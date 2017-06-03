@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using Landau.Blitz.Api.Helpers.CryptHelpers;
 
 namespace Landau.Blitz.Api
 {
@@ -8,6 +9,7 @@ namespace Landau.Blitz.Api
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //string pass = PasswordHelper.Crypt.EncryptString("123456");
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 

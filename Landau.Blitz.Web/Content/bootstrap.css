@@ -5372,7 +5372,7 @@ a.list-group-item:focus {
 }
 
 .panel > .list-group .list-group-item:last-child {
-  border-bottom: 0;
+  /*border-bottom: 0;*/
 }
 
 .panel-heading + .list-group .list-group-item:first-child {

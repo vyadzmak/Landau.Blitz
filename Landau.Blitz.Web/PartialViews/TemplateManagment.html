@@ -1,0 +1,54 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Шаблон
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="templateForm" id="templateForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Имя шаблона<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Шаблон для МКО" maxlength="70" data-error="Имя должно быть заполнено" ng-model="template.Name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Описание</label>
+                        <div class="col-sm-9">
+                            <input type="textarea" class="form-control" placeholder="Данный шаблон стандарт для МКО" maxlength="450" ng-model="template.Description">
+                        </div>
+                    </div>
+
+
+
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#templateForm').validator({
+        disable: false
+    });
+</script>

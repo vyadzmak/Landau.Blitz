@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9a6230267171404da2c531a188faddc1" Name="Diagram1">
+        <EntityTypeShape EntityType="LandauBlitzModel.Clients" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.ClientTypes" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.CreditRequests" Width="1.5" PointX="7.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.CreditRequestStates" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Settings" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Templates" Width="1.5" PointX="10.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.UserLogins" Width="1.5" PointX="7.5" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.UserLoginStates" Width="1.5" PointX="5.25" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.UserRoles" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Users" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <AssociationConnector Association="LandauBlitzModel.FK_Clients_ClientTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Clients1" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_Templates_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_Users_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_CreditRequestStates" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Templates" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_Templates_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_UserLoginStates" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_UserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

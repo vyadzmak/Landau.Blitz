@@ -1,0 +1,31 @@
+<div ng-controller="editorController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 fill" style="padding-right:0px; padding-left:0px; background-color:#f8f8f8">
+                <div class="panel panel-success fill" style="padding-left:0px">
+                    <div class="panel-heading">Шаблон</div>
+
+                    <div style="background-color: #f5f5f5;" class="fill">
+
+                        <!-- as a Dom element -->
+                        <treecontrol class="tree-boot" tree-model="dataForTheTree" options="treeOptions" on-selection="showSelected(node)" selected-node="selected" on-selection="showSelected(node, selected)" on-node-toggle="showToggle(node, expanded)">
+                            {{node.label}} {{node.id}}
+                        </treecontrol>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-8 fill" style="padding-left:0px">
+                <div class="panel panel-success fill">
+                    <div class="panel-heading">Редактор</div>
+                    <div ui-view></div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

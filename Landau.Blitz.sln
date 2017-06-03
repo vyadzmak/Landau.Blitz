@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.Api", "Landau.Blitz.Api\Landau.Blitz.Api.csproj", "{BE15F2D9-9976-42C5-8055-287522662835}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.Web", "Landau.Blitz.Web\Landau.Blitz.Web.csproj", "{163B1F0C-0BB8-4A24-80C2-0275268A2AB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.QuickNode", "Landau.Blitz.QuickNode\Landau.Blitz.QuickNode.csproj", "{C5B39C85-685D-4163-9E60-E73A3AE73AF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.TestConsole", "Landau.Blitz.TestConsole\Landau.Blitz.TestConsole.csproj", "{F2B2F0A9-1D3B-4184-8F67-FF9692FBE57B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.Api", "Landau.Blitz.Api\Landau.Blitz.Api.csproj", "{1C2D10A6-0B33-4321-B73F-AD5F5FA6E8DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BE15F2D9-9976-42C5-8055-287522662835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE15F2D9-9976-42C5-8055-287522662835}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE15F2D9-9976-42C5-8055-287522662835}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE15F2D9-9976-42C5-8055-287522662835}.Release|Any CPU.Build.0 = Release|Any CPU
 		{163B1F0C-0BB8-4A24-80C2-0275268A2AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{163B1F0C-0BB8-4A24-80C2-0275268A2AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{163B1F0C-0BB8-4A24-80C2-0275268A2AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{163B1F0C-0BB8-4A24-80C2-0275268A2AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B39C85-685D-4163-9E60-E73A3AE73AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B39C85-685D-4163-9E60-E73A3AE73AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B39C85-685D-4163-9E60-E73A3AE73AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B39C85-685D-4163-9E60-E73A3AE73AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B2F0A9-1D3B-4184-8F67-FF9692FBE57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B2F0A9-1D3B-4184-8F67-FF9692FBE57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B2F0A9-1D3B-4184-8F67-FF9692FBE57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B2F0A9-1D3B-4184-8F67-FF9692FBE57B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C2D10A6-0B33-4321-B73F-AD5F5FA6E8DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C2D10A6-0B33-4321-B73F-AD5F5FA6E8DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C2D10A6-0B33-4321-B73F-AD5F5FA6E8DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C2D10A6-0B33-4321-B73F-AD5F5FA6E8DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

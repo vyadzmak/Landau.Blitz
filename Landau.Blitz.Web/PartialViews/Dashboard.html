@@ -1,0 +1,106 @@
+﻿<head>
+    <link rel="stylesheet" type="text/css" href="./Content/sb-admin-2.css">
+    <link rel="stylesheet" type="text/css" href="./Content/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./Content/metisMenu.min.css">
+
+    <script>
+        function test() {
+            $('.projectsUl').collapse()
+        }
+    </script>
+</head>
+<div ng-controller="dashBoardController">
+
+
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed; width: 100%;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="color: #146daf" ng-click="exitQuestion();"><img border="0" alt="Blitz" src="Content/puzzle.png" height="24"> Blitz</a>
+            </div>
+            <!-- /.navbar-header -->
+
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!--<a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>-->
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a ng-click="selectService(5);"> <i class="fa fa-user fa-fw"></i> Профиль <b>{{userData.UserFirstName}} {{userData.UserLastName}}</b> </a>
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Настройки аккаунта</a>
+                        </li>
+
+                        <li class="divider"></li>
+                        <li>
+                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Выход</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+
+            <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <!-- ADMIN -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserRoleId==1">
+
+
+
+                        <li>
+                            <a ui-sref="main.dashboard.templates" style="cursor:default"><i class="fa fa-terminal "></i> Шаблоны</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.companies" style="cursor:default"><i class="fa fa-briefcase"></i> Компании</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.systemSettings" style="cursor:default"><i class="fa fa-cogs"></i> Системные настройки</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.adminStatistics" style="cursor:default"><i class="fa fa-pie-chart"></i> Статистика</a>
+                        </li>
+                    </ul>
+                    <!--end ADMIN-->
+
+                    <!--end PROFILE-->
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+    </div>
+    <div id="page-wrapper" class="dashboard-container">
+        <span us-spinner spinner-key="spinner-1" spinner-start-active="true"></span>
+        <div ui-view></div>
+
+
+    </div>
+    <script type="text/ng-template" id="warning-dialog.html">
+        <div class="modal-header">
+            <h3>Выход!</h3>
+        </div>
+        <div idle-countdown="countdown" ng-init="countdown=30" class="modal-body">
+            Сессия будет закрыта через {{countdown}} секунд.
+            <uib-progressbar max="30" value="countdown" animate="true" class="progress-striped active"></uib-progressbar>
+        </div>
+
+    </script>
+</div>
