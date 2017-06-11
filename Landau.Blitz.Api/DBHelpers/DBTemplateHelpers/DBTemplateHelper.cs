@@ -126,7 +126,9 @@ namespace Landau.Blitz.Api.DBHelpers.DBTemplateHelpers
                         template.Name = model.Name;
                         if (!string.IsNullOrEmpty(model.Content))
                         template.Template = model.Content;
+
                         db.SaveChanges();
+                        
                     }
 
                 }

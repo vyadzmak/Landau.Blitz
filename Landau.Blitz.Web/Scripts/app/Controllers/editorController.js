@@ -1,12 +1,46 @@
-var editorController = function($scope, $stateParams, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, navigatorService) {
+var editorController = function($scope, $stateParams, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, navigatorService, treeGeneratorService) {
+    $scope.clickOnTree = function(node) {
+        var type = node.id[0];
+        var index = node.id[1];
 
+        switch (type) {
+            case 't':
+                $state.go('main.dashboard.editor.templateDetails')
+                break;
+
+
+            case 's':
+                $state.go('main.dashboard.editor.sheetDetails', { 'sheetId': index });
+                break;
+
+            case 'b':
+                $state.go('main.dashboard.editor.blockDetails', { 'blockId': index });
+                break;
+
+            case 'q':
+                $state.go('main.dashboard.editor.questionDetails', { 'questionId': index });
+                break;
+
+            case 'f':
+                $state.go('main.dashboard.editor.fieldDetails', { 'fieldId': index });
+                break;
+
+            case 'e':
+                $state.go('main.dashboard.editor.elementDetails', { 'elementId': index });
+                break;
+        }
+
+    }
+
+    $scope.dataForTheTree = [];
     // Event($scope)
     $scope.showToggle = function(node, expanded) {
-        console.log(JSON.stringify(node) + " Expanded: " + expanded)
+        // console.log(JSON.stringify(node) + " Expanded: " + expanded)
+        $scope.clickOnTree(node);
     };
     $scope.showSelected = function(node, selected) {
-        console.log(JSON.stringify(node) + " Expanded: " + selected)
-
+        // console.log(JSON.stringify(node) + " Expanded: " + selected)
+        $scope.clickOnTree(node);
     };
 
     $scope.addTree = function(parentElement, childElement) {
@@ -19,6 +53,21 @@ var editorController = function($scope, $stateParams, $http, $location, $state, 
     $scope.clearSelected = function() {
         $scope.selected = undefined;
     }
+
+    $scope.$watch('dataForTheTree', function(newValue, oldValue) {
+        if (newValue != oldValue) {
+
+            $scope.dataForTheTree = navigatorService.getDataForTheTree();
+        }
+    }, true);
+
+    $scope.$on('tree:updated', function(event, data) {
+
+        if (data != undefined) {
+            $scope.dataForTheTree = navigatorService.getDataForTheTree();
+        }
+        //alert(JSON.stringify(data));
+    });
 
     $scope.init = function() {
         var templateId = $stateParams.templateId;
@@ -53,12 +102,13 @@ var editorController = function($scope, $stateParams, $http, $location, $state, 
                 labelSelected: "a8"
             }
         }
-        $scope.dataForTheTree = [];
-        $scope.dataForTheTree.push(rootElement);
+
+        navigatorService.setScope($scope);
+        treeGeneratorService.generateTreeStructure($scope, $state, cTemplate, true);
         //$scope.selectNode(1);
-        $scope.selected = $scope.dataForTheTree[0];
-        $state.go("main.dashboard.editor.templateDetails");
+
+
     }
     $scope.init();
 };
-blitzApp.controller("editorController", ["$scope", "$stateParams", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "navigatorService", editorController]);
+blitzApp.controller("editorController", ["$scope", "$stateParams", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "navigatorService", "treeGeneratorService", editorController]);

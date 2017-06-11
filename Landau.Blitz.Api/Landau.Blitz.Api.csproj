@@ -236,11 +236,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CatalogsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBHelpers\DBAuthDataHelpers\DBAuthDataHelper.cs" />
+    <Compile Include="DBHelpers\DBCatalogHelpers\DBCatalogHelper.cs" />
     <Compile Include="DBHelpers\DBLoginHelpers\DBLoginHelper.cs" />
     <Compile Include="DBHelpers\DBTemplateHelpers\DBTemplateHelper.cs" />
     <Compile Include="DB\BlitzModel.Context.cs">
@@ -257,6 +259,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BlitzModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Catalogs.cs">
+      <DependentUpon>BlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Clients.cs">
       <DependentUpon>BlitzModel.tt</DependentUpon>
@@ -303,6 +308,8 @@
     <Compile Include="Helpers\SerializeHelpers\SerializeHelper.cs" />
     <Compile Include="Helpers\TemplateHelpers\TemplateHelper.cs" />
     <Compile Include="Models\AuthData\AuthDataModel.cs" />
+    <Compile Include="Models\Catalogs\CatalogField.cs" />
+    <Compile Include="Models\Catalogs\CatalogModel.cs" />
     <Compile Include="Models\Error\ErrorModel.cs" />
     <Compile Include="Models\Other\AccountBindingModels.cs" />
     <Compile Include="Models\Other\AccountViewModels.cs" />

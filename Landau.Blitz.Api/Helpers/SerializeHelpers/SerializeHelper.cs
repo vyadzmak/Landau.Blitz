@@ -15,6 +15,7 @@ namespace Landau.Blitz.Api.Helpers.SerializeHelpers
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
+                serializer.MaxJsonLength = int.MaxValue;
                 return serializer.Serialize(obj);
             }
             catch (Exception e)

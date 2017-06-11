@@ -1,4 +1,4 @@
-<div ng-controller="templateDetailsController">
+<div ng-controller="sheetDetailsController">
 
     <div class="container">
         <div class="panel panel-primary">
@@ -6,13 +6,13 @@
             <div class="panel-body">
                 <div class="form-inline">
                     <label>Имя</label>
-                    <input type="text" size="32" class="form-control" ng-model="template.Name">
+                    <input type="text" size="32" class="form-control" ng-model="currentSheet.Name">
                 </div>
 
-                <div class="form-inline">
+                <!--<div class="form-inline">
                     <label>Описание</label>
                     <input type="text" size="32" class="form-control" ng-model="template.Description">
-                </div>
+                </div>-->
             </div>
             <div class="panel-footer" ng-show="isChanged">
                 <button type="button" class="btn btn-success btn-block" ng-click="save()">Сохранить</button>
@@ -20,14 +20,14 @@
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading"> Страницы <button class="btn btn-primary pull-right" ng-click="addNewSheetView();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <div class="panel-heading"> Блоки<button class="btn btn-primary pull-right" ng-click="addNewBlockView();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">
                 <ul>
-                    <li ng-repeat="sheet in template.Content.Sheets">
+                    <li ng-repeat="block in currentSheet.Blocks">
                         <!--ng-bind-html-unsafe="template.Content.Sheets"-->
-                        <a href=""> {{sheet.Name }}</a>
+                        <a href=""> {{block.Name }}</a>
                     </li>
                 </ul>
 

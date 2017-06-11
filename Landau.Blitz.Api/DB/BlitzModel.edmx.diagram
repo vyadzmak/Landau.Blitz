@@ -30,6 +30,7 @@
         <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_UserLoginStates" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_UserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Catalogs" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -9,7 +9,7 @@
 
                         <!-- as a Dom element -->
                         <treecontrol class="tree-boot" tree-model="dataForTheTree" options="treeOptions" on-selection="showSelected(node)" selected-node="selected" on-selection="showSelected(node, selected)" on-node-toggle="showToggle(node, expanded)">
-                            {{node.label}} {{node.id}}
+                            {{node.label}} [{{node.type}}]
                         </treecontrol>
 
                     </div>

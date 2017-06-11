@@ -1,0 +1,32 @@
+<div ng-controller="catalogsController">
+
+    <div class="container">
+
+        <div class="row" ng-show="!loading">
+            <div id="toolbar">
+                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewCatalogView();" data-toggle="tooltip" title="Добавить новую компанию" data-placement="bottom">
+                    
+                    <span class="glyphicon glyphicon-plus" ></span>
+                    </button>
+
+            </div>
+
+            <!--<div class="alert alert-success" id="eventsResult">
+                Here is the result of event.
+            </div>-->
+            <div class="form-inline">
+                <table id="catalogTable" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true" data-height="100%" data-toggle="table">
+                    <thead>
+                        <tr>
+                            <th data-field="catalogId" data-sortable="true" data-align="center">Id</th>
+                            <th data-field="catalogName" data-sortable="true" data-align="center">Имя</th>
+                            <th data-field="catalogSystemName" data-sortable="true" data-align="center">Системное имя</th>
+
+                            <th data-field="action" data-formatter="actionFormatterCatalogs" data-events="actionEventsCatalogs" data-width="5%" style="text-align:center;" data-align="center"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

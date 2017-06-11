@@ -1,4 +1,4 @@
-blitzApp.service('templatesHttpService', function() {
+blitzApp.service('templatesHttpService', ["treeGeneratorService", "navigatorService", function(treeGeneratorService, navigatorService) {
     var lTemplates = [];
     //добавляем данные
     function addData(template) {
@@ -148,7 +148,7 @@ blitzApp.service('templatesHttpService', function() {
     }
 
 
-    this.updateTemplate = function($http, template) {
+    this.updateTemplate = function($http, $scope, $state, template) {
         var url = $$ApiUrl + "/templates";
         //usSpinnerService.spin("spinner-1");
         var methodType = "PUT";
@@ -162,7 +162,14 @@ blitzApp.service('templatesHttpService', function() {
                 data: JSON.stringify(updateTemplate)
             })
             .then(function(response) {
+
+                    var scope = navigatorService.getScope();
+                    scope.template = JSON.parse(response.data);
+                    scope.template.Content = JSON.parse(scope.template.Content);
+                    navigatorService.updateCurrentTemplate(scope.template);
+                    treeGeneratorService.generateTreeStructure($scope, $state, $scope.template, false);
                     // success
+
                     showNotify("Успех", "Шаблон обновлен", "success");
                 },
                 function(response) { // optional
@@ -170,4 +177,4 @@ blitzApp.service('templatesHttpService', function() {
                     showNotify("Ошибка", "Ошибка обновления шаблона", "danger");
                 });
     }
-});
+}]);

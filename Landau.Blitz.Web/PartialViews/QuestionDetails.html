@@ -1,0 +1,38 @@
+<div ng-controller="questionDetailsController">
+
+    <div class="container ">
+        <div class="panel panel-primary ">
+            <div class="panel-heading "> Общие настройки</div>
+            <div class="panel-body ">
+                <div class="form-inline ">
+                    <label>Имя</label>
+                    <input type="text " size="32 " class="form-control " ng-model="currentQuestion.Name ">
+                </div>
+
+
+
+            </div>
+            <div class="panel-footer " ng-show="isChanged ">
+                <button type="button " class="btn btn-success btn-block " ng-click="save() ">Сохранить</button>
+            </div>
+        </div>
+
+        <div class="panel panel-primary ">
+            <div class="panel-heading "> Поля<button class="btn btn-primary pull-right " ng-click="addNewFieldView(); "><i class="fa fa-plus " aria-hidden="true "></i></button>
+                <div class="clearfix "></div>
+            </div>
+            <div class="panel-body ">
+                <ul>
+                    <li ng-repeat="field in currentQuestion.Fields ">
+                        <!--ng-bind-html-unsafe="template.Content.Sheets "-->
+                        <a href=" "> {{field.Name }}</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</div>

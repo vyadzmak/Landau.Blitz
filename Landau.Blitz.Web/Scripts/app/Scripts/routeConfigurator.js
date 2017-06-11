@@ -79,6 +79,28 @@
         }
     })
 
+    .state("main.dashboard.catalogs", {
+        url: "/catalogs",
+        templateUrl: "PartialViews/Catalogs.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Справочники";
+        }
+    })
+
+    .state("main.dashboard.catalogFieldDetails", {
+        url: "/catalogFieldDetails/:catalogId",
+        templateUrl: "PartialViews/CatalogFieldDetails.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Поля справочника";
+        }
+    })
+
     .state("main.dashboard.editor.templateDetails", {
         url: "/templateDetails",
         templateUrl: "PartialViews/TemplateDetails.html",
@@ -90,8 +112,63 @@
         }
     })
 
-    ///user managments
-    .state("main.dashboard.systemSettings", {
+    .state("main.dashboard.editor.sheetDetails", {
+        url: "/templateDetails/:sheetId",
+        templateUrl: "PartialViews/SheetDetails.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Страница";
+        }
+    })
+
+
+    .state("main.dashboard.editor.blockDetails", {
+        url: "/blockDetails/:blockId",
+        templateUrl: "PartialViews/BlockDetails.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Блок";
+        }
+    })
+
+    .state("main.dashboard.editor.questionDetails", {
+        url: "/questionDetails/:questionId",
+        templateUrl: "PartialViews/QuestionDetails.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Вопрос";
+        }
+    })
+
+    .state("main.dashboard.editor.fieldDetails", {
+        url: "/fieldDetails/:fieldId",
+        templateUrl: "PartialViews/FieldDetails.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Поле";
+        }
+    })
+
+    .state("main.dashboard.editor.elementDetails", {
+            url: "/elementDetails/:elementId",
+            templateUrl: "PartialViews/ElementDetails.html",
+            onEnter: function($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Элемент";
+            }
+        })
+        ///user managments
+        .state("main.dashboard.systemSettings", {
             url: "/systemSettings",
             templateUrl: "PartialViews/SystemSettings.html",
             onEnter: function($window, $state) {

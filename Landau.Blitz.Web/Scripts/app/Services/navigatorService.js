@@ -1,4 +1,4 @@
-blitzApp.service('navigatorService', function() {
+blitzApp.service('navigatorService', ['$rootScope', function($rootScope) {
     var templates = [];
     var currentTemplate = {};
 
@@ -16,8 +16,37 @@ blitzApp.service('navigatorService', function() {
 
     var elements = [];
     var currentElement = {};
+    var scope = {};
+    var dataForTheTree = [];
+
+    var catalogs = [];
+    var currentCatalog = {};
+
+    var catalogFields = [];
+    var currentCatalogField = {};
 
     //--------------------GET FUNCTIONS-----------------------------------//
+    this.getScope = function() {
+        return scope;
+    }
+
+    this.getCatalogs = function() {
+        return catalogs;
+    }
+
+    this.getCurrentCatalog = function() {
+        return currentCatalog;
+    }
+
+    this.getCatalogFields = function() {
+        return catalogs;
+    }
+
+
+    this.getDataForTheTree = function() {
+        return dataForTheTree;
+    };
+
     this.getTemplates = function() {
         return templates;
     };
@@ -69,6 +98,10 @@ blitzApp.service('navigatorService', function() {
     //--------------------END FUNCTION GET ------------------------------//
 
     //---------------------DROP FUNCTIONS------------------------------//
+
+    this.dropDataForTheTree = function() {
+        dataForTheTree = [];
+    };
 
     this.dropTemplates = function() {
         templates = [];
@@ -136,6 +169,10 @@ blitzApp.service('navigatorService', function() {
         //---------------------END DROP FUNCTIONS--------------------------//
 
     //---------------------SET FUNCTIONS------------------------------//
+
+    this.setScope = function(_scope) {
+        scope = _scope;
+    }
     this.setTemplates = function(_templates) {
         templates = _templates;
         for (var i = 0; i < templates.length; i++) {
@@ -155,9 +192,49 @@ blitzApp.service('navigatorService', function() {
 
     };
 
+
+    this.setCatalogs = function(_catalogs) {
+        caalogs = _catalogs;
+        for (var i = 0; i < catalogs.length; i++) {
+            catalogs.Fields = JSON.parse(catalogs[i].Fields);
+        }
+    };
+
+    this.setCurrentCatalog = function(catalogId) {
+        for (i = 0; i < catalogs.length; i++) {
+            if (catalogId == catalogs[i].Id) {
+                currentCatalog = catalogs[i];
+                if (currentCatalog != null)
+                    catalogFields = currentCatalog.Fields;
+                break;
+            }
+        }
+
+    };
+
+    this.updateCurrentTemplate = function(template) {
+        for (i = 0; i < templates.length; i++) {
+            if (template.Id == templates[i].Id) {
+                templates[i] = template;
+                currentTemplate = templates[i];
+                if (currentTemplate != null)
+                    sheets = currentTemplate.Content.Sheets;
+                break;
+            }
+        }
+
+    };
+
     this.setSheets = function(_sheets) {
         sheets = _sheets;
     };
+
+
+    this.setDataForTheTree = function(_data) {
+        dataForTheTree = _data;
+        $rootScope.$broadcast('tree:updated', _data);
+    };
+
 
     this.setCurrentSheet = function(sheetId) {
         for (i = 0; i < sheets.length; i++) {
@@ -205,7 +282,7 @@ blitzApp.service('navigatorService', function() {
         for (i = 0; i < fields.length; i++) {
             if (fieldId == fields[i].Id) {
                 currentField = fields[i];
-                elements = currentField.Fields;
+                elements = currentField.Elements;
                 break;
             }
         }
@@ -226,4 +303,4 @@ blitzApp.service('navigatorService', function() {
 
     //---------------------END SET FUNCTIONS--------------------------//
 
-});
+}]);

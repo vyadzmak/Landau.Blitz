@@ -8,6 +8,8 @@ var templateDetailsController = function($scope, $http, $location, $state, $uibM
         $scope.$watch('template', function(newValue, oldValue) {
             if (newValue != oldValue) {
                 $scope.isChanged = true;
+
+
             }
         }, true);
 
@@ -41,21 +43,26 @@ var templateDetailsController = function($scope, $http, $location, $state, $uibM
 
         modalInstance.result.then(function() {
             // console.log(JSON.stringify($scope.sheet))
+            var id = 1;
+
+            if ($scope.template.Content.Sheets.length > 0) {
+                id = $scope.template.Content.Sheets.Id + 1;
+            }
+            $scope.sheet.Id = id;
             $scope.template.Content.Sheets.push($scope.sheet);
             $scope.sheet = {};
-            templatesHttpService.updateTemplate($http, $scope.template);
+            templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
 
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
         });
 
-        $scope.save = function() {
-
-            $scope.isChanged = false;
-            templatesHttpService.updateTemplate($http, $scope.template);
-        }
-
-
     };
+
+    $scope.save = function() {
+
+        $scope.isChanged = false;
+        templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
+    }
 };
 blitzApp.controller("templateDetailsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "navigatorService", "templatesHttpService", templateDetailsController]);
