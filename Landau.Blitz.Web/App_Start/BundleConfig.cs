@@ -47,7 +47,10 @@ namespace Landau.Blitz.Web
                 "~/Content/chk-multi-select.css",
                 "~/Content/angular.treeview.css",
                 "~/Content/tree-control.css",
-                "~/Content/tree-control-attribute.css"
+                "~/Content/tree-control-attribute.css",
+                "~/Content/tabs.css",
+                "~/Content/tabs.sideways.css",
+                "~/Content/ng-table.css"
 
             //"~/Content/bootstrap-datetimepicker.min.css"
             ));
@@ -77,7 +80,8 @@ namespace Landau.Blitz.Web
                 "~/Scripts/angularjs-dropdown-multiselect.min.js",
                 "~/Scripts/chk-multi-select.js",
                 "~/Scripts/angular.treeview.js",
-                "~/Scripts/angular-tree-control.js"
+                "~/Scripts/angular-tree-control.js",
+                "~/Scripts/ng-table.js"
             // "~/Scripts/eaTreeView-tpls.min.js"
             //"~/Scripts/eaTreeView.directive.js",
             //"~/Scripts/eaTreeView.factory.js",
@@ -106,8 +110,12 @@ namespace Landau.Blitz.Web
 
             bundles.Add(new ScriptBundle("~/bundles/blitzControllers")
                 .IncludeDirectory("~/Scripts/app/Controllers", "*.js", true));
+
+            bundles.Add(new ScriptBundle("~/bundles/blitzInitServices")
+                .IncludeDirectory("~/Scripts/app/Services/initializers", "*.js", true));
+
             bundles.Add(new ScriptBundle("~/bundles/blitzServices")
-                .IncludeDirectory("~/Scripts/app/Services", "*.js", true));
+                .IncludeDirectory("~/Scripts/app/Services", "*.js", false));
            
             
         }

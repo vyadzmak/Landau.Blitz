@@ -68,6 +68,163 @@
         }
     })
 
+    .state("main.dashboard.project", {
+        url: "/project",
+        templateUrl: "PartialViews/Project.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Проект";
+        }
+    })
+
+    .state("main.dashboard.project.clientData", {
+        url: "/clientData",
+        templateUrl: "PartialViews/ClientData.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Данные о клиенте";
+        }
+    })
+
+
+    .state("main.dashboard.project.creditData", {
+        url: "/creditData",
+        templateUrl: "PartialViews/CreditData.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Данные о кредите";
+        }
+    })
+
+    .state("main.dashboard.project.financePlanning", {
+        url: "/financePlanning",
+        templateUrl: "PartialViews/FinancePlanning.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "План финансирования";
+        }
+    })
+
+    .state("main.dashboard.project.projectAnalysis", {
+        url: "/projectAnalysis",
+        templateUrl: "PartialViews/ProjectAnalysis.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Анализ проекта";
+        }
+    })
+
+
+    .state("main.dashboard.project.businessInfo", {
+        url: "/businessInfo",
+        templateUrl: "PartialViews/BusinessInfo.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Информация о бизнесе";
+        }
+    })
+
+    .state("main.dashboard.project.finDataBalance", {
+        url: "/finDataBalance",
+        templateUrl: "PartialViews/FinDataBalance.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Финдата Баланс";
+        }
+    })
+
+    .state("main.dashboard.project.finDataCrossChecking", {
+        url: "/finDataCrossChecking",
+        templateUrl: "PartialViews/FinDataCrossChecking.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Финдата cross-checking";
+        }
+    })
+
+    .state("main.dashboard.project.finDataOpiu", {
+        url: "/finDataOpiu",
+        templateUrl: "PartialViews/FinDataOpiu.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Финдата ОПиУ";
+        }
+    })
+
+
+    .state("main.dashboard.project.finDataOdds", {
+        url: "/finDataOdds",
+        templateUrl: "PartialViews/FinDataOdds.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Финдата ОДДС";
+        }
+    })
+
+    .state("main.dashboard.project.largeExpenses", {
+        url: "/largeExpenses",
+        templateUrl: "PartialViews/LargeExpenses.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Крупные расходы";
+        }
+    })
+
+    .state("main.dashboard.project.provision", {
+        url: "/provision",
+        templateUrl: "PartialViews/Provision.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Обеспечение";
+        }
+    })
+
+    .state("main.dashboard.project.dataDamu", {
+        url: "/dataDamu",
+        templateUrl: "PartialViews/DataDamu.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Данные по гарантии ДАМУ";
+        }
+    })
+
+    .state("main.dashboard.project.conclusion", {
+        url: "/conclusion",
+        templateUrl: "PartialViews/Conclusion.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Заключение";
+        }
+    })
+
     .state("main.dashboard.editor", {
         url: "/editor/:templateId",
         templateUrl: "PartialViews/Editor.html",

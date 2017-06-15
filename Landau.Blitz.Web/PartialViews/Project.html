@@ -1,0 +1,36 @@
+<div ng-controller="projectController">
+
+    <div class="container">
+
+        <div class="scroller scroller-left"><i class="fa fa-chevron-circle-left"></i></div>
+        <div class="scroller scroller-right"><i class="fa fa-chevron-circle-right"></i></div>
+        <div class="wrapper">
+            <ul class="nav nav-tabs list" id="myTab">
+                <li><a ui-sref="main.dashboard.project.clientData" aria-controls="clientData" role="tab">Данные о клиенте</a></li>
+                <li><a ui-sref="main.dashboard.project.creditData" aria-controls="creditData" role="tab">Данные о кредите</a></li>
+                <li><a ui-sref="main.dashboard.project.financePlanning" aria-controls="financePlanning" role="tab">План финансирования</a></li>
+                <li><a ui-sref="main.dashboard.project.projectAnalysis" aria-controls="projectAnalysis" role="tab">Анализ проекта</a></li>
+
+                <li><a ui-sref="main.dashboard.project.businessInfo" aria-controls="businessInfo" role="tab">Информация о бизнесе</a></li>
+                <li><a ui-sref="main.dashboard.project.finDataBalance" aria-controls="finDataBalance" role="tab">Финданные Баланс</a></li>
+                <li><a ui-sref="main.dashboard.project.finDataCrossChecking" aria-controls="finDataCrossChecking" role="tab">Финданные cross-checking</a></li>
+                <li><a ui-sref="main.dashboard.project.finDataOpiu" aria-controls="finDataOpiu" role="tab">Финданные Опиу</a></li>
+                <li><a ui-sref="main.dashboard.project.finDataOdds" aria-controls="finDataOpiu" role="tab">Финданные Оддс</a></li>
+                <li><a ui-sref="main.dashboard.project.largeExpenses" aria-controls="largeExpenses" role="tab">Крупные расходы</a></li>
+                <li><a ui-sref="main.dashboard.project.provision" aria-controls="provision" role="tab">Обеспечение</a></li>
+                <li><a ui-sref="main.dashboard.project.dataDamu" aria-controls="dataDamu" role="tab">Данные по гарантии ДАМУ</a></li>
+                <li><a ui-sref="main.dashboard.project.conclusion" aria-controls="сonclusion" role="tab">Заключение</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <!-- Tab panes -->
+        <div style="overflow-y:auto">
+            <div style="margin-top:15px" ui-view></div>
+        </div>
+    </div>
+
+
+</div>
+</div>

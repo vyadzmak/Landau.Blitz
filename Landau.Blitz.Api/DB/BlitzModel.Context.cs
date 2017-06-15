@@ -39,5 +39,6 @@ namespace Landau.Blitz.Api.DB
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Catalogs> Catalogs { get; set; }
+        public virtual DbSet<Projects> Projects { get; set; }
     }
 }

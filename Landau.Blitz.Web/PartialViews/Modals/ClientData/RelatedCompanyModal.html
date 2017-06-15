@@ -1,0 +1,79 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Связанные компании и лица
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="relatedCompanyForm" id="relatedCompanyForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование организации<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ТОО 'Альфа Бета'" maxlength="270" data-error="Имя должно быть заполнено" ng-model="mElement.CompanyName" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Вид деятельности<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Производство мебели" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.ActivityType" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Дата регистрации<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.RegistrationDate" required>
+                            <div class=" help-block with-errors "></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label ">ФИО директора<i class="red-star ">*</i></label>
+                        <div class="col-sm-9 ">
+                            <input type="text " class="form-control " placeholder="Иванов И.И. " maxlength="270 " data-error="Имя должно быть заполнено " ng-model="mElement.DirectorName " required>
+                            <div class="help-block with-errors "></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Количество сотрудников<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="5" maxlength="2" data-error="Поле должно быть заполнено" ng-model="mElement.EmployeesCount" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    </br>
+                    <div class="form-group ">
+                        <div class="form-group col-sm-11 text-right ">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit " class="btn btn-success " ng-click="vm.confirm() ">Сохранить</button>
+                            <button type="button " class="btn btn-danger " ng-click="vm.cancel(); ">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text ">Поля обозначеннные знаком <i class="red-star ">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#templateForm').validator({
+        disable: false
+    });
+</script>

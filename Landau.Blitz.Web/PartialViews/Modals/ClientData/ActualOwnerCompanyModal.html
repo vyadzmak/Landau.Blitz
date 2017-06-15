@@ -1,0 +1,131 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Информация о фактическом собственнике
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="actualOwnerCompanyForm" id="actualOwnerCompanyForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">ФИО<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Иванов И.И." maxlength="270" data-error="Имя должно быть заполнено" ng-model="mElement.Name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">% от собственности<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" data-error="Поле должно быть заполнено" ng-model="mElement.PercentOwnerShip" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Дата рождения<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" data-error="Дата рождения должна быть заполненв" ng-model="mElement.DateOfBirth" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Документ,№, кем и когда выдан<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Паспорт №1234567, выдан Центральным РОВД, г.Москва" maxlength="400" data-error="Поле должно быть заполнено" ng-model="mElement.Document" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Прописка<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="г.Москва, ул.Кирова 3, кв.56" maxlength="400" data-error="Поле должно быть заполнено" ng-model="mElement.PlaceOfRegistration" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Проживание<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="г.Москва, ул.Украинки 8, к1, кв.217" maxlength="400" data-error="Поле должно быть заполнено" ng-model="mElement.PlaceOfResidence" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Телефон<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="+7777777777" maxlength="20" data-error="Поле должно быть заполнено" ng-model="mElement.PhoneNumber" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Женат/замужем<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="mElement.IsMarried">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Количество детей<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="2" maxlength="2" data-error="Поле должно быть заполнено" ng-model="mElement.ChildrenCount" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Возраст детей</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="6, 10" maxlength="20" data-error="Поле должно быть заполнено" ng-model="mElement.ChildrenAge">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Место работы супругов и их зарплата</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ООО 'Альфа Центр, технолог, 900 руб'" maxlength="400" ng-model="mElement.PartnerData">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Образование и опыт</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Институт им. Гете; " maxlength="400" ng-model="mElement.Expirience">
+                        </div>
+                    </div>
+
+
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#templateForm').validator({
+        disable: false
+    });
+</script>

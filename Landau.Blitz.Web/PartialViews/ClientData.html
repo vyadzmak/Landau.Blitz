@@ -1,0 +1,311 @@
+<div ng-controller="clientDataController">
+
+    <div class="container">
+
+        <!--Наименование компании-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Наименование компании и юридическая форма организации</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Наименование компании</label>
+                            <input type="text" class="form-control" placeholder="Наименование компании" ng-model="currentProject.ClientData.OrganizationName">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleSelect2">Вид деятельности</label>
+                            <select class="form-control" id="exampleSelect2" ng-model="currentProject.ClientData.OrganizationType">
+                <option value="1">ИП</option>
+                <option value="2">ТОО</option>
+                <option value="3">КХ</option>
+                </select>
+                            <small id="emailHelp" class="form-text text-muted">Относится ли к целевой группе по юридическому статусу</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Вид деятельности</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Количество направлений деятельности</label>
+                            <input type="text" class="form-control" placeholder="1,2,3...." ng-model="currentProject.ClientData.NumberOfActivities">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleSelect1">Сектор экономики</label>
+                            <select multiple class="form-control" id="exampleSelect1" ng-model="currentProject.ClientData.EconomicSectors">
+                                <option value="1">Услуги</option>
+                                <option value="2">Торговля</option>
+                                <option value="3">С/Х</option>
+                                <option value="4">Производство</option>
+                                
+                                </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Дата регистрации</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Дата регистрации компании</label>
+                            <input type="date" class="form-control" ng-model="currentProject.ClientData.RegistrationDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Дата перерегистрации компании</label>
+                            <input type="date" class="form-control" ng-model="currentProject.ClientData.ReRegistrationDate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Опыт работы фактический</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Опыт в годах</label>
+                            <input type="text" class="form-control" ng-model="currentProject.ClientData.ActualExperience">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Число работников</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Официально работников</label>
+                            <input type="text" class="form-control" ng-model="currentProject.ClientData.OfficiallyEmployees">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Фактически работников</label>
+                            <input type="text" class="form-control" ng-model="currentProject.ClientData.ActuallyEmployees">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--END BLOCK-->
+
+
+        <!--Вид Деятельности-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Место бизнеса <button class="btn btn-primary pull-right" ng-click="showNewBusinessPlace();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <table ng-table="businessPlacesParams" class="table">
+                        <tr ng-repeat="place in currentProject.ClientData.BusinessPlaces">
+                            <td title="'Адрес'" sortable="'address'" class="col-md-6">
+                                {{place.Address}}</td>
+
+                            <td title="'Аренда'" sortable="'age'" class="col-md-2">
+                                <input type="checkbox" ng-model="place.IsRent" /> </td>
+
+                            <td title="'Филиал'" sortable="'rate'" class="col-md-2">
+                                <input type="checkbox" ng-model="place.IsFilial" /></td>
+
+                            <td title="'Рейтинг'" sortable="'address'" class="col-md-2">
+                                {{place.Rate}}</td>
+
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+
+        <!--Директор-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Директор <button class="btn btn-primary pull-right" ng-click="showNewDirectorInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="directorInfosParams" class="table">
+                            <tr ng-repeat="director in currentProject.ClientData.DirectorInfos">
+                                <td title="'ФИО'" sortable="'Name'">
+                                    {{director.Name}}</td>
+                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
+                                    <p ng-bind="director.DateOfBirth | date:'dd/MM/yyyy'"></p>
+                                </td>
+                                <td title="'Док-т'" sortable="'Document'">
+                                    {{director.Document}}</td>
+                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
+                                    {{director.PlaceOfRegistration}}</td>
+                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
+                                    {{director.PlaceOfResidence}}</td>
+                                <td title="'Тел'" sortable="'PhoneNumber'">
+                                    {{director.PhoneNumber}}</td>
+                                <td title="'Жен/Зам'" sortable="'IsMarried'">
+                                    <input type="checkbox" ng-model="director.IsMarried" </td>
+
+                                    <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                        {{director.ChildrenCount}} ({{director.ChildrenAge}})</td>
+                                    <td title="'Супруги'" sortable="'partnerData'">
+                                        {{director.PartnerData}}</td>
+                                    <td title="'Опыт'" sortable="'expirience'">
+                                        {{director.Expirience}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+
+        <!--связанные компании-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Связанные компании <button class="btn btn-primary pull-right" ng-click="showNewRelatedCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="relatedCompanyInfosParams" class="table">
+                            <tr ng-repeat="company in currentProject.ClientData.RelatedCompanyInfos">
+                                <td title="'Наименование организации'" sortable="'Companyame'">
+                                    {{company.CompanyName}}</td>
+
+                                <td title="'Вид деятельности'" sortable="'DirectorName'">
+                                    {{company.ActivityType}}</td>
+
+                                <td title="'Дата регистрации'" sortable="'RegistrationDate'">
+                                    <p ng-bind="company.RegistrationDate | date:'dd/MM/yyyy'"></p>
+                                </td>
+
+                                <td title="'ФИО директора'" sortable="'DirectorName'">
+                                    {{company.DirectorName}}</td>
+
+                                <td title="'Количество сотрудников'" sortable="'DirectorName'">
+                                    {{company.EmployeesCount}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+
+        <!--Юридические собственники компании-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Юридические собственники компании <button class="btn btn-primary pull-right" ng-click="showNewLegalOwnerCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="legalOwnerCompanyInfosParams" class="table">
+                            <tr ng-repeat="owner in currentProject.ClientData.LegalOwnerCompanyInfos">
+                                <td title="'ФИО'" sortable="'Name'">
+                                    {{owner.Name}}</td>
+
+                                <td title="'%'" sortable="'Percent'">
+                                    {{owner.PercentOwnerShip}}</td>
+                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
+                                    <p ng-bind="owner.DateOfBirth | date:'dd/MM/yyyy'"></p>
+                                </td>
+                                <td title="'Док-т'" sortable="'Document'">
+                                    {{owner.Document}}</td>
+                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
+                                    {{owner.PlaceOfRegistration}}</td>
+                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
+                                    {{owner.PlaceOfResidence}}</td>
+                                <td title="'Тел'" sortable="'PhoneNumber'">
+                                    {{owner.PhoneNumber}}</td>
+                                <td title="'Жен/Зам'" sortable="'IsMarried'">
+                                    <input type="checkbox" ng-model="owner.IsMarried" </td>
+
+                                    <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                        {{owner.ChildrenCount}} ({{owner.ChildrenAge}})</td>
+                                    <td title="'Супруги'" sortable="'partnerData'">
+                                        {{owner.PartnerData}}</td>
+                                    <td title="'Опыт'" sortable="'expirience'">
+                                        {{owner.Expirience}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+
+
+        <!--Фактические собственники компании-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Фактические собственники компании <button class="btn btn-primary pull-right" ng-click="showNewActualOwnerCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="actualOwnerCompanyInfosParams" class="table">
+                            <tr ng-repeat="owner in currentProject.ClientData.ActualOwnerCompanyInfos">
+                                <td title="'ФИО'" sortable="'Name'">
+                                    {{owner.Name}}</td>
+
+                                <td title="'%'" sortable="'Percent'">
+                                    {{owner.PercentOwnerShip}}</td>
+
+                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
+                                    <p ng-bind="owner.DateOfBirth | date:'dd/MM/yyyy'"></p>
+                                </td>
+                                <td title="'Док-т'" sortable="'Document'">
+                                    {{owner.Document}}</td>
+                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
+                                    {{owner.PlaceOfRegistration}}</td>
+                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
+                                    {{owner.PlaceOfResidence}}</td>
+                                <td title="'Тел'" sortable="'PhoneNumber'">
+                                    {{owner.PhoneNumber}}</td>
+                                <td title="'Жен/Зам'" sortable="'IsMarried'">
+                                    <input type="checkbox" ng-model="owner.IsMarried" </td>
+
+                                    <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                        {{owner.ChildrenCount}} ({{owner.ChildrenAge}})</td>
+                                    <td title="'Супруги'" sortable="'partnerData'">
+                                        {{owner.PartnerData}}</td>
+                                    <td title="'Опыт'" sortable="'expirience'">
+                                        {{owner.Expirience}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+    </div>
+</div>

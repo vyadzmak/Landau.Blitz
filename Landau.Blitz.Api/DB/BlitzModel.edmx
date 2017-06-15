@@ -63,6 +63,16 @@
           <Property Name="Message" Type="nvarchar(max)" />
           <Property Name="CreationDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="ProjectContent" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Settings">
           <Key>
             <PropertyRef Name="Id" />
@@ -297,6 +307,7 @@
           <EntitySet Name="CreditRequests" EntityType="Self.CreditRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditRequestStates" EntityType="Self.CreditRequestStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Templates" EntityType="Self.Templates" Schema="dbo" store:Type="Tables" />
@@ -729,6 +740,7 @@
             <End Role="UserLogins" EntitySet="UserLogins" />
           </AssociationSet>
           <EntitySet Name="Catalogs" EntityType="LandauBlitzModel.Catalogs" />
+          <EntitySet Name="Projects" EntityType="LandauBlitzModel.Projects" />
         </EntityContainer>
         <EntityType Name="Catalogs">
           <Key>
@@ -738,6 +750,16 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="SystemName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CatalogContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="ProjectContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -882,6 +904,17 @@
               <MappingFragment StoreEntitySet="Catalogs">
                 <ScalarProperty Name="CatalogContent" ColumnName="CatalogContent" />
                 <ScalarProperty Name="SystemName" ColumnName="SystemName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="LandauBlitzModel.Projects">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ProjectContent" ColumnName="ProjectContent" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

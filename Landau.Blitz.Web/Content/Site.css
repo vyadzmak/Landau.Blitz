@@ -510,3 +510,136 @@ a.vbg-icon.btn-warning.btn-outline {
     min-height: 100vh;
     height: 100vh;
 }
+
+.bs-example {
+    position: relative;
+}
+
+.tab-pane {
+    position: absolute;
+    top: 42px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: auto;
+}
+
+.side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 0;
+}
+
+.scroll-area {
+    width: 100%;
+    height: calc(100% - 200px);
+    margin-top: 100px;
+    background-color: green;
+    float: left;
+    overflow-y: scroll;
+}
+
+.wrapper {
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 5px;
+    height: 50px;
+}
+
+.list {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    min-width: 3000px;
+    margin-left: 12px;
+    margin-top: 0px;
+}
+
+.list li {
+    display: table-cell;
+    position: relative;
+    text-align: center;
+    cursor: grab;
+    cursor: -webkit-grab;
+    color: #efefef;
+    vertical-align: middle;
+}
+
+.scroller {
+    text-align: center;
+    cursor: pointer;
+    display: none;
+    padding: 7px;
+    padding-top: 11px;
+    white-space: no-wrap;
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+.scroller-right {
+    float: right;
+}
+
+.scroller-left {
+    float: left;
+}
+
+#sidebar-wrapper {
+    left: 70px;
+}
+
+#wrapper.active {
+    /*//width: 10px;*/
+}
+
+#wrapper.active #sidebar-wrapper {
+    /*left: 150px;
+    width: 150px;
+    transition: all .4s ease 0s;*/
+}
+
+
+/*NGTABLE*/
+
+thead {
+    background: #efefef;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    margin: 0;
+}
+
+.ng-table th,
+.ng-table td {
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.ng-table th {
+    text-align: center !important;
+    font-size: 13px;
+}
+
+.ng-table td {
+    text-align: center !important;
+    font-size: 13px;
+}
+
+.ng-table {
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.ng-table tbody tr:hover {
+    background-color: #dddddd;
+    cursor: pointer;
+}

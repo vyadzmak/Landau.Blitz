@@ -8,7 +8,7 @@
             console.log(JSON.stringify($scope.userData));
             switch ($scope.userData.UserRoleId) {
                 case 1:
-                    $state.go("main.dashboard.templates");
+                    $state.go("main.dashboard.project");
                     break;
 
                     // case 2:

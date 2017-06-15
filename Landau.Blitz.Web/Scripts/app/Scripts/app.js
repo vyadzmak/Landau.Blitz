@@ -1,5 +1,5 @@
 ﻿var $$ApiUrl = "http://localhost/BlitzApi/api";
-var blitzApp = angular.module("blitzApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask', 'angularjs-dropdown-multiselect', 'isteven-multi-select', 'angularTreeview', 'treeControl']);
+var blitzApp = angular.module("blitzApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask', 'angularjs-dropdown-multiselect', 'isteven-multi-select', 'angularTreeview', 'treeControl', 'ngTable']);
 
 blitzApp.run([
     '$rootScope', '$state', '$stateParams', '$window', '$cookies',
@@ -28,6 +28,12 @@ blitzApp.filter('myLimitTo', function() {
         return input.slice(begin, begin + limit);
     };
 });
+
+blitzApp.filter('to_trusted', ['$sce', function($sce) {
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
 
 function twoDigits(d) {
     if (0 <= d && d < 10) return "0" + d.toString();
