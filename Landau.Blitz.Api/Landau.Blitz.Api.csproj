@@ -287,9 +287,6 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>BlitzModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB\Templates.cs">
       <DependentUpon>BlitzModel.tt</DependentUpon>
     </Compile>
