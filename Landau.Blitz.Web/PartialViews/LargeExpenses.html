@@ -2,8 +2,57 @@
 
     <div class="container">
 
+         <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Вне бизнеса <button class="btn btn-primary pull-right" ng-click="showNewOutOfBuisnessPayment();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <table ng-table="outOfBuisnessPaymentsParams" class="table">
+                        <tr ng-repeat="payment in currentProject.LargeExpenses.OutOfBuisnessPayments">
+                            <td title="'Наименование расхода'" sortable="'name'" class="col-md-6">
+                                {{payment.Name}}
+                            </td>
+
+                            <td title="'Сумма'" sortable="'sum'" class="col-md-3">
+                                {{payment.Sum}}
+                            </td>
+
+                            <td title="'Дата'" sortable="'date'" class="col-md-3">
+                                <p ng-bind="payment.Date | date:'dd/MM/yyyy'"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="row">
-            large expenses
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Инвестиции <button class="btn btn-primary pull-right" ng-click="showNewInvestment();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <table ng-table="investmentsParams" class="table">
+                        <tr ng-repeat="investment in currentProject.LargeExpenses.Investments">
+                            <td title="'Наименование расхода'" sortable="'name'" class="col-md-6">
+                                {{investment.Name}}
+                            </td>
+
+                            <td title="'Сумма'" sortable="'sum'" class="col-md-3">
+                                {{investment.Sum}}
+                            </td>
+
+                            <td title="'Дата'" sortable="'date'" class="col-md-3">
+                                <p ng-bind="investment.Date | date:'dd/MM/yyyy'"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
 
 

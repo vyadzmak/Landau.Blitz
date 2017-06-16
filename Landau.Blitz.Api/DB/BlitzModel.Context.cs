@@ -18,7 +18,6 @@ namespace Landau.Blitz.Api.DB
         public LandauBlitzEntities()
             : base("name=LandauBlitzEntities")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,19 +25,18 @@ namespace Landau.Blitz.Api.DB
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Catalogs> Catalogs { get; set; }
         public virtual DbSet<Clients> Clients { get; set; }
         public virtual DbSet<ClientTypes> ClientTypes { get; set; }
         public virtual DbSet<CreditRequests> CreditRequests { get; set; }
         public virtual DbSet<CreditRequestStates> CreditRequestStates { get; set; }
         public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Templates> Templates { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Catalogs> Catalogs { get; set; }
-        public virtual DbSet<Projects> Projects { get; set; }
     }
 }
