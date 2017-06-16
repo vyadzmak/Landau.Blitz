@@ -1,0 +1,52 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Поставщик
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="supplierStructureForm" id="supplierStructureForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ЧТУП БВАР" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Страна<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Казахстан" maxlength="270" data-error="Страна должна быть заполнена" ng-model="mElement.Country" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#supplierStructureForm').validator({
+        disable: false
+    });
+</script>

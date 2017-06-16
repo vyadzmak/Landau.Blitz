@@ -1,0 +1,59 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Закуп
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="periodicityProcurementForm" id="periodicityProcurementForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Периодичность<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="1 раз в неделю" maxlength="270" data-error="Периодичность должна быть заполнена" ng-model="mElement.Periodicity" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Условия<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="предоплата" maxlength="270" data-error="Условия должны быть заполнены" ng-model="mElement.Condition" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Место<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ЧТУП ВБАР, Минск, Беларусь" maxlength="270" data-error="Место должно быть заполнено" ng-model="mElement.Place" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#periodicityProcurementForm').validator({
+        disable: false
+    });
+</script>
