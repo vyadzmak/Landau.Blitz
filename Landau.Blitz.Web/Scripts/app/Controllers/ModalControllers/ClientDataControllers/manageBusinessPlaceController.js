@@ -6,6 +6,7 @@ var manageBusinessPlaceController = function($scope, $uibModal, $uibModalInstanc
         vm.$scope = $scope;
         //vm.BusinessPlace = $scope.businessPlace;
         vm.confirm = function() {
+
             if ($scope.businessPlaceForm.$valid) { $uibModalInstance.close(); }
         };
         vm.cancel = $uibModalInstance.dismiss;

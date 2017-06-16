@@ -165,14 +165,14 @@
                                 <td title="'Тел'" sortable="'PhoneNumber'">
                                     {{director.PhoneNumber}}</td>
                                 <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="director.IsMarried" </td>
+                                    <input type="checkbox" ng-model="director.IsMarried"> </td>
 
-                                    <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                        {{director.ChildrenCount}} ({{director.ChildrenAge}})</td>
-                                    <td title="'Супруги'" sortable="'partnerData'">
-                                        {{director.PartnerData}}</td>
-                                    <td title="'Опыт'" sortable="'expirience'">
-                                        {{director.Expirience}}</td>
+                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                    {{director.ChildrenCount}} ({{director.ChildrenAge}})</td>
+                                <td title="'Супруги'" sortable="'partnerData'">
+                                    {{director.PartnerData}}</td>
+                                <td title="'Опыт'" sortable="'expirience'">
+                                    {{director.Expirience}}</td>
 
                             </tr>
                         </table>
@@ -196,7 +196,7 @@
                                 <td title="'Наименование организации'" sortable="'Companyame'">
                                     {{company.CompanyName}}</td>
 
-                                <td title="'Вид деятельности'" sortable="'DirectorName'">
+                                <td title="'Вид деятельности'" sortable="'ActivityType'">
                                     {{company.ActivityType}}</td>
 
                                 <td title="'Дата регистрации'" sortable="'RegistrationDate'">
@@ -206,7 +206,7 @@
                                 <td title="'ФИО директора'" sortable="'DirectorName'">
                                     {{company.DirectorName}}</td>
 
-                                <td title="'Количество сотрудников'" sortable="'DirectorName'">
+                                <td title="'Количество сотрудников'" sortable="'EmployeesCount'">
                                     {{company.EmployeesCount}}</td>
                             </tr>
                         </table>
@@ -244,14 +244,14 @@
                                 <td title="'Тел'" sortable="'PhoneNumber'">
                                     {{owner.PhoneNumber}}</td>
                                 <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="owner.IsMarried" </td>
+                                    <input type="checkbox" ng-model="owner.IsMarried"> </td>
 
-                                    <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                        {{owner.ChildrenCount}} ({{owner.ChildrenAge}})</td>
-                                    <td title="'Супруги'" sortable="'partnerData'">
-                                        {{owner.PartnerData}}</td>
-                                    <td title="'Опыт'" sortable="'expirience'">
-                                        {{owner.Expirience}}</td>
+                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                    {{owner.ChildrenCount}} ({{owner.ChildrenAge}})</td>
+                                <td title="'Супруги'" sortable="'partnerData'">
+                                    {{owner.PartnerData}}</td>
+                                <td title="'Опыт'" sortable="'expirience'">
+                                    {{owner.Expirience}}</td>
 
                             </tr>
                         </table>
@@ -291,14 +291,67 @@
                                 <td title="'Тел'" sortable="'PhoneNumber'">
                                     {{owner.PhoneNumber}}</td>
                                 <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="owner.IsMarried" </td>
+                                    <input type="checkbox" ng-model="owner.IsMarried"> </td>
 
-                                    <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                        {{owner.ChildrenCount}} ({{owner.ChildrenAge}})</td>
-                                    <td title="'Супруги'" sortable="'partnerData'">
-                                        {{owner.PartnerData}}</td>
-                                    <td title="'Опыт'" sortable="'expirience'">
-                                        {{owner.Expirience}}</td>
+                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                    {{owner.ChildrenCount}} ({{owner.ChildrenAge}})</td>
+                                <td title="'Супруги'" sortable="'partnerData'">
+                                    {{owner.PartnerData}}</td>
+                                <td title="'Опыт'" sortable="'expirience'">
+                                    {{owner.Expirience}}</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+
+
+        <!--Фактические собственники компании-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Кредитная история <button class="btn btn-primary pull-right" ng-click="showNewCreditHistoryInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="creditHistoryInfosParams" class="table">
+                            <tr ng-repeat="history in currentProject.ClientData.CreditHistoryInfos">
+                                <td title="'Наименование Банка/кредитора'" sortable="'CompanyName'">
+                                    {{history.CompanyName}}</td>
+
+                                <td title="'Сумма займа'" sortable="'LoanAmount'">
+                                    {{history.LoanAmount}}</td>
+
+                                <td title="'Годовая % ставка'" sortable="'AnnualRate'">
+                                    {{history.AnnualRate}}</td>
+
+                                <td title="'Дата получения'" sortable="'DateOfReceiving'">
+                                    <p ng-bind="history.DateOfReceiving | date:'dd/MM/yyyy'"></p>
+                                </td>
+
+                                <td title="'Дата погашения по договору'" sortable="'DateOfRepaymentAgreement'">
+                                    <p ng-bind="history.DateOfRepaymentAgreement | date:'dd/MM/yyyy'"></p>
+                                </td>
+
+                                <td title="'Дата погашения по факту'" sortable="'DateOfRepaymentFact'">
+                                    <p ng-bind="history.DateOfRepaymentFact | date:'dd/MM/yyyy'"></p>
+                                </td>
+
+                                <td title="'Остаток задолженности'" sortable="'RemainingDebt'">
+                                    {{history.RemainingDebt}}</td>
+
+                                <td title="'Взнос ежемесячный'" sortable="'MonthlyFee'">
+                                    {{history.MonthlyFee}}</td>
+
+                                <td title="'Задолженность'" sortable="'DelayPay'">
+                                    <input type="checkbox" ng-model="history.DelayPay">
+                                </td>
+
+
 
                             </tr>
                         </table>

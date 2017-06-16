@@ -1,0 +1,111 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Кредитная история
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="creditHistoryForm" id="creditHistoryForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование банка/кредитора<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ТОО 'Альфа Бета'" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.CompanyName" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Сумма займа<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="50000" data-error="Поле должно быть заполнено" ng-model="mElement.LoanAmount" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Годовая ставка<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="5" data-error="Поле должно быть заполнено" ng-model="mElement.AnnualRate" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Дата получения<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.DateOfReceiving" required>
+                            <div class=" help-block with-errors "></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Дата погашения по договору <i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.DateOfRepaymentAgreement" required>
+                            <div class=" help-block with-errors "></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Дата погашения по факту <i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.DateOfRepaymentFact" required>
+                            <div class=" help-block with-errors "></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Остаток задолженности <i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="500" data-error="Поле должно быть заполнено" ng-model="mElement.RemainingDebt" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Взнос ежемесячный<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" data-error="Заполните поле" placeholder="500" ng-model="mElement.MonthlyFee" required>
+                            <div class=" help-block with-errors "></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наличие за последние 3 года просроченной задолженности 1 более 90 дней или 3-х раз выхода на просрочку сроком свыше 30 дней</i></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="mElement.DelayPay">
+
+                        </div>
+                    </div>
+
+
+
+
+                    </br>
+                    <div class="form-group ">
+                        <div class="form-group col-sm-11 text-right ">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit " class="btn btn-success " ng-click="vm.confirm() ">Сохранить</button>
+                            <button type="button " class="btn btn-danger " ng-click="vm.cancel(); ">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text ">Поля обозначеннные знаком <i class="red-star ">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#templateForm').validator({
+        disable: false
+    });
+</script>
