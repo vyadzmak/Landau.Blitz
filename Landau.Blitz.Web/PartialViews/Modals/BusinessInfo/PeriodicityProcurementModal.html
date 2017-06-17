@@ -10,6 +10,14 @@
         <div class="container">
             <div class="row">
                 <form class="form-horizontal" name="periodicityProcurementForm" id="periodicityProcurementForm" role="form" data-toggle="validator">
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Сырье" maxlength="270" data-error="Наименование должна быть заполнена" ng-model="mElement.Name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Периодичность<i class="red-star">*</i></label>

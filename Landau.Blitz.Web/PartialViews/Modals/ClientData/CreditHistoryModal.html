@@ -22,14 +22,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Сумма займа<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="number" value="0" class="form-control" placeholder="50000" data-error="Поле должно быть заполнено" ng-model="mElement.LoanAmount" required>
+                            <input type="number" step="0.01" value="0" class="form-control" placeholder="50000" data-error="Поле должно быть заполнено" ng-model="mElement.LoanAmount" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Годовая ставка<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="number" value="0" class="form-control" placeholder="5" data-error="Поле должно быть заполнено" ng-model="mElement.AnnualRate" required>
+                            <input type="number" step="0.01" value="0" class="form-control" placeholder="5" data-error="Поле должно быть заполнено" ng-model="mElement.AnnualRate" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Остаток задолженности <i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="number" value="0" class="form-control" placeholder="500" data-error="Поле должно быть заполнено" ng-model="mElement.RemainingDebt" required>
+                            <input type="number" step="0.01" value="0" class="form-control" placeholder="500" data-error="Поле должно быть заполнено" ng-model="mElement.RemainingDebt" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Взнос ежемесячный<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" data-error="Заполните поле" placeholder="500" ng-model="mElement.MonthlyFee" required>
+                            <input type="number" step="0.01" class="form-control" data-error="Заполните поле" placeholder="500" ng-model="mElement.MonthlyFee" required>
                             <div class=" help-block with-errors "></div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
 
 </div>
 <script>
-    $('#templateForm').validator({
+    $('#creditHistoryForm').validator({
         disable: false
     });
 </script>

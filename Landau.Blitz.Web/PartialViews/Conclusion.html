@@ -1,9 +1,22 @@
-<div ng-controller="conclusionController">
+﻿<div ng-controller="conclusionController">
 
     <div class="container">
 
         <div class="row">
-            Conclusion
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Заключение</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Заключение</label>
+                            <textarea type="text" class="form-control" placeholder="Заключение" ng-model="currentProject.Conclusion.Text"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 

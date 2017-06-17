@@ -1,12 +1,168 @@
-<div ng-controller="financePlanningController">
+﻿<div ng-controller="financePlanningController">
 
     <div class="container">
 
         <div class="row">
-            FINANCE PLANNING
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Статья затрат</div>
+
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Поставщики <button class="btn btn-primary pull-right" ng-click="showNewSupplier();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
 
+                <div class="panel-body">
+                    <table ng-table="suppliers" class="table">
+                        <tr ng-repeat="item in currentProject.FinancePlanning.Suppliers">
+                            <td title="'Наименование'" sortable="'Name'" class="col-md-6">
+                                {{item.Name}}
+                            </td>
+
+                            <td title="'Страна'" sortable="'Country'" class="col-md-2">
+                                {{item.Country}}
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Сумма</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Сделанная сумма затрат по данной статье, тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.ExpensesDone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Планируемая сумма сумма по данной статье</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.ExpensesPlanned">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Источник финансирования</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Собственные средства заемщика, тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.OwnFunds">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Заемные средства (кредит банка), тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.BankFunds">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Заемные средства (частный займ), тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.PrivateFunds">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Заемные средства (инвестиции третьих лиц), тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.ThirdPartyFunds">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Срок</div>
+
+
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО Сумма</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Общая сумма всех затрат, тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalExpenses">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО Собственных средств</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Сумма собственного капитала в проекте, тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalOwnFunds">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО заемных средств</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Сумма заемного капитала в проекте, тенге</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalBorrowedFunds">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО Общий срок</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Общий период финансирования всех затрат по проекту, мес</label>
+                            <input type="number" step="1" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalTerm">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
