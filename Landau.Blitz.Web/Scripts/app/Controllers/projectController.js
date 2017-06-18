@@ -1,5 +1,5 @@
 (function() {
-    var projectController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, $interval, usSpinnerService, projectFactory, projectHttpService) {
+    var projectController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, $interval, usSpinnerService, projectFactory, calculatorFactory, projectHttpService) {
         var url = $$ApiUrl + "/contentGenerator";
 
         $scope.initTabs = function() {
@@ -79,6 +79,8 @@
             } else {
 
                 $scope.currentProject = projectFactory.setData($scope.currentProject);
+
+
                 $state.go("main.dashboard.project.clientData");
                 $scope.initTabs();
 
@@ -94,6 +96,13 @@
 
         }
 
+        $scope.$watch('currentProject', function(newValue, oldValue) {
+            if (newValue != oldValue) {
+                calculatorFactory.calculateData($scope.currentProject);
+
+            }
+        }, true);
+
         $scope.init = function() {
             projectHttpService.getToProjectById($http, $scope, usSpinnerService, 1);
 
@@ -107,5 +116,5 @@
             $(this).tab('show')
         })
     };
-    blitzApp.controller("projectController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "$interval", "usSpinnerService", "projectFactory", "projectHttpService", projectController]);
+    blitzApp.controller("projectController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "$interval", "usSpinnerService", "projectFactory", "calculatorFactory", "projectHttpService", projectController]);
 }())

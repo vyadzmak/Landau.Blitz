@@ -309,7 +309,7 @@
         <!--END BLOCK-->
 
 
-        <!--Фактические собственники компании-->
+        <!--Кредитная история-->
         <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">Кредитная история <button class="btn btn-primary pull-right" ng-click="showNewCreditHistoryInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -351,6 +351,41 @@
                                     <input type="checkbox" ng-model="history.DelayPay">
                                 </td>
 
+
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END BLOCK-->
+
+        <!--Банковские счета-->
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Банковские счета<button class="btn btn-primary pull-right" ng-click="showNewBankAccountInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="bankAccountInfosParams" class="table">
+                            <tr ng-repeat="account in currentProject.ClientData.BankAccountInfos">
+                                <td title="'Наименование Банка'" sortable="'CompanyName'">
+                                    {{account.CompanyName}}</td>
+
+                                <td title="'Валюта'" sortable="'Currency'">
+                                    {{account.Currency}}</td>
+
+                                <td title="'№ счета'" sortable="'AccountNumber'">
+                                    {{account.AccountNumber}}</td>
+
+                                <td title="'Остаток'" sortable="'AccountBalance'">
+                                    {{account.AccountBalance}}</td>
+
+                                <td title="'Среднемесяцные обороты'" sortable="'AvgMonth'">
+                                    {{account.AvgMonth}}</td>
 
 
                             </tr>

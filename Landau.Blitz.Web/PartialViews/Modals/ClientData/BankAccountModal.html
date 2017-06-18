@@ -1,0 +1,84 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Банковский счет
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="bankAccountForm" id="bankAccountForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование банка<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ТОО 'Альфа Бета'" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.CompanyName" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Номер счета<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="123023024234" data-error="Поле должно быть заполнено" ng-model="mElement.AccountNumber" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect1">Валюта</label>
+
+                        <div class="col-sm-9">
+                            <select class="form-control" id="exampleSelect1" ng-model="mElement.Currency">
+                                <option value="KZT">Тенге</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="RUB">RUB</option>
+                                
+                                </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Остатки на счете<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="50000" data-error="Поле должно быть заполнено" ng-model="mElement.AccountBalance" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Среднемесячные обороты<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" value="0" class="form-control" placeholder="7000" data-error="Поле должно быть заполнено" ng-model="mElement.AvgMonth" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    </br>
+                    <div class="form-group ">
+                        <div class="form-group col-sm-11 text-right ">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit " class="btn btn-success " ng-click="vm.confirm() ">Сохранить</button>
+                            <button type="button " class="btn btn-danger " ng-click="vm.cancel(); ">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text ">Поля обозначеннные знаком <i class="red-star ">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#templateForm').validator({
+        disable: false
+    });
+</script>

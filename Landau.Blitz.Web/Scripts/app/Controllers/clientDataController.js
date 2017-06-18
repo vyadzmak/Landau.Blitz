@@ -10,6 +10,7 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
             $scope.legalOwnerCompanyInfosParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.LegalOwnerCompanyInfos });
             $scope.actualOwnerCompanyInfosParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.ActualOwnerCompanyInfos });
             $scope.creditHistoryInfosParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.CreditHistoryInfos });
+            $scope.bankAccountInfosParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.BankAccountInfos });
         }
     };
     $scope.init();
@@ -115,6 +116,17 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         }
         $scope.mElement = {};
         $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.CreditHistoryInfos);
+    }
+
+    $scope.showNewBankAccountInfo = function() {
+        var modalView = 'PartialViews/Modals/ClientData/BankAccountModal.html';
+        var modalController = manageBankAccountController;
+
+        if ($scope.currentProject.ClientData.BankAccountInfos == undefined) {
+            $scope.currentProject.ClientData.BankAccountInfos = [];
+        }
+        $scope.mElement = {};
+        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.BankAccountInfos);
     }
 };
 blitzApp.controller("clientDataController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", clientDataController]);

@@ -56,6 +56,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', funct
         currentProject.ProjectAnalysis = currentProject.ProjectContent.ProjectAnalysis;
         currentProject.BusinessInfo = currentProject.ProjectContent.BusinessInfo;
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
+        currentProject.FinDataBalance.Date = new Date(currentProject.FinDataBalance.Date);
+        currentProject.FinDataBalance.PreviousDate = new Date(currentProject.FinDataBalance.PreviousDate);
+
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
         currentProject.FinDataOdds = currentProject.ProjectContent.FinDataOdds;
