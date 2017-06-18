@@ -2,24 +2,227 @@
 
     <div class="container">
 
+        <!--Наименование компании-->
         <div class="row">
-            <div class="form-group col-md-6">
-                <label>Наименование компании</label>
-                <input type="text" class="form-control" placeholder="Наименование компании">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Цель займа</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="exampleSelect1">Выберите цель займа</label>
+                            <select multiple class="form-control" id="exampleSelect1" ng-model="currentProject.ClientData.EconomicSectors">
+                                <option value="1">Пополнение оборотных средств - ПОС</option>
+                                <option value="2">Приобретение основных средств</option>
+                                <option value="3">Приобретение коммерческой недвижимости</option>
+                                <option value="4">Ремонт/модернизация основных средств</option>
+                                <option value="5">Строительство коммерческой недвижимости</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Запрошенная сумма кредитной линии
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Запрошенная сумма</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="" ng-model="currentProject.CreditData.CreditLineSum">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Запрошенная сумма кредита
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Запрошенная сумма</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="" ng-model="currentProject.CreditData.CreditSum">
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
 
-            <div class="form-group col-md-6">
-                <label for="exampleSelect2">Вид деятельности</label>
-                <select class="form-control" id="exampleSelect2">
-                <option>ИП</option>
-                <option>ТОО</option>
-                <option>КХ</option>
-                </select>
-                <small id="emailHelp" class="form-text text-muted">Относится ли к целевой группе по юридическому статусу</small>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Запрошенный срок кредита</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Запрошенный срок</label>
+                            <input type="number" class="form-control" ng-model="currentProject.CreditData.RequestedCreditTerm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Запрошенная ставка</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Запрошенная ставка по кредиту</label>
+                            <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.RequestedLoanRate">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Запрошенная отсрочка</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Запрошенная отсрочка</label>
+                            <input type="number" class="form-control" ng-model="currentProject.CreditData.RequestedLoanDelay">
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Предложенная сумма кредитной линии</div>
 
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Предложенная сумма
+                            </label>
+                            <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.ProposedCreditLineSum">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Предложенная сумма кредита/субкредита</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Предложенная сумма</label>
+                            <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.RequestedLoanRate">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Предложенный срок кредитной линии</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Предложенный срок</label>
+                            <input type="number" class="form-control" ng-model="currentProject.CreditData.ProposedCreditLineTerm">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Предложенный срок кредита</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Предложенный срок
+                            </label>
+                            <input type="number" class="form-control" ng-model="currentProject.CreditData.ProposedCreditSum">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Период доступности кредитной линии</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Период доступности</label>
+                            <input type="number" class="form-control" ng-model="currentProject.CreditData.CreditLineAvailabilityTerm">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Предложенная ставка вознаграждения</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Предложенная ставка</label>
+                            <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.PurposedRewardRate">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Предложенная отсрочка</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Предложенная отсрочка
+                            </label>
+                            <input type="number" class="form-control" ng-model="currentProject.CreditData.ProposedDelay">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Месячный взнос</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Размер взноса</label>
+                            <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.MonthlyFee">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 </div>

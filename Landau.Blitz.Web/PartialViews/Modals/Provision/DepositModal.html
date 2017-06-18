@@ -1,0 +1,91 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Закуп
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="depositForm" id="depositForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование предмета залога<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Дом" maxlength="300" data-error="Наименование должна быть заполнена" ng-model="mElement.Name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Описание предмета залога<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="250 кв.м 2016 года постройки" maxlength="300" data-error="Описание должно быть заполнено" ng-model="mElement.Description" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Данные владельца<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ФИО, паспорт" maxlength="450" data-error="Данные должны быть заполнены" ng-model="mElement.Owner" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Место расположения<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="г. Актобе ул. Новая, д.34" maxlength="300" data-error="Место расположения должно быть заполнено" ng-model="mElement.Location" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Рыночная цена<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" step="0.01" class="form-control" placeholder="500000" data-error="Заполните поле" ng-model="mElement.MarketPrice" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Оценочная стоимость<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" step="0.01" class="form-control" placeholder="500000" data-error="Заполните поле" ng-model="mElement.AssessedPrice" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Коэффициет ликвидности<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" step="0.01" class="form-control" data-error="Заполните поле" placeholder="500" ng-model="mElement.LiquidityRatio" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#depositForm').validator({
+        disable: false
+    });
+</script>

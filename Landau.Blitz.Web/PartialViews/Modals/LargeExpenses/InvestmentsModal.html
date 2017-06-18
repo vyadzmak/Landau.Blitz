@@ -2,47 +2,37 @@
 
     <div class="create-modal-header">
         <h3 class="modal-title">
-            Место бизнеса
+            Инвестиции
         </h3>
 
     </div>
     <div class="modal-body">
         <div class="container">
             <div class="row">
-                <form class="form-horizontal" name="businessPlaceForm" id="businessPlaceForm" role="form" data-toggle="validator">
+                <form class="form-horizontal" name="investmentForm" id="investmentForm" role="form" data-toggle="validator">
+
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Адрес<i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label">Наименование расхода</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="г.Москва, ул.Коммунистическая, д.19, офис 1493" maxlength="270" data-error="Адрес должен быть заполнен" ng-model="mElement.Address" required>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Аренда</label>
-                        <div class="col-sm-9">
-                            <input type="checkbox" ng-model="mElement.IsRent">
+                            <input type="text" class="form-control" ng-model="mElement.Name">
 
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Филиал/точка продаж/подразделение</i></label>
+                        <label class="col-sm-3 control-label">Сумма</i></label>
                         <div class="col-sm-9">
-                            <input type="checkbox" ng-model="mElement.IsFilial">
-
+                            <input type="number" step="0.01" class="form-control" ng-model="mElement.Sum">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Оценка<i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label">Дата</i></label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" placeholder="Оценка от 1 до 5. 1 это минимум" maxlength="1" ng-model="mElement.Rate">
-
+                            <input type="date" class="form-control" ng-model="mElement.Date">
                         </div>
                     </div>
-                    </br>
                     <div class="form-group">
                         <div class="form-group col-sm-11 text-right">
                             <!-- Indicates a successful or positive action -->
@@ -61,7 +51,7 @@
 
 </div>
 <script>
-    $('#businessPlaceForm').validator({
+    $('#investmentForm').validator({
         disable: false
     });
 </script>

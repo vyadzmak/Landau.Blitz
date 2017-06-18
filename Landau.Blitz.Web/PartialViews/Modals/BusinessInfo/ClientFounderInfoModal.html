@@ -2,28 +2,19 @@
 
     <div class="create-modal-header">
         <h3 class="modal-title">
-            Информация о юридическом собственнике
+            Данные учредителя
         </h3>
 
     </div>
     <div class="modal-body">
         <div class="container">
             <div class="row">
-                <form class="form-horizontal" name="legalOwnerCompanyForm" id="legalOwnerCompanyForm" role="form" data-toggle="validator">
+                <form class="form-horizontal" name="clientFounderInfoForm" id="clientFounderInfoForm" role="form" data-toggle="validator">
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">ФИО<i class="red-star">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" placeholder="Иванов И.И." maxlength="270" data-error="Имя должно быть заполнено" ng-model="mElement.Name" required>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">% от собственности<i class="red-star">*</i></label>
-                        <div class="col-sm-9">
-                            <input type="number" step="0.01" class="form-control" data-error="Поле должно быть заполнено" ng-model="mElement.PercentOwnerShip" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -106,7 +97,7 @@
                     </div>
 
 
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <div class="form-group col-sm-11 text-right">
                             <!-- Indicates a successful or positive action -->
@@ -125,7 +116,7 @@
 
 </div>
 <script>
-    $('#legalOwnerCompanyForm').validator({
+    $('#clientFounderInfoForm').validator({
         disable: false
     });
 </script>

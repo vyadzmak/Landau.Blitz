@@ -1,11 +1,84 @@
 <div ng-controller="dataDamuController">
 
-    <div class="container">
+     <div class="container">
 
+        <!--Наименование компании-->
         <div class="row">
-            Data Damu
+            <div class="col-md-5">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Полное наименование заемщика</div>
+                        <div class="panel-body">
+                        <div class="form-group">
+                            <label for="exampleSelect1">Введите наименование заемщика</label>
+                            <input type="text" class="form-control" placeholder="" ng-model="currentProject.DataDamu.BorrowerName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Наименование проекта
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Введите наименование проекта</label>
+                            <input type="text" class="form-control" placeholder="" ng-model="currentProject.DataDamu.ProjectName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Сумма гарантии
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Введите сумму гарантии</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="" ng-model="currentProject.DataDamu.CreditSum">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
         </div>
 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Срок гарантии</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Введите срок гарантии</label>
+                            <input type="number" class="form-control" ng-model="currentProject.DataDamu.GuaranteeTerm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Ставка вознаграждения</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Введите размер ставки</label>
+                            <input type="number" step="0.01" class="form-control" ng-model="currentProject.DamuData.InterestRate">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
     </div>

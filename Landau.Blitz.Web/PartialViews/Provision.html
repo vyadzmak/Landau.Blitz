@@ -1,9 +1,49 @@
-<div ng-controller="provisionController">
+﻿<div ng-controller="provisionController">
 
     <div class="container">
 
         <div class="row">
-            Provision
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Залоговое имущество <button class="btn btn-primary pull-right" ng-click="showNewDeposit();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
+
+                <div class="panel-body">
+                    <table ng-table="deposits" class="table">
+                        <tr ng-repeat="item in currentProject.Provision.Deposits">
+                            <td title="'Наименование'" sortable="'Name'" class="col-md-6">
+                                {{item.Name}}
+                            </td>
+
+                            <td title="'Описание'" sortable="'Description'" class="col-md-6">
+                                {{item.Description}}
+                            </td>
+
+                            <td title="'Владелец'" sortable="'Owner'" class="col-md-6">
+                                {{item.Owner}}
+                            </td>
+
+                            <td title="'Место расположения'" sortable="'Location'" class="col-md-6">
+                                {{item.Location}}
+                            </td>
+
+                            <td title="'Рыночная цена'" sortable="'MarketPrice'" class="col-md-6">
+                                {{item.MarketPrice}}
+                            </td>
+                            
+                            <td title="'Оценочная стоимость'" sortable="'AssessedPrice'" class="col-md-6">
+                                {{item.AssessedPrice}}
+                            </td>
+                            
+                            <td title="'Коэффициент ликвидности'" sortable="'LiquidityRatio'" class="col-md-6">
+                                {{item.LiquidityRatio}}
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
 
 
