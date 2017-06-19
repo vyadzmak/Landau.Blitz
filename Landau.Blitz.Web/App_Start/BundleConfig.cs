@@ -23,6 +23,8 @@ namespace Landau.Blitz.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/bootstrap-dialog.min.js",
+                "~/Scripts/mindmup-editabletable.js",
+                "~/Scripts/numeric-input-example.js",
                 "~/Scripts/bootstrap-notify.js",
                 "~/Scripts/BootstrapMenu.min.js",
                 "~/Scripts/lightbox.js",
@@ -41,6 +43,7 @@ namespace Landau.Blitz.Web
                 "~/Content/sb-admin-2.css",
                 "~/Content/animate.css",
                 "~/Content/bootstrap-table.css",
+                "~/Content/bootstrap-editable.css",
                 "~/Content/lightbox.css",
                 "~/Scripts/chat/chat.css",
                 "~/Content/chat_list.css",
@@ -62,7 +65,9 @@ namespace Landau.Blitz.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-table").Include(
                 "~/Scripts/bootstrap-table.js",
-                "~/Scripts/bootstrap-table-en-US.js"));
+                "~/Scripts/bootstrap-table-editable.js",
+                "~/Scripts/bootstrap-editable.js",
+                "~/Scripts/bootstrap-table-ru-Ru.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",

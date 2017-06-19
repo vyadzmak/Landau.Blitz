@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Projects\Github\Landau.Blitz\Landau.Blitz\Landau.Blitz.Api\DB\BlitzModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Projects\Git\Landau.Blitz\Landau.Blitz.Api\DB\BlitzModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

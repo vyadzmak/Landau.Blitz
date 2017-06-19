@@ -1,16 +1,57 @@
+function rowStyle(row, index) {
+    var classes = ['active bold-trow', 'success', 'info', 'warning', 'danger'];
+
+    if (row.Calculate) {
+        return {
+            classes: classes[0]
+        }
+    }
+
+    return {};
+}
+
 var financePlanningController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory) {
     usSpinnerService.stop("spinner-1");
 
     $scope.init = function() {
         $scope.currentProject = projectFactory.getToCurrentProject();
-        if ($scope.currentProject != undefined) {
-            $scope.suppliers = new NgTableParams({}, { dataset: $scope.currentProject.FinancePlanning.Suppliers });
-        }
+
+
+        $('#financePlanningTable').bootstrapTable({
+            idField: 'CostItem',
+            pagination: false,
+            search: true,
+            data: $scope.currentProject.FinancePlanning.Table,
+
+            columns: [{
+                    field: 'CostItem',
+                    title: 'Ğ¡Ñ‚Ğ°Ñ‚ÑŒÑ Ğ·Ğ°Ñ‚Ñ€Ğ°Ñ‚',
+                }, {
+                    field: 'Supplier',
+                    title: 'ĞŸĞ¾ÑÑ‚Ğ°Ğ²Ñ‰Ğ¸Ğº',
+                },
+                {
+                    field: 'Amount',
+                    title: 'Ğ¡ÑƒĞ¼Ğ¼Ğ°',
+                },
+                {
+                    field: 'SourceOfFinancing',
+                    title: 'Ğ˜ÑÑ‚Ğ¾Ñ‡Ğ½Ğ¸Ğº Ñ„Ğ¸Ğ½Ğ°Ğ½ÑĞ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ',
+                },
+                {
+                    field: 'Term',
+                    title: 'Ğ¡Ñ€Ğ¾Ğº',
+
+                }
+            ]
+        });
+
+
+
+
     };
     $scope.init();
-    //------------------ÁËÎÊ ÄËß ĞÀÁÎÒÛ Ñ ÌÎÄÀËÜÍÛÌÈ ÎÊÍÀÌÈ---------------------------//
-    //add new user btn event
-    //èìÿ âüşõè, êîíòğîëëåğ, ïóñòîé ıëåìåíò, êóäà ïèøåì, ÷òî ïèøåì
+
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
 
@@ -44,18 +85,21 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
-    //-----------ÊÎÍÅÖ ÁËÎÊÀ ÄËß ĞÀÁÎÒÛ Ñ ÌÎÄÀËÜÍÛÌÈ ÎÊÍÀÌÈ---------------------------//
+    //-----------ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½---------------------------//
 
-    $scope.showNewSupplier = function() {
+    $scope.showNewFinPlan = function() {
         var modalView = 'PartialViews/Modals/FinancePlanning/SupplierModal.html';
         var modalController = manageSupplierController;
 
-        if ($scope.currentProject.FinancePlanning.Suppliers == undefined) {
-            $scope.currentProject.FinancePlanning.Suppliers = [];
+        if ($scope.currentProject.FinancePlanning.Table == undefined) {
+            $scope.currentProject.FinancePlanning.Table = [];
         }
         $scope.mElement = {};
         $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.FinancePlanning.Suppliers);
     }
 
+    $("#addFP").click(function() {
+        $scope.showNewFinPlan();
+    });
 };
 blitzApp.controller("financePlanningController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", financePlanningController]);

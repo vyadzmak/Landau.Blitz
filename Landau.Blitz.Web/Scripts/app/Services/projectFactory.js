@@ -1,4 +1,4 @@
-blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', function($rootScope, clientDataInitializer) {
+blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'dataInitializer', function($rootScope, clientDataInitializer, dataInitilizer) {
     var projectFactory = {};
     var currentProject = {};
 
@@ -17,7 +17,127 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', funct
     var currentDataDamu = {};
     var currentConclusion = {};
     //------end views data ---//
+    function initLine(title, varName) {
+        var line = {};
+        line.Title = title;
 
+        var calc = false;
+        if (varName.indexOf("!") != -1) {
+            calc = true;
+            varName = varName.replace('!', '');
+        }
+
+        line.Calculate = calc;
+        line.VarName = varName;
+        line.M1 = 0;
+        line.M2 = 0;
+        line.M3 = 0;
+        line.M4 = 0;
+        line.M5 = 0;
+        line.M6 = 0;
+        line.Avg = 0;
+        line.AvgPrognose = 0;
+
+        return line;
+    }
+
+    function initOpiu() {
+
+        var lines = [];
+
+        var positions = [
+            'Выручка',
+            'Себестоимость прод. товаров',
+            'Маржа',
+            'Валовая прибыль',
+            'Итого расходы по бизнесу',
+            'Заработная плата',
+            'Доставка товаров/сырья',
+            'Транспортные расходы',
+            'Командировочные расходы',
+            'Аренда',
+            'Коммунальные услуги',
+            'Налоги',
+            'Услуги связи',
+            'Текущий ремонт',
+            'Реклама',
+            'Расходный материал',
+            'Представительские расходы',
+            'Брак/порча/списания',
+            'Спонсорские/благотворительные расходы',
+            'Прочие расходы по бизнесу',
+            'Прибыль по бизнесу',
+            'Прочие расходы',
+            'Семейные',
+            'Оплата за обучение детей',
+            'Помощь родителям/детям',
+            'Посещение мероприятий',
+            'Хобби/увлечения',
+            'Путешествия семьей',
+            'Выплата дивидендов',
+            'Другое',
+            'Прочие доходы',
+            'Зарплата членов семьи',
+            'Доход от сдачи в аренду недвижимсти',
+            'Доход от неосновной деятельности клиента',
+            'Другое',
+            'Чистая прибыль',
+            'Взнос по займу',
+            'Соотношение взнос/прибыль',
+            'Скорость товарооборота',
+            'Рентабельность продаж'
+
+        ]
+
+
+        var vNames = [
+            'Revenues',
+            'CostOfGoods',
+            '!Margin',
+            '!GrossProfit',
+            '!TotalExpensesForBusiness',
+            'Wage',
+            'DeliveryOfGoods',
+            'Fare',
+            'TravelExpenses',
+            'Rent',
+            'Utilities',
+            'Taxes',
+            'CommunicationServices',
+            'Maintenance',
+            'Advertising',
+            'Consumables',
+            'Hospitality',
+            'MarriageDamageCancellation',
+            'SponsorshipCharitableExpenses',
+            'OtherBusinessExpenses',
+            '!ProfitOnBusiness',
+            '!OtherExpenses',
+            'FamilyExpenses',
+            'PaymentForTheEducationOfChildren',
+            'AssistanceToParentsChildren',
+            'AttendanceEvents',
+            'Hobbies',
+            'TravelingFamily',
+            'DividendPayment',
+            'OtherFamilyExpenses',
+            '!OtherIncome',
+            'SalaryOfFamilyMembers',
+            'IncomeFromTheRentalOfImmovableProperty',
+            "IncomeFromNonCoreActivitiesOfTheClient",
+            'OtherIncomeOut',
+            '!NetProfit',
+            '!LoanPayment',
+            '!ValueOfContributionProfit',
+            '!SpeedOfTurnover',
+            '!ProfitabilityOfSales'
+        ]
+        for (var i = 0; i < positions.length; i++) {
+            lines.push(initLine(positions[i], vNames[i]));
+        }
+
+        return lines;
+    }
 
     //-------------------------------init functions --------------------------------------//
     projectFactory.initProject = function() {
@@ -40,6 +160,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', funct
         currentProject.DataDamu = {};
         currentProject.Conclusion = {};
 
+        dataInitilizer.setBalanceData(currentProject);
         //currentProject.ProjectContent = JSON.stringify(currentProject);
         this.currentProject = currentProject;
         return currentProject;
@@ -61,6 +182,10 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', funct
 
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
+        //alert(JSON.stringify(currentProject.FinDataOpiu));
+        if (JSON.stringify(currentProject.FinDataOpiu) == '{}') {
+            currentProject.FinDataOpiu.Table = initOpiu();
+        };
         currentProject.FinDataOdds = currentProject.ProjectContent.FinDataOdds;
         currentProject.LargeExpenses = currentProject.ProjectContent.LargeExpenses;
         currentProject.Provision = currentProject.ProjectContent.Provision;

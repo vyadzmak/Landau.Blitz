@@ -3,7 +3,48 @@
     <div class="container">
 
         <div class="row">
-            FIN DATA CROSS CHECKING
+
+
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Cross Checking</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-8">Фактический прирост СК </label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataCrossChecking.ActualIncreaseSK">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-8">% по кредиту (выплаченные)</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" ng-model="currentProject.FinDataCrossChecking.PaidInterest">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-8">Ожидаемый прирост СК</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataCrossChecking.ExpectedIncreaseSK">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-8">Фактический СК</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataCrossChecking.ActualSK">
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
 
 

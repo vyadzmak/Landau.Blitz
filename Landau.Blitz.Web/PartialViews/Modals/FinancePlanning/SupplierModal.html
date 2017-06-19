@@ -12,21 +12,67 @@
                 <form class="form-horizontal" name="supplierForm" id="supplierForm" role="form" data-toggle="validator">
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Наименование<i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label" for="exampleSelect1">Статья затрат</label>
+
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="ЧТУП БВАР" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
+                            <select class="form-control" id="exampleSelect1" ng-model="mElement.CostItem">
+                                <option>ПОС</option>
+                                <option>Доставка, растаможка ТМЦ</option>
+                                <option>Приобретение оборудования, автотраспорта, мебели, техники, основного стада</option>
+                                <option>Приобретение коммерческой недвижимости (здания, сооружения, земля)</option>
+                                <option>Предоплата за оборудование, автотранспорт, мебель, технику, основное стадо</option>
+                                <option>Предоплата за коммерческую недвижимость</option>
+                                <option>Приобретение строительных материалов</option>
+                                <option>Оплата услуг, работ, связанных со строительством объектов коммерческого назначения</option>
+                                <option>Оплата расходов по оформлению, узаконению коммерческих объектов </option>
+                                <option>Расходы, связанные с монтажем, установкой, наладкой техники и оборудования</option>
+                                <option>Дополнительные расходы на рекламу, продвижение продуктов в рамках финансируемого проекта </option>
+                                <option>Расходы по обучению персонала для обслуживания оборудования, техники в рамках финансируемого проекта  </option>
+                                
+                                
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Поставщик<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ЧТУП БВАР" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Supplier" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Страна<i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label">Сумма<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Казахстан" maxlength="270" data-error="Страна должна быть заполнена" ng-model="mElement.Country" required>
+                            <input type="number" class="form-control" placeholder="5000" maxlength="270" data-error="Сумма должна быть заполнена" ng-model="mElement.Amount" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect1">Источник финансирования</label>
+
+                        <div class="col-sm-9">
+                            <select class="form-control" id="exampleSelect1" ng-model="mElement.SourceOfFinancing">
+                                <option>Собственные средства заемщика</option>
+                                <option>Заемные средства (кредит банка) </option>
+                                <option>Заемные средства (частный займ)</option>
+                                <option>Заемные средства (инвестиции третьих лиц)</option>
+                                              
+                                
+                                </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Срок<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" placeholder="5000" maxlength="270" data-error="Срок должен быть заполнен" ng-model="mElement.Term" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
                     </br>
                     <div class="form-group">
                         <div class="form-group col-sm-11 text-right">
