@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Landau.Blitz.Api.DB;
+using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
 using Landau.Blitz.Api.Helpers.AuthHelpers;
 using Landau.Blitz.Api.Helpers.CryptHelpers;
 using Landau.Blitz.Api.Helpers.SerializeHelpers;
@@ -62,7 +63,13 @@ namespace Landau.Blitz.Api.DBHelpers.DBLoginHelpers
                 {
                     Error = new ErrorModel() {Exception = e.Message, InnerException = "Ошибка авторизации!"}
                 };
-              return SerializeHelper.Serialize(model);  
+
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                 innerException);
+
+                return SerializeHelper.Serialize(model);  
             }
         }
     }

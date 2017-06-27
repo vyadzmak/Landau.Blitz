@@ -75,9 +75,12 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
                 id = elements[elements.length - 1].Id + 1;
             }
             $scope.mElement.Id = id;
+            $scope.mElement.Term = new Date($scope.mElement.Term);
             elements.push($scope.mElement);
             $scope.mElement = {};
 
+            $('#financePlanningTable').bootstrapTable('load', $scope.currentProject.FinancePlanning.Table);
+            $('#financePlanningTable').bootstrapTable('resetView');
             ///alert(JSON.stringify($scope.currentProject.ClientData.BusinessPlaces));
             // templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
 
@@ -95,7 +98,7 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
             $scope.currentProject.FinancePlanning.Table = [];
         }
         $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.FinancePlanning.Suppliers);
+        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.FinancePlanning.Table);
     }
 
     $("#addFP").click(function() {

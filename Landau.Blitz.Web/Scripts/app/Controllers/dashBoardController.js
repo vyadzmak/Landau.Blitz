@@ -8,7 +8,7 @@
             console.log(JSON.stringify($scope.userData));
             switch ($scope.userData.UserRoleId) {
                 case 1:
-                    $state.go("main.dashboard.project");
+                    $state.go("main.dashboard.companies");
                     break;
 
                     // case 2:
@@ -32,8 +32,8 @@
                 type: BootstrapDialog.TYPE_WARNING,
                 size: BootstrapDialog.SIZE_SMALL,
                 closable: true,
-                btnCancelLabel: 'No',
-                btnOKLabel: 'OK',
+                btnCancelLabel: 'Нет',
+                btnOKLabel: 'Да',
                 btnOKClass: 'btn-warning',
                 callback: function(result) {
                     if (result) {

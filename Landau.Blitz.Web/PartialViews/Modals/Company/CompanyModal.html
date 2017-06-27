@@ -1,0 +1,72 @@
+<div>
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Организация
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="companyForm" id="companyForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ЧТУП БВАР" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Регистрационный номер<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="123456789" data-error="Страна должна быть заполнена" ng-model="mElement.RegistrationNumber" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Адрес<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="г.Минск, ул.Народная, д.80, офис 63" data-error="Страна должна быть заполнена" ng-model="mElement.Address" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect1">Тип организации</label>
+
+                        <div class="col-sm-9">
+
+                            <select class="form-control" ng-options="type.Description for type in mElement.ClientTypes track by type.Id" ng-model="mElement.CurrentClientType"></select>
+                            <!--<select class="form-control" id="exampleSelect1" ng-model="mElement.ClientTypeId">
+                                <option value="1">Разработчик</option>
+                                <option value="2">Финансовая организация</option>
+                                <option value="3">Заемщик</option>
+                                
+                                </select>-->
+                        </div>
+                    </div>
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#companyForm').validator({
+        disable: false
+    });
+</script>

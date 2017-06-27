@@ -1,16 +1,72 @@
 blitzApp.factory('financePlanningCalculatorFactory', ['$rootScope', function($rootScope) {
     var financePlaningCalculatorFactory = {};
 
+    function monthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth() + 1;
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
 
     financePlaningCalculatorFactory.calculateData = function(currentProject) {
 
+        var ob = currentProject.FinancePlanning.Table.filter(function(item) {
+            return item.CostItem == 'ПОС';
+        });
 
+        var t = "";
+        currentProject.FinancePlanning.TotalPos = 0;
+        currentProject.FinancePlanning.TotalExpenses = 0;
+        currentProject.FinancePlanning.TotalOwnFunds = 0;
+
+        if (ob.length > 0) {
+            ob.forEach(function(element) {
+                currentProject.FinancePlanning.TotalPos += element.Amount;
+            }, this);
+        }
+
+        ob = currentProject.FinancePlanning.Table.filter(function(item) {
+            return item.Amount;
+        });
+
+        if (ob.length > 0) {
+            ob.forEach(function(element) {
+                currentProject.FinancePlanning.TotalExpenses += element.Amount;
+            }, this);
+        }
+
+
+        ob = currentProject.FinancePlanning.Table.filter(function(item) {
+            return item.SourceOfFinancing == 'Собственные средства заемщика';
+        });
+
+        if (ob.length > 0) {
+            ob.forEach(function(element) {
+                currentProject.FinancePlanning.TotalOwnFunds += element.Amount;
+            }, this);
+        }
+
+
+        var dates = [];
+        ob = currentProject.FinancePlanning.Table.filter(function(item) {
+            return item.Term;
+        });
+
+        if (ob.length > 0) {
+            ob.forEach(function(element) {
+                dates.push(new Date(element.Term));
+            }, this);
+        }
+
+        var maxDate = new Date(Math.max.apply(null, dates));
+        var minDate = new Date(Math.min.apply(null, dates));
         //currentProject.FinancePlanning.OwnFunds
-        currentProject.FinancePlanning.TotalOwnFunds = currentProject.FinancePlanning.OwnFunds;
+        //  currentProject.FinancePlanning.TotalOwnFunds = currentProject.FinancePlanning.OwnFunds;
+        currentProject.FinancePlanning.TotalTerm = monthDiff(minDate, maxDate)
+        currentProject.FinancePlanning.TotalBorrowedFunds = currentProject.FinancePlanning.TotalExpenses - currentProject.FinancePlanning.TotalOwnFunds;
 
-        currentProject.FinancePlanning.TotalBorrowedFunds = currentProject.FinancePlanning.BankFunds + currentProject.FinancePlanning.PrivateFunds + currentProject.FinancePlanning.ThirdPartyFunds;
-
-        currentProject.FinancePlanning.TotalExpenses = currentProject.FinancePlanning.ExpensesDone + currentProject.FinancePlanning.ExpensesPlanned;
+        //currentProject.FinancePlanning.TotalExpenses = currentProject.FinancePlanning.ExpensesDone + currentProject.FinancePlanning.ExpensesPlanned;
 
     }
 

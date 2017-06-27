@@ -56,6 +56,28 @@
         }
     })
 
+    .state("main.dashboard.logs", {
+        url: "/logs",
+        templateUrl: "PartialViews/Logs.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Лог";
+        }
+    })
+
+    .state("main.dashboard.companyUsers", {
+        url: "/companyUsers/:companyId",
+        templateUrl: "PartialViews/Users.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Пользователи";
+        }
+    })
+
     ///user managments
     .state("main.dashboard.templates", {
         url: "/templates",
@@ -325,9 +347,9 @@
             }
         })
         ///user managments
-        .state("main.dashboard.systemSettings", {
-            url: "/systemSettings",
-            templateUrl: "PartialViews/SystemSettings.html",
+        .state("main.dashboard.settings", {
+            url: "/settings",
+            templateUrl: "PartialViews/Settings.html",
             onEnter: function($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");

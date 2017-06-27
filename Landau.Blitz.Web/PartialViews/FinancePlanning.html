@@ -12,6 +12,67 @@
             </div>
             <table id="financePlanningTable" data-toolbar="#toolbar" data-row-style="rowStyle"></table>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО Сумма</div>
 
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Общая сумма всех затрат, тенге</label>
+                            <input type="number" readonly step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalExpenses">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО Собственных средств</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Сумма собственного капитала в проекте, тенге</label>
+                            <input type="number" readonly step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalOwnFunds">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+        <div class="row" style="margin-top:15px">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО заемных средств</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Сумма заемного капитала в проекте, тенге</label>
+                            <input type="number" readonly step="0.01" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalBorrowedFunds">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">ИТОГО Общий срок</div>
+
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Общий период финансирования всех затрат по проекту, мес</label>
+                            <input type="number" readonly step="1" class="form-control" placeholder="0" ng-model="currentProject.FinancePlanning.TotalTerm">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', function($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory) {
+blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'oddsCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', 'analyzeProjectCalculatorFactory', function($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, oddsCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory, analyzeProjectCalculatorFactory) {
     var calculatorFactory = {};
     var currentProject = {};
 
@@ -12,6 +12,11 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
 
     };
 
+    var calculateOddsData = function(currentProject) {
+        oddsCalculatorFactory.calculateData(currentProject);
+
+    };
+
     var calculateCrossCheckData = function(currentProject) {
         crossCheckCalculatorFactory.calculateData(currentProject);
 
@@ -22,11 +27,18 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
 
     };
 
+    var calculateProjectAnalyzeData = function(currentProject) {
+        analyzeProjectCalculatorFactory.calculateData(currentProject);
+
+    };
+
     calculatorFactory.calculateData = function(currentProject) {
         calculateBalanceData(currentProject);
         calculateOpiuData(currentProject);
+        calculateOddsData(currentProject);
         calculateCrossCheckData(currentProject);
         calculateFinancePlanningData(currentProject);
+        calculateProjectAnalyzeData(currentProject);
     }
 
 

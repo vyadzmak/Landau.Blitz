@@ -6,6 +6,8 @@ using Landau.Blitz.Api.DB;
 using Landau.Blitz.Api.Helpers.SerializeHelpers;
 using Landau.Blitz.Api.Models.AuthData;
 using System.Data.Entity;
+using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
+
 namespace Landau.Blitz.Api.DBHelpers.DBAuthDataHelpers
 {
     public static class DBAuthDataHelper
@@ -51,11 +53,16 @@ namespace Landau.Blitz.Api.DBHelpers.DBAuthDataHelpers
                         db.SaveChanges();
                     }
                 }
-
+                DBLogHelper.AddLog("Пользователь "+ model.UserFirstName+" "+model.UserLastName+" ("+model.CompanyName+")"+ " зашел в кабинет");
                 return SerializeHelper.Serialize(model);
             }
             catch (Exception e)
             {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+
                 return "";
             }
         }

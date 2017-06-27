@@ -614,6 +614,10 @@ table {
     margin: 0;
 }
 
+table td {
+    cursor: default;
+}
+
 .ng-table th,
 .ng-table td {
     border-left: 1px solid #ccc;

@@ -33,16 +33,35 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user fa-rocket"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+
+
+                    <ul class="dropdown-menu dropdown-rocket">
+                        <li>
+                            <a ng-click="selectService(5);"> <i class="fa fa-eye fa-fw"></i> Аналитика </a>
+                        </li>
+                        <li>
+                            <a ng-click="selectService(5);"> <i class="fa fa-floppy-o fa-fw"></i> Экспорт </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
+
+
                     <ul class="dropdown-menu dropdown-user">
                         <li>
                             <a ng-click="selectService(5);"> <i class="fa fa-user fa-fw"></i> Профиль <b>{{userData.UserFirstName}} {{userData.UserLastName}}</b> </a>
                         </li>
 
-                        <li>
+                        <!--<li>
                             <a href="#"><i class="fa fa-gear fa-fw"></i> Настройки аккаунта</a>
-                        </li>
+                        </li>-->
 
                         <li class="divider"></li>
                         <li>
@@ -62,27 +81,29 @@
 
 
                         <li>
-                            <a ui-sref="main.dashboard.project" style="cursor:default"><i class="fa fa-code"></i> Проект</a>
-                        </li>
-
-                        <li>
-                            <a ui-sref="main.dashboard.templates" style="cursor:default"><i class="fa fa-terminal "></i> Шаблоны</a>
-                        </li>
-
-                        <li>
                             <a ui-sref="main.dashboard.companies" style="cursor:default"><i class="fa fa-briefcase"></i> Компании</a>
                         </li>
 
+
                         <li>
+                            <a ui-sref="main.dashboard.project" style="cursor:default"><i class="fa fa-code"></i> Проекты</a>
+                        </li>
+
+                        <!--<li>
+                            <a ui-sref="main.dashboard.templates" style="cursor:default"><i class="fa fa-terminal "></i> Шаблоны</a>
+                        </li>-->
+
+
+                        <!--<li>
                             <a ui-sref="main.dashboard.catalogs" style="cursor:default"><i class="fa fa-list-ol"></i> Справочники</a>
+                        </li>-->
+
+                        <li>
+                            <a ui-sref="main.dashboard.settings" style="cursor:default"><i class="fa fa-cogs"></i> Системные настройки</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.systemSettings" style="cursor:default"><i class="fa fa-cogs"></i> Системные настройки</a>
-                        </li>
-
-                        <li>
-                            <a ui-sref="main.dashboard.adminStatistics" style="cursor:default"><i class="fa fa-pie-chart"></i> Статистика</a>
+                            <a ui-sref="main.dashboard.logs" style="cursor:default"><i class="fa fa-binoculars"></i> Логи</a>
                         </li>
 
 

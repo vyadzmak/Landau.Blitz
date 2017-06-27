@@ -41,6 +41,93 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         return line;
     }
 
+
+    function initOdds() {
+
+        var lines = [];
+
+        var positions = [
+            'Выручка',
+            'Прочие поступления',
+            'Доходы из статьи ОПиУ',
+            'Разовые доходы от продажи основных средств',
+            'Разовые поступления в виде спонсорской помощи',
+            'Кредиты/Займы',
+            'Кредиты банков',
+            'Частные займы',
+            'Финансовая помощь',
+            'Затраты денежных средств',
+
+            'Заработная плата',
+            'Доставка товаров/сырья',
+            'Транспортные расходы',
+            'Командировочные расходы',
+            'Аренда',
+            'Коммунальные услуги',
+            'Налоги',
+            'Услуги связи',
+            'Текущий ремонт',
+            'Реклама',
+            'Расходный материал',
+            'Представительские расходы',
+            'Брак/порча/списания',
+            'Спонсорские/благотворительные расходы',
+            'Прочие расходы по бизнесу',
+
+            'Капитальные затраты',
+            'Строительство, ремонт',
+            'Покупка основных средств',
+            'Затраты вне бизнеса',
+            'Погашение кредитов',
+            'Результат месяца'
+
+
+
+
+        ]
+
+
+        var vNames = [
+            '!Revenues',
+            '!OtherSupply',
+            '!IncomeFromOPIU',
+            'SingleIncome',
+            'IncomeFromSponsorship',
+            '!Loans',
+            'BankLoans',
+            'PrivateLoans',
+            'FinancialAid',
+            '!CostOfMoney',
+            'Wage',
+            'DeliveryOfGoods',
+            'Fare',
+            'TravelExpenses',
+            'Rent',
+            'Utilities',
+            'Taxes',
+            'CommunicationServices',
+            'Maintenance',
+            'Advertising',
+            'Consumables',
+            'Hospitality',
+            'MarriageDamageCancellation',
+            'SponsorshipCharitableExpenses',
+            'OtherBusinessExpenses',
+
+            '!CapitalExpenditures',
+            'ConstructionRepair',
+            'PurchaseOfFixedAssets',
+            'CostsOutOfBusiness',
+            'RepaymentOfLoans',
+            '!ResultOfTheMonth'
+        ]
+        for (var i = 0; i < positions.length; i++) {
+            lines.push(initLine(positions[i], vNames[i]));
+        }
+
+        return lines;
+    }
+
     function initOpiu() {
 
         var lines = [];
@@ -187,6 +274,10 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             currentProject.FinDataOpiu.Table = initOpiu();
         };
         currentProject.FinDataOdds = currentProject.ProjectContent.FinDataOdds;
+
+        if (JSON.stringify(currentProject.FinDataOdds) == '{}') {
+            currentProject.FinDataOdds.Table = initOdds();
+        };
         currentProject.LargeExpenses = currentProject.ProjectContent.LargeExpenses;
         currentProject.Provision = currentProject.ProjectContent.Provision;
         currentProject.DataDamu = currentProject.ProjectContent.DataDamu;

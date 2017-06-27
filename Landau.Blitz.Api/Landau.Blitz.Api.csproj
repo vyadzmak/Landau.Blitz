@@ -237,17 +237,28 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CatalogsController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\ClientTypeController.cs" />
+    <Compile Include="Controllers\ClientUsersController.cs" />
     <Compile Include="Controllers\ContentGeneratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBHelpers\DBAuthDataHelpers\DBAuthDataHelper.cs" />
     <Compile Include="DBHelpers\DBCatalogHelpers\DBCatalogHelper.cs" />
+    <Compile Include="DBHelpers\DBClientHelpers\DBClientHelper.cs" />
+    <Compile Include="DBHelpers\DBClientHelpers\DBClientTypeHelper.cs" />
+    <Compile Include="DBHelpers\DBLogHelpers\DBLogHelper.cs" />
     <Compile Include="DBHelpers\DBLoginHelpers\DBLoginHelper.cs" />
     <Compile Include="DBHelpers\DBProjectHelpers\DBProjectHelper.cs" />
+    <Compile Include="DBHelpers\DBSettingsHelpers\DBSettingHelper.cs" />
     <Compile Include="DBHelpers\DBTemplateHelpers\DBTemplateHelper.cs" />
+    <Compile Include="DBHelpers\DBUserHelpers\DBUserHelper.cs" />
     <Compile Include="DB\BlitzModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -306,22 +317,33 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthHelpers\AuthHelper.cs" />
+    <Compile Include="Helpers\ClientHelpers\ClientHelper.cs" />
+    <Compile Include="Helpers\ClientHelpers\ClientTypeHelper.cs" />
     <Compile Include="Helpers\ContentGeneratorHelpers\ContentGeneratorHelper.cs" />
     <Compile Include="Helpers\CryptHelpers\Crypt.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
     <Compile Include="Helpers\ProjectHelpers\ProjectHelper.cs" />
     <Compile Include="Helpers\SerializeHelpers\SerializeHelper.cs" />
+    <Compile Include="Helpers\SettingsHelpers\SettingsHelper.cs" />
     <Compile Include="Helpers\TemplateHelpers\TemplateHelper.cs" />
+    <Compile Include="Helpers\UserHelpers\UserHelper.cs" />
     <Compile Include="Models\AuthData\AuthDataModel.cs" />
     <Compile Include="Models\Catalogs\CatalogField.cs" />
     <Compile Include="Models\Catalogs\CatalogModel.cs" />
+    <Compile Include="Models\ClientModel\ClientModel.cs" />
+    <Compile Include="Models\ClientType\ClientTypeModel.cs" />
     <Compile Include="Models\Error\ErrorModel.cs" />
+    <Compile Include="Models\Log\LogModel.cs" />
     <Compile Include="Models\Other\AccountBindingModels.cs" />
     <Compile Include="Models\Other\AccountViewModels.cs" />
     <Compile Include="Models\Other\IdentityModels.cs" />
     <Compile Include="Models\Project\ProjectViewModel.cs" />
+    <Compile Include="Models\Settings\SettingModel.cs" />
     <Compile Include="Models\Template\TemplateModel.cs" />
+    <Compile Include="Models\UserLoginState\UserLoginStateModel.cs" />
     <Compile Include="Models\UserLogin\UserLoginModel.cs" />
+    <Compile Include="Models\UserRole\UserRoleModel.cs" />
+    <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

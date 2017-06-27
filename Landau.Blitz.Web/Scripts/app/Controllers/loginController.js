@@ -2,11 +2,14 @@
     var loginController = function($scope, $http, $location, $state, $rootScope, $window, usSpinnerService, $cookies) {
         var url = $$ApiUrl + "/login";
         $scope.rememberMe = false;
-
+        $scope.isLogin = false;
         // $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
         $scope.loadData = false;
         $scope.loginUser = function() {
+            $scope.isLogin = true;
+
             if ($scope.loginForm.$invalid) {
+                $scope.isLogin = false;
                 $scope.submitted = true;
                 return;
             }
@@ -30,6 +33,8 @@
                     data: $scope.model
                 })
                 .then(function(response) {
+                        $scope.isLogin = false;
+
                         usSpinnerService.stop('spinner-1');
                         $scope.loadData = false;
 
@@ -77,6 +82,13 @@
 
 
         setTimeout(function() {
+                $("#login")
+                    .keypress(function(e) {
+                        if (e.charCode == 13) {
+                            $scope.loginUser();
+                        }
+                    });
+
                 $("#password")
                     .keypress(function(e) {
                         if (e.charCode == 13) {

@@ -1,0 +1,95 @@
+<div>
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Пользователь
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="userForm" id="userForm" role="form" data-toggle="validator">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Имя<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Иван" maxlength="270" data-error="Имя должно быть заполнено" ng-model="mElement.FirstName" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Фамилия<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Иванов" data-error="Фамилия должна быть заполнена" ng-model="mElement.LastName" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" placeholder="test@gmail.com" data-error="Email должен быть заполнен" ng-model="mElement.Email" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Телефон<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="+777777777" data-error="Телефонный номер должен быть заполнен" ng-model="mElement.PhoneNumber" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Пароль<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <!--<span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button"> <span class="glyphicon glyphicon-eye-open" ></span></button>
+                                </span>-->
+                                <input type="text" class="form-control" placeholder="Password" ng-model="mElement.Login.UserPassword">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button" ng-click="generatePassword()"> <span class="glyphicon glyphicon-refresh" ></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect1">Состояние логина</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" ng-options="state.Description for state in mElement.Login.LoginStates track by state.Id" ng-model="mElement.Login.CurrentLoginState"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect2">Роль пользователя</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" ng-options="role.Description for role in mElement.Login.Roles track by role.Id" ng-model="mElement.Login.CurrentRole"></select>
+                        </div>
+                    </div>
+
+                    </br>
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#userForm').validator({
+        disable: false
+    });
+</script>

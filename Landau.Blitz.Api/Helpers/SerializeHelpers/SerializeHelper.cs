@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Script.Serialization;
+using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
 
 namespace Landau.Blitz.Api.Helpers.SerializeHelpers
 {
@@ -20,6 +21,10 @@ namespace Landau.Blitz.Api.Helpers.SerializeHelpers
             }
             catch (Exception e)
             {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
                 return "";
             }
         }

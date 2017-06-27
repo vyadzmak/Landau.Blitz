@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
 using Landau.Blitz.Api.DBHelpers.DBLoginHelpers;
 using Landau.Blitz.Api.Models.UserLogin;
 
@@ -24,6 +25,10 @@ namespace Landau.Blitz.Api.Helpers.LoginHelpers
             }
             catch (Exception e)
             {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
                 return "";
             }
         }
