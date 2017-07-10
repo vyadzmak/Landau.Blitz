@@ -247,6 +247,7 @@
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
+    <Compile Include="Controllers\UserProjectsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBHelpers\DBAuthDataHelpers\DBAuthDataHelper.cs" />
@@ -259,59 +260,68 @@
     <Compile Include="DBHelpers\DBSettingsHelpers\DBSettingHelper.cs" />
     <Compile Include="DBHelpers\DBTemplateHelpers\DBTemplateHelper.cs" />
     <Compile Include="DBHelpers\DBUserHelpers\DBUserHelper.cs" />
-    <Compile Include="DB\BlitzModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BlitzModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\BlitzModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BlitzModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\BlitzModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BlitzModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="DB\Catalogs.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Clients.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ClientTypes.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\CreditRequests.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\CreditRequestStates.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\LandauBlitzModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandauBlitzModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\LandauBlitzModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\LandauBlitzModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB\Log.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Projects.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ProjectStates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ReportTemplates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sysdiagrams.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Templates.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserLogins.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserLoginStates.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserRoles.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Users.cs">
-      <DependentUpon>BlitzModel.tt</DependentUpon>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -353,15 +363,15 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DB\BlitzModel.Context.tt">
+    <Content Include="DB\LandauBlitzModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BlitzModel.edmx</DependentUpon>
-      <LastGenOutput>BlitzModel.Context.cs</LastGenOutput>
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
+      <LastGenOutput>LandauBlitzModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DB\BlitzModel.tt">
+    <Content Include="DB\LandauBlitzModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BlitzModel.edmx</DependentUpon>
-      <LastGenOutput>BlitzModel.cs</LastGenOutput>
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
+      <LastGenOutput>LandauBlitzModel.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -390,12 +400,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="DB\BlitzModel.edmx">
+    <EntityDeploy Include="DB\LandauBlitzModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BlitzModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>LandauBlitzModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DB\BlitzModel.edmx.diagram">
-      <DependentUpon>BlitzModel.edmx</DependentUpon>
+    <Content Include="DB\LandauBlitzModel.edmx.diagram">
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

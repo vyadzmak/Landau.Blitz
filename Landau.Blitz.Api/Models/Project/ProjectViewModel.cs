@@ -40,6 +40,11 @@ namespace Landau.Blitz.Api.Models.Project
         /// creator Id
         /// </summary>
         public int CreatorId { get; set; }
+
+        /// <summary>
+        /// creator name
+        /// </summary>
+        public string CreatorName { get; set; }
         /// <summary>
         /// content
         /// </summary>

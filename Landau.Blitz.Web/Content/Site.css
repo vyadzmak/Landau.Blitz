@@ -576,15 +576,18 @@ a.vbg-icon.btn-warning.btn-outline {
     padding-top: 11px;
     white-space: no-wrap;
     vertical-align: middle;
-    background-color: #fff;
+    background-color: #f8f8f8;
+    height: 43px;
 }
 
 .scroller-right {
     float: right;
+    /*//smargin-right: 8px;*/
 }
 
 .scroller-left {
     float: left;
+    margin-left: 8px;
 }
 
 #sidebar-wrapper {

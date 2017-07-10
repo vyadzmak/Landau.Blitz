@@ -91,13 +91,24 @@
     })
 
     .state("main.dashboard.project", {
-        url: "/project",
+        url: "/project/:projectId",
         templateUrl: "PartialViews/Project.html",
         onEnter: function($window, $state) {
             if (!$window.sessionStorage.getItem("UserData")) {
                 $state.go("main.login");
             }
             $window.document.title = "Проект";
+        }
+    })
+
+    .state("main.dashboard.projects", {
+        url: "/projects",
+        templateUrl: "PartialViews/Projects.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Проекты";
         }
     })
 

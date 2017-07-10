@@ -63,5 +63,28 @@ namespace Landau.Blitz.Api.DBHelpers.DBLogHelpers
                 return "";
             }
         }
+
+        /// <summary>
+        /// clean log
+        /// </summary>
+        /// <returns></returns>
+        public static string CleanLog()
+        {
+            try
+            {
+                using (var db = new LandauBlitzEntities())
+                {
+                    List<Log> logs = db.Log.Select(x => x).ToList();
+                    db.Log.RemoveRange(logs);
+                    db.SaveChanges();
+                }
+
+                return "OK";
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
     }
 }

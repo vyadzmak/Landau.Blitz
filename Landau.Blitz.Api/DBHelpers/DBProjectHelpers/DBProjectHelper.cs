@@ -6,11 +6,40 @@ using Landau.Blitz.Api.DB;
 using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
 using Landau.Blitz.Api.Helpers.SerializeHelpers;
 using Landau.Blitz.Api.Models.Project;
+using System.Data.Entity;
 
 namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
 {
     public static class DBProjectHelper
     {
+        #region helpers
+        /// <summary>
+        /// get to projects id
+        /// </summary>
+        /// <returns></returns>
+        public static List<Projects> GetProjectsByUserId(int userId)
+        {
+            try
+            {
+                using (var db = new LandauBlitzEntities())
+                {
+                    return db.Projects
+                        .Include(x=>x.Users)
+                        
+                        .Where(x => x.CreatorId == userId)
+                        .ToList();
+                }
+                
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -22,8 +51,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
             {
                 using (var db = new LandauBlitzEntities())
                 {
-                    return SerializeHelper.Serialize(db.Projects.FirstOrDefault());
-                    //return SerializeHelper.Serialize(db.Projects.FirstOrDefault(x => x.Id==id));
+                    return SerializeHelper.Serialize(db.Projects.FirstOrDefault(x => x.Id==id));
                 }
             }
             catch (Exception e)
@@ -38,6 +66,11 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
             
         }
 
+        /// <summary>
+        /// update project
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public static string UpdateProjectInDb(ProjectViewModel model)
         {
             try

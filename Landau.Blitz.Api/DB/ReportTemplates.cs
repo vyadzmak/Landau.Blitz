@@ -12,16 +12,12 @@ namespace Landau.Blitz.Api.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Projects
+    public partial class ReportTemplates
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Template { get; set; }
         public Nullable<System.DateTime> CreationDate { get; set; }
-        public int CreatorId { get; set; }
-        public string ProjectContent { get; set; }
-        public int ProjectStateId { get; set; }
-    
-        public virtual ProjectStates ProjectStates { get; set; }
-        public virtual Users Users { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     }
 }

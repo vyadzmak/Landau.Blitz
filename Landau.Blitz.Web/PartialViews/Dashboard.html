@@ -31,7 +31,7 @@
             <ul class="nav navbar-top-links navbar-right">
                 <!--<a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>-->
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <li class="dropdown" ng-if="$state.includes('main.dashboard.project')">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user fa-rocket"></i> <i class="fa fa-caret-down"></i>
                     </a>
@@ -86,7 +86,7 @@
 
 
                         <li>
-                            <a ui-sref="main.dashboard.project" style="cursor:default"><i class="fa fa-code"></i> Проекты</a>
+                            <a ui-sref="main.dashboard.projects" style="cursor:default"><i class="fa fa-code"></i> Проекты</a>
                         </li>
 
                         <!--<li>

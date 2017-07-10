@@ -4,20 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4c523316dc924d6d8cb533896d4583f9" Name="Diagram1">
+      <Diagram DiagramId="7114f9379af14fc2beca496c59e36209" Name="Diagram1">
         <EntityTypeShape EntityType="LandauBlitzModel.Catalogs" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.Clients" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.ClientTypes" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.CreditRequests" Width="1.5" PointX="7.5" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.CreditRequestStates" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Clients" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.ClientTypes" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.CreditRequests" Width="1.5" PointX="7.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.CreditRequestStates" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LandauBlitzModel.Log" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.Projects" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.Settings" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.Templates" Width="1.5" PointX="10.5" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.UserLogins" Width="1.5" PointX="7.5" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.UserLoginStates" Width="1.5" PointX="5.25" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.UserRoles" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="LandauBlitzModel.Users" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Projects" Width="1.5" PointX="7.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.ProjectStates" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.ReportTemplates" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Settings" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Templates" Width="1.5" PointX="10.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.UserLogins" Width="1.5" PointX="10.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.UserLoginStates" Width="1.5" PointX="8.25" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.UserRoles" Width="1.5" PointX="8.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="LandauBlitzModel.Users" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
         <AssociationConnector Association="LandauBlitzModel.FK_Clients_ClientTypes" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Clients" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Clients1" ManuallyRouted="false" />
@@ -27,6 +30,8 @@
         <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Templates" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_CreditRequests_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_Projects_ProjectStates" ManuallyRouted="false" />
+        <AssociationConnector Association="LandauBlitzModel.FK_Projects_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_Templates_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_UserLoginStates" ManuallyRouted="false" />
         <AssociationConnector Association="LandauBlitzModel.FK_UserLogins_UserRoles" ManuallyRouted="false" />

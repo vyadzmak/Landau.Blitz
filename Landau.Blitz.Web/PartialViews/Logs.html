@@ -1,6 +1,13 @@
 <div ng-controller="logsController">
 
     <div class="container">
-        <table id="logTable" data-search="true" data-show-columns="true" data-pagination="true" data-height="100%" data-toggle="table"></table>
+        <div class="row" ng-show="!loading">
+            <div id="toolbar">
+                <button type="button" class="btn btn-danger orange-tooltip" ng-click="cleanLog();" data-toggle="tooltip" title="Очистить лог" data-placement="bottom">
+                    <span class="glyphicon glyphicon-trash" ></span>
+                    </button>
+            </div>
+            <table id="logTable" data-search="true" data-toolbar="#toolbar" data-show-columns="true" data-pagination="true" data-height="100%" data-toggle="table"></table>
+        </div>
     </div>
 </div>

@@ -19,6 +19,7 @@ namespace Landau.Blitz.Api.DB
         {
             this.CreditRequests = new HashSet<CreditRequests>();
             this.CreditRequests1 = new HashSet<CreditRequests>();
+            this.Projects = new HashSet<Projects>();
             this.Templates = new HashSet<Templates>();
             this.UserLogins = new HashSet<UserLogins>();
         }
@@ -35,6 +36,8 @@ namespace Landau.Blitz.Api.DB
         public virtual ICollection<CreditRequests> CreditRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CreditRequests> CreditRequests1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Projects> Projects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Templates> Templates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

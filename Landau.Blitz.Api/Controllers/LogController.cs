@@ -33,8 +33,14 @@ namespace Landau.Blitz.Api.Controllers
         }
 
         // DELETE: api/Log/5
-        public void Delete(int id)
+        public string Delete(int id)
         {
+            if (id == -1)
+            {
+            return DBLogHelper.CleanLog();
+            }
+            return "Error";
+
         }
     }
 }

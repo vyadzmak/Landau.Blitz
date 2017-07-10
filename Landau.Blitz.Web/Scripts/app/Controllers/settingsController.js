@@ -20,7 +20,7 @@ function settingDeleteFormatter(value, row, index) {
 
 var settingsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, promiseUtils, httpService) {
 
-
+    $scope.showProjectMenu = false;
     var url = $$ApiUrl + "/settings";
     $scope.settings = [];
 

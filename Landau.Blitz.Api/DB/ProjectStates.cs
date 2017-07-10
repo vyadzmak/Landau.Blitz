@@ -12,16 +12,19 @@ namespace Landau.Blitz.Api.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Projects
+    public partial class ProjectStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProjectStates()
+        {
+            this.Projects = new HashSet<Projects>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<System.DateTime> CreationDate { get; set; }
-        public int CreatorId { get; set; }
-        public string ProjectContent { get; set; }
-        public int ProjectStateId { get; set; }
+        public string Description { get; set; }
     
-        public virtual ProjectStates ProjectStates { get; set; }
-        public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Projects> Projects { get; set; }
     }
 }

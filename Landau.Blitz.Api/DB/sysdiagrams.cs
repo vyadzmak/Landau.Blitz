@@ -12,16 +12,12 @@ namespace Landau.Blitz.Api.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Projects
+    public partial class sysdiagrams
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> CreationDate { get; set; }
-        public int CreatorId { get; set; }
-        public string ProjectContent { get; set; }
-        public int ProjectStateId { get; set; }
-    
-        public virtual ProjectStates ProjectStates { get; set; }
-        public virtual Users Users { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
