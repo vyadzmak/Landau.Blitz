@@ -8,10 +8,6 @@ var largeExpensesController = function($scope, $http, $location, $state, $uibMod
         }
     };
     $scope.init();
-
-    //------------------БЛОК ДЛЯ РАБОТЫ С МОДАЛЬНЫМИ ОКНАМИ---------------------------//
-    //add new user btn event
-    //имя вьюхи, контроллер, пустой элемент, куда пишем, что пишем
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
 
@@ -30,27 +26,138 @@ var largeExpensesController = function($scope, $http, $location, $state, $uibMod
 
         modalInstance.result.then(function() {
             //alert(JSON.stringify($scope.mElement));
-            var id = 1;
-            if (elements.length > 0) {
-                id = elements[elements.length - 1].Id + 1;
-            }
-            $scope.mElement.Id = id;
-            elements.push($scope.mElement);
-            $scope.mElement = {};
+            if ($scope.mElement.Id == -1 || $scope.mElement.Id == undefined) {
 
-            ///alert(JSON.stringify($scope.currentProject.ClientData.BusinessPlaces));
-            // templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
+
+                var id = 1;
+                if (elements.length > 0) {
+                    id = elements[elements.length - 1].Id + 1;
+                }
+                $scope.mElement.Id = id;
+                elements.push($scope.mElement);
+                $scope.mElement = {};
+            } else {
+                var ob = elements.filter(function(item) {
+                    return item.Id == $scope.mElement.Id;
+                });
+
+                if (ob.length > 0) {
+                    var dElement = ob[0];
+                    var index = $scope.elements.indexOf(dElement);
+
+                    if (index != -1) {
+                        $scope.elements[index] = $scope.mElement;
+                    }
+                }
+                $scope.mElement = {};
+            }
+            projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
+    //-----------КОНЕЦ БЛОКА ДЛЯ РАБОТЫ С МОДАЛЬНЫМИ ОКНАМИ---------------------------//
+    $scope.filterFromArray = function(arr, id) {
+            var ob = arr.filter(function(item) {
+                return item.Id == id;
+            });
+
+            return ob[0];
+    }
+
+    $scope.clickInvestment = function(id) {
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.LargeExpenses.Investments, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/LargeExpenses/InvestmentsModal.html';
+        $scope.modalController = manageInvestmentController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.LargeExpenses.Investments;
+    };
+
+    $scope.clickOutOfBusinessPayment = function(id) {
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.LargeExpenses.OutOfBuisnessPayments, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/LargeExpenses/OutOfBusinessPaymentModal.htm';
+        $scope.modalController = managePeriodicityProcurementController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.BusinessInfo.PeriodicityProcurements;
+    };
+
+    $scope.EditElement = function() {
+
+        $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);
+
+        //alert("ED Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+    };
+
+
+    $scope.deleteData = function() {
+        var ob = $scope.elements.filter(function(item) {
+            return item.Id == $scope.eIndex;
+        });
+
+        if (ob.length > 0) {
+            var dElement = ob[0];
+            var index = $scope.elements.indexOf(dElement);
+
+            if (index != -1) {
+                $scope.elements.splice(index, 1);
+            }
+        }
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+
+    }
+    $scope.RemoveElement = function() {
+        //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+
+
+        var dialog = BootstrapDialog.confirm({
+            title: 'Предупреждение',
+            message: 'Вы действительно хотите удалить данные?',
+            type: BootstrapDialog.TYPE_WARNING,
+            size: BootstrapDialog.SIZE_SMALL,
+            closable: true,
+            btnCancelLabel: 'Нет',
+            btnOKLabel: 'Да',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    $scope.deleteData();
+                }
+            }
+        });
+        dialog.setSize(BootstrapDialog.SIZE_SMALL);
+    };
+
+    $scope.menuItems = [{
+            text: "Редактировать", //menu option text 
+            callback: $scope.EditElement, //function to be called on click  
+            disabled: false //No click event. Grayed out option. 
+        },
+        {
+            text: "Удалить",
+            callback: $scope.RemoveElement, //function to be called on click  
+            disabled: false
+        }
+    ];
+
     
     $scope.showNewOutOfBuisnessPayment = function() {
         
-        var modalView = 'PartialViews/Modals/LargeExpenses/OutOfBuisnessPaymentModal.html';
+        var modalView = 'l';
         var modalController = manageOutOfBuisnessPaymentController
-
+PartialViews/Modals/LargeExpenses/OutOfBusinessPaymentModal.htm
         if ($scope.currentProject.LargeExpenses.OutOfBuisnessPayments == undefined) {
             $scope.currentProject.LargeExpenses.OutOfBuisnessPayments = [];
         }

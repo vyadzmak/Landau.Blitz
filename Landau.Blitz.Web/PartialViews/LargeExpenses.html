@@ -11,7 +11,7 @@
 
                 <div class="panel-body">
                     <table ng-table="outOfBuisnessPaymentsParams" class="table">
-                        <tr ng-repeat="payment in currentProject.LargeExpenses.OutOfBuisnessPayments">
+                        <tr ng-repeat="payment in currentProject.LargeExpenses.OutOfBuisnessPayments"  ng-right-click="clickOutOfBusinessPayment(payment.Id)" menu-items="menuItems">
                             <td title="'Наименование расхода'" sortable="'name'" class="col-md-6">
                                 {{payment.Name}}
                             </td>
@@ -37,7 +37,7 @@
 
                 <div class="panel-body">
                     <table ng-table="investmentsParams" class="table">
-                        <tr ng-repeat="investment in currentProject.LargeExpenses.Investments">
+                        <tr ng-repeat="investment in currentProject.LargeExpenses.Investments" ng-right-click="clickInvestment(investment.Id)" menu-items="menuItems">
                             <td title="'Наименование расхода'" sortable="'name'" class="col-md-6">
                                 {{investment.Name}}
                             </td>

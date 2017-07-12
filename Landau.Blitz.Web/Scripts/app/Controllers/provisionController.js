@@ -1,4 +1,4 @@
-var provisionController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory) {
+var provisionController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory, projectHttpService) {
     usSpinnerService.stop("spinner-1");
 
     $scope.init = function() {
@@ -8,9 +8,16 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
         }
     };
     $scope.init();
-    //------------------¡ÀŒ  ƒÀﬂ –¿¡Œ“€ — ÃŒƒ¿À‹Õ€Ã» Œ Õ¿Ã»---------------------------//
+     $scope.filterFromArray = function(arr, id) {
+            var ob = arr.filter(function(item) {
+                return item.Id == id;
+            });
+
+            return ob[0];
+        }
+    //------------------ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ---------------------------//
     //add new user btn event
-    //ËÏˇ ‚¸˛ıË, ÍÓÌÚÓÎÎÂ, ÔÛÒÚÓÈ ˝ÎÂÏÂÌÚ, ÍÛ‰‡ ÔË¯ÂÏ, ˜ÚÓ ÔË¯ÂÏ
+    //ÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
 
@@ -44,7 +51,79 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
-    //----------- ŒÕ≈÷ ¡ÀŒ ¿ ƒÀﬂ –¿¡Œ“€ — ÃŒƒ¿À‹Õ€Ã» Œ Õ¿Ã»---------------------------//
+    //-----------ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ---------------------------//
+
+    $scope.clickDeposit = function(id) {
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.Provision.Deposits, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/Provision/DepositModal.html';
+        $scope.modalController = manageDepositController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.Provision.Deposits;
+    };
+
+     $scope.EditElement = function() {
+
+        $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);
+
+        //alert("ED Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+    };
+
+
+    $scope.deleteData = function() {
+        var ob = $scope.elements.filter(function(item) {
+            return item.Id == $scope.eIndex;
+        });
+
+        if (ob.length > 0) {
+            var dElement = ob[0];
+            var index = $scope.elements.indexOf(dElement);
+
+            if (index != -1) {
+                $scope.elements.splice(index, 1);
+            }
+        }
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+
+    }
+    $scope.RemoveElement = function() {
+        //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+
+
+        var dialog = BootstrapDialog.confirm({
+            title: '–ü—Ä–µ–¥—É–ø—Ä–µ–∂–¥–µ–Ω–∏–µ',
+            message: '–í—ã –¥–µ–π—Å—Ç–≤–∏—Ç–µ–ª—å–Ω–æ —Ö–æ—Ç–∏—Ç–µ —É–¥–∞–ª–∏—Ç—å –¥–∞–Ω–Ω—ã–µ?',
+            type: BootstrapDialog.TYPE_WARNING,
+            size: BootstrapDialog.SIZE_SMALL,
+            closable: true,
+            btnCancelLabel: '–ù–µ—Ç',
+            btnOKLabel: '–î–∞',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    $scope.deleteData();
+                }
+            }
+        });
+        dialog.setSize(BootstrapDialog.SIZE_SMALL);
+    };
+
+     $scope.menuItems = [{
+            text: "–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å", //menu option text 
+            callback: $scope.EditElement, //function to be called on click  
+            disabled: false //No click event. Grayed out option. 
+        },
+        {
+            text: "–£–¥–∞–ª–∏—Ç—å",
+            callback: $scope.RemoveElement, //function to be called on click  
+            disabled: false
+        }
+    ];
 
     $scope.showNewDeposit = function() {
         var modalView = 'PartialViews/Modals/Provision/DepositModal.html';
@@ -57,4 +136,4 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
         $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.Provision.Deposits);
     }
 };
-blitzApp.controller("provisionController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", provisionController]);
+blitzApp.controller("provisionController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", provisionController]);

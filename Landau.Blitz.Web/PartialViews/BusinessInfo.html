@@ -41,7 +41,7 @@
 
                 <div class="panel-body">
                     <table ng-table="supplierStructures" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.SupplierStructures">
+                        <tr ng-repeat="item in currentProject.BusinessInfo.SupplierStructures" ng-right-click="clickSupplierStructure(item.Id)" menu-items="menuItems">
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>
@@ -66,7 +66,7 @@
 
                 <div class="panel-body">
                     <table ng-table="consumerStructures" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.ConsumerStructures">
+                        <tr ng-repeat="item in currentProject.BusinessInfo.ConsumerStructures"  ng-right-click="clickConsumerStructure(item.Id)" menu-items="menuItems">
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>
@@ -91,7 +91,7 @@
 
                 <div class="panel-body">
                     <table ng-table="periodicityProcurements" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.PeriodicityProcurements">
+                        <tr ng-repeat="item in currentProject.BusinessInfo.PeriodicityProcurements"  ng-right-click="clickConsumerStructure(item.Id)" menu-items="menuItems">
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>
@@ -169,7 +169,7 @@
             <div class="panel-body">
                 <div class="b-div">
                     <table ng-table="clientFounderInfos" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.ClientFounderInfos">
+                        <tr ng-repeat="item in currentProject.BusinessInfo.ClientFounderInfos"  ng-right-click="clickClientFounderInfo(item.Id)" menu-items="menuItems">
                             <td title="'ФИО'" sortable="'Name'">
                                 {{item.Name}}
                             </td>

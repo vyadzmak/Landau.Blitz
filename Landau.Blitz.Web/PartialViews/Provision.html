@@ -11,7 +11,7 @@
 
                 <div class="panel-body">
                     <table ng-table="deposits" class="table">
-                        <tr ng-repeat="item in currentProject.Provision.Deposits">
+                        <tr ng-repeat="item in currentProject.Provision.Deposits" ng-right-click="clickDeposit(item.Id)" menu-items="menuItems">
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>

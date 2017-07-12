@@ -43,7 +43,20 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
                     title: 'Срок',
 
                 }
-            ]
+            ],
+    contextMenu: '#context-menu',
+    onContextMenuItem: function(row, $el) {
+      if($el.data("item") == "checkAll") {
+        $table.bootstrapTable('checkAll');
+      };
+      if($el.data("item") == "uncheckAll") {
+        $table.bootstrapTable('uncheckAll');
+      };
+      if($el.data("item") == "checkInvert") {
+        $table.bootstrapTable('checkInvert');
+      };
+      $info.html(JSON.stringify($table.bootstrapTable('getSelections'), null, 4));
+    }
         });
 
 
