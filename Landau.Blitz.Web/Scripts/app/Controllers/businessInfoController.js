@@ -52,49 +52,7 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
             });
 
             return ob[0];
-        }
-
-    $scope.clickSupplierStructure = function(id) {
-        $scope.rmIndex = 1;
-        $scope.eIndex = id;
-
-        console.log(id);
-        $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.SupplierStructures, $scope.eIndex);
-
-        $scope.modalView = 'PartialViews/Modals/BusinessInfo/SupplierStructureModal.html';
-        $scope.modalController = manageSupplierStructureController;
-
-        $scope.mElement = $scope.editElement;
-        $scope.elements = $scope.currentProject.BusinessInfo.SupplierStructure;
-    };
-
-    $scope.clickPeriodicityProcurement = function(id) {
-        $scope.rmIndex = 1;
-        $scope.eIndex = id;
-
-        console.log(id);
-        $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.PeriodicityProcurements, $scope.eIndex);
-
-        $scope.modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementsModal.html';
-        $scope.modalController = managePeriodicityProcurementController;
-
-        $scope.mElement = $scope.editElement;
-        $scope.elements = $scope.currentProject.BusinessInfo.PeriodicityProcurements;
-    };
-
-    $scope.clickConsumerStructure = function(id) {
-        $scope.rmIndex = 1;
-        $scope.eIndex = id;
-
-        console.log(id);
-        $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.ConsumerStructures, $scope.eIndex);
-
-        $scope.modalView = 'PartialViews/Modals/BusinessInfo/ConsumerStructureModal.html';
-        $scope.modalController = manageConsumerStructureController;
-
-        $scope.mElement = $scope.editElement;
-        $scope.elements = $scope.currentProject.BusinessInfo.ConsumerStructures;
-    };
+    }
     $scope.clickClientFounderInfo = function(id) {
 
 
@@ -113,7 +71,8 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
     
     $scope.EditElement = function() {
 
-        $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);
+        $scope.addNewModal($scope.modalView, $scope.modalController, 
+        $scope.mElement, $scope.elements, $scope.mElement);
 
         //alert("ED Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
     };
