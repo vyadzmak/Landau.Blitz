@@ -53,7 +53,9 @@ namespace Landau.Blitz.Web
                 "~/Content/tree-control-attribute.css",
                 "~/Content/tabs.css",
                 "~/Content/tabs.sideways.css",
-                "~/Content/ng-table.css"
+                "~/Content/ng-table.css",
+                "~/Content/ng-right-click.css"
+
 
             //"~/Content/bootstrap-datetimepicker.min.css"
             ));
@@ -86,7 +88,8 @@ namespace Landau.Blitz.Web
                 "~/Scripts/chk-multi-select.js",
                 "~/Scripts/angular.treeview.js",
                 "~/Scripts/angular-tree-control.js",
-                "~/Scripts/ng-table.js"
+                "~/Scripts/ng-table.js",
+                "~/Scripts/ng-right-click.js"
             // "~/Scripts/eaTreeView-tpls.min.js"
             //"~/Scripts/eaTreeView.directive.js",
             //"~/Scripts/eaTreeView.factory.js",

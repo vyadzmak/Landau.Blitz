@@ -1,6 +1,8 @@
-var clientDataController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory) {
+var clientDataController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory, projectHttpService) {
     usSpinnerService.stop("spinner-1");
 
+    $scope.rmIndex = -1;
+    $scope.eIndex = -1;
     $scope.init = function() {
         $scope.currentProject = projectFactory.getToCurrentProject();
         if ($scope.currentProject != undefined) {
@@ -35,23 +37,123 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
 
         modalInstance.result.then(function() {
             //alert(JSON.stringify($scope.mElement));
-            var id = 1;
-            if (elements.length > 0) {
-                id = elements[elements.length - 1].Id + 1;
-            }
-            $scope.mElement.Id = id;
-            elements.push($scope.mElement);
-            $scope.mElement = {};
+            if ($scope.mElement.Id == -1 || $scope.mElement.Id == undefined) {
 
-            ///alert(JSON.stringify($scope.currentProject.ClientData.BusinessPlaces));
-            // templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
+
+                var id = 1;
+                if (elements.length > 0) {
+                    id = elements[elements.length - 1].Id + 1;
+                }
+                $scope.mElement.Id = id;
+                elements.push($scope.mElement);
+                $scope.mElement = {};
+            } else {
+                var ob = elements.filter(function(item) {
+                    return item.Id == $scope.mElement.Id;
+                });
+
+                if (ob.length > 0) {
+                    var dElement = ob[0];
+                    var index = $scope.elements.indexOf(dElement);
+
+                    if (index != -1) {
+                        $scope.elements[index] = $scope.mElement;
+                    }
+                }
+                $scope.mElement = {};
+            }
+            projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
     //-----------КОНЕЦ БЛОКА ДЛЯ РАБОТЫ С МОДАЛЬНЫМИ ОКНАМИ---------------------------//
+    $scope.filterFromArray = function(arr, id) {
+            var ob = arr.filter(function(item) {
+                return item.Id == id;
+            });
 
+            return ob[0];
+        }
+        //-----------блок для контекстного меню--------------------------------------//
+    $scope.clickBusinessPlace = function(id) {
+
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.BusinessPlaces, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/BusinessPlaceModal.html';
+        $scope.modalController = manageBusinessPlaceController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.BusinessPlaces;
+
+        //alert(id);
+    };
+
+    $scope.EditElement = function() {
+
+        $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);
+
+        //alert("ED Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+    };
+
+
+    $scope.deleteData = function() {
+        var ob = $scope.elements.filter(function(item) {
+            return item.Id == $scope.eIndex;
+        });
+
+        if (ob.length > 0) {
+            var dElement = ob[0];
+            var index = $scope.elements.indexOf(dElement);
+
+            if (index != -1) {
+                $scope.elements.splice(index, 1);
+            }
+        }
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+
+    }
+    $scope.RemoveElement = function() {
+        //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+
+
+        var dialog = BootstrapDialog.confirm({
+            title: 'Предупреждение',
+            message: 'Вы действительно хотите удалить данные?',
+            type: BootstrapDialog.TYPE_WARNING,
+            size: BootstrapDialog.SIZE_SMALL,
+            closable: true,
+            btnCancelLabel: 'Нет',
+            btnOKLabel: 'Да',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    $scope.deleteData();
+                }
+            }
+        });
+        dialog.setSize(BootstrapDialog.SIZE_SMALL);
+    };
+
+    $scope.menuItems = [{
+            text: "Редактировать", //menu option text 
+            callback: $scope.EditElement, //function to be called on click  
+            disabled: false //No click event. Grayed out option. 
+        },
+        {
+            text: "Удалить",
+            callback: $scope.RemoveElement, //function to be called on click  
+            disabled: false
+        }
+    ];
+
+    //----------------------------------------------------------------------------//
     $scope.showNewBusinessPlace = function() {
         var modalView = 'PartialViews/Modals/ClientData/BusinessPlaceModal.html';
         var modalController = manageBusinessPlaceController;
@@ -129,4 +231,4 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.BankAccountInfos);
     }
 };
-blitzApp.controller("clientDataController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", clientDataController]);
+blitzApp.controller("clientDataController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", clientDataController]);
