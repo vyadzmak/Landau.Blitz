@@ -90,14 +90,7 @@ namespace Landau.Blitz.Web
                 "~/Scripts/angular-tree-control.js",
                 "~/Scripts/ng-table.js",
                 "~/Scripts/ng-right-click.js"
-            // "~/Scripts/eaTreeView-tpls.min.js"
-            //"~/Scripts/eaTreeView.directive.js",
-            //"~/Scripts/eaTreeView.factory.js",
-            //"~/Scripts/eaTreeView.module.js",
-            //"~/Scripts/eaTreeViewItem.directive.js"
-            //angular.treeview
-            // "~/Scripts/angular-recaptcha.js"
-            //angularjs-dropdown-multiselect.min.js
+            
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/blitzApp").Include(
@@ -110,9 +103,7 @@ namespace Landau.Blitz.Web
                     "~/Scripts/app/Scripts/routeConfigurator.js",
                     "~/Scripts/app/Scripts/fileUploader.js",
                     "~/Scripts/app/Scripts/disposable.js"
-                    //"~/Scripts/app/Scripts/mapAreaConfigurator.js",
-                    //"~/Scripts/app/Controllers/loginController.js",
-                    //"~/Scripts/app/Controllers/dashBoardController.js"
+                   
                 )
             );
 
