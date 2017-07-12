@@ -148,6 +148,7 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
                 var currentIndex = $element.context.cellIndex;
                 var totalCount = $element.context.parentElement.cells.length;
                 if (totalCount - currentIndex > 2) {
+                    $rootScope.currentProjectId = row.Id;
                     $state.go('main.dashboard.project', { projectId: row.Id });
                     console.log('Event: click-row.bs.table' + JSON.stringify(row.Id));
                 }

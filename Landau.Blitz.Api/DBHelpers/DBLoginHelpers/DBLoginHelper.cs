@@ -45,7 +45,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBLoginHelpers
                                 Exception = "Пользователь заблокирован",
                                 InnerException =
                                     "Данный пользователь был заблокирован. Для решения данной проблемы обратитесь к администратору системы!",
-                                MethodName = "Аторизация"
+                                MethodName = "Авторизация"
                             };
                             return SerializeHelper.Serialize(model);
                         }

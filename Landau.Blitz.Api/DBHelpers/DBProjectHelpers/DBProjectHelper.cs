@@ -67,6 +67,20 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
         }
 
         /// <summary>
+        /// Получить проект по айдишнику
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static DB.Projects GetProjectEntityById(int id)
+        {
+            using (var db = new LandauBlitzEntities())
+            {
+                DB.Projects pj = db.Projects.FirstOrDefault(x => x.Id == id);
+                return pj;
+            }
+        }
+
+        /// <summary>
         /// update project
         /// </summary>
         /// <param name="model"></param>

@@ -36,7 +36,6 @@ namespace Landau.Blitz.Api.DB
         public virtual DbSet<ProjectStates> ProjectStates { get; set; }
         public virtual DbSet<ReportTemplates> ReportTemplates { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Templates> Templates { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }

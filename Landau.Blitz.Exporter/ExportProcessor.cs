@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -12,6 +14,8 @@ namespace Landau.Blitz.Exporter
 {
     public class ExportProcessor
     {
+        private System.Web.Script.Serialization.JavaScriptSerializer serializer;
+
         public static void OpenAndAddTextToWordDocument(string filepath, string txt)
         {
             // Open a WordprocessingDocument for editing using the filepath.
@@ -28,6 +32,46 @@ namespace Landau.Blitz.Exporter
 
             // Close the handle explicitly.
             wordprocessingDocument.Close();
+        }
+
+        public FileStream CreateTestDocument(string path)
+        {
+            try
+            {
+                string fileName = "test.docx";
+                path = Path.Combine(path, fileName);
+                // Create a Wordprocessing document. 
+                using (WordprocessingDocument package = WordprocessingDocument.Create(path, WordprocessingDocumentType.Document))
+                {
+                    // Add a new main document part. 
+                    package.AddMainDocumentPart();
+                   
+                    Text head = new Text();
+
+                    // Create the Document DOM. 
+                    package.MainDocumentPart.Document =
+                      new Document(
+                        new Body(
+                          new Paragraph(
+                            new Run(
+                              new Text("Hello World!")))));
+
+                    // Save changes to the main document part. 
+                    package.MainDocumentPart.Document.Save();
+
+                    using (FileStream fs = File.Open(path, FileMode.Open))
+                    {
+
+                        return fs;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
         }
 
         public void InserTable(string filepath)
@@ -129,6 +173,40 @@ namespace Landau.Blitz.Exporter
             {
                 
             }
+        }
+
+        private object ParseTemplate(string templateString)
+        {
+            return serializer.Deserialize<object>(templateString);
+        }
+
+        private object ParseProjectJson(string projectString)
+        {
+            return serializer.Deserialize<Dictionary<string, object>>(projectString);
+        }
+
+        private string GetValueFromResumeTree(Dictionary<string, object> tree)
+        {
+            try
+            {
+                foreach (var item in tree)
+                {
+                    
+                }
+
+                return "";
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine();
+                throw;
+            }
+        }
+
+        public ExportProcessor()
+        {
+            //serializer = new JavaScriptSerializer();
+            //Helpers.ResumeStaticInfo.ResumeFields = fields;
         }
     }
 }

@@ -27,6 +27,24 @@ blitzApp.service('projectHttpService', function() {
 
     }
 
+    this.getDocumentByProjectId = function ($http, $scope, usSpinnerService, projectId, reload) {
+        var url = $$ApiUrl + "/document";
+
+        $http.get(url,
+        {
+            params: { id: projectId }
+        }).then(function(response) {
+            $scope.loadData = false;
+            if (reload) {
+                $scope.init();
+                $scope.currentProject = JSON.parse(response.data);
+            }
+            usSpinnerService.stop('spinner-1');
+
+        });
+    }
+
+
 
     //add or Edit company
     this.manageProject = function($http, $scope, usSpinnerService, currentProject, reload) {

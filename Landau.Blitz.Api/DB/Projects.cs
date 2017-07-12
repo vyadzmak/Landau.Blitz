@@ -20,7 +20,9 @@ namespace Landau.Blitz.Api.DB
         public int CreatorId { get; set; }
         public string ProjectContent { get; set; }
         public int ProjectStateId { get; set; }
+        public Nullable<int> ClientId { get; set; }
     
+        public virtual Clients Clients { get; set; }
         public virtual ProjectStates ProjectStates { get; set; }
         public virtual Users Users { get; set; }
     }

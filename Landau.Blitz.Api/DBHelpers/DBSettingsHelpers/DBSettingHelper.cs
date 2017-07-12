@@ -154,5 +154,24 @@ namespace Landau.Blitz.Api.DBHelpers.DBSettingsHelpers
                 return "Error";
             }
         }
+
+        public static string GetSettingByName(string name)
+        {
+            try
+            {
+                using (LandauBlitzEntities db = new LandauBlitzEntities())
+                {
+                    return db.Settings.FirstOrDefault(x => x.SettingName == name).SettingValue;
+                }
+            }
+            catch (Exception e)
+            {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+                return "";
+            }
+        }
     }
 }
