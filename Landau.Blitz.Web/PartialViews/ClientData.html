@@ -119,7 +119,7 @@
 
                 <div class="panel-body">
                     <table ng-table="businessPlacesParams" class="table">
-                        <tr ng-repeat="place in currentProject.ClientData.BusinessPlaces">
+                        <tr ng-repeat="place in currentProject.ClientData.BusinessPlaces" ng-right-click="clickBusinessPlace(place.Id)" menu-items="menuItems">
                             <td title="'Адрес'" sortable="'address'" class="col-md-6">
                                 {{place.Address}}</td>
 
