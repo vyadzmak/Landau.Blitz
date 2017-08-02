@@ -1,6 +1,8 @@
 var projectController = function($scope, $stateParams, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, $interval, usSpinnerService, projectFactory, calculatorFactory, projectHttpService) {
     var url = $$ApiUrl + "/contentGenerator";
 
+    
+
     $scope.counter = 0;
     $scope.initTabs = function() {
         $scope.currentX = 0;
@@ -90,7 +92,7 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
         });
     }
 
-
+    
 
     $scope.setProject = function() {
         $scope.showProjectMenu = true;

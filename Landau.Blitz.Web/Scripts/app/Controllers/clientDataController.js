@@ -95,6 +95,110 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         //alert(id);
     };
 
+    $scope.clickDirectorInfo = function(id) {
+
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.DirectorInfos, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/DirectorInfoModal.html';
+        $scope.modalController = manageDirectorInfoController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.DirectorInfos;
+
+        //alert(id);
+    };
+
+    $scope.clickRelatedCompanyInfo = function(id) {
+
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.RelatedCompanyInfos, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/RelatedCompanyModal.html';
+        $scope.modalController = manageRelatedCompanyController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.RelatedCompanyInfos;
+
+        //alert(id);
+    };
+
+    $scope.clickLegalOwnerCompanyInfo = function(id) {
+        
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.LegalOwnerCompanyInfos, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/LegalOwnerCompanyModal.html';
+        $scope.modalController = manageLegalOwnerCompanyController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.LegalOwnerCompanyInfos;
+
+        //alert(id);
+    };
+    
+    $scope.clickActualOwnerCompanyInfo = function(id) {
+        
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.ActualOwnerCompanyInfos, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/ActualOwnerCompanyModal.html';
+        $scope.modalController = manageActualOwnerCompanyController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.ActualOwnerCompanyInfos;
+
+        //alert(id);
+    };
+    
+     $scope.clickCreditHistoryInfo = function(id) {
+        
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.CreditHistoryInfos, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/CreditHistoryModal.html';
+        $scope.modalController = manageCreditHistoryController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.CreditHistoryInfos;
+
+        //alert(id);
+    };
+
+    $scope.clickBankAccountInfo = function(id) {
+        
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.ClientData.BankAccountInfos, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/ClientData/BankAccountModal.html';
+        $scope.modalController = manageBankAccountController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.ClientData.BankAccountInfos;
+
+        //alert(id);
+    };
+
     $scope.EditElement = function() {
 
         $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);

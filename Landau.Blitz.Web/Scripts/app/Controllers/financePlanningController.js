@@ -43,7 +43,16 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
                     title: 'Срок',
 
                 }
-            ]
+            ],
+    contextMenu: '#context-menu',
+    onContextMenuItem: function(row, $el) {
+      if($el.data("item") == "edit") {
+        //
+      };
+      if($el.data("item") == "remove") {
+        //
+      };
+    }
         });
 
 

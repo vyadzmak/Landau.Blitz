@@ -69,7 +69,8 @@ namespace Landau.Blitz.Web
                 "~/Scripts/bootstrap-table.js",
                 "~/Scripts/bootstrap-table-editable.js",
                 "~/Scripts/bootstrap-editable.js",
-                "~/Scripts/bootstrap-table-ru-Ru.js"));
+                "~/Scripts/bootstrap-table-ru-Ru.js",
+                "~/Content/bootstrap-table-context.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",

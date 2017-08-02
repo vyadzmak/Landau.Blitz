@@ -150,7 +150,7 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="directorInfosParams" class="table">
-                            <tr ng-repeat="director in currentProject.ClientData.DirectorInfos" ng-right-click="clickBusinessPlace()" menu-items="menuItems">
+                            <tr ng-repeat="director in currentProject.ClientData.DirectorInfos" ng-right-click="clickDirectorInfo(director.Id)"  menu-items="menuItems">
                                 <td title="'ФИО'" sortable="'Name'">
                                     {{director.Name}}</td>
                                 <td title="'Дата рож-я'" sortable="'DateOfBirth'">
@@ -192,7 +192,7 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="relatedCompanyInfosParams" class="table">
-                            <tr ng-repeat="company in currentProject.ClientData.RelatedCompanyInfos">
+                            <tr ng-repeat="company in currentProject.ClientData.RelatedCompanyInfos" ng-right-click="clickRelatedCompanyInfo(company.Id)" menu-items="menuItems">
                                 <td title="'Наименование организации'" sortable="'Companyame'">
                                     {{company.CompanyName}}</td>
 
@@ -226,7 +226,8 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="legalOwnerCompanyInfosParams" class="table">
-                            <tr ng-repeat="owner in currentProject.ClientData.LegalOwnerCompanyInfos">
+                            <tr ng-repeat="owner in currentProject.ClientData.LegalOwnerCompanyInfos"
+                             ng-right-click="clickLegalCompanyInfo(owner.Id)" menu-items="menuItems">
                                 <td title="'ФИО'" sortable="'Name'">
                                     {{owner.Name}}</td>
 
@@ -272,7 +273,7 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="actualOwnerCompanyInfosParams" class="table">
-                            <tr ng-repeat="owner in currentProject.ClientData.ActualOwnerCompanyInfos">
+                            <tr ng-repeat="owner in currentProject.ClientData.ActualOwnerCompanyInfos" ng-right-click="clickActualOwnerCompanyInfo(owner.Id)" menu-items="menuItems">
                                 <td title="'ФИО'" sortable="'Name'">
                                     {{owner.Name}}</td>
 
@@ -319,7 +320,7 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="creditHistoryInfosParams" class="table">
-                            <tr ng-repeat="history in currentProject.ClientData.CreditHistoryInfos">
+                            <tr ng-repeat="history in currentProject.ClientData.CreditHistoryInfos" ng-right-click="clickCreditHistoryInfo(history.Id)" menu-items="menuItems">
                                 <td title="'Наименование Банка/кредитора'" sortable="'CompanyName'">
                                     {{history.CompanyName}}</td>
 
@@ -371,7 +372,7 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="bankAccountInfosParams" class="table">
-                            <tr ng-repeat="account in currentProject.ClientData.BankAccountInfos">
+                            <tr ng-repeat="account in currentProject.ClientData.BankAccountInfos" ng-right-click="clickBankAccountInfo(account.Id)" menu-items="menuItems">
                                 <td title="'Наименование Банка'" sortable="'CompanyName'">
                                     {{account.CompanyName}}</td>
 

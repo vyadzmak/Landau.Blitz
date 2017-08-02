@@ -241,6 +241,7 @@
     <Compile Include="Controllers\ClientTypeController.cs" />
     <Compile Include="Controllers\ClientUsersController.cs" />
     <Compile Include="Controllers\ContentGeneratorController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -306,9 +307,6 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
-      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB\Templates.cs">
       <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
@@ -332,6 +330,7 @@
     <Compile Include="Helpers\ClientHelpers\ClientTypeHelper.cs" />
     <Compile Include="Helpers\ContentGeneratorHelpers\ContentGeneratorHelper.cs" />
     <Compile Include="Helpers\CryptHelpers\Crypt.cs" />
+    <Compile Include="Helpers\DocumentHelpers\DocumentHelper.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
     <Compile Include="Helpers\ProjectHelpers\ProjectHelper.cs" />
     <Compile Include="Helpers\SerializeHelpers\SerializeHelper.cs" />
@@ -348,6 +347,7 @@
     <Compile Include="Models\Other\AccountBindingModels.cs" />
     <Compile Include="Models\Other\AccountViewModels.cs" />
     <Compile Include="Models\Other\IdentityModels.cs" />
+    <Compile Include="Models\Project\CliendDataViewModel.cs" />
     <Compile Include="Models\Project\ProjectViewModel.cs" />
     <Compile Include="Models\Settings\SettingModel.cs" />
     <Compile Include="Models\Template\TemplateModel.cs" />
@@ -450,6 +450,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Landau.Blitz.Exporter\Landau.Blitz.Exporter.csproj">
+      <Project>{17851b9e-2d52-4ed0-bdbe-f70b7aaea0b4}</Project>
+      <Name>Landau.Blitz.Exporter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Landau.Blitz.QuickNode\Landau.Blitz.QuickNode.csproj">
       <Project>{c5b39c85-685d-4163-9e60-e73a3ae73af2}</Project>
       <Name>Landau.Blitz.QuickNode</Name>

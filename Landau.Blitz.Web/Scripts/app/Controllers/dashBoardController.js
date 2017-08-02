@@ -1,4 +1,4 @@
-﻿var dashBoardController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
+﻿var dashBoardController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, projectHttpService) {
     $scope.showProjectMenu = true;
     $scope.profileShowing = false;
     var dash = function() {
@@ -23,6 +23,10 @@
 
     };
     dash();
+
+    $scope.loadDocument = function () {
+        projectHttpService.getDocumentByProjectId($http, $scope, usSpinnerService, $rootScope.currentProjectId, false);
+    }
 
     $scope.exitQuestion = function() {
         var dialog = BootstrapDialog.confirm({
@@ -95,4 +99,4 @@
 };
 
 
-blitzApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", dashBoardController]);
+blitzApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "projectHttpService", dashBoardController]);
