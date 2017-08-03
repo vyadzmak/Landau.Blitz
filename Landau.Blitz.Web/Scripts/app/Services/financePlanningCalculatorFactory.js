@@ -61,10 +61,19 @@ blitzApp.factory('financePlanningCalculatorFactory', ['$rootScope', function($ro
 
         var maxDate = new Date(Math.max.apply(null, dates));
         var minDate = new Date(Math.min.apply(null, dates));
-        //currentProject.FinancePlanning.OwnFunds
-        //  currentProject.FinancePlanning.TotalOwnFunds = currentProject.FinancePlanning.OwnFunds;
+
+        ob = currentProject.FinancePlanning.Table.filter(function(item) {
+            return ((item.SourceOfFinancing == 'Заемные средства (кредит банка)' || item.SourceOfFinancing == 'Заемные средства (частный займ)' || item.SourceOfFinancing == 'Заемные средства (инвестиции третьих лиц)') && item.CostItem == 'ПОС');
+        });
+        var posFunds = 0;
+        if (ob.length > 0) {
+            ob.forEach(function(element) {
+                posFunds += element.Amount;
+            }, this);
+        }
+
         currentProject.FinancePlanning.TotalTerm = monthDiff(minDate, maxDate)
-        currentProject.FinancePlanning.TotalBorrowedFunds = currentProject.FinancePlanning.TotalExpenses - currentProject.FinancePlanning.TotalOwnFunds;
+        currentProject.FinancePlanning.TotalBorrowedFunds = currentProject.FinancePlanning.TotalExpenses - currentProject.FinancePlanning.TotalOwnFunds - posFunds;
 
         //currentProject.FinancePlanning.TotalExpenses = currentProject.FinancePlanning.ExpensesDone + currentProject.FinancePlanning.ExpensesPlanned;
 

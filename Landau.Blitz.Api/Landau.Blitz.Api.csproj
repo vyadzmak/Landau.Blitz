@@ -311,6 +311,9 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\sysdiagrams.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Templates.cs">
       <DependentUpon>LandauBlitzModel.tt</DependentUpon>
     </Compile>

@@ -152,6 +152,7 @@ namespace Landau.Blitz.Exporter.Helpers
                     }
                     for (int i = 0; i < sepCount; i++)
                     {
+                        bool isAdd = false;
                         row = new XRow();
                         foreach (var element in loopList)
                         {
@@ -164,6 +165,7 @@ namespace Landau.Blitz.Exporter.Helpers
                                 if (t[i] != null)
                                 {
                                     row.Cells.Add(new XCell() {Text = t[i].Replace(";","")});
+                                    isAdd = true;
                                 }
                                 else
                                 {
@@ -177,6 +179,7 @@ namespace Landau.Blitz.Exporter.Helpers
                             }
 
                         }
+                        if (isAdd)
                         rows.Add(row);
                     }
                 }
@@ -187,6 +190,46 @@ namespace Landau.Blitz.Exporter.Helpers
             catch (Exception e)
             {
                 return null;
+            }
+        }
+
+
+        private static XTable CleanTable(XTable table)
+        {
+            try
+            {
+                int rIndex = 0;
+                while (rIndex < table.Rows.Count)
+                {
+                    bool isDelete = true;
+                    int cIndex = 0;
+                    foreach (var cls in table.Rows[rIndex].Cells)
+                    {
+                        if (cIndex > 0)
+                            if (!string.IsNullOrWhiteSpace(cls.Text) && !cls.Text.Equals("0") && !cls.Text.Equals(" 0 ") && !cls.Text.Equals(" 0") && !cls.Text.Equals("0 "))
+                            {
+                                isDelete = false;
+                                break;
+
+                            }
+
+                        cIndex++;
+                    }
+
+                    if (isDelete)
+                    {
+                        table.Rows.Remove(table.Rows[rIndex]);
+                    }
+                    else
+                    {
+                        rIndex++;
+                    }
+                }
+                return table;
+            }
+            catch (Exception e)
+            {
+                return table;
             }
         }
         /// <summary>
@@ -221,6 +264,11 @@ namespace Landau.Blitz.Exporter.Helpers
                                 table.Rows.Add(row);
                         }
                     }
+
+                    if (element.Name.ToLower().Equals("баланс таблица"))
+                    {
+                        CleanTable(table);
+                    }
                 }
                 else
                 {
@@ -233,6 +281,8 @@ namespace Landau.Blitz.Exporter.Helpers
                                 table.Rows.AddRange(row);
                         }
                     }
+                    CleanTable(table);
+
                 }
             }
             catch (Exception e)

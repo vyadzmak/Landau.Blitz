@@ -3,6 +3,8 @@
     <div class="container">
 
         <div class="row">
+
+
             <div id="toolbar">
                 <button type="button" id="addFP" class="btn btn-primary orange-tooltip" ng-click="showNewFinPlan();" data-toggle="tooltip" title="Добавить" data-placement="bottom">
                     
@@ -10,17 +12,29 @@
                     </button>
 
             </div>
+
             <table id="financePlanningTable" data-toolbar="#toolbar" data-row-style="rowStyle"></table>
+            <div>
+                <br/> План финансирования составляется для любой цели поэтапно. Если в рамках данного проекта были уже выполнены некоторые работы, они указываются в плане финансирования. Расшифровка этапов - по видам, срокам и источникам финансирования.
+                Этапы на строительство: квадратура, стоимость материалов и стоимость работ. Комментарии.
+
+            </div>
             <ul id="context-menu" class="dropdown-menu">
-                 <li data-item="edit">
+                <li data-item="edit">
                     <a>Редактировать</a>
                 </li>
                 <li data-item="delete">
                     <a>Удалить</a>
                 </li>
             </ul>
-           
+
         </div>
+
+        <div class="row">
+            <br/>
+            <br/>
+        </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-primary">

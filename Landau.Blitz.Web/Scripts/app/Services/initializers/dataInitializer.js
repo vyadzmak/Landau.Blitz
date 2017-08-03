@@ -122,6 +122,10 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.TotalTransport2 = 0;
         currentProject.FinDataBalance.TotalBuildings2 = 0;;
 
+
+        currentProject.FinDataBalance.TotalInvestment = 0;
+        currentProject.FinDataBalance.TotalInvestment2 = 0;
+
         currentProject.FinDataBalance.TotalActive = 0;
         currentProject.FinDataBalance.PrepaymentsForFixedAssets = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.PrepaymentsForFixedAssets2 : 0;
         currentProject.FinDataBalance.UnfinishedObjects = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.UnfinishedObjects2 : 0;

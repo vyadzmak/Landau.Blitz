@@ -159,13 +159,29 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
     var calculateBalanceTotalActive = function(currentProject) {
         //var totalCurrentAssets = 
         currentProject.FinDataBalance.TotalActive =
+            currentProject.FinDataBalance.TotalFixedAssets +
+            currentProject.FinDataBalance.TotalCurrentAssets +
+            currentProject.FinDataBalance.TotalInvestment;
+
+
+        currentProject.FinDataBalance.TotalActive2 =
+            currentProject.FinDataBalance.TotalFixedAssets2 +
+            currentProject.FinDataBalance.TotalCurrentAssets2 +
+            currentProject.FinDataBalance.TotalInvestment2;
+
+    };
+
+
+    var calculateBalanceTotalInvestment = function(currentProject) {
+        //var totalCurrentAssets = 
+        currentProject.FinDataBalance.TotalInvestment =
             currentProject.FinDataBalance.PrepaymentsForFixedAssets +
             currentProject.FinDataBalance.UnfinishedObjects +
             currentProject.FinDataBalance.FixedAssetsTempNotInBusiness +
             currentProject.FinDataBalance.CapitalCostsInUncompletedWork;
 
 
-        currentProject.FinDataBalance.TotalActive2 =
+        currentProject.FinDataBalance.TotalInvestment2 =
             currentProject.FinDataBalance.PrepaymentsForFixedAssets2 +
             currentProject.FinDataBalance.UnfinishedObjects2 +
             currentProject.FinDataBalance.FixedAssetsTempNotInBusiness2 +
@@ -207,15 +223,28 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
 
     };
 
+    var calculateBalanceTotalPassive = function(currentProject) {
+        //var totalCurrentAssets = 
+        currentProject.FinDataBalance.TotalPassive =
+            currentProject.FinDataBalance.TotalShortAccountsPayable +
+            currentProject.FinDataBalance.TotalLongAccountsPayable;
+
+
+        currentProject.FinDataBalance.TotalPassive2 =
+            currentProject.FinDataBalance.TotalShortAccountsPayable2 +
+            currentProject.FinDataBalance.TotalLongAccountsPayable2;
+
+
+    };
     var calculateBalanceDesignValue = function(currentProject) {
 
-        currentProject.FinDataBalance.Equity = Number((currentProject.FinDataBalance.TotalActive - currentProject.FinDataBalance.TotalShortAccountsPayable).toFixed(3));
-        currentProject.FinDataBalance.CoefficientOfLiquidity = Number((currentProject.FinDataBalance.TotalShortAccountsPayable / currentProject.FinDataBalance.TotalCurrentAssets).toFixed(3));
-        currentProject.FinDataBalance.CapitalAdequacyRatio = Number((currentProject.FinDataBalance.Equity / currentProject.FinDataBalance.TotalActive * 100).toFixed(3));
+        currentProject.FinDataBalance.Equity = +((currentProject.FinDataBalance.TotalActive - currentProject.FinDataBalance.TotalShortAccountsPayable).toFixed(2));
+        currentProject.FinDataBalance.CoefficientOfLiquidity = +((currentProject.FinDataBalance.TotalShortAccountsPayable / currentProject.FinDataBalance.TotalCurrentAssets * 100).toFixed(2));
+        currentProject.FinDataBalance.CapitalAdequacyRatio = +((currentProject.FinDataBalance.Equity / currentProject.FinDataBalance.TotalActive * 100).toFixed(2));
 
-        currentProject.FinDataBalance.Equity2 = Number((currentProject.FinDataBalance.TotalActive2 - currentProject.FinDataBalance.TotalShortAccountsPayable2).toFixed(3));
-        currentProject.FinDataBalance.CoefficientOfLiquidity2 = Number((currentProject.FinDataBalance.TotalShortAccountsPayable2 / currentProject.FinDataBalance.TotalCurrentAssets2).toFixed(3));
-        currentProject.FinDataBalance.CapitalAdequacyRatio2 = Number((currentProject.FinDataBalance.Equity2 / currentProject.FinDataBalance.TotalActive2 * 100).toFixed(3));
+        currentProject.FinDataBalance.Equity2 = +((currentProject.FinDataBalance.TotalActive2 - currentProject.FinDataBalance.TotalShortAccountsPayable2).toFixed(2));
+        currentProject.FinDataBalance.CoefficientOfLiquidity2 = +((currentProject.FinDataBalance.TotalShortAccountsPayable2 / currentProject.FinDataBalance.TotalCurrentAssets2 * 100).toFixed(2));
+        currentProject.FinDataBalance.CapitalAdequacyRatio2 = +((currentProject.FinDataBalance.Equity2 / currentProject.FinDataBalance.TotalActive2 * 100).toFixed(2));
 
     }
 
@@ -238,9 +267,11 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
         calculateBalanceTotalTransport(currentProject);
         calculateBalanceTotalBuildings(currentProject);
         calculateBalanceTotalFixedAssets(currentProject);
+        calculateBalanceTotalInvestment(currentProject);
         calculateBalanceTotalActive(currentProject);
         calculateBalanceTotalShortAccountsPayable(currentProject);
         calculateBalanceTotalLongAccountsPayable(currentProject);
+        calculateBalanceTotalPassive(currentProject);
         calculateBalanceDesignValue(currentProject);
     }
 

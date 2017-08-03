@@ -71,6 +71,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
         var ob = currentProject.FinDataOpiu.Table.filter(function(item) {
             return item.VarName == name;
         });
+        if (ob == undefined || values == undefined) return;
 
         for (var z = 0; z < months.length; z++) {
             ob[0][months[z]] = values[z];
@@ -337,7 +338,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
 
     function calculateValueOfContributionProfit(currentProject) {
 
-        var ent = ["NetProfit", 'LoanPayment'];
+        var ent = ['LoanPayment', "NetProfit"];
         var calc = [];
         ent.forEach(function(element) {
             calc.push(getVarArrayByName(currentProject, element))

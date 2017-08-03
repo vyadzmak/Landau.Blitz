@@ -665,7 +665,7 @@
         <!--АКТИВ ИНВЕСТИЦИИ-->
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Инвестиции</div>
 
@@ -718,13 +718,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4">Итого АКТИВ:</label>
+                            <label class="col-sm-4">Итого Инвестиции:</label>
                             <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalInvestment">
                             </div>
 
                             <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive2">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalInvestment2">
                             </div>
                         </div>
                     </div>
@@ -733,7 +733,39 @@
 
 
 
-            <div class="col-md-4">
+
+
+        </div>
+
+
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Итого актив</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-6">Итого актив</label>
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive2">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Краткосрочная кредиторская задолженность</div>
 
@@ -801,7 +833,7 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Долгосрочные кредиты и займы</div>
 
@@ -867,9 +899,32 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!--КОНЕЦ АКТИВА -->
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Итого пассив</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-6">Итого пассив</label>
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalPassive">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalPassive2">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--РАСЧЕТНЫЕ ВЕЛИЧИНЫ-->
         <div class="row">

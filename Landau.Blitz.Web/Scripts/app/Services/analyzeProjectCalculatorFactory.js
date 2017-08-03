@@ -5,28 +5,31 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', function($roo
 
 
     analyzeProjectCalculatorFactory.calculateData = function(currentProject) {
-        currentProject.ProjectAnalysis.FullExpensesExcludePos = currentProject.FinancePlanning.TotalExpenses - currentProject.FinancePlanning.TotalPos;
-        currentProject.ProjectAnalysis.SK = currentProject.FinancePlanning.TotalOwnFunds;
-        currentProject.ProjectAnalysis.ZK = currentProject.FinancePlanning.TotalBorrowedFunds;
+        currentProject.ProjectAnalysis.FullExpensesExcludePos = +(parseFloat(currentProject.FinancePlanning.TotalExpenses - currentProject.FinancePlanning.TotalPos)).toFixed(2);
+        currentProject.ProjectAnalysis.SK = +(parseFloat(currentProject.FinancePlanning.TotalOwnFunds)).toFixed(2);
+        currentProject.ProjectAnalysis.ZK = +(parseFloat(currentProject.FinancePlanning.TotalBorrowedFunds)).toFixed(2);
 
-        currentProject.ProjectAnalysis.SKPercent = Number((currentProject.FinancePlanning.TotalOwnFunds / currentProject.ProjectAnalysis.FullExpensesExcludePos * 100).toFixed(2));;
-        currentProject.ProjectAnalysis.ZKPercent = Number((currentProject.FinancePlanning.TotalBorrowedFunds / currentProject.ProjectAnalysis.FullExpensesExcludePos * 100).toFixed(2));
+        currentProject.ProjectAnalysis.SKPercent = +(parseFloat(currentProject.FinancePlanning.TotalOwnFunds / currentProject.ProjectAnalysis.FullExpensesExcludePos * 100)).toFixed(2);
+        currentProject.ProjectAnalysis.ZKPercent = +(parseFloat(currentProject.FinancePlanning.TotalBorrowedFunds / currentProject.ProjectAnalysis.FullExpensesExcludePos * 100)).toFixed(2);
 
-        currentProject.ProjectAnalysis.SSK = currentProject.ProjectAnalysis.AlternativeBid * currentProject.ProjectAnalysis.SKPercent + currentProject.ProjectAnalysis.CreditBid * currentProject.ProjectAnalysis.ZKPercent;
+        currentProject.ProjectAnalysis.SSK = +(parseFloat((currentProject.ProjectAnalysis.AlternativeBid / 100) * currentProject.ProjectAnalysis.SKPercent + (currentProject.ProjectAnalysis.CreditBid / 100) * currentProject.ProjectAnalysis.ZKPercent)).toFixed(2);
+        //currentProject.ProjectAnalysis.SSK = Number((currentProject.ProjectAnalysis.AlternativeBid) * currentProject.ProjectAnalysis.SKPercent + (currentProject.ProjectAnalysis.CreditBid) * currentProject.ProjectAnalysis.ZKPercent).toFixed(2);
 
 
         //ожидаемая выручка
-        currentProject.ProjectAnalysis.SelfCost = Number((currentProject.ProjectAnalysis.ExpectedRevenue * 100 / currentProject.ProjectAnalysis.ExtraCharge).toFixed(2))
-        currentProject.ProjectAnalysis.AGrossProfit = currentProject.ProjectAnalysis.ExpectedRevenue - currentProject.ProjectAnalysis.SelfCost;
-        currentProject.ProjectAnalysis.ProfitForTheProject = currentProject.ProjectAnalysis.AGrossProfit - currentProject.ProjectAnalysis.VariableCosts - currentProject.ProjectAnalysis.FixedCosts;
-        currentProject.ProjectAnalysis.SalesProfitability = Number((currentProject.ProjectAnalysis.ProfitForTheProject / currentProject.ProjectAnalysis.ExpectedRevenue).toFixed(2));
+
+        //1. Себестоимость = [Ожидаемая выручка (3.2.-42) /(100+m)] х 100 
+        currentProject.ProjectAnalysis.SelfCost = +(parseFloat(((currentProject.ProjectAnalysis.ExpectedRevenue / (currentProject.ProjectAnalysis.ExtraCharge + 100) * 100)))).toFixed(2);
+        currentProject.ProjectAnalysis.AGrossProfit = +(parseFloat(currentProject.ProjectAnalysis.ExpectedRevenue - currentProject.ProjectAnalysis.SelfCost)).toFixed(2);
+        currentProject.ProjectAnalysis.ProfitForTheProject = +(parseFloat(currentProject.ProjectAnalysis.AGrossProfit - currentProject.ProjectAnalysis.VariableCosts - currentProject.ProjectAnalysis.FixedCosts)).toFixed(2);
+        currentProject.ProjectAnalysis.SalesProfitability = +(parseFloat((currentProject.ProjectAnalysis.ProfitForTheProject / currentProject.ProjectAnalysis.ExpectedRevenue))).toFixed(2);
         //payback period
-        currentProject.ProjectAnalysis.PaybackPeriod = Number((currentProject.ProjectAnalysis.FullExpensesExcludePos / currentProject.ProjectAnalysis.ProfitForTheProject).toFixed(1));
-        currentProject.ProjectAnalysis.ARR = Number((currentProject.ProjectAnalysis.ProfitForTheProject * 12 / currentProject.ProjectAnalysis.FullExpensesExcludePos).toFixed(1));
+        currentProject.ProjectAnalysis.PaybackPeriod = +(parseFloat((currentProject.ProjectAnalysis.FullExpensesExcludePos / currentProject.ProjectAnalysis.ProfitForTheProject))).toFixed(2);
+        currentProject.ProjectAnalysis.ARR = +(parseFloat((currentProject.ProjectAnalysis.ProfitForTheProject * 12 / currentProject.ProjectAnalysis.FullExpensesExcludePos))).toFixed(2);
         //breakeven point
-        currentProject.ProjectAnalysis.BreakevenPoint = Number(((currentProject.ProjectAnalysis.ExpectedRevenue * currentProject.ProjectAnalysis.FixedCosts) / (currentProject.ProjectAnalysis.ExpectedRevenue - currentProject.ProjectAnalysis.SelfCost - currentProject.ProjectAnalysis.VariableCosts)).toFixed(1));
+        currentProject.ProjectAnalysis.BreakevenPoint = +(parseFloat(((currentProject.ProjectAnalysis.ExpectedRevenue * currentProject.ProjectAnalysis.FixedCosts) / (currentProject.ProjectAnalysis.ExpectedRevenue - currentProject.ProjectAnalysis.SelfCost - currentProject.ProjectAnalysis.VariableCosts)))).toFixed(2);
         //margin of safety
-        currentProject.ProjectAnalysis.MarginOfSafety = Number(((currentProject.ProjectAnalysis.ExpectedRevenue - currentProject.ProjectAnalysis.BreakevenPoint) / currentProject.ProjectAnalysis.ExpectedRevenue).toFixed(1));
+        currentProject.ProjectAnalysis.MarginOfSafety = +(parseFloat(((currentProject.ProjectAnalysis.ExpectedRevenue - currentProject.ProjectAnalysis.BreakevenPoint) / currentProject.ProjectAnalysis.ExpectedRevenue))).toFixed(2);
 
     }
 
