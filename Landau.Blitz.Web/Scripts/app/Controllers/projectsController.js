@@ -18,7 +18,7 @@ function projectDeleteFormatter(value, row, index) {
     ].join('');
 }
 
-var projectsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, promiseUtils, httpService) {
+var projectsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, promiseUtils, httpService, projectFactory) {
 
 
     var url = $$ApiUrl + "/userprojects";
@@ -176,6 +176,24 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
         });
 
         modalInstance.result.then(function() {
+            var url = $$ApiUrl + "/projects"
+            $scope.mElement = projectFactory.initProjectData($scope.mElement);
+            $scope.mElement.ClientData.OrganizationName = $scope.mElement.ProjectSetting.SelectedClient.Name;
+
+            $scope.mElement.ProjectAnalysis.CreditBid = $scope.mElement.PercentBid;
+            $scope.mElement.ProjectAnalysis.DollarRate = $scope.mElement.DollarRate;
+            $scope.mElement.ProjectAnalysis.AlternativeBid = $scope.mElement.AlternateBid;
+
+            $scope.mElement.ProjectAnalysis.ActivityService = $scope.mElement.ActivityService;
+            $scope.mElement.ProjectAnalysis.ActivityTrade = $scope.mElement.ActivityTrade;
+            $scope.mElement.ProjectAnalysis.ActivityAgriculture = $scope.mElement.ActivityAgriculture;
+            $scope.mElement.ProjectAnalysis.ActivityProduction = $scope.mElement.ActivityProduction;
+
+
+
+            $scope.mElement.Content = JSON.stringify($scope.mElement);
+
+
             var rParams = {
                 data: $scope.mElement,
                 config: { contentType: "application/json" }
@@ -186,7 +204,7 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
 
                 promiseUtils.getPromiseHttpResult(httpService.postRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
 
-                    $scope.mElement.Id = JSON.parse(result).Id;
+                    $scope.mElement = JSON.parse(result);
                     //$scope.mElement.ClientTypeName = $scope.mElement.CurrentClientType.Description;
                     //$scope.mElement.RegistrationDate = JSON.parse(result).RegistrationDate;
                     elements.push($scope.mElement);
@@ -236,16 +254,64 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
 
     $scope.showProjectModal = function() {
 
+        var rParams = { 'id': $scope.userData.UserId };
+        var url = $$ApiUrl + "/projectconfig"
+        promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
+            // alert(result);
+            $scope.projectSetting = JSON.parse(result);
+            $scope.projectSetting.SelectedClient = $scope.projectSetting.Clients[0];
 
-        var modalView = 'PartialViews/Modals/Project/ProjectModal.html';
-        var modalController = manageProjectController;
+            $scope.projectSetting.StartMonth = $scope.projectSetting.StartDates.Months[0];
+            $scope.projectSetting.StartYear = $scope.projectSetting.StartDates.Years[0];
 
-        if ($scope.projects == undefined) {
-            $scope.projects = [];
-        }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.projects);
+            $scope.projectSetting.EndMonth = $scope.projectSetting.EndDates.Months[0];
+            $scope.projectSetting.EndYear = $scope.projectSetting.EndDates.Years[0];
+
+
+            var modalView = 'PartialViews/Modals/Project/ProjectModal.html';
+            var modalController = manageProjectController;
+
+            if ($scope.projects == undefined) {
+                $scope.projects = [];
+            }
+            $scope.mElement = {};
+            $scope.mElement = projectFactory.initProject();
+            $scope.mElement.CreatorId = $scope.userData.UserId;
+            $scope.mElement.ActivityService = $scope.projectSetting.ActivityService;
+            $scope.mElement.ActivityTrade = $scope.projectSetting.ActivityTrade;
+            $scope.mElement.ActivityAgriculture = $scope.projectSetting.ActivityAgriculture;
+            $scope.mElement.ActivityProduction = $scope.projectSetting.ActivityProduction;
+
+
+
+            $scope.mElement.ProjectSetting = $scope.projectSetting;
+            $scope.selectClient();
+
+            $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.projects);
+        });
+
+
+    }
+
+
+    $scope.selectClient = function() {
+
+        var rParams = { 'id': $scope.mElement.ProjectSetting.SelectedClient.Id };
+        var url = $$ApiUrl + "/parentproject"
+        promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
+            var ob = JSON.parse(result)
+            if (ob == null) {
+                $scope.mElement.ParentExists = false;
+                $scope.mElement.ParentProject = undefined;
+            } else {
+                $scope.mElement.ParentExists = true;
+                $scope.mElement.ParentProject = JSON.parse(ob.ProjectContent);
+
+            }
+        })
+
+
     }
 
 };
-blitzApp.controller("projectsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "promiseUtils", "httpService", projectsController]);
+blitzApp.controller("projectsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "promiseUtils", "httpService", "projectFactory", projectsController]);

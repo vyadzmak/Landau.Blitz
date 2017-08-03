@@ -10,7 +10,7 @@ blitzApp.factory('financePlanningCalculatorFactory', ['$rootScope', function($ro
     }
 
     financePlaningCalculatorFactory.calculateData = function(currentProject) {
-
+        if (currentProject.FinancePlanning.Table == undefined) return;
         var ob = currentProject.FinancePlanning.Table.filter(function(item) {
             return item.CostItem == 'ПОС';
         });

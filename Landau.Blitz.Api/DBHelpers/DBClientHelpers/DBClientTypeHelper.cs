@@ -22,7 +22,9 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
             {
                 using (var db = new LandauBlitzEntities())
                 {
-                    return db.ClientTypes.Select(x => x).ToList();
+                    return db.ClientTypes.Select(x => x)
+                        .Where(x=>x.Id!=1 && x.Id!=2)
+                        .ToList();
                 }
             }
             catch (Exception e)

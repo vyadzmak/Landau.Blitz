@@ -58,7 +58,7 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', function($rootScope) {
         var ob = currentProject.FinDataOdds.Table.filter(function(item) {
             return item.VarName == name;
         });
-
+        if (ob == undefined || ob.length == 0) return;
         for (var z = 0; z < months.length; z++) {
             result.push(Number(ob[0][months[z]]));
         }
@@ -253,16 +253,28 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', function($rootScope) {
     function getRevenueFromOpiu(currentProject) {
         var result = [];
         var ob = currentProject.FinDataOpiu.Table.filter(function(item) {
-            return item.VarName == "Revenues";
+            return item.VarName == "TotalRevenues";
         });
 
         for (var z = 0; z < months.length; z++) {
             result.push(ob[0][months[z]]);
         }
-        setVarArrayByName(currentProject, "Revenues", result);
+        setVarArrayByName(currentProject, "TotalRevenues", result);
         //return result;
     }
 
+    function getSingleRevenueFromOpiu(currentProject, service) {
+        var result = [];
+        var ob = currentProject.FinDataOpiu.Table.filter(function(item) {
+            return item.VarName == "Revenues" + service;
+        });
+
+        for (var z = 0; z < months.length; z++) {
+            result.push(ob[0][months[z]]);
+        }
+        setVarArrayByName(currentProject, "Revenues" + service, result);
+        //return result;
+    }
 
     function getRevenueOtherIncome(currentProject) {
         var result = [];
@@ -279,6 +291,25 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', function($rootScope) {
 
     function calculateInternalVarsByMonths(currentProject) {
         getRevenueFromOpiu(currentProject);
+
+
+
+        if (currentProject.ProjectAnalysis.ActivityService) {
+            getSingleRevenueFromOpiu(currentProject, "Service");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityTrade) {
+            getSingleRevenueFromOpiu(currentProject, "Trade");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityAgriculture) {
+            getSingleRevenueFromOpiu(currentProject, "Agriculture");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityProduction) {
+            getSingleRevenueFromOpiu(currentProject, "Production");
+        }
+
         getRevenueOtherIncome(currentProject);
         calculateOtherSupply(currentProject)
         calculateTotalExpensesForBusiness(currentProject);

@@ -121,17 +121,48 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
                 {
                     Projects project = new Projects();
                     project.CreationDate = DateTime.Now;
-                    project.CreatorId = 1;
-                    project.Name = "Тестовый проект";
+                    project.CreatorId = model.CreatorId;
+                    project.Name = model.Name;
                     project.ProjectContent = model.Content;
+                    project.ProjectStateId = 1;
+                    project.ClientId = model.ProjectSetting.SelectedClient.Id;
                     db.Projects.Add(project);
                     db.SaveChanges();
+                    Users user = db.Users.FirstOrDefault(x => x.Id == model.CreatorId);
+                    if (user != null)
+                    {
+                        model.CreatorName = user.FirstName + " " + user.LastName;
+                    }
                     model.Id = project.Id;
                     model.CreationDate = project.CreationDate.ToString();
-                    model.CreatorId = 1;
-                    model.Name = "Тестовый проект";
                 }
                     return SerializeHelper.Serialize(model);
+            }
+            catch (Exception e)
+            {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
+        public static string GetToParentProjectById(int clientId)
+        {
+            try
+            {
+                using (var db = new LandauBlitzEntities())
+                {
+                    Projects lastProject = db.Projects.ToList().LastOrDefault(x => x.ClientId == clientId);
+                    return SerializeHelper.Serialize(lastProject);
+                }
             }
             catch (Exception e)
             {

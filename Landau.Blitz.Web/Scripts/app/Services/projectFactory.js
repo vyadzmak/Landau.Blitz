@@ -16,10 +16,39 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
     var currentProvision = {};
     var currentDataDamu = {};
     var currentConclusion = {};
+
+    function checkAdd(varName) {
+        //услуги
+        if ((varName == 'RevenuesService' || varName == 'CostOfGoodsService' || varName == 'MarginService' || varName == 'GrossProfitService' || varName == 'SpeedOfTurnoverService' || varName == 'ProfitabilityOfSalesService') && currentProject.ActivityService) {
+            return true;
+        } else if ((varName == 'RevenuesService' || varName == 'CostOfGoodsService' || varName == 'MarginService' || varName == 'GrossProfitService' || varName == 'SpeedOfTurnoverService' || varName == 'ProfitabilityOfSalesService') && !currentProject.ActivityService) {
+            return false;
+        }
+
+        if ((varName == 'RevenuesTrade' || varName == 'CostOfGoodsTrade' || varName == 'MarginTrade' || varName == 'GrossProfitTrade' || varName == 'SpeedOfTurnoverTrade' || varName == 'ProfitabilityOfSalesTrade') && currentProject.ActivityTrade) {
+            return true;
+        } else if ((varName == 'RevenuesTrade' || varName == 'CostOfGoodsTrade' || varName == 'MarginTrade' || varName == 'GrossProfitTrade' || varName == 'SpeedOfTurnoverTrade' || varName == 'ProfitabilityOfSalesTrade') && !currentProject.ActivityTrade) {
+            return false;
+        }
+
+        if ((varName == 'RevenuesAgriculture' || varName == 'CostOfGoodsAgriculture' || varName == 'MarginAgriculture' || varName == 'GrossProfitAgriculture' || varName == 'SpeedOfTurnoverAgriculture' || varName == 'ProfitabilityOfSalesAgriculture') && currentProject.ActivityAgriculture) {
+            return true;
+        } else if ((varName == 'RevenuesAgriculture' || varName == 'CostOfGoodsAgriculture' || varName == 'MarginAgriculture' || varName == 'GrossProfitAgriculture' || varName == 'SpeedOfTurnoverAgriculture' || varName == 'ProfitabilityOfSalesAgriculture') && !currentProject.ActivityAgriculture) {
+            return false;
+        }
+
+        if ((varName == 'RevenuesProduction' || varName == 'CostOfGoodsProduction' || varName == 'MarginProduction' || varName == 'GrossProfitProduction' || varName == 'SpeedOfTurnoverProduction' || varName == 'ProfitabilityOfSalesProduction') && currentProject.ActivityProduction) {
+            return true;
+        } else if ((varName == 'RevenuesProduction' || varName == 'CostOfGoodsProduction' || varName == 'MarginProduction' || varName == 'GrossProfitProduction' || varName == 'SpeedOfTurnoverProduction' || varName == 'ProfitabilityOfSalesProduction') && !currentProject.ActivityProduction) {
+            return false;
+        }
+
+        return true;
+    }
+
     //------end views data ---//
     function initLine(title, varName) {
-        var line = {};
-        line.Title = title;
+
 
         var calc = false;
         if (varName.indexOf("!") != -1) {
@@ -27,18 +56,25 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             varName = varName.replace('!', '');
         }
 
-        line.Calculate = calc;
-        line.VarName = varName;
-        line.M1 = 0;
-        line.M2 = 0;
-        line.M3 = 0;
-        line.M4 = 0;
-        line.M5 = 0;
-        line.M6 = 0;
-        line.Avg = 0;
-        line.AvgPrognose = 0;
 
-        return line;
+        if (checkAdd(varName)) {
+            var line = {};
+            line.Title = title;
+            line.Calculate = calc;
+            line.VarName = varName;
+            line.M1 = 0;
+            line.M2 = 0;
+            line.M3 = 0;
+            line.M4 = 0;
+            line.M5 = 0;
+            line.M6 = 0;
+            line.Avg = 0;
+            line.AvgPrognose = 0;
+            return line;
+        } else {
+            return undefined;
+        }
+
     }
 
 
@@ -47,7 +83,11 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         var lines = [];
 
         var positions = [
-            'Выручка',
+            'Итого Выручка',
+            'Выручка (Услуги)',
+            'Выручка (Торговля)',
+            'Выручка (С/Х)',
+            'Выручка (Производство)',
             'Прочие поступления',
             'Доходы из статьи ОПиУ',
             'Разовые доходы от продажи основных средств',
@@ -57,7 +97,6 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Частные займы',
             'Финансовая помощь',
             'Затраты денежных средств',
-
             'Заработная плата',
             'Доставка товаров/сырья',
             'Транспортные расходы',
@@ -73,22 +112,21 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Брак/порча/списания',
             'Спонсорские/благотворительные расходы',
             'Прочие расходы по бизнесу',
-
             'Капитальные затраты',
             'Строительство, ремонт',
             'Покупка основных средств',
             'Затраты вне бизнеса',
             'Погашение кредитов',
             'Результат месяца'
-
-
-
-
         ]
 
 
         var vNames = [
-            '!Revenues',
+            '!TotalRevenues',
+            '!RevenuesService',
+            '!RevenuesTrade',
+            '!RevenuesAgriculture',
+            '!RevenuesProduction',
             '!OtherSupply',
             '!IncomeFromOPIU',
             'SingleIncome',
@@ -113,7 +151,6 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'MarriageDamageCancellation',
             'SponsorshipCharitableExpenses',
             'OtherBusinessExpenses',
-
             '!CapitalExpenditures',
             'ConstructionRepair',
             'PurchaseOfFixedAssets',
@@ -122,7 +159,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             '!ResultOfTheMonth'
         ]
         for (var i = 0; i < positions.length; i++) {
-            lines.push(initLine(positions[i], vNames[i]));
+            var l = initLine(positions[i], vNames[i]);
+            if (l != undefined)
+                lines.push(l);
         }
 
         return lines;
@@ -133,10 +172,28 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         var lines = [];
 
         var positions = [
-            'Выручка',
-            'Себестоимость прод. товаров',
-            'Маржа',
-            'Валовая прибыль',
+            'Выручка (Услуги)',
+            'Себестоимость прод. товаров (Услуги)',
+            'Маржа (Услуги)',
+            'Валовая прибыль (Услуги)',
+
+            'Выручка (Торговля)',
+            'Себестоимость прод. товаров (Торговля)',
+            'Маржа (Торговля)',
+            'Валовая прибыль (Торговля)',
+
+            'Выручка (С/Х)',
+            'Себестоимость прод. товаров (С/Х)',
+            'Маржа (С/Х)',
+            'Валовая прибыль (С/Х)',
+
+            'Выручка (Производство)',
+            'Себестоимость прод. товаров (Производство)',
+            'Маржа (Производство)',
+            'Валовая прибыль (Производство)',
+
+            'Итого Выручка',
+            'Итого Валовая прибыль',
             'Итого расходы по бизнесу',
             'Заработная плата',
             'Доставка товаров/сырья',
@@ -162,26 +219,50 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Хобби/увлечения',
             'Путешествия семьей',
             'Выплата дивидендов',
-            'Другое',
+            'Другое (расход)',
             'Прочие доходы',
             'Зарплата членов семьи',
             'Доход от сдачи в аренду недвижимсти',
             'Доход от неосновной деятельности клиента',
-            'Другое',
+            'Другое (доход)',
             'Чистая прибыль',
             'Взнос по займу',
             'Соотношение взнос/прибыль',
-            'Скорость товарооборота',
-            'Рентабельность продаж'
-
+            'Скорость товарооборота (Услуги)',
+            'Скорость товарооборота (Торговля)',
+            'Скорость товарооборота (С/Х)',
+            'Скорость товарооборота (Производство)',
+            'Рентабельность продаж (Услуги)',
+            'Рентабельность продаж (Торговля)',
+            'Рентабельность продаж (С/Х)',
+            'Рентабельность продаж (Производство)',
         ]
 
 
         var vNames = [
-            'Revenues',
-            'CostOfGoods',
-            '!Margin',
-            '!GrossProfit',
+            'RevenuesService',
+            'CostOfGoodsService',
+            '!MarginService',
+            '!GrossProfitService',
+
+            'RevenuesTrade',
+            'CostOfGoodsTrade',
+            '!MarginTrade',
+            '!GrossProfitTrade',
+
+            'RevenuesAgriculture',
+            'CostOfGoodsAgriculture',
+            '!MarginAgriculture',
+            '!GrossProfitAgriculture',
+
+            'RevenuesProduction',
+            'CostOfGoodsProduction',
+            '!MarginProduction',
+            '!GrossProfitProduction',
+
+
+            '!TotalRevenues',
+            '!TotalGrossProfit',
             '!TotalExpensesForBusiness',
             'Wage',
             'DeliveryOfGoods',
@@ -216,11 +297,20 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             '!NetProfit',
             '!LoanPayment',
             '!ValueOfContributionProfit',
-            '!SpeedOfTurnover',
-            '!ProfitabilityOfSales'
+            '!SpeedOfTurnoverService',
+            '!SpeedOfTurnoverTrade',
+            '!SpeedOfTurnoverAgriculture',
+            '!SpeedOfTurnoverProduction',
+            '!ProfitabilityOfSalesService',
+            '!ProfitabilityOfSalesTrade',
+            '!ProfitabilityOfSalesAgriculture',
+            '!ProfitabilityOfSalesProduction',
         ]
         for (var i = 0; i < positions.length; i++) {
-            lines.push(initLine(positions[i], vNames[i]));
+
+            var l = initLine(positions[i], vNames[i]);
+            if (l != undefined)
+                lines.push(l);
         }
 
         return lines;
@@ -230,10 +320,10 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
     projectFactory.initProject = function() {
         currentProject = {};
         currentProject.Id = -1;
+        currentProject.ParentProject = {};
+        currentProject.ParentExists = false;
         currentProject.Name = "";
-        currentProject.CreatorId = 1;
         currentProject.ClientData = {};
-        //clientDataInitializer.setClientData(currentProject);
         currentProject.CreditData = {};
         currentProject.FinancePlanning = {};
         currentProject.ProjectAnalysis = {};
@@ -247,8 +337,31 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.DataDamu = {};
         currentProject.Conclusion = {};
 
-        dataInitilizer.setBalanceData(currentProject);
+        //dataInitilizer.setBalanceData(currentProject);
         //currentProject.ProjectContent = JSON.stringify(currentProject);
+        this.currentProject = currentProject;
+        return currentProject;
+    }
+
+    projectFactory.initProjectData = function(currentProject) {
+        //var currentProject = this.currentProject;
+        if (currentProject.ParentExists) {
+            currentProject.ClientData = angular.copy(currentProject.ParentProject.ClientData);
+            // currentProject.CreditData = {};
+            //currentProject.FinancePlanning = {};
+            //currentProject.ProjectAnalysis = {};
+            currentProject.BusinessInfo = angular.copy(currentProject.ParentProject.BusinessInfo);
+            //currentProject.FinDataBalance = {};
+            //currentProject.FinDataCrossChecking = {};
+            //currentProject.FinDataOpiu = {};
+            //currentProject.FinDataOdds = {};
+            currentProject.LargeExpenses = angular.copy(currentProject.ParentProject.LargeExpenses);
+            currentProject.Provision = angular.copy(currentProject.ParentProject.Provision);
+            //currentProject.DataDamu = angular.copy(currentProject.ParentProject.DataDamu);
+            //currentProject.Conclusion = angular.copy(currentProject.ParentProject.ClientData);
+        }
+        dataInitilizer.setBalanceData(currentProject);
+
         this.currentProject = currentProject;
         return currentProject;
     }
@@ -258,7 +371,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ClientData = currentProject.ProjectContent.ClientData;
         currentProject.ClientData.RegistrationDate = new Date(currentProject.ProjectContent.ClientData.RegistrationDate);
         currentProject.ClientData.ReRegistrationDate = new Date(currentProject.ProjectContent.ClientData.ReRegistrationDate);
-
+        currentProject.ParentProject = currentProject.ProjectContent.ParentProject;
+        currentProject.ParentExists = currentProject.ProjectContent.ParentExists;
+        // alert(currentProject.ParentExists);
         currentProject.CreditData = currentProject.ProjectContent.CreditData;;
         currentProject.FinancePlanning = currentProject.ProjectContent.FinancePlanning;
         currentProject.ProjectAnalysis = currentProject.ProjectContent.ProjectAnalysis;

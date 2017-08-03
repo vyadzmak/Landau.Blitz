@@ -1,4 +1,4 @@
-﻿var dashBoardController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, projectHttpService) {
+﻿var dashBoardController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, projectHttpService, promiseUtils, httpService, projectFactory) {
     $scope.showProjectMenu = true;
     $scope.profileShowing = false;
     var dash = function() {
@@ -11,9 +11,9 @@
                 break;
 
                 // case 2:
-                // case 3:
-                //     $state.go("main.dashboard.single");
-                //     break;
+            case 3:
+                $state.go("main.dashboard.projects");
+                break;
 
             default:
                 $state.go("main.login");
@@ -24,10 +24,48 @@
     };
     dash();
 
-    $scope.loadDocument = function () {
+    $scope.loadDocument = function() {
         projectHttpService.getDocumentByProjectId($http, $scope, usSpinnerService, $rootScope.currentProjectId, false);
     }
 
+    $scope.exportDocument = function() {
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+        console.log("Save project before export");
+        //export function
+
+        var url = $$ApiUrl + "/exportProject";
+        $http({
+            method: 'GET',
+            url: url,
+            params: { id: projectFactory.getToCurrentProject().Id },
+            responseType: 'arraybuffer'
+        }).success(function(data, status, headers) {
+            headers = headers();
+
+            var filename = headers['x-filename'];
+            var contentType = headers['content-type'];
+
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([data], { type: contentType });
+                var url = window.URL.createObjectURL(blob);
+
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (ex) {
+                console.log(ex);
+            }
+        }).error(function(data) {
+            console.log(data);
+        });
+    }
     $scope.exitQuestion = function() {
         var dialog = BootstrapDialog.confirm({
             title: 'Предупреждение',
@@ -99,4 +137,4 @@
 };
 
 
-blitzApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "projectHttpService", dashBoardController]);
+blitzApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "projectHttpService", "promiseUtils", "httpService", "projectFactory", dashBoardController]);

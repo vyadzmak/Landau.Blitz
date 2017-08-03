@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.Exporter", "La
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.TestExporter", "Landau.Blitz.TestExporter\Landau.Blitz.TestExporter.csproj", "{F344F763-5D59-4DE4-A7B9-78A57C38EA98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landau.Blitz.ReportGenerator", "Landau.Blitz.ReportGenerator\Landau.Blitz.ReportGenerator.csproj", "{E3CA2CED-6AC1-4E13-942A-DBF2CCF60B79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F344F763-5D59-4DE4-A7B9-78A57C38EA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F344F763-5D59-4DE4-A7B9-78A57C38EA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F344F763-5D59-4DE4-A7B9-78A57C38EA98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3CA2CED-6AC1-4E13-942A-DBF2CCF60B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3CA2CED-6AC1-4E13-942A-DBF2CCF60B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3CA2CED-6AC1-4E13-942A-DBF2CCF60B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3CA2CED-6AC1-4E13-942A-DBF2CCF60B79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

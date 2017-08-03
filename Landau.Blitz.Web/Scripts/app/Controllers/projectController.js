@@ -1,7 +1,7 @@
 var projectController = function($scope, $stateParams, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, $interval, usSpinnerService, projectFactory, calculatorFactory, projectHttpService) {
     var url = $$ApiUrl + "/contentGenerator";
 
-    
+
 
     $scope.counter = 0;
     $scope.initTabs = function() {
@@ -92,14 +92,17 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
         });
     }
 
-    
+
 
     $scope.setProject = function() {
         $scope.showProjectMenu = true;
         //$scope.$digest();
         // alert());
+
+
         if (JSON.stringify($scope.currentProject) == "null") {
             $scope.currentProject = projectFactory.initProject();
+            $scope.currentProject.ProjectStateId = 2;
             projectHttpService.manageProject($http, $scope, usSpinnerService, $scope.currentProject, true);
 
         } else {
@@ -132,7 +135,14 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
     $scope.init = function() {
         $scope.projectId = $stateParams.projectId;
         //alert($scope.projectId);
-        projectHttpService.getToProjectById($http, $scope, usSpinnerService, $scope.projectId);
+
+
+        $scope.initTabs();
+        if ($scope.currentProject == undefined || $scope.currentProject.Id == -1 || JSON.stringify($scope.currentProject) == "null") {
+            if ($scope.projectId != -1 && $scope.projectId != "")
+                projectHttpService.getToProjectById($http, $scope, usSpinnerService, $scope.projectId);
+
+        }
 
     }
     $scope.init();

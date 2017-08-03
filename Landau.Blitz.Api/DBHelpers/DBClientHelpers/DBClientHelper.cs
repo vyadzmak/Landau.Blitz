@@ -26,6 +26,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                 {
                     var result = db.Clients.Select(x => x)
                         .Include(x => x.ClientTypes)
+                        .Where(x=>x.ClientTypeId!=1)
                         .ToList();
                     return result;
 

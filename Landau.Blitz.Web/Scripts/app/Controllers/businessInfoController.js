@@ -1,4 +1,4 @@
-var businessInfoController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory) {
+var businessInfoController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory, projectHttpService) {
     usSpinnerService.stop("spinner-1");
 
     $scope.init = function() {
@@ -30,16 +30,32 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
 
         modalInstance.result.then(function() {
             //alert(JSON.stringify($scope.mElement));
-            var id = 1;
-            if (elements.length > 0) {
-                id = elements[elements.length - 1].Id + 1;
-            }
-            $scope.mElement.Id = id;
-            elements.push($scope.mElement);
-            $scope.mElement = {};
+            if ($scope.mElement.Id == -1 || $scope.mElement.Id == undefined) {
 
-            ///alert(JSON.stringify($scope.currentProject.ClientData.BusinessPlaces));
-            // templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
+
+                var id = 1;
+                if (elements.length > 0) {
+                    id = elements[elements.length - 1].Id + 1;
+                }
+                $scope.mElement.Id = id;
+                elements.push($scope.mElement);
+                $scope.mElement = {};
+            } else {
+                var ob = elements.filter(function(item) {
+                    return item.Id == $scope.mElement.Id;
+                });
+
+                if (ob.length > 0) {
+                    var dElement = ob[0];
+                    var index = $scope.elements.indexOf(dElement);
+
+                    if (index != -1) {
+                        $scope.elements[index] = $scope.mElement;
+                    }
+                }
+                $scope.mElement = {};
+            }
+            projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
@@ -47,11 +63,11 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
     };
 
     $scope.filterFromArray = function(arr, id) {
-            var ob = arr.filter(function(item) {
-                return item.Id == id;
-            });
+        var ob = arr.filter(function(item) {
+            return item.Id == id;
+        });
 
-            return ob[0];
+        return ob[0];
     }
     $scope.clickClientFounderInfo = function(id) {
 
@@ -68,11 +84,60 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         $scope.mElement = $scope.editElement;
         $scope.elements = $scope.currentProject.BusinessInfo.ClientFounderInfos;
     };
-    
+
+    $scope.clickConsumerStructure = function(id) {
+
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.ConsumerStructures, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/BusinessInfo/ConsumerStructureModal.html';;
+        $scope.modalController = manageConsumerStructureController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.BusinessInfo.ConsumerStructures;
+    };
+
+
+    $scope.clickSupplierStructure = function(id) {
+
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.SupplierStructures, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/BusinessInfo/SupplierStructureModal.html';;
+        $scope.modalController = manageSupplierStructureController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.BusinessInfo.SupplierStructures;
+    };
+
+    $scope.clickPeriodicityProcurements = function(id) {
+
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.PeriodicityProcurements, $scope.eIndex);
+
+        $scope.modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementModal.html';;
+        $scope.modalController = managePeriodicityProcurementController;
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.BusinessInfo.PeriodicityProcurements;
+    };
+
     $scope.EditElement = function() {
 
-        $scope.addNewModal($scope.modalView, $scope.modalController, 
-        $scope.mElement, $scope.elements, $scope.mElement);
+        $scope.addNewModal($scope.modalView, $scope.modalController,
+            $scope.mElement, $scope.elements, $scope.mElement);
 
         //alert("ED Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
     };
@@ -174,4 +239,4 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
     }
 
 };
-blitzApp.controller("businessInfoController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", businessInfoController]);
+blitzApp.controller("businessInfoController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", businessInfoController]);

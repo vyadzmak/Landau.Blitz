@@ -242,9 +242,11 @@
     <Compile Include="Controllers\ClientUsersController.cs" />
     <Compile Include="Controllers\ContentGeneratorController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\ExportProjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ParentProjectController.cs" />
     <Compile Include="Controllers\ProjectConfigController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -259,6 +261,8 @@
     <Compile Include="DBHelpers\DBLogHelpers\DBLogHelper.cs" />
     <Compile Include="DBHelpers\DBLoginHelpers\DBLoginHelper.cs" />
     <Compile Include="DBHelpers\DBProjectHelpers\DBProjectHelper.cs" />
+    <Compile Include="DBHelpers\DBProjectSettingsHelpers\DBProjectSettingsHelper.cs" />
+    <Compile Include="DBHelpers\DBReportHelpers\DBReportHelper.cs" />
     <Compile Include="DBHelpers\DBSettingsHelpers\DBSettingHelper.cs" />
     <Compile Include="DBHelpers\DBTemplateHelpers\DBTemplateHelper.cs" />
     <Compile Include="DBHelpers\DBUserHelpers\DBUserHelper.cs" />
@@ -331,8 +335,10 @@
     <Compile Include="Helpers\ContentGeneratorHelpers\ContentGeneratorHelper.cs" />
     <Compile Include="Helpers\CryptHelpers\Crypt.cs" />
     <Compile Include="Helpers\DocumentHelpers\DocumentHelper.cs" />
+    <Compile Include="Helpers\ExportHelpers\ExportHelper.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
     <Compile Include="Helpers\ProjectHelpers\ProjectHelper.cs" />
+    <Compile Include="Helpers\ProjectSettingsHelpers\ProjectSettingHelper.cs" />
     <Compile Include="Helpers\SerializeHelpers\SerializeHelper.cs" />
     <Compile Include="Helpers\SettingsHelpers\SettingsHelper.cs" />
     <Compile Include="Helpers\TemplateHelpers\TemplateHelper.cs" />
@@ -347,6 +353,8 @@
     <Compile Include="Models\Other\AccountBindingModels.cs" />
     <Compile Include="Models\Other\AccountViewModels.cs" />
     <Compile Include="Models\Other\IdentityModels.cs" />
+    <Compile Include="Models\ProjectSetting\ProjectSettingDateModel.cs" />
+    <Compile Include="Models\ProjectSetting\ProjectSettingModel.cs" />
     <Compile Include="Models\Project\CliendDataViewModel.cs" />
     <Compile Include="Models\Project\ProjectViewModel.cs" />
     <Compile Include="Models\Settings\SettingModel.cs" />

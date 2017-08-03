@@ -52,8 +52,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExportProcessor.cs" />
-    <Compile Include="Helpers\ResumeStaticInfo.cs" />
-    <Compile Include="Models\ResumeField.cs" />
+    <Compile Include="Helpers\ArraysHelper.cs" />
+    <Compile Include="Helpers\GenerateDocumentHelper.cs" />
+    <Compile Include="Helpers\GenerateParagraphHelper.cs" />
+    <Compile Include="Helpers\GenerateTableHelper.cs" />
+    <Compile Include="Helpers\ParseTableHelper.cs" />
+    <Compile Include="Helpers\SerializeHelper.cs" />
+    <Compile Include="Helpers\TextProcessHelper.cs" />
+    <Compile Include="Helpers\VariablesHelper.cs" />
+    <Compile Include="Models\ReportSchemaModels\ReportSchemaElement.cs" />
+    <Compile Include="Models\ReportSchemaModels\ReportSchemaElementStyle.cs" />
+    <Compile Include="Models\ReportSchemaModels\ReportSchemaElementType.cs" />
+    <Compile Include="Models\ReportSchemaModels\ReportSchemaModel.cs" />
+    <Compile Include="Models\TableModels\XCell.cs" />
+    <Compile Include="Models\TableModels\XRow.cs" />
+    <Compile Include="Models\TableModels\XTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

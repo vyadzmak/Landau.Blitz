@@ -58,7 +58,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
         var ob = currentProject.FinDataOpiu.Table.filter(function(item) {
             return item.VarName == name;
         });
-
+        if (ob == undefined || ob.length == 0) return;
         for (var z = 0; z < months.length; z++) {
             result.push(Number(ob[0][months[z]]));
         }
@@ -154,9 +154,9 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
         return resultData;
     }
 
-    function calculateMargin(currentProject) {
-        var revenues = getVarArrayByName(currentProject, "Revenues");
-        var costOfGoods = getVarArrayByName(currentProject, "CostOfGoods");;
+    function calculateMargin(currentProject, service) {
+        var revenues = getVarArrayByName(currentProject, "Revenues" + service);
+        var costOfGoods = getVarArrayByName(currentProject, "CostOfGoods" + service);;
         var margins = [];
         for (var i = 0; i < revenues.length; i++) {
             var r = revenues[i];
@@ -167,7 +167,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
             }
             margins.push(m);;
         }
-        setVarArrayByName(currentProject, "Margin", margins);
+        setVarArrayByName(currentProject, "Margin" + service, margins);
 
     }
 
@@ -201,7 +201,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
 
     function calculateProfitOnBusiness(currentProject) {
 
-        var ent = ["GrossProfit", 'TotalExpensesForBusiness'];
+        var ent = ["TotalGrossProfit", 'TotalExpensesForBusiness'];
         var calc = [];
         ent.forEach(function(element) {
             calc.push(getVarArrayByName(currentProject, element))
@@ -211,13 +211,52 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
 
     }
 
-    function calculateGrossProfit(currentProject) {
-        var revenues = getVarArrayByName(currentProject, "Revenues");
-        var costOfGoods = getVarArrayByName(currentProject, "CostOfGoods");;
+    function calculateGrossProfit(currentProject, service) {
+        var revenues = getVarArrayByName(currentProject, "Revenues" + service);
+        var costOfGoods = getVarArrayByName(currentProject, "CostOfGoods" + service);;
         var margins = [];
         var calc = [revenues, costOfGoods];
         var grossProfit = deltaArrays(calc);
-        setVarArrayByName(currentProject, "GrossProfit", grossProfit);
+        setVarArrayByName(currentProject, "GrossProfit" + service, grossProfit);
+        //alert(margins);
+
+    }
+
+    function calculateTotalGrossProfit(currentProject) {
+        var gProfitService = getVarArrayByName(currentProject, "GrossProfitService");
+        var gProfitTrade = getVarArrayByName(currentProject, "GrossProfitTrade");
+        var gAgriculture = getVarArrayByName(currentProject, "GrossProfitAgriculture");
+        var gProduction = getVarArrayByName(currentProject, "GrossProfitProduction");;
+
+        var margins = [];
+        var calc = [];
+        if (currentProject.ProjectAnalysis.ActivityService) calc.push(gProfitService);
+        if (currentProject.ProjectAnalysis.ActivityTrade) calc.push(gProfitTrade);
+        if (currentProject.ProjectAnalysis.ActivityAgriculture) calc.push(gAgriculture);
+        if (currentProject.ProjectAnalysis.ActivityProduction) calc.push(gProduction);
+
+        var grossProfit = sumArrays(calc);
+        setVarArrayByName(currentProject, "TotalGrossProfit", grossProfit);
+        //alert(margins);
+
+    }
+
+
+    function calculateTotalRevenues(currentProject) {
+        var revenuesService = getVarArrayByName(currentProject, "RevenuesService");
+        var revenuesTrade = getVarArrayByName(currentProject, "RevenuesTrade");
+        var revenuesAgriculture = getVarArrayByName(currentProject, "RevenuesAgriculture");
+        var revenuesProduction = getVarArrayByName(currentProject, "RevenuesProduction");;
+
+        var margins = [];
+        var calc = [];
+        if (currentProject.ProjectAnalysis.ActivityService) calc.push(revenuesService);
+        if (currentProject.ProjectAnalysis.ActivityTrade) calc.push(revenuesTrade);
+        if (currentProject.ProjectAnalysis.ActivityAgriculture) calc.push(revenuesAgriculture);
+        if (currentProject.ProjectAnalysis.ActivityProduction) calc.push(revenuesProduction);
+
+        var totalRevenues = sumArrays(calc);
+        setVarArrayByName(currentProject, "TotalRevenues", totalRevenues);
         //alert(margins);
 
     }
@@ -308,9 +347,9 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
 
     }
 
-    function calculateSpeedOfTurnover(currentProject) {
+    function calculateSpeedOfTurnover(currentProject, service) {
 
-        var ent = ["CostOfGoods"];
+        var ent = ["CostOfGoods" + service];
         var tmz = [];
         for (var i = 0; i < months.length; i++) {
             tmz.push(currentProject.FinDataBalance.TotalTMZ);
@@ -321,14 +360,14 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
             calc.push(getVarArrayByName(currentProject, element))
         }, this);
         var speedOfTurnover = divArrays(calc);
-        setVarArrayByName(currentProject, "SpeedOfTurnover", speedOfTurnover);
+        setVarArrayByName(currentProject, "SpeedOfTurnover" + service, speedOfTurnover);
 
     }
 
 
-    function calculateProfitabilityOfSales(currentProject) {
+    function calculateProfitabilityOfSales(currentProject, service) {
 
-        var ent = ["ProfitOnBusiness", "Revenues"];
+        var ent = ["ProfitOnBusiness", "Revenues" + service];
         var calc = [];
         ent.forEach(function(element) {
             calc.push(getVarArrayByName(currentProject, element))
@@ -345,21 +384,64 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
         resc.push(perc);
         var profitabilityOfSales = multArrays(resc);
 
-        setVarArrayByName(currentProject, "ProfitabilityOfSales", profitabilityOfSales);
+        setVarArrayByName(currentProject, "ProfitabilityOfSales" + service, profitabilityOfSales);
 
     }
 
     function calculateInternalVarsByMonths(currentProject) {
-        calculateMargin(currentProject);
-        calculateGrossProfit(currentProject);
+        if (currentProject.ProjectAnalysis.ActivityService) {
+            calculateMargin(currentProject, "Service");
+            calculateGrossProfit(currentProject, "Service");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityTrade) {
+            calculateMargin(currentProject, "Trade");
+            calculateGrossProfit(currentProject, "Trade");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityAgriculture) {
+            calculateMargin(currentProject, "Agriculture");
+            calculateGrossProfit(currentProject, "Agriculture");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityProduction) {
+            calculateMargin(currentProject, "Production");
+            calculateGrossProfit(currentProject, "Production");
+        }
+        calculateTotalRevenues(currentProject);
+        calculateTotalGrossProfit(currentProject);
+        // if (currentProject.ActivityService) calc.push(gProfitService);
+        // if (currentProject.ActivityTrade) calc.push(gProfitTrade);
+        // if (currentProject.ActivityAgriculture) calc.push(gAgriculture);
+        // if (currentProject.ActivityProduction) calc.push(gProduction);
+
         calculateTotalExpensesForBusiness(currentProject);
         calculateProfitOnBusiness(currentProject);
         calculateOtherExpenses(currentProject);
         calculateOtherIncome(currentProject);
         calculateNetProfit(currentProject);
         calculateValueOfContributionProfit(currentProject);
-        calculateSpeedOfTurnover(currentProject);
-        calculateProfitabilityOfSales(currentProject);
+
+        if (currentProject.ProjectAnalysis.ActivityService) {
+            calculateSpeedOfTurnover(currentProject, "Service");
+            calculateProfitabilityOfSales(currentProject, "Service");
+        }
+
+
+        if (currentProject.ProjectAnalysis.ActivityTrade) {
+            calculateSpeedOfTurnover(currentProject, "Trade");
+            calculateProfitabilityOfSales(currentProject, "Trade");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityAgriculture) {
+            calculateSpeedOfTurnover(currentProject, "Agriculture");
+            calculateProfitabilityOfSales(currentProject, "Agriculture");
+        }
+
+        if (currentProject.ProjectAnalysis.ActivityProduction) {
+            calculateSpeedOfTurnover(currentProject, "Production");
+            calculateProfitabilityOfSales(currentProject, "Production");
+        }
         //currentProject.FinDataBalance.TotalTMZ
         //ProfitabilityOfSales
     }

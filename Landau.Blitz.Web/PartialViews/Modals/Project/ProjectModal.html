@@ -12,8 +12,102 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Наименование<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Проект компания ТОО 'Альфа Центавра' " maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
+                            <input type="text" class="form-control" placeholder="Заявка №1 " maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
                             <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect2">Клиент</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" ng-options="client.Name for client in mElement.ProjectSetting.Clients track by client.Id" ng-model="mElement.ProjectSetting.SelectedClient" ng-change="selectClient()"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect2">Предыдущие проекты</label>
+                        <div class="col-sm-9">
+                            <label ng-if="mElement.ParentExists">По данному клиенту найдены предыдущие периоды {{mElement.ParentProject.ProjectSetting.StartMonth}}.{{mElement.ParentProject.ProjectSetting.StartYear}}-{{mElement.ParentProject.ProjectSetting.EndMonth}}.{{mElement.ParentProject.ProjectSetting.EndYear}} (повторное обращение)</label>
+                            <label ng-if="!mElement.ParentExists">По данному клиенту не найдено ни одного периода (первое обращение)</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect2">Начало периода</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" ng-options="startMonth for startMonth in mElement.ProjectSetting.StartDates.Months track by startMonth" ng-model="mElement.ProjectSetting.StartMonth"></select>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <select class="form-control" ng-options="startYear for startYear in mElement.ProjectSetting.StartDates.Years track by startYear" ng-model="mElement.ProjectSetting.StartYear"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleSelect2">Конец периода</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" ng-options="endMonth for endMonth in mElement.ProjectSetting.EndDates.Months track by endMonth" ng-model="mElement.ProjectSetting.EndMonth"></select>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <select class="form-control" ng-options="endYear for endYear in mElement.ProjectSetting.EndDates.Years track by endYear" ng-model="mElement.ProjectSetting.EndYear"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Процентная ставка<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" placeholder="12" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.PercentBid" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Альтернативная ставка<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" placeholder="10" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.AlternateBid" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Курс $<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="325" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.DollarRate" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-9 control-label">Выберите вид(ы) деятельности</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Услуги</label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="mElement.ActivityService">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Торговля</label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="mElement.ActivityTrade">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">С/Х</label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="mElement.ActivityAgriculture">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Производство</label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="mElement.ActivityProduction">
                         </div>
                     </div>
 

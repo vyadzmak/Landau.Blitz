@@ -12,6 +12,27 @@ namespace Landau.Blitz.Api.Helpers.ProjectHelpers
 {
     public static class ProjectHelper
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static string GetToParentProjectById(int id)
+        {
+            try
+            {
+                return DBProjectHelper.GetToParentProjectById(id);
+            }
+            catch (Exception e)
+            {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+                return "";
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

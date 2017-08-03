@@ -88,7 +88,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBUserHelpers
             {
                 using (var db= new LandauBlitzEntities())
                 {
-                    return db.UserRoles.ToList();
+                    return db.UserRoles.Where(x=>x.Id==4).ToList();
                 }
             }
             catch (Exception e)

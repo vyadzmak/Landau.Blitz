@@ -42,7 +42,7 @@
                             <a ng-click="selectService(5);"> <i class="fa fa-eye fa-fw"></i> Аналитика </a>
                         </li>
                         <li>
-                            <a ng-click="loadDocument();"> <i class="fa fa-floppy-o fa-fw"></i> Экспорт </a>
+                            <a ng-click="exportDocument();"> <i class="fa fa-floppy-o fa-fw"></i> Экспорт </a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -89,14 +89,6 @@
                             <a ui-sref="main.dashboard.projects" style="cursor:default"><i class="fa fa-code"></i> Проекты</a>
                         </li>
 
-                        <!--<li>
-                            <a ui-sref="main.dashboard.templates" style="cursor:default"><i class="fa fa-terminal "></i> Шаблоны</a>
-                        </li>-->
-
-
-                        <!--<li>
-                            <a ui-sref="main.dashboard.catalogs" style="cursor:default"><i class="fa fa-list-ol"></i> Справочники</a>
-                        </li>-->
 
                         <li>
                             <a ui-sref="main.dashboard.settings" style="cursor:default"><i class="fa fa-cogs"></i> Системные настройки</a>
@@ -109,7 +101,13 @@
 
                     </ul>
                     <!--end ADMIN-->
-
+                    <!--ANALYTIC-->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserRoleId==3">
+                        <li>
+                            <a ui-sref="main.dashboard.projects" style="cursor:default"><i class="fa fa-code"></i> Проекты</a>
+                        </li>
+                    </ul>
+                    <!---->
                     <!--end PROFILE-->
                 </div>
                 <!-- /.sidebar-collapse -->

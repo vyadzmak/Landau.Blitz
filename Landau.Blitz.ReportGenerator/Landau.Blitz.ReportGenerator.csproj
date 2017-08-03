@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E3CA2CED-6AC1-4E13-942A-DBF2CCF60B79}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Landau.Blitz.ReportGenerator</RootNamespace>
+    <AssemblyName>Landau.Blitz.ReportGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBHelpers\DBProjectHelper.cs" />
+    <Compile Include="DBHelpers\DBReportHelper.cs" />
+    <Compile Include="DB\Catalogs.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Clients.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ClientTypes.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\CreditRequests.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\CreditRequestStates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\LandauBlitzModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandauBlitzModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\LandauBlitzModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\LandauBlitzModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Log.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Projects.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ProjectStates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ReportTemplates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Settings.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sysdiagrams.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Templates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserLogins.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserLoginStates.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserRoles.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Users.cs">
+      <DependentUpon>LandauBlitzModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Controls\FieldSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\FieldSettingsControl.Designer.cs">
+      <DependentUpon>FieldSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Controls\TableSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\TableSettingsControl.Designer.cs">
+      <DependentUpon>TableSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NewElementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NewElementForm.Designer.cs">
+      <DependentUpon>NewElementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NewReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NewReportForm.Designer.cs">
+      <DependentUpon>NewReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\OpenReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\OpenReportForm.Designer.cs">
+      <DependentUpon>OpenReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\Controls\FieldSettingsControl.resx">
+      <DependentUpon>FieldSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Controls\TableSettingsControl.resx">
+      <DependentUpon>TableSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NewElementForm.resx">
+      <DependentUpon>NewElementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NewReportForm.resx">
+      <DependentUpon>NewReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\OpenReportForm.resx">
+      <DependentUpon>OpenReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EntityDeploy Include="DB\LandauBlitzModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LandauBlitzModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DB\LandauBlitzModel.edmx.diagram">
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\LandauBlitzModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
+      <LastGenOutput>LandauBlitzModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\LandauBlitzModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LandauBlitzModel.edmx</DependentUpon>
+      <LastGenOutput>LandauBlitzModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Landau.Blitz.Exporter\Landau.Blitz.Exporter.csproj">
+      <Project>{17851b9e-2d52-4ed0-bdbe-f70b7aaea0b4}</Project>
+      <Name>Landau.Blitz.Exporter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

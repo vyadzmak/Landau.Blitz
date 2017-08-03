@@ -1,14 +1,15 @@
 blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
     this.setBalanceData = function(currentProject) {
-        currentProject.FinDataBalance.TotalCash = 0;
-        currentProject.FinDataBalance.CashInAccounts = 0;
-        currentProject.FinDataBalance.CashInHands = 0;
-        currentProject.FinDataBalance.CashSavings = 0;
-        currentProject.FinDataBalance.CashInBankAccounts = 0;
-        currentProject.FinDataBalance.CashInBankCurrencyAccounts = 0;
-        currentProject.FinDataBalance.CashInCompanyDeposits = 0;
-        currentProject.FinDataBalance.CashInOwnerDeposits = 0;
+        currentProject.FinDataBalance.TotalCash = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalCash2 : 0;
+        currentProject.FinDataBalance.CashInAccounts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInAccounts2 : 0;;
+        currentProject.FinDataBalance.CashInHands = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInHands2 : 0;;
+        currentProject.FinDataBalance.CashSavings = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashSavings2 : 0;
+        currentProject.FinDataBalance.CashInBankAccounts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInBankAccounts2 : 0;;
+        currentProject.FinDataBalance.CashInBankCurrencyAccounts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInBankCurrencyAccounts2 : 0;;
+        currentProject.FinDataBalance.CashInCompanyDeposits = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInCompanyDeposits2 : 0;;
+        currentProject.FinDataBalance.CashInOwnerDeposits = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInOwnerDeposits2 : 0;;
 
+        //var x = y !== undefined ? y : 1;
         currentProject.FinDataBalance.TotalCash2 = 0;
         currentProject.FinDataBalance.CashInAccounts2 = 0;
         currentProject.FinDataBalance.CashInHands2 = 0;
@@ -19,12 +20,12 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.CashInOwnerDeposits2 = 0;
 
         currentProject.FinDataBalance.TotalDebt = 0;
-        currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers = 0;
-        currentProject.FinDataBalance.ReceivablesGoodsOnSale = 0;
-        currentProject.FinDataBalance.ReceivablesGoodsOnConsignment = 0;
-        currentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses = 0;
-        currentProject.FinDataBalance.ReceivablesLoansGranted = 0;
-        currentProject.FinDataBalance.ReceivablesDebtBuyers = 0;
+        currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers2 : 0;;
+        currentProject.FinDataBalance.ReceivablesGoodsOnSale = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ReceivablesGoodsOnSale2 : 0;
+        currentProject.FinDataBalance.ReceivablesGoodsOnConsignment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ReceivablesGoodsOnConsignment2 : 0;
+        currentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses2 : 0;
+        currentProject.FinDataBalance.ReceivablesLoansGranted = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ReceivablesLoansGranted2 : 0;
+        currentProject.FinDataBalance.ReceivablesDebtBuyers = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ReceivablesDebtBuyers2 : 0;
 
         currentProject.FinDataBalance.TotalDebt2 = 0;
         currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers2 = 0;
@@ -35,14 +36,14 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.ReceivablesDebtBuyers2 = 0;
 
         currentProject.FinDataBalance.TotalTMZ = 0;
-        currentProject.FinDataBalance.TMZProducts = 0;
-        currentProject.FinDataBalance.TMZRawMaterials = 0;
-        currentProject.FinDataBalance.TMZSemifinishedProducts = 0;
-        currentProject.FinDataBalance.TMZFinishedProducts = 0;
-        currentProject.FinDataBalance.TMZConsumables = 0;
-        currentProject.FinDataBalance.TMZFeed = 0;
-        currentProject.FinDataBalance.TMZSeeds = 0;
-        currentProject.FinDataBalance.TMZHerdOnFattening = 0;
+        currentProject.FinDataBalance.TMZProducts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZProducts2 : 0;
+        currentProject.FinDataBalance.TMZRawMaterials = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZRawMaterials2 : 0;
+        currentProject.FinDataBalance.TMZSemifinishedProducts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZSemifinishedProducts2 : 0;
+        currentProject.FinDataBalance.TMZFinishedProducts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZFinishedProducts2 : 0;
+        currentProject.FinDataBalance.TMZConsumables = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZConsumables2 : 0;
+        currentProject.FinDataBalance.TMZFeed = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZFeed2 : 0;
+        currentProject.FinDataBalance.TMZSeeds = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZSeeds2 : 0;
+        currentProject.FinDataBalance.TMZHerdOnFattening = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TMZHerdOnFattening2 : 0;
 
         currentProject.FinDataBalance.TotalTMZ2 = 0;
         currentProject.FinDataBalance.TMZProducts2 = 0;
@@ -55,21 +56,21 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.TMZHerdOnFattening2 = 0;
 
         currentProject.FinDataBalance.TotalCurrentAssets = 0;
-        currentProject.FinDataBalance.TotalCash = 0;
-        currentProject.FinDataBalance.TotalDebt = 0;
-        currentProject.FinDataBalance.TotalTMZ = 0;
+        currentProject.FinDataBalance.TotalCash = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalCash2 : 0;
+        currentProject.FinDataBalance.TotalDebt = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalDebt2 : 0;
+        currentProject.FinDataBalance.TotalTMZ = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalTMZ2 : 0;
 
         currentProject.FinDataBalance.TotalCurrentAssets2 = 0;
         currentProject.FinDataBalance.TotalCash2 = 0;
         currentProject.FinDataBalance.TotalDebt2 = 0;
         currentProject.FinDataBalance.TotalTMZ2 = 0;
 
-        currentProject.FinDataBalance.TotalEquipment = 0;
-        currentProject.FinDataBalance.ProductionEquipment = 0;
-        currentProject.FinDataBalance.RetailEquipment = 0;
-        currentProject.FinDataBalance.Furniture = 0;
-        currentProject.FinDataBalance.OfficeEquipment = 0;
-        currentProject.FinDataBalance.OtherEquipment = 0;
+        currentProject.FinDataBalance.TotalEquipment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalEquipment2 : 0;
+        currentProject.FinDataBalance.ProductionEquipment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ProductionEquipment2 : 0;
+        currentProject.FinDataBalance.RetailEquipment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.RetailEquipment2 : 0;
+        currentProject.FinDataBalance.Furniture = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Furniture2 : 0;
+        currentProject.FinDataBalance.OfficeEquipment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.OfficeEquipment2 : 0;
+        currentProject.FinDataBalance.OtherEquipment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.OtherEquipment2 : 0;
 
         currentProject.FinDataBalance.TotalEquipment2 = 0;
         currentProject.FinDataBalance.ProductionEquipment2 = 0;
@@ -79,10 +80,10 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.OtherEquipment2 = 0;
 
         currentProject.FinDataBalance.TotalTransport = 0;
-        currentProject.FinDataBalance.PassengerTransport = 0;
-        currentProject.FinDataBalance.FreightTransport = 0;
-        currentProject.FinDataBalance.SpecialMachinery = 0;
-        currentProject.FinDataBalance.OtherTransport = 0;
+        currentProject.FinDataBalance.PassengerTransport = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.PassengerTransport2 : 0;
+        currentProject.FinDataBalance.FreightTransport = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.FreightTransport2 : 0;
+        currentProject.FinDataBalance.SpecialMachinery = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.SpecialMachinery2 : 0;
+        currentProject.FinDataBalance.OtherTransport = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.OtherTransport2 : 0;
 
         currentProject.FinDataBalance.TotalTransport2 = 0;
         currentProject.FinDataBalance.PassengerTransport2 = 0;
@@ -91,14 +92,14 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.OtherTransport2 = 0;;
 
         currentProject.FinDataBalance.TotalBuildings = 0;
-        currentProject.FinDataBalance.Offices = 0;
-        currentProject.FinDataBalance.RetailPremises = 0;
-        currentProject.FinDataBalance.Caffees = 0;
-        currentProject.FinDataBalance.IndustrialPremises = 0;
-        currentProject.FinDataBalance.Warehouses = 0;
-        currentProject.FinDataBalance.Buildings = 0;
-        currentProject.FinDataBalance.Territory = 0;
-        currentProject.FinDataBalance.ProductionComplexes = 0;
+        currentProject.FinDataBalance.Offices = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Offices2 : 0;
+        currentProject.FinDataBalance.RetailPremises = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.RetailPremises2 : 0;
+        currentProject.FinDataBalance.Caffees = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Caffees2 : 0;
+        currentProject.FinDataBalance.IndustrialPremises = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.IndustrialPremises2 : 0;
+        currentProject.FinDataBalance.Warehouses = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Warehouses2 : 0;
+        currentProject.FinDataBalance.Buildings = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Buildings2 : 0;
+        currentProject.FinDataBalance.Territory = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Territory2 : 0;
+        currentProject.FinDataBalance.ProductionComplexes = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.ProductionComplexes2 : 0;
 
         currentProject.FinDataBalance.TotalBuildings = 0;
         currentProject.FinDataBalance.Offices2 = 0;
@@ -111,9 +112,9 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.ProductionComplexes2 = 0;
 
         currentProject.FinDataBalance.TotalFixedAssets = 0;
-        currentProject.FinDataBalance.TotalEquipment = 0;
-        currentProject.FinDataBalance.TotalTransport = 0;
-        currentProject.FinDataBalance.TotalBuildings = 0;
+        currentProject.FinDataBalance.TotalEquipment = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalEquipment2 : 0;
+        currentProject.FinDataBalance.TotalTransport = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalTransport2 : 0;
+        currentProject.FinDataBalance.TotalBuildings = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalBuildings2 : 0;
 
 
         currentProject.FinDataBalance.TotalFixedAssets2 = 0;
@@ -122,10 +123,10 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.TotalBuildings2 = 0;;
 
         currentProject.FinDataBalance.TotalActive = 0;
-        currentProject.FinDataBalance.PrepaymentsForFixedAssets = 0;
-        currentProject.FinDataBalance.UnfinishedObjects = 0;
-        currentProject.FinDataBalance.FixedAssetsTempNotInBusiness = 0;
-        currentProject.FinDataBalance.CapitalCostsInUncompletedWork = 0;;
+        currentProject.FinDataBalance.PrepaymentsForFixedAssets = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.PrepaymentsForFixedAssets2 : 0;
+        currentProject.FinDataBalance.UnfinishedObjects = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.UnfinishedObjects2 : 0;
+        currentProject.FinDataBalance.FixedAssetsTempNotInBusiness = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.FixedAssetsTempNotInBusiness2 : 0;
+        currentProject.FinDataBalance.CapitalCostsInUncompletedWork = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CapitalCostsInUncompletedWork2 : 0;
 
 
         currentProject.FinDataBalance.TotalActive2 = 0;
@@ -134,11 +135,11 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.FixedAssetsTempNotInBusiness2 = 0;
         currentProject.FinDataBalance.CapitalCostsInUncompletedWork2 = 0;
 
-        currentProject.FinDataBalance.TotalShortAccountsPayable = 0;
-        currentProject.FinDataBalance.IndebtednessToSuppliers = 0;
-        currentProject.FinDataBalance.IndebtednessBuyers = 0;
-        currentProject.FinDataBalance.IndebtednessForExpenses = 0;
-        currentProject.FinDataBalance.CreditLoans = 0;
+        currentProject.FinDataBalance.TotalShortAccountsPayable = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalShortAccountsPayable2 : 0;
+        currentProject.FinDataBalance.IndebtednessToSuppliers = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.IndebtednessToSuppliers2 : 0;
+        currentProject.FinDataBalance.IndebtednessBuyers = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.IndebtednessBuyers2 : 0;
+        currentProject.FinDataBalance.IndebtednessForExpenses = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.IndebtednessForExpenses2 : 0;
+        currentProject.FinDataBalance.CreditLoans = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CreditLoans2 : 0;
 
         currentProject.FinDataBalance.TotalShortAccountsPayable2 = 0;
         currentProject.FinDataBalance.IndebtednessToSuppliers2 = 0;
@@ -146,11 +147,11 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.IndebtednessForExpenses2 = 0;
         currentProject.FinDataBalance.CreditLoans2 = 0;
 
-        currentProject.FinDataBalance.TotalLongAccountsPayable = 0;
-        currentProject.FinDataBalance.BankLoans = 0;
-        currentProject.FinDataBalance.Leasing = 0;
-        currentProject.FinDataBalance.CommercialMortgage = 0;
-        currentProject.FinDataBalance.PrivateLoans = 0;
+        currentProject.FinDataBalance.TotalLongAccountsPayable = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalLongAccountsPayable2 : 0;
+        currentProject.FinDataBalance.BankLoans = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.BankLoans2 : 0;
+        currentProject.FinDataBalance.Leasing = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.Leasing2 : 0;
+        currentProject.FinDataBalance.CommercialMortgage = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CommercialMortgage2 : 0;
+        currentProject.FinDataBalance.PrivateLoans = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.PrivateLoans2 : 0;
 
         currentProject.FinDataBalance.TotalLongAccountsPayable2 = 0;
         currentProject.FinDataBalance.BankLoans2 = 0;

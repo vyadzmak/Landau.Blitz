@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Описание всех видов деятельности</div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <div class="row">
             <div class="panel panel-primary">
@@ -45,7 +45,7 @@
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>
-                            
+
                             <td title="'Страна'" sortable="'Country'" class="col-md-2">
                                 {{item.Country}}
                             </td>
@@ -66,7 +66,7 @@
 
                 <div class="panel-body">
                     <table ng-table="consumerStructures" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.ConsumerStructures"  ng-right-click="clickConsumerStructure(item.Id)" menu-items="menuItems">
+                        <tr ng-repeat="item in currentProject.BusinessInfo.ConsumerStructures" ng-right-click="clickConsumerStructure(item.Id)" menu-items="menuItems">
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -91,7 +91,7 @@
 
                 <div class="panel-body">
                     <table ng-table="periodicityProcurements" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.PeriodicityProcurements"  ng-right-click="clickConsumerStructure(item.Id)" menu-items="menuItems">
+                        <tr ng-repeat="item in currentProject.BusinessInfo.PeriodicityProcurements" ng-right-click="clickPeriodicityProcurements(item.Id)" menu-items="menuItems">
                             <td title="'Наименование'" sortable="'Name'" class="col-md-6">
                                 {{item.Name}}
                             </td>
@@ -99,11 +99,11 @@
                             <td title="'Периодичность'" sortable="'Periodicity'" class="col-md-2">
                                 {{item.Periodicity}}
                             </td>
-                            
+
                             <td title="'Условие'" sortable="'Condition'" class="col-md-2">
                                 {{item.Condition}}
                             </td>
-                            
+
                             <td title="'Место'" sortable="'Place'" class="col-md-2">
                                 {{item.Place}}
                             </td>
@@ -113,8 +113,8 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
         <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -122,12 +122,12 @@
                 </div>
 
                 <div class="panel-body">
-                    
+
                 </div>
             </div>
         </div>
-        
-        
+
+
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-primary">
@@ -157,59 +157,60 @@
                 </div>
             </div>
         </div>
-        
-        
-    <div class="row">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Социальное положение клиента/ учредителя (семья, пожилые родители, количество лиц на иждивении, возраст, образование клиента и т.п.) в случае, когда право собственности и управление не разделены <button class="btn btn-primary pull-right" ng-click="showNewClientFounderInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                <div class="clearfix "></div>
-            </div>
 
-            <div class="panel-body">
-                <div class="b-div">
-                    <table ng-table="clientFounderInfos" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.ClientFounderInfos"  ng-right-click="clickClientFounderInfo(item.Id)" menu-items="menuItems">
-                            <td title="'ФИО'" sortable="'Name'">
-                                {{item.Name}}
-                            </td>
-                            <td title="'Дата рож-я'" sortable="'DateOfBirth'">
-                                <p ng-bind="item.DateOfBirth | date:'dd/MM/yyyy'"></p>
-                            </td>
-                            <td title="'Док-т'" sortable="'Document'">
-                                {{item.Document}}
-                            </td>
-                            <td title="'Прописка'" sortable="'PlaceOfRegistration'">
-                                {{item.PlaceOfRegistration}}
-                            </td>
-                            <td title="'Проживание'" sortable="'PlaceOfResidence'">
-                                {{item.PlaceOfResidence}}
-                            </td>
-                            <td title="'Тел'" sortable="'PhoneNumber'">
-                                {{item.PhoneNumber}}
-                            </td>
-                            <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                <input type="checkbox" ng-model="item.IsMarried">
-                            </td>
 
-                            <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                {{item.ChildrenCount}} ({{item.ChildrenAge}})
-                            </td>
-                            <td title="'Супруги'" sortable="'partnerData'">
-                                {{item.PartnerData}}
-                            </td>
-                            <td title="'Опыт'" sortable="'expirience'">
-                                {{item.Expirience}}
-                            </td>
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Социальное положение клиента/ учредителя (семья, пожилые родители, количество лиц на иждивении, возраст, образование клиента и т.п.) в случае, когда право собственности и управление не разделены <button class="btn btn-primary pull-right"
+                        ng-click="showNewClientFounderInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix "></div>
+                </div>
 
-                        </tr>
-                    </table>
+                <div class="panel-body">
+                    <div class="b-div">
+                        <table ng-table="clientFounderInfos" class="table">
+                            <tr ng-repeat="item in currentProject.BusinessInfo.ClientFounderInfos" ng-right-click="clickClientFounderInfo(item.Id)" menu-items="menuItems">
+                                <td title="'ФИО'" sortable="'Name'">
+                                    {{item.Name}}
+                                </td>
+                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
+                                    <p ng-bind="item.DateOfBirth | date:'dd/MM/yyyy'"></p>
+                                </td>
+                                <td title="'Док-т'" sortable="'Document'">
+                                    {{item.Document}}
+                                </td>
+                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
+                                    {{item.PlaceOfRegistration}}
+                                </td>
+                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
+                                    {{item.PlaceOfResidence}}
+                                </td>
+                                <td title="'Тел'" sortable="'PhoneNumber'">
+                                    {{item.PhoneNumber}}
+                                </td>
+                                <td title="'Жен/Зам'" sortable="'IsMarried'">
+                                    <input type="checkbox" ng-model="item.IsMarried">
+                                </td>
+
+                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
+                                    {{item.ChildrenCount}} ({{item.ChildrenAge}})
+                                </td>
+                                <td title="'Супруги'" sortable="'partnerData'">
+                                    {{item.PartnerData}}
+                                </td>
+                                <td title="'Опыт'" sortable="'expirience'">
+                                    {{item.Expirience}}
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        
-        
+
+
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-primary">

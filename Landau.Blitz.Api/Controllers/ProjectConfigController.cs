@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Landau.Blitz.Api.Helpers.ProjectSettingsHelpers;
+using Landau.Blitz.Api.Models.ProjectSetting;
 
 namespace Landau.Blitz.Api.Controllers
 {
@@ -18,7 +20,7 @@ namespace Landau.Blitz.Api.Controllers
         // GET: api/ProjectConfig/5
         public string Get(int id)
         {
-            return "value";
+            return ProjectSettingHelper.GetToProjectSettings(id);
         }
 
         // POST: api/ProjectConfig
