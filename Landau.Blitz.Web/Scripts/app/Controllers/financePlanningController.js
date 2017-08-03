@@ -24,12 +24,12 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
             data: $scope.currentProject.FinancePlanning.Table,
 
             columns: [{
-                    field: 'CostItem',
-                    title: 'Статья затрат',
-                }, {
-                    field: 'Supplier',
-                    title: 'Поставщик',
-                },
+                field: 'CostItem',
+                title: 'Статья затрат',
+            }, {
+                field: 'Supplier',
+                title: 'Поставщик',
+            },
                 {
                     field: 'Amount',
                     title: 'Сумма',
@@ -44,15 +44,15 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
 
                 }
             ],
-    contextMenu: '#context-menu',
-    onContextMenuItem: function(row, $el) {
-      if($el.data("item") == "edit") {
-        //
-      };
-      if($el.data("item") == "remove") {
-        //
-      };
-    }
+            contextMenu: '#context-menu',
+            onContextMenuItem: function(row, $el) {
+                if($el.data("item") == "edit") {
+                    $scope.updateItem(row);
+                };
+                if($el.data("item") == "delete") {
+                    $scope.deleteItem(row);
+                };
+            }
         });
 
 
@@ -61,14 +61,33 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
     };
     $scope.init();
 
-    $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
+    $scope.deleteItem = function(row) {
+        for (var i = 0; i < $scope.currentProject.FinancePlanning.Table.length; i++) {
+            if ($scope.currentProject.FinancePlanning.Table[i].Id == row.Id) {
+                $scope.currentProject.FinancePlanning.Table.splice(i, 1);
+                $('#financePlanningTable').bootstrapTable('load', $scope.currentProject.FinancePlanning.Table);
+                $('#financePlanningTable').bootstrapTable('resetView');
+            }
+        }
+    }
+
+    $scope.updateItem = function(row) {
+        var modalView = 'PartialViews/Modals/FinancePlanning/SupplierModal.html';
+        var modalController = manageSupplierController;
+        var found = $filter('filter')($scope.currentProject.FinancePlanning.Table, {Id: row.Id}, true);
+        if (found.length > 0) {
+            var element = found[0];
+            $scope.addNewModal(modalView, modalController, element, $scope.currentProject.FinancePlanning.Table);
+        }
+    }
+
+    $scope.addNewModal = function(modalView, modalCtrl, element, elements) {
 
 
         if (element != {}) {
             $scope.isEdit = true;
         }
-
-        currentElement = element;
+        $scope.mElement = element;
         var modalInstance = $uibModal.open({
             templateUrl: modalView,
             controller: modalCtrl,
@@ -79,13 +98,21 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
 
         modalInstance.result.then(function() {
             //alert(JSON.stringify($scope.mElement));
-            var id = 1;
-            if (elements.length > 0) {
-                id = elements[elements.length - 1].Id + 1;
+            if (!$scope.isEdit) {
+                var id = 1;
+                if (elements.length > 0) {
+                    id = elements[elements.length - 1].Id + 1;
+                }
+                $scope.mElement.Id = id;
+                $scope.mElement.Term = new Date($scope.mElement.Term);
+                elements.push($scope.mElement);
+            } else {
+                for (var i = 0; i < elements.length; i++) {
+                    if ($scope.mElement.Id == elements[i].Id) {
+                        elements[i] = $scope.mElement;
+                    }
+                }
             }
-            $scope.mElement.Id = id;
-            $scope.mElement.Term = new Date($scope.mElement.Term);
-            elements.push($scope.mElement);
             $scope.mElement = {};
 
             $('#financePlanningTable').bootstrapTable('load', $scope.currentProject.FinancePlanning.Table);

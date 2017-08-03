@@ -13,24 +13,26 @@
 
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Наименование расхода</label>
+                        <label class="col-sm-3 control-label">Наименование расхода<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" ng-model="mElement.Name">
-
+                            <input type="text" class="form-control" ng-model="mElement.Name" data-error="Наименование должно быть заполнено" required>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Сумма</label>
+                        <label class="col-sm-3 control-label">Сумма<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="number" step="0.01" class="form-control" ng-model="mElement.Sum">
+                            <input type="number" step="0.01" class="form-control" data-error="Сумма должна быть заполнена" ng-model="mElement.Sum" required>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Дата</i></label>
+                        <label class="col-sm-3 control-label">Дата<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" ng-model="mElement.Date">
+                            <input type="date" class="form-control" data-error="Укажите дату" ng-model="mElement.Date" required>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                      <div class="form-group">

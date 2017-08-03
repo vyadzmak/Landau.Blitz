@@ -1,925 +1,925 @@
 <div ng-controller="finDataBalanceController">
 
-    <div class="container">
+<div class="container">
 
-        <!--Наименование компании-->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Дата и время проведения финансового анализа (ФА) на месте бизнеса клиента</div>
+<!--Наименование компании-->
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Дата и время проведения финансового анализа (ФА) на месте бизнеса клиента</div>
 
-                    <div class="panel-body">
-                        <div class="form-group col-xs-6">
-                            <label>Дата</label>
-                            <input type="date" class="form-control" ng-model="currentProject.FinDataBalance.Date" ng-bind="currentProject.FinDataBalance.Date | date:'dd/MM/yyyy'">
-                        </div>
-                        <div class="form-group col-xs-6">
-                            <label>Время</label>
-                            <input type="text" class="form-control" ng-model="currentProject.FinDataBalance.Time">
-                        </div>
-
-                    </div>
+            <div class="panel-body">
+                <div class="form-group col-xs-6">
+                    <label>Дата</label>
+                    <input type="date" class="form-control" ng-model="currentProject.FinDataBalance.Date" ng-bind="currentProject.FinDataBalance.Date | date:'dd/MM/yyyy'">
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Дата проведения предыдущего финансового анализа </div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Дата</label>
-                            <input type="date" class="form-control" ng-model="currentProject.FinDataBalance.PreviousDate">
-                        </div>
-                    </div>
+                <div class="form-group col-xs-6">
+                    <label>Время</label>
+                    <input type="text" class="form-control" ng-model="currentProject.FinDataBalance.Time">
                 </div>
+
             </div>
         </div>
-
-
-        <div class="row">
-
-
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Денежные средства</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-8">Наличные денежные средства в кассе (-ах) компании на момент ФА </label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInAccounts">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInAccounts2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Наличные денежные средства на руках Клиента (выручка предыдущих дней)</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInHands">
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInHands2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Наличные денежные средства в сейфе/хранилище/ячейке (накопления предыдущих периодов)</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashSavings">
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashSavings2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Денежные средства на Р/С компании</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInBankAccounts">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInBankAccounts2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Денеджные средства на валютных счетах компании</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInBankCurrencyAccounts">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInBankCurrencyAccounts2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Денежные средства на депозите, оформленном на компанию</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInCompanyDeposits">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInCompanyDeposits2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Денежные средства на депозите, оформленном на собственника/другое лицо</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInOwnerDeposits">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInOwnerDeposits2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Итого Денежные Средства:</label>
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCash">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCash2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Дебиторская задолженность</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-6">Предоплаты поставщикам</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Товар на реализации</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnSale">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnSale2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Товар на консигнации</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnConsignment">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnConsignment2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Предоплаты по расходам</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Авансы/займы выданные</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesLoansGranted">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesLoansGranted2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Задолженность покупателей </label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesDebtBuyers">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesDebtBuyers2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Итого Дебиторская задолженность:</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalDebt">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalDebt2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">ТМЗ</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-6">Товары</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZProducts">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZProducts2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Сырье</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZRawMaterials">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZRawMaterials2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Полуфабрикаты</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZSemifinishedProducts">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZSemifinishedProducts2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Готовая продукция</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZFinishedProducts">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZFinishedProducts2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Расходные материалы</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZConsumables">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZConsumables2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Корма</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZFeed">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZFeed2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Семена</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZSeeds">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZSeeds2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Стадо на откорме</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZHerdOnFattening">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZHerdOnFattening2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Итого ТМЗ:</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTMZ">
-                            </div>
-
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTMZ2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-
-
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Итого оборотных средств</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-6">Итого Оборотных средств</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCurrentAssets">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCurrentAssets2">
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--ОСНОВНЫЕ СРЕДСТВА-->
-        <div class="row">
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Оборудование</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-4">Произв.об.</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ProductionEquipment">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ProductionEquipment2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Торг.об.</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.RetailEquipment">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.RetailEquipment2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Мебель</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Furniture">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Furniture2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Оргтехника</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.OfficeEquipment">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.OfficeEquipment2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Проч. об.</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.OtherEquipment">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.OtherEquipment2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Итого об.:</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalEquipment">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalEquipment2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Автотранспорт</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-4">Легк.авт</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.PassengerTransport">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.PassengerTransport2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Груз.авт</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.FreightTransport">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.FreightTransport2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Спецт-ка</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.SpecialMachinery">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.SpecialMachinery2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Прочее</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.OtherTransport">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.OtherTransport2">
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Итого Авт-т:</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTransport">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTransport2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Недвижимость</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-4">Офисы</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly value="0" class="form-control" ng-model="currentProject.FinDataBalance.Offices">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" value="0" class="form-control" ng-model="currentProject.FinDataBalance.Offices2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Торг.пом.</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly value="0" class="form-control" ng-model="currentProject.FinDataBalance.RetailPremises">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" value="0" class="form-control" ng-model="currentProject.FinDataBalance.RetailPremises2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Кафе</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Caffees">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Caffees2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Пр.пом.</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndustrialPremises">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndustrialPremises2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Скл. пом</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Warehouses">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Warehouses2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Зд. соор.</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Buildings">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Buildings2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Земля</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Territory">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Territory2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Пр.компл</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ProductionComplexes">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ProductionComplexes2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Итого Нед-ть:</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalBuildings">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalBuildings2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!--КОНЕЦ ОСНОВНЫХ СРЕДСТВ-->
-
-        <div class="row">
-
-
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Итого основных средств</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-6">Итого основных средств</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalFixedAssets">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalFixedAssets2">
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--АКТИВ ИНВЕСТИЦИИ-->
-        <div class="row">
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Инвестиции</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-4">Пред.осн.ср</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.PrepaymentsForFixedAssets">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.PrepaymentsForFixedAssets2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Недостр.об</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.UnfinishedObjects">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.UnfinishedObjects2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Ос.ср.вне.биз</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.FixedAssetsTempNotInBusiness">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.FixedAssetsTempNotInBusiness2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Кап.затратынез.раб </label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalCostsInUncompletedWork">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CapitalCostsInUncompletedWork2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Итого АКТИВ:</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Краткосрочная кредиторская задолженность</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-4">З-ть пост</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessToSuppliers">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessToSuppliers2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">З-ть пок</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessBuyers">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessBuyers2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">З-ть рас</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessForExpenses">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessForExpenses2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Кр/З</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CreditLoans">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CreditLoans2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Итог КрЗ:</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalShortAccountsPayable">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalShortAccountsPayable2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Долгосрочные кредиты и займы</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-4">Банк.займ</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.BankLoans">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.BankLoans2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Лизинг</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Leasing">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Leasing2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Ком.ипот</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CommercialMortgage">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CommercialMortgage2">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Част.зай</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.PrivateLoans">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.PrivateLoans2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-4">Итог Долг</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalLongAccountsPayable">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalLongAccountsPayable2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!--КОНЕЦ АКТИВА -->
-
-        <!--РАСЧЕТНЫЕ ВЕЛИЧИНЫ-->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Расчетные величины</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-6">Собственный капитал</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Equity">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Equity2">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Коэффициент ликвидности</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CoefficientOfLiquidity">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CoefficientOfLiquidity2">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-sm-6">Коэффициент достаточности капитала</label>
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalAdequacyRatio">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalAdequacyRatio2">
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-        <!--КОНЕЦ РАСЧЕТНЫХ ВЕЛИЧИН-->
     </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Дата проведения предыдущего финансового анализа </div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Дата</label>
+                    <input type="date" class="form-control" ng-model="currentProject.FinDataBalance.PreviousDate">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Денежные средства</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-8">Наличные денежные средства в кассе (-ах) компании на момент ФА </label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInAccounts">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInAccounts2">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-8">Наличные денежные средства на руках Клиента (выручка предыдущих дней)</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInHands">
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInHands2">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-8">Наличные денежные средства в сейфе/хранилище/ячейке (накопления предыдущих периодов)</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashSavings">
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashSavings2">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-8">Денежные средства на Р/С компании</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInBankAccounts">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInBankAccounts2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-8">Денеджные средства на валютных счетах компании</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInBankCurrencyAccounts">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInBankCurrencyAccounts2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-8">Денежные средства на депозите, оформленном на компанию</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInCompanyDeposits">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInCompanyDeposits2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-8">Денежные средства на депозите, оформленном на собственника/другое лицо</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CashInOwnerDeposits">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CashInOwnerDeposits2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-8">Итого Денежные Средства:</label>
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCash">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCash2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Дебиторская задолженность</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-6">Предоплаты поставщикам</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsToSuppliers2">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-6">Товар на реализации</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnSale">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnSale2">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-6">Товар на консигнации</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnConsignment">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesGoodsOnConsignment2">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-6">Предоплаты по расходам</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesPrepaymentsForExpenses2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Авансы/займы выданные</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesLoansGranted">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesLoansGranted2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Задолженность покупателей </label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesDebtBuyers">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ReceivablesDebtBuyers2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Итого Дебиторская задолженность:</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalDebt">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalDebt2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">ТМЗ</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-6">Товары</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZProducts">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZProducts2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Сырье</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZRawMaterials">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZRawMaterials2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Полуфабрикаты</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZSemifinishedProducts">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZSemifinishedProducts2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Готовая продукция</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZFinishedProducts">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZFinishedProducts2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Расходные материалы</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZConsumables">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZConsumables2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Корма</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZFeed">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZFeed2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Семена</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZSeeds">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZSeeds2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Стадо на откорме</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TMZHerdOnFattening">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.TMZHerdOnFattening2">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-6">Итого ТМЗ:</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTMZ">
+                    </div>
+
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTMZ2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Итого оборотных средств</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-6">Итого Оборотных средств</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCurrentAssets">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalCurrentAssets2">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ОСНОВНЫЕ СРЕДСТВА-->
+<div class="row">
+
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Оборудование</div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-4">Произв.об.</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ProductionEquipment">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ProductionEquipment2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Торг.об.</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.RetailEquipment">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.RetailEquipment2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Мебель</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Furniture">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Furniture2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Оргтехника</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.OfficeEquipment">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.OfficeEquipment2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Проч. об.</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.OtherEquipment">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.OtherEquipment2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4">Итого об.:</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalEquipment">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalEquipment2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Автотранспорт</div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-4">Легк.авт</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.PassengerTransport">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.PassengerTransport2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Груз.авт</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.FreightTransport">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.FreightTransport2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Спецт-ка</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.SpecialMachinery">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.SpecialMachinery2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Прочее</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.OtherTransport">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.OtherTransport2">
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Итого Авт-т:</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTransport">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalTransport2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Недвижимость</div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-4">Офисы</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly value="0" class="form-control" ng-model="currentProject.FinDataBalance.Offices">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" value="0" class="form-control" ng-model="currentProject.FinDataBalance.Offices2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Торг.пом.</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly value="0" class="form-control" ng-model="currentProject.FinDataBalance.RetailPremises">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" value="0" class="form-control" ng-model="currentProject.FinDataBalance.RetailPremises2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Кафе</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Caffees">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Caffees2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4">Пр.пом.</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndustrialPremises">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndustrialPremises2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4">Скл. пом</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Warehouses">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Warehouses2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4">Зд. соор.</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Buildings">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Buildings2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4">Земля</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Territory">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Territory2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4">Пр.компл</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.ProductionComplexes">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.ProductionComplexes2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4">Итого Нед-ть:</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalBuildings">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalBuildings2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!--КОНЕЦ ОСНОВНЫХ СРЕДСТВ-->
+
+<div class="row">
+
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Итого основных средств</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-6">Итого основных средств</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalFixedAssets">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalFixedAssets2">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--АКТИВ ИНВЕСТИЦИИ-->
+<div class="row">
+
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Инвестиции</div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Предоплаты за основные средства" tooltip-placement="top-left">Пред.осн.ср</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.PrepaymentsForFixedAssets">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.PrepaymentsForFixedAssets2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Недостроенные объекты" tooltip-placement="top-left">Недостр.об</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.UnfinishedObjects">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.UnfinishedObjects2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Основные cредства, временно не участвующие в бизнесе" tooltip-placement="top-left">Ос.ср.вне.биз</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.FixedAssetsTempNotInBusiness">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.FixedAssetsTempNotInBusiness2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Капитальные затраты в основные средства на стадии не завершенных работ" tooltip-placement="top-left">Кап.затратынез.раб </label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalCostsInUncompletedWork">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CapitalCostsInUncompletedWork2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Итоговое значение по всем статьям активной части баланса" tooltip-placement="top-left">Итого АКТИВ:</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalActive2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Краткосрочная кредиторская задолженность</div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Задолженности поставщикам" tooltip-placement="top-left">З-ть пост</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessToSuppliers">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessToSuppliers2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Задолженность покупателям (предоплаты)" tooltip-placement="top-left">З-ть пок</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessBuyers">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessBuyers2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Задолженность по расходам" tooltip-placement="top-left">З-ть рас</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessForExpenses">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.IndebtednessForExpenses2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Кредиты/займы" tooltip-placement="top-left">Кр/З</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CreditLoans">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CreditLoans2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Итоговое значение по всем статьям имеющейся задолженности сроком до 1 года" tooltip-placement="top-left">Итог КрЗ:</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalShortAccountsPayable">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalShortAccountsPayable2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Долгосрочные кредиты и займы</div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Банковчкие займы" tooltip-placement="top-left">Банк.займ</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.BankLoans">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.BankLoans2">
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Лизинг" tooltip-placement="top-left">Лизинг</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Leasing">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.Leasing2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Коммерческая ипотека" tooltip-placement="top-left">Ком.ипот</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CommercialMortgage">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.CommercialMortgage2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Частные займы" tooltip-placement="top-left">Част.зай</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.PrivateLoans">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" ng-model="currentProject.FinDataBalance.PrivateLoans2">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4" uib-tooltip="Итоговое значение по всем статьям имеющейся задолженности сроком свыше 1 года" tooltip-placement="top-left">Итог Долг</label>
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalLongAccountsPayable">
+                </div>
+
+                <div class="col-sm-4">
+                    <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.TotalLongAccountsPayable2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!--КОНЕЦ АКТИВА -->
+
+<!--РАСЧЕТНЫЕ ВЕЛИЧИНЫ-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Расчетные величины</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-6">Собственный капитал</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Equity">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Equity2">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-6">Коэффициент ликвидности</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CoefficientOfLiquidity">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CoefficientOfLiquidity2">
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-6">Коэффициент достаточности капитала</label>
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalAdequacyRatio">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalAdequacyRatio2">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--КОНЕЦ РАСЧЕТНЫХ ВЕЛИЧИН-->
+</div>
 </div>
