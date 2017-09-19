@@ -20,7 +20,9 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectSettingsHelpers
             {
                 using (var db = new LandauBlitzEntities())
                 {
-                    return db.Clients.Where(x => x.ClientTypeId == 3).ToList();
+                    int clientId =(int)db.Users.FirstOrDefault(x => x.Id == userId).ClientId;
+
+                    return db.Clients.Where(x => x.ClientTypeId == 3 && x.ClientCreatorId==clientId).ToList();
                 }
                 return null;
             }

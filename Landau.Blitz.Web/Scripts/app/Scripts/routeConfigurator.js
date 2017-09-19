@@ -180,6 +180,18 @@
         }
     })
 
+
+    .state("main.dashboard.project.finDataBalanceTable", {
+        url: "/finDataBalanceTable",
+        templateUrl: "PartialViews/FinDataBalanceTable.html",
+        onEnter: function($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Финдата Баланс Табличное представление";
+        }
+    })
+
     .state("main.dashboard.project.finDataCrossChecking", {
         url: "/finDataCrossChecking",
         templateUrl: "PartialViews/FinDataCrossChecking.html",

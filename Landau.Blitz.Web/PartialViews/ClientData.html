@@ -15,7 +15,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleSelect2">Вид деятельности</label>
+                            <label for="exampleSelect2">Форма СЧП</label>
                             <select class="form-control" id="exampleSelect2" ng-model="currentProject.ClientData.OrganizationType">
                 <option value="1">ИП</option>
                 <option value="2">ТОО</option>
@@ -226,7 +226,7 @@
                 <div class="panel-body">
                     <div class="b-div">
                         <table ng-table="legalOwnerCompanyInfosParams" class="table">
-                            <tr ng-repeat="owner in currentProject.ClientData.LegalOwnerCompanyInfos" ng-right-click="clickLegalCompanyInfo(owner.Id)" menu-items="menuItems">
+                            <tr ng-repeat="owner in currentProject.ClientData.LegalOwnerCompanyInfos" ng-right-click="clickLegalOwnerCompanyInfo(owner.Id)" menu-items="menuItems">
                                 <td title="'ФИО'" sortable="'Name'">
                                     {{owner.Name}}</td>
 
@@ -320,6 +320,9 @@
                     <div class="b-div">
                         <table ng-table="creditHistoryInfosParams" class="table">
                             <tr ng-repeat="history in currentProject.ClientData.CreditHistoryInfos" ng-right-click="clickCreditHistoryInfo(history.Id)" menu-items="menuItems">
+                                <td title="'Заемщик'" sortable="'BorrowerName'">
+                                    {{history.BorrowerName}}</td>
+
                                 <td title="'Наименование Банка/кредитора'" sortable="'CompanyName'">
                                     {{history.CompanyName}}</td>
 

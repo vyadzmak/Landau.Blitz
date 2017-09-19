@@ -35,7 +35,7 @@ namespace Landau.Blitz.Api.Helpers.UserHelpers
         /// </summary>
         /// <param name="companyId"></param>
         /// <returns></returns>
-        public static string GetToUsersByCompanyId(int companyId)
+        public static string GetToUsersByCompanyId(int companyId, int userId)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace Landau.Blitz.Api.Helpers.UserHelpers
                                     Name = state.StateName
                                 });
 
-                            var rs = DBUserHelper.GetToAllUserRoles();
+                            var rs = DBUserHelper.GetToAllUserRoles(userId);
                             foreach (var role in rs)
                                 model.Login.Roles.Add(new UserRoleModel
                                 {
@@ -131,7 +131,7 @@ namespace Landau.Blitz.Api.Helpers.UserHelpers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static string GetToUserInfoById(int id)
+        public static string GetToUserInfoById(int id, int userId)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace Landau.Blitz.Api.Helpers.UserHelpers
                             Name = state.StateName
                         });
 
-                    var rs = DBUserHelper.GetToAllUserRoles();
+                    var rs = DBUserHelper.GetToAllUserRoles(userId);
                     foreach (var role in rs)
                         model.Login.Roles.Add(new UserRoleModel
                         {
@@ -219,7 +219,7 @@ namespace Landau.Blitz.Api.Helpers.UserHelpers
                                     Name = state.StateName
                                 });
 
-                            var rs = DBUserHelper.GetToAllUserRoles();
+                            var rs = DBUserHelper.GetToAllUserRoles(userId);
                             foreach (var role in rs)
                                 model.Login.Roles.Add(new UserRoleModel
                                 {

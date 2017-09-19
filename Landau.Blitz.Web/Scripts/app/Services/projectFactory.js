@@ -1,4 +1,4 @@
-blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'dataInitializer', function($rootScope, clientDataInitializer, dataInitilizer) {
+blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'dataInitializer', 'balanceTableFactory', function($rootScope, clientDataInitializer, dataInitilizer, balanceTableFactory) {
     var projectFactory = {};
     var currentProject = {};
 
@@ -336,7 +336,8 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.Provision = {};
         currentProject.DataDamu = {};
         currentProject.Conclusion = {};
-
+        currentProject.FinDataBalance.Table = {};
+        //currentProject.FinDataBalance.Date = currentProject.ProjectContent.BalanceDate;
         //dataInitilizer.setBalanceData(currentProject);
         //currentProject.ProjectContent = JSON.stringify(currentProject);
         this.currentProject = currentProject;
@@ -379,8 +380,11 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ProjectAnalysis = currentProject.ProjectContent.ProjectAnalysis;
         currentProject.BusinessInfo = currentProject.ProjectContent.BusinessInfo;
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
-        currentProject.FinDataBalance.Date = new Date(currentProject.FinDataBalance.Date);
-        currentProject.FinDataBalance.PreviousDate = new Date(currentProject.FinDataBalance.PreviousDate);
+        // currentProject.FinDataBalance.Date = new Date(currentProject.FinDataBalance.Date);
+
+        // if (currentProject.ParentExists) {
+        //     currentProject.FinDataBalance.PreviousDate = new Date(currentProject.ParentProject.FinDataBalance.Date);
+        // }
 
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
@@ -393,10 +397,17 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         if (JSON.stringify(currentProject.FinDataOdds) == '{}') {
             currentProject.FinDataOdds.Table = initOdds();
         };
+
+        if (JSON.stringify(currentProject.FinDataBalance.Table) == '{}') {
+            currentProject.FinDataBalance.Table = balanceTableFactory.initBalanceTable(currentProject);
+        };
+
         currentProject.LargeExpenses = currentProject.ProjectContent.LargeExpenses;
         currentProject.Provision = currentProject.ProjectContent.Provision;
         currentProject.DataDamu = currentProject.ProjectContent.DataDamu;
         currentProject.Conclusion = currentProject.ProjectContent.Conclusion;
+        currentProject.BalanceDate = currentProject.ProjectContent.BalanceDate;
+        //currentProject.FinDataBalance.Date = currentProject.ProjectContent.BalanceDate;
 
         currentProject.ProjectContent = {};
         this.currentProject = currentProject;

@@ -102,7 +102,11 @@
                     </ul>
                     <!--end ADMIN-->
                     <!--ANALYTIC-->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserRoleId==3">
+                    <ul class="nav" id="side-menu" ng-show="userData.UserRoleId==3 || userData.UserRoleId==2">
+                        <li>
+                            <a ui-sref="main.dashboard.companies" style="cursor:default"><i class="fa fa-briefcase"></i> Компании</a>
+                        </li>
+
                         <li>
                             <a ui-sref="main.dashboard.projects" style="cursor:default"><i class="fa fa-code"></i> Проекты</a>
                         </li>

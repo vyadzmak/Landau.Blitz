@@ -51,6 +51,46 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
         }
 
         /// <summary>
+        ///     get to all companies
+        /// </summary>
+        /// <returns></returns>
+        public static string GetToCompaniesByUserId(int userId)
+        {
+            try
+            {
+                var clients = DBClientHelper.GetToCompaniesByUserId(userId);
+                var models = new List<ClientModel>();
+                foreach (var client in clients)
+                {
+                    var model = new ClientModel
+                    {
+                        Address = client.Address,
+                        ClientTypeId = client.ClientTypeId,
+                        ClientTypeName = client.ClientTypes.Description,
+                        Id = client.Id,
+                        Name = client.Name,
+                        RegistrationNumber = client.RegistrationNumber,
+                        RegistrationDate = client.RegistrationDate.ToString(),
+                        ClientTypes = ClientTypeHelper.GetToClientType(userId)
+
+                    };
+
+                    model.CurrentClientType = model.ClientTypes.FirstOrDefault(x => x.Id == model.ClientTypeId);
+                    models.Add(model);
+                }
+                return SerializeHelper.Serialize(models);
+            }
+            catch (Exception e)
+            {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+                return "";
+            }
+        }
+
+        /// <summary>
         ///     get to company by ID
         /// </summary>
         /// <returns></returns>
@@ -72,6 +112,47 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
                         RegistrationNumber = client.RegistrationNumber,
                         RegistrationDate = client.RegistrationDate.ToString(),
                         ClientTypes = ClientTypeHelper.GetToClientType()
+                    };
+                    model.CurrentClientType = model.ClientTypes.FirstOrDefault(x => x.Id == model.ClientTypeId);
+
+                    return SerializeHelper.Serialize(model);
+                }
+                return "";
+            }
+            catch (Exception e)
+            {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+                return "";
+            }
+        }
+
+
+
+        /// <summary>
+        ///     get to company by ID
+        /// </summary>
+        /// <returns></returns>
+        public static string GetToCompanyByUserAndClientId(int clientId, int userId)
+        {
+            try
+            {
+                var client = DBClientHelper.GetToCompanyById(clientId);
+
+                if (client != null)
+                {
+                    var model = new ClientModel
+                    {
+                        Address = client.Address,
+                        ClientTypeId = client.ClientTypeId,
+                        ClientTypeName = client.ClientTypes.ClientTypeName,
+                        Id = client.Id,
+                        Name = client.Name,
+                        RegistrationNumber = client.RegistrationNumber,
+                        RegistrationDate = client.RegistrationDate.ToString(),
+                        ClientTypes = ClientTypeHelper.GetToClientType(userId)
                     };
                     model.CurrentClientType = model.ClientTypes.FirstOrDefault(x => x.Id == model.ClientTypeId);
 

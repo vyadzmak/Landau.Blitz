@@ -1,0 +1,119 @@
+<div ng-controller="finDataBalanceTableController">
+
+    <div class="container">
+
+        <!--Наименование компании-->
+
+
+        <div class="row">
+            <!-- <div id="toolbar">
+                <button type="button" class="btn btn-danger orange-tooltip" ng-click="cleanLog();" data-toggle="tooltip" title="Очистить лог" data-placement="bottom">
+                    <span class="glyphicon glyphicon-trash" ></span>
+                    </button>
+            </div> -->
+            <table id="balanceTable" data-row-style="rowBoldStyle"></table>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Дата и время проведения финансового анализа (ФА) на месте бизнеса клиента</div>
+
+                    <div class="panel-body">
+                        <div class="form-group col-xs-6">
+                            <label>Дата</label>
+                            <input type="date" class="form-control" ng-model="currentProject.FinDataBalance.Date" ng-bind="currentProject.FinDataBalance.Date | date:'dd/MM/yyyy'">
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label>Время</label>
+                            <input type="text" class="form-control" ng-model="currentProject.FinDataBalance.Time">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Дата проведения предыдущего финансового анализа </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Дата</label>
+                            <input type="date" class="form-control" ng-model="currentProject.FinDataBalance.PreviousDate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!--РАСЧЕТНЫЕ ВЕЛИЧИНЫ-->
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Расчетные величины</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-6">Собственный капитал</label>
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Equity">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.Equity2">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-6">Коэффициент ликвидности</label>
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CoefficientOfLiquidity">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CoefficientOfLiquidity2">
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-sm-6">Коэффициент достаточности капитала</label>
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalAdequacyRatio">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataBalance.CapitalAdequacyRatio2">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div> -->
+
+        <!--КОНЕЦ РАСЧЕТНЫХ ВЕЛИЧИН-->
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Коментарии к Балансу</div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Комментарии</label>
+                            <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.FinDataBalance.Comments"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -332,7 +332,7 @@
     <Content Include="PartialViews\Modals\Company\CompanyModal.html" />
     <Content Include="PartialViews\Modals\FinancePlanning\SupplierModal.html" />
     <Content Include="PartialViews\Modals\LargeExpenses\InvestmentsModal.html" />
-    <Content Include="PartialViews\Modals\LargeExpenses\OutOfBuisnessPaymentModal.html" />
+    <Content Include="PartialViews\Modals\LargeExpenses\OutOfBusinessPaymentModal.html" />
     <Content Include="PartialViews\Modals\Project\ProjectModal.html" />
     <Content Include="PartialViews\Modals\Provision\DepositModal.html" />
     <Content Include="PartialViews\Modals\Setting\SettingModal.html" />

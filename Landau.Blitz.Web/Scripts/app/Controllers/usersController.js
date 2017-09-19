@@ -24,12 +24,13 @@ var usersController = function($scope, $stateParams, $http, $location, $state, $
     var url = $$ApiUrl + "/clientUsers";
     $scope.companies = [];
     var rParams = {
-        id: companyId
+        id: companyId,
+        userId: $scope.userData.UserId
     }
     promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
         $scope.users = JSON.parse(result);
         $scope.deleteUser = function(userId) {
-                var rParams = { id: userId };
+                var rParams = { id: userId, userId: $scope.userData.UserId };
                 var url = $$ApiUrl + "/users";
 
                 promiseUtils.getPromiseHttpResult(httpService.deleteRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
@@ -178,7 +179,7 @@ var usersController = function($scope, $stateParams, $http, $location, $state, $
     //add new user btn event
     //имя вьюхи, контроллер, пустой элемент, куда пишем, что пишем
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
-
+        var url = $$ApiUrl + "/users";
 
         if (element != {}) {
             $scope.isEdit = true;
@@ -195,7 +196,7 @@ var usersController = function($scope, $stateParams, $http, $location, $state, $
 
         modalInstance.result.then(function() {
             $scope.mElement.Login.UserLogin = $scope.mElement.Email;
-            var url = $$ApiUrl + "/users";
+            //var url = $$ApiUrl + "/users";
 
             var rParams = {
                 data: $scope.mElement,
@@ -259,7 +260,8 @@ var usersController = function($scope, $stateParams, $http, $location, $state, $
     $scope.showUserModal = function() {
         var url = $$ApiUrl + "/users";
         var rParams = {
-            id: -1
+            id: -1,
+            userId: $scope.userData.UserId
         };
 
         promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {

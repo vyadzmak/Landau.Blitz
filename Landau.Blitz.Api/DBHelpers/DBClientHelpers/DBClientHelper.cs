@@ -49,6 +49,66 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
         /// get to all clients
         /// </summary>
         /// <returns></returns>
+        public static List<Clients> GetToCompaniesByUserId(int userId)
+        {
+            try
+            {
+                
+
+                using (var db = new LandauBlitzEntities())
+                {
+
+                    var data = db.UserLogins
+                        .Include(x => x.Users)
+                        .Include(x=>x.Users.Clients)
+                        
+                        .FirstOrDefault(x=>x.Id==userId);
+                    if (data == null) return null;
+                    int clientId = (int)data.Users.ClientId;
+
+                    switch (data.UserRoleId)
+                    {
+                        case 1:
+                            var result = db.Clients.Select(x => x)
+                                .Include(x => x.ClientTypes)
+                                .ToList();
+                            return result;
+                            break;
+                            
+                        case 2:
+                             result = db.Clients.Select(x => x)
+                                .Include(x => x.ClientTypes)
+                                .Where(x => x.ClientCreatorId == clientId || x.Id == clientId)
+                                .ToList();
+                            return result;
+
+                        case 3:
+                            result = db.Clients.Select(x => x)
+                                .Include(x => x.ClientTypes)
+                                .Where(x => x.ClientCreatorId == clientId)
+                                .ToList();
+                            return result;
+                            break;  
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// get to all clients
+        /// </summary>
+        /// <returns></returns>
         public static Clients GetToCompanyById(int id)
         {
             try
@@ -94,7 +154,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                         ClientTypeId = model.CurrentClientType.Id,
                         RegistrationDate = DateTime.Now,
                         RegistrationNumber = model.RegistrationNumber,
-
+                        ClientCreatorId = model.ClientCreatorId
                     };
                     model.RegistrationDate = client.RegistrationDate.ToString();
                     db.Clients.Add(client);
@@ -164,8 +224,36 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                 {
                     Clients client = db.Clients.FirstOrDefault(x => x.Id == id);
 
+                    List<Projects> projects = db.Projects.Where(x => x.ClientId == client.Id).ToList();
+                    if (projects != null)
+                    {
+                        db.Projects.RemoveRange(projects);
+                        db.SaveChanges();
+                    }
+
                     if (client != null)
                     {
+                        List<Users> users = db.Users.Where(x => x.ClientId == id).ToList();
+
+                        foreach (var user in users)
+                        {
+                            List<UserLogins> logins = db.UserLogins.Where(x => x.UserId == user.Id).ToList();
+
+                            if (logins != null)
+                            {
+                                db.UserLogins.RemoveRange(logins);
+                                db.SaveChanges();
+                            }
+
+                            
+                        }
+
+                        if (users != null)
+                        {
+                            db.Users.RemoveRange(users);
+                            db.SaveChanges();
+                        }
+
                         db.Clients.Remove(client);
                     }
                     db.SaveChanges();

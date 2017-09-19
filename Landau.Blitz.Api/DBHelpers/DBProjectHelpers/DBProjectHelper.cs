@@ -26,7 +26,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
                     return db.Projects
                         .Include(x=>x.Users)
                         
-                        .Where(x => x.CreatorId == userId)
+                        .Where(x => x.CreatorId == userId).OrderByDescending(x => x.Id)
                         .ToList();
                 }
                 
@@ -172,6 +172,28 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
                                    innerException);
 
                 return "";
+            }
+        }
+
+        public static string DeleteProject(int id)
+        {
+            try
+            {
+                using (var db = new LandauBlitzEntities())
+                {
+                    Projects project = db.Projects.FirstOrDefault(x => x.Id == id);
+
+                    if (project != null)
+                    {
+                        db.Projects.Remove(project);
+                        db.SaveChanges();
+                    }
+                }
+                return "OK";
+            }
+            catch (Exception e)
+            {
+                return "Error";
             }
         }
     }

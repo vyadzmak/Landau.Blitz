@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Landau.Blitz.Api.DBHelpers.DBProjectHelpers;
 using Landau.Blitz.Api.Helpers.ProjectHelpers;
 
 namespace Landau.Blitz.Api.Controllers
@@ -33,8 +34,9 @@ namespace Landau.Blitz.Api.Controllers
         }
 
         // DELETE: api/UserProjects/5
-        public void Delete(int id)
+        public string Delete(int id)
         {
+            return DBProjectHelper.DeleteProject(id);
         }
     }
 }

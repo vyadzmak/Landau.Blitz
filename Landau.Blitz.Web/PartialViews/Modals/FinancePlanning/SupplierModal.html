@@ -28,10 +28,12 @@
                                 <option>Расходы, связанные с монтажем, установкой, наладкой техники и оборудования</option>
                                 <option>Дополнительные расходы на рекламу, продвижение продуктов в рамках финансируемого проекта </option>
                                 <option>Расходы по обучению персонала для обслуживания оборудования, техники в рамках финансируемого проекта  </option>
-                                
-                                
-                                </select>
+                            </select>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Иная статья затрат</label>
+                        <div class="col-sm-9"><input class="form-control" ng-model="mElement.OtherCostItem" /></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Поставщик<i class="red-star">*</i></label>
@@ -67,10 +69,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Срок<i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label">Дата</label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" placeholder="5000" maxlength="270" data-error="Срок должен быть заполнен" ng-model="mElement.Term" required>
-                            <div class="help-block with-errors"></div>
+                            <input type="date" class="form-control" placeholder="5000" maxlength="270" data-error="Срок должен быть заполнен" ng-model="mElement.Term">
+                            <!-- <div class="help-block with-errors"></div> -->
                         </div>
                     </div>
                     </br>

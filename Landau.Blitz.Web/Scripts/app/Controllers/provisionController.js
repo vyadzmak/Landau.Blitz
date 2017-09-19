@@ -8,16 +8,26 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
         }
     };
     $scope.init();
-     $scope.filterFromArray = function(arr, id) {
-            var ob = arr.filter(function(item) {
-                return item.Id == id;
-            });
+    $scope.filterFromArray = function(arr, id) {
+        var ob = arr.filter(function(item) {
+            return item.Id == id;
+        });
 
-            return ob[0];
+        return ob[0];
+    }
+
+
+    $scope.calculateLiquidityRatio = function() {
+            try {
+                $scope.mElement.LiquidityRatio = +($scope.mElement.AssessedPrice / $scope.mElement.MarketPrice).toFixed(2);
+
+            } catch (e) {
+                $scope.mElement.LiquidityRatio = 0;
+            }
         }
-    //------------------���� ��� ������ � ���������� ������---------------------------//
-    //add new user btn event
-    //��� �����, ����������, ������ �������, ���� �����, ��� �����
+        //------------------���� ��� ������ � ���������� ������---------------------------//
+        //add new user btn event
+        //��� �����, ����������, ������ �������, ���� �����, ��� �����
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
 
@@ -67,7 +77,7 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
         $scope.elements = $scope.currentProject.Provision.Deposits;
     };
 
-     $scope.EditElement = function() {
+    $scope.EditElement = function() {
 
         $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);
 
@@ -113,7 +123,7 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
         dialog.setSize(BootstrapDialog.SIZE_SMALL);
     };
 
-     $scope.menuItems = [{
+    $scope.menuItems = [{
             text: "Редактировать", //menu option text 
             callback: $scope.EditElement, //function to be called on click  
             disabled: false //No click event. Grayed out option. 

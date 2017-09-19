@@ -73,6 +73,15 @@ namespace Landau.Blitz.Api.Models.ClientModel
         /// client types list
         /// </summary>
         public List<ClientTypeModel> ClientTypes { get; set; }
+
+        /// <summary>
+        /// user creator ID
+        /// </summary>
+        public int UserCreatorId { get; set; }
+        /// <summary>
+        /// client creator id
+        /// </summary>
+        public int ClientCreatorId { get; set; }
         #endregion
 
     }

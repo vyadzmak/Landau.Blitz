@@ -82,13 +82,46 @@ namespace Landau.Blitz.Api.DBHelpers.DBUserHelpers
         /// get to all user roles
         /// </summary>
         /// <returns></returns>
-        public static List<UserRoles> GetToAllUserRoles()
+        public static List<UserRoles> GetToAllUserRoles(int userId=1)
         {
             try
             {
                 using (var db= new LandauBlitzEntities())
                 {
-                    return db.UserRoles.Where(x=>x.Id==4).ToList();
+
+                    UserLogins login = db.UserLogins
+
+                        .FirstOrDefault(x => x.UserId == userId);
+
+                    if (login != null)
+                    {
+                        int roleId = login.UserRoleId;
+
+                        switch (roleId)
+                        {
+                            case 1:
+                                return db.UserRoles.Select(x => x)
+                                    .ToList();
+                                break;
+
+
+                            case 2:
+                                return db.UserRoles.Select(x => x)
+                                    .Where(x => x.Id == 2 || x.Id == 3 || x.Id==4)
+                                    .ToList();
+                                break;
+
+                            case 3:
+                                return db.UserRoles.Select(x => x)
+                                    .Where(x => x.Id == 3|| x.Id==4)
+                                    .ToList();
+                                break;
+
+                        }
+                    }
+
+                    return null;
+                   // return db.UserRoles.Where(x=>x.Id==4).ToList();
                 }
             }
             catch (Exception e)

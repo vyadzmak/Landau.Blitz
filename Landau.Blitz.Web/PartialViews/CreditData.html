@@ -8,7 +8,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Цель займа</div>
                     <div class="panel-body">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="exampleSelect1">Выберите цель займа</label>
                             <select multiple class="form-control" id="exampleSelect1" ng-model="currentProject.ClientData.EconomicSectors">
                                 <option value="1">Пополнение оборотных средств - ПОС</option>
@@ -17,6 +17,10 @@
                                 <option value="4">Ремонт/модернизация основных средств</option>
                                 <option value="5">Строительство коммерческой недвижимости</option>
                             </select>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="exampleSelect1">Укажите цель</label>
+                            <input class="form-control" ng-model="currentProject.ClientData.OtherEconomicSector" />
                         </div>
                     </div>
                 </div>
@@ -32,12 +36,12 @@
 
                     <div class="panel-body">
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-sm-8">Запрошенная сумма кредитной линии </label>
                             <div class="col-sm-4">
                                 <input type="number" step="0.01" class="form-control" placeholder="" ng-model="currentProject.CreditData.CreditLineSum">
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="form-group">
@@ -68,13 +72,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-sm-8">Предложенная сумма кредитной линии</label>
                             <div class="col-sm-4">
                                 <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.ProposedCreditLineSum">
                             </div>
                         </div>
-
+ -->
 
                         <div class="form-group">
                             <label class="col-sm-8">Предложенная сумма кредита/субкредита</label>
@@ -83,12 +87,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-sm-8">Предложенный срок кредитной линии</label>
                             <div class="col-sm-4">
                                 <input type="number" step="0.01" class="form-control" ng-model="currentProject.CreditData.ProposedCreditLineTerm">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label class="col-sm-8">Предложенный срок кредита</label>

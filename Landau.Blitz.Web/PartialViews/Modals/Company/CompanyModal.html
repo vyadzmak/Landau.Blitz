@@ -10,9 +10,9 @@
                 <form class="form-horizontal" name="companyForm" id="companyForm" role="form" data-toggle="validator">
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Наименование<i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label">«Наименование клиента (с указанием организационно-правовой формы)»<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="ЧТУП БВАР" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
+                            <input type="text" class="form-control" placeholder="ТОО Альфа" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -33,18 +33,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-show="userData.UserRoleId==1 || userData.UserRoleId==2">
                         <label class="col-sm-3 control-label" for="exampleSelect1">Тип организации</label>
 
                         <div class="col-sm-9">
 
                             <select class="form-control" ng-options="type.Description for type in mElement.ClientTypes track by type.Id" ng-model="mElement.CurrentClientType"></select>
-                            <!--<select class="form-control" id="exampleSelect1" ng-model="mElement.ClientTypeId">
-                                <option value="1">Разработчик</option>
-                                <option value="2">Финансовая организация</option>
-                                <option value="3">Заемщик</option>
-                                
-                                </select>-->
+
                         </div>
                     </div>
                     </br>

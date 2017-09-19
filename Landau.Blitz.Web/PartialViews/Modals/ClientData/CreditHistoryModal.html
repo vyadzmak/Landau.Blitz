@@ -12,6 +12,15 @@
                 <form class="form-horizontal" name="creditHistoryForm" id="creditHistoryForm" role="form" data-toggle="validator">
 
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">Наименование заемщика<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="ТОО 'Заемщик'" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.BorrowerName" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">Наименование банка/кредитора<i class="red-star">*</i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" placeholder="ТОО 'Альфа Бета'" maxlength="270" data-error="Поле должно быть заполнено" ng-model="mElement.CompanyName" required>
@@ -37,7 +46,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Дата получения<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.DateOfReceiving" required>
+                            <input type="date" class="form-control" data-error="Поле должно быть заполнено" ng-model="mElement.DateOfReceiving" required>
                             <div class=" help-block with-errors "></div>
                         </div>
                     </div>
@@ -45,16 +54,16 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Дата погашения по договору <i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.DateOfRepaymentAgreement" required>
+                            <input type="date" class="form-control" data-error="Поле должно быть заполнено" ng-model="mElement.DateOfRepaymentAgreement" required>
                             <div class=" help-block with-errors "></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Дата погашения по факту <i class="red-star">*</i></label>
+                        <label class="col-sm-3 control-label">Дата погашения по факту </label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" data-error="Дата регистрации" ng-model="mElement.DateOfRepaymentFact" required>
-                            <div class=" help-block with-errors "></div>
+                            <input type="date" class="form-control" data-error="Поле должно быть заполнено" ng-model="mElement.DateOfRepaymentFact">
+
                         </div>
                     </div>
 
@@ -76,7 +85,7 @@
 
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Наличие за последние 3 года просроченной задолженности 1 более 90 дней или 3-х раз выхода на просрочку сроком свыше 30 дней</i></label>
+                        <label class="col-sm-3 control-label">Наличие за последние 5 лет просроченной задолженности 1 раз более 90 дней или 3-х раз выхода на просрочку сроком свыше 30 дней</label>
                         <div class="col-sm-9">
                             <input type="checkbox" ng-model="mElement.DelayPay">
 

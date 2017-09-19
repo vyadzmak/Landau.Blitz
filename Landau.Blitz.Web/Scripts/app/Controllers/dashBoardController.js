@@ -11,6 +11,11 @@
                 break;
 
                 // case 2:
+
+            case 2:
+                $state.go("main.dashboard.companies");
+                break;
+
             case 3:
                 $state.go("main.dashboard.projects");
                 break;

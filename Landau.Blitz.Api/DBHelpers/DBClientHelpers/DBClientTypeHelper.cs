@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Landau.Blitz.Api.DB;
 using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
-
+using System.Data.Entity;
 namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
 {
     /// <summary>
@@ -16,15 +16,44 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
         /// get to client types
         /// </summary>
         /// <returns></returns>
-        public static List<ClientTypes> GetToClientTypes()
+        public static List<ClientTypes> GetToClientTypes(int userId=1)
         {
             try
             {
                 using (var db = new LandauBlitzEntities())
                 {
-                    return db.ClientTypes.Select(x => x)
-                        .Where(x=>x.Id!=1 && x.Id!=2)
-                        .ToList();
+                    UserLogins login = db.UserLogins
+                        
+                        .FirstOrDefault(x => x.UserId == userId);
+
+                    if (login != null)
+                    {
+                        int roleId = login.UserRoleId;
+
+                        switch (roleId)
+                        {
+                            case 1:
+                                return db.ClientTypes.Select(x => x)
+                                    .ToList();
+                                break;
+
+
+                            case 2:
+                                return db.ClientTypes.Select(x => x)
+                                  .Where(x=>x.Id==2 || x.Id==3)
+                                    .ToList();
+                                break;
+
+                            case 3:
+                                return db.ClientTypes.Select(x => x)
+                                    .Where(x => x.Id == 3)
+                                    .ToList();
+                                break;
+
+                        }
+                    }
+
+                    return null;
                 }
             }
             catch (Exception e)

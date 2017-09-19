@@ -17,9 +17,9 @@ namespace Landau.Blitz.Api.Controllers
         }
 
         // GET: api/ClientUsers/5
-        public string Get(int id)
+        public string Get(int id, int userId)
         {
-            return UserHelper.GetToUsersByCompanyId(id);
+            return UserHelper.GetToUsersByCompanyId(id, userId);
         }
 
         // POST: api/ClientUsers

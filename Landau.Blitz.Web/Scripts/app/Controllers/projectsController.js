@@ -188,6 +188,7 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
             $scope.mElement.ProjectAnalysis.ActivityTrade = $scope.mElement.ActivityTrade;
             $scope.mElement.ProjectAnalysis.ActivityAgriculture = $scope.mElement.ActivityAgriculture;
             $scope.mElement.ProjectAnalysis.ActivityProduction = $scope.mElement.ActivityProduction;
+            $scope.mElement.ProjectAnalysis.BalanceDate = $scope.mElement.BalanceDate;
 
 
 
@@ -259,35 +260,54 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
         promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
             // alert(result);
             $scope.projectSetting = JSON.parse(result);
-            $scope.projectSetting.SelectedClient = $scope.projectSetting.Clients[0];
 
-            $scope.projectSetting.StartMonth = $scope.projectSetting.StartDates.Months[0];
-            $scope.projectSetting.StartYear = $scope.projectSetting.StartDates.Years[0];
+            if ($scope.projectSetting.Clients == undefined || $scope.projectSetting.Clients.length == 0) {
+                var dialog = BootstrapDialog.alert({
+                    title: 'Ошибка',
+                    message: 'Отсутствуют компании заемщики. Перед созданием заявки необходимо создать заемщика',
+                    type: BootstrapDialog.TYPE_DANGER,
+                    size: BootstrapDialog.SIZE_SMALL,
+                    closable: true,
+                    btnOKLabel: 'Да',
+                    btnOKClass: 'btn-danger',
+                    callback: function(result) {
+                        return;
+                    }
+                });
+                dialog.setSize(BootstrapDialog.SIZE_SMALL);
+            } else {
 
-            $scope.projectSetting.EndMonth = $scope.projectSetting.EndDates.Months[0];
-            $scope.projectSetting.EndYear = $scope.projectSetting.EndDates.Years[0];
+                $scope.projectSetting.SelectedClient = $scope.projectSetting.Clients[0];
+
+                $scope.projectSetting.StartMonth = $scope.projectSetting.StartDates.Months[0];
+                $scope.projectSetting.StartYear = $scope.projectSetting.StartDates.Years[0];
+
+                $scope.projectSetting.EndMonth = $scope.projectSetting.EndDates.Months[0];
+                $scope.projectSetting.EndYear = $scope.projectSetting.EndDates.Years[0];
 
 
-            var modalView = 'PartialViews/Modals/Project/ProjectModal.html';
-            var modalController = manageProjectController;
+                var modalView = 'PartialViews/Modals/Project/ProjectModal.html';
+                var modalController = manageProjectController;
 
-            if ($scope.projects == undefined) {
-                $scope.projects = [];
+                if ($scope.projects == undefined) {
+                    $scope.projects = [];
+                }
+                $scope.mElement = {};
+                $scope.mElement = projectFactory.initProject();
+                $scope.mElement.CreatorId = $scope.userData.UserId;
+                $scope.mElement.ActivityService = $scope.projectSetting.ActivityService;
+                $scope.mElement.ActivityTrade = $scope.projectSetting.ActivityTrade;
+                $scope.mElement.ActivityAgriculture = $scope.projectSetting.ActivityAgriculture;
+                $scope.mElement.ActivityProduction = $scope.projectSetting.ActivityProduction;
+                $scope.mElement.BalanceDate = $scope.projectSetting.BalanceDate;
+
+
+
+                $scope.mElement.ProjectSetting = $scope.projectSetting;
+                $scope.selectClient();
+
+                $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.projects);
             }
-            $scope.mElement = {};
-            $scope.mElement = projectFactory.initProject();
-            $scope.mElement.CreatorId = $scope.userData.UserId;
-            $scope.mElement.ActivityService = $scope.projectSetting.ActivityService;
-            $scope.mElement.ActivityTrade = $scope.projectSetting.ActivityTrade;
-            $scope.mElement.ActivityAgriculture = $scope.projectSetting.ActivityAgriculture;
-            $scope.mElement.ActivityProduction = $scope.projectSetting.ActivityProduction;
-
-
-
-            $scope.mElement.ProjectSetting = $scope.projectSetting;
-            $scope.selectClient();
-
-            $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.projects);
         });
 
 
@@ -306,7 +326,7 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
             } else {
                 $scope.mElement.ParentExists = true;
                 $scope.mElement.ParentProject = JSON.parse(ob.ProjectContent);
-
+                var t = "";
             }
         })
 

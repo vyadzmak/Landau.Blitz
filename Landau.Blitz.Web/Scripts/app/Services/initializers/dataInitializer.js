@@ -1,5 +1,29 @@
 blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
     this.setBalanceData = function(currentProject) {
+
+
+        var d = new Date(currentProject.BalanceDate);
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth() + 1;
+        var curr_year = d.getFullYear();
+
+        //document.write(curr_year + "-" + curr_month + "-" + curr_date);
+
+
+        currentProject.FinDataBalance.Date = curr_date + "/" + curr_month + "/" + curr_year;
+
+        //now.format("yyyy-mm-dd");
+        //currentProject.FinDataBalance.Date = currentProject.FinDataBalance.Date.format("dd")
+        if (currentProject.ParentExists) {
+
+            d = new Date(currentProject.ParentProject.FinDataBalance.Date);
+            curr_date = d.getDate();
+            curr_month = d.getMonth() + 1;
+            curr_year = d.getFullYear();
+
+            currentProject.FinDataBalance.PreviousDate = curr_date + "/" + curr_month + "/" + curr_year;
+        }
+
         currentProject.FinDataBalance.TotalCash = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.TotalCash2 : 0;
         currentProject.FinDataBalance.CashInAccounts = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInAccounts2 : 0;;
         currentProject.FinDataBalance.CashInHands = currentProject.ParentExists ? currentProject.ParentProject.FinDataBalance.CashInHands2 : 0;;
@@ -162,6 +186,11 @@ blitzApp.service('dataInitializer', ['$rootScope', function($rootScope) {
         currentProject.FinDataBalance.Leasing2 = 0;
         currentProject.FinDataBalance.CommercialMortgage2 = 0;
         currentProject.FinDataBalance.PrivateLoans2 = 0;
+
+        currentProject.FinDataBalance.OwnCash = 0;
+        currentProject.FinDataBalance.OwnCash2 = 0;
+        currentProject.FinDataBalance.TotalOwnCash = 0;
+        currentProject.FinDataBalance.TotalOwnCash2 = 0;
 
 
     }

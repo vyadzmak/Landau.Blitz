@@ -21,36 +21,38 @@ function companyDeleteFormatter(value, row, index) {
 var companiesController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, promiseUtils, httpService) {
 
 
-    var url = $$ApiUrl + "/clients";
+    var url = $$ApiUrl + "/userclients";
     $scope.companies = [];
 
     $scope.deleteCompany = function(companyId) {
-        var rParams = { id: companyId };
-        promiseUtils.getPromiseHttpResult(httpService.deleteRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
+            var rParams = { id: companyId };
+            promiseUtils.getPromiseHttpResult(httpService.deleteRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
 
-            //alert(result);
+                //alert(result);
 
-            if (result == "OK") {
-                var ob = $scope.companies.filter(function(item) {
-                    return item.Id == companyId;
-                });
+                if (result == "OK") {
+                    var ob = $scope.companies.filter(function(item) {
+                        return item.Id == companyId;
+                    });
 
-                if (ob.length > 0) {
-                    var dElement = ob[0];
-                    var index = $scope.companies.indexOf(dElement);
+                    if (ob.length > 0) {
+                        var dElement = ob[0];
+                        var index = $scope.companies.indexOf(dElement);
 
-                    if (index != -1) {
-                        $scope.companies.splice(index, 1);
+                        if (index != -1) {
+                            $scope.companies.splice(index, 1);
+                        }
                     }
                 }
-            }
-            $('#companyTable').bootstrapTable('load', $scope.companies);
-            $('#companyTable').bootstrapTable('resetView');
+                $('#companyTable').bootstrapTable('load', $scope.companies);
+                $('#companyTable').bootstrapTable('resetView');
 
-        })
-    }
+            })
+        }
+        //getRequestById
 
-    promiseUtils.getPromiseHttpResult(httpService.getRequestList($http, $scope, usSpinnerService, url)).then(function(result) {
+    var rParams = { userId: $scope.userData.UserId };
+    promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
         $scope.companies = JSON.parse(result);
         $window.operateEvents = {
             'click .edit-company': function(e, value, row, index) {
@@ -162,7 +164,7 @@ var companiesController = function($scope, $http, $location, $state, $uibModal, 
     //имя вьюхи, контроллер, пустой элемент, куда пишем, что пишем
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
-
+        var url = $$ApiUrl + "/clients";
         if (element != {}) {
             $scope.isEdit = true;
         }
@@ -237,7 +239,9 @@ var companiesController = function($scope, $http, $location, $state, $uibModal, 
 
     $scope.showCompanyModal = function() {
         var url = $$ApiUrl + "/clientType";
-        promiseUtils.getPromiseHttpResult(httpService.getRequestList($http, $scope, usSpinnerService, url)).then(function(result) {
+
+        var rParams = { userId: $scope.userData.UserId };
+        promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
 
             var types = JSON.parse(result);
 
@@ -250,6 +254,8 @@ var companiesController = function($scope, $http, $location, $state, $uibModal, 
             $scope.mElement = {};
             $scope.mElement.ClientTypes = types;
             $scope.mElement.CurrentClientType = $scope.mElement.ClientTypes[0];
+            $scope.mElement.UserCreatorId = $scope.userData.UserId;
+            $scope.mElement.ClientCreatorId = $scope.userData.ClientId;
 
             $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.companies);
         })

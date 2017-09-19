@@ -15,11 +15,11 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
         /// get to type clients 
         /// </summary>
         /// <returns></returns>
-        public static List<ClientTypeModel> GetToClientType()
+        public static List<ClientTypeModel> GetToClientType(int userId=1)
         {
             try
             {
-                List<ClientTypes> clientTypes = DBClientTypeHelper.GetToClientTypes();
+                List<ClientTypes> clientTypes = DBClientTypeHelper.GetToClientTypes(userId);
                 List<ClientTypeModel> models = new List<ClientTypeModel>();
                 foreach (var type in clientTypes)
                 {

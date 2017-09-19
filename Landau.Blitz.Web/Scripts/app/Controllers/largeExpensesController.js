@@ -155,9 +155,9 @@ var largeExpensesController = function($scope, $http, $location, $state, $uibMod
     
     $scope.showNewOutOfBuisnessPayment = function() {
         
-        var modalView = 'l';
-        var modalController = manageOutOfBuisnessPaymentController
-PartialViews/Modals/LargeExpenses/OutOfBusinessPaymentModal.htm
+        var modalView = 'PartialViews/Modals/LargeExpenses/OutOfBusinessPaymentModal.html';
+        var modalController = manageOutOfBuisnessPaymentController;
+
         if ($scope.currentProject.LargeExpenses.OutOfBuisnessPayments == undefined) {
             $scope.currentProject.LargeExpenses.OutOfBuisnessPayments = [];
         }

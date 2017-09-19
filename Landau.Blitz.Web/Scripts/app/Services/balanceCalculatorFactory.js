@@ -1,6 +1,134 @@
 blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope) {
     var balanceCalculatorFactory = {};
+    var formatTable = function() {
 
+        try {
+
+
+
+            var x = document.getElementById("balanceTable").rows;
+
+            for (var i = 0; i < x.length; i++) {
+                //active bold-trow
+                var r = x[i];
+                // alert(JSON.stringify(r));
+                if (r.className == "active bold-trow")
+
+                {
+                    for (var j = 0; j < r.children.length; j++) {
+                        var ch = r.children[j];
+
+                        var ih = ch.innerHTML;
+                        var rh = "";
+                        //alert(JSON.stringify(ch));
+                        ch.innerHTML = ch.innerHTML.replace('<a href="javascript:void(0)"', '<span');
+                        //  ch.InnerHtml =ch.InnerHtml.replace('','<span');
+                        //class="editable editable-click"
+                        ch.innerHTML = ch.innerHTML.replace('class="editable editable-click"', '');
+                        ch.innerHTML = ch.innerHTML.replace('</a>', '</span>');
+                        var p = ch.innerHTML;
+
+                    }
+                }
+            }
+        } catch (e) {
+
+        }
+    }
+
+    var setBalanceDataTotal = function(currentProject) {
+        //currentProject = projectFactory.getToCurrentProject();
+
+        currentProject.FinDataBalance.Table.forEach(function(element) {
+            var activeName = element.ActiveName;
+            var passiveName = element.PassiveName;
+
+            if (currentProject.ParentExists) {
+                activeName = activeName.replace("2", "");
+                passiveName = passiveName.replace("2", "");
+
+            }
+            if (activeName.startsWith('Total')) {
+                var lngt = Object.keys(currentProject.FinDataBalance).length;
+                var vIndex = -1;
+                for (var i = 0; i < lngt; i++) {
+                    if (Object.keys(currentProject.FinDataBalance)[i] == activeName) {
+                        vIndex = i;
+                        break;
+                    }
+                }
+
+                if (vIndex != -1) {
+
+                    element.ActiveDate1 = currentProject.FinDataBalance[activeName];
+
+                };
+            }
+
+            if (passiveName.startsWith('Total')) {
+                var lngt = Object.keys(currentProject.FinDataBalance).length;
+                var vIndex = -1;
+                for (var i = 0; i < lngt; i++) {
+                    if (Object.keys(currentProject.FinDataBalance)[i] == passiveName) {
+                        vIndex = i;
+                        break;
+                    }
+                }
+
+                if (vIndex != -1) {
+                    element.PassiveDate1 = currentProject.FinDataBalance[passiveName];
+
+                };
+            }
+        });
+        //console.log("Work!");
+
+
+        if (currentProject.ParentExists) {
+            currentProject.FinDataBalance.Table.forEach(function(element) {
+                var activeName = element.ActiveName;
+                var passiveName = element.PassiveName;
+
+                if (activeName.startsWith('Total')) {
+                    var lngt = Object.keys(currentProject.FinDataBalance).length;
+                    var vIndex = -1;
+                    for (var i = 0; i < lngt; i++) {
+                        if (Object.keys(currentProject.FinDataBalance)[i] == activeName) {
+                            vIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (vIndex != -1) {
+
+                        element.ActiveDate2 = currentProject.FinDataBalance[activeName];
+
+                    };
+                }
+
+                if (passiveName.startsWith('Total')) {
+                    var lngt = Object.keys(currentProject.FinDataBalance).length;
+                    var vIndex = -1;
+                    for (var i = 0; i < lngt; i++) {
+                        if (Object.keys(currentProject.FinDataBalance)[i] == passiveName) {
+                            vIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (vIndex != -1) {
+                        element.PassiveDate2 = currentProject.FinDataBalance[passiveName];
+
+                    };
+                }
+            });
+        }
+
+
+        $('#balanceTable').bootstrapTable('load', currentProject.FinDataBalance.Table);
+        $('#balanceTable').bootstrapTable('resetView');
+        formatTable();
+    }
 
     var calculateBalanceTotalCash = function(currentProject) {
         //var totalCurrentAssets = 
@@ -223,16 +351,34 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
 
     };
 
+
+    var calculateTotalBalanceOwnCash = function(currentProject) {
+        //var totalCurrentAssets = 
+        currentProject.FinDataBalance.TotalOwnCash =
+            currentProject.FinDataBalance.OwnCash;
+
+        currentProject.FinDataBalance.TotalOwnCash2 =
+            currentProject.FinDataBalance.OwnCash2;
+
+
+
+
+
+    };
+
+
     var calculateBalanceTotalPassive = function(currentProject) {
         //var totalCurrentAssets = 
         currentProject.FinDataBalance.TotalPassive =
             currentProject.FinDataBalance.TotalShortAccountsPayable +
-            currentProject.FinDataBalance.TotalLongAccountsPayable;
+            currentProject.FinDataBalance.TotalLongAccountsPayable +
+            currentProject.FinDataBalance.TotalOwnCash;
 
 
         currentProject.FinDataBalance.TotalPassive2 =
             currentProject.FinDataBalance.TotalShortAccountsPayable2 +
-            currentProject.FinDataBalance.TotalLongAccountsPayable2;
+            currentProject.FinDataBalance.TotalLongAccountsPayable2 +
+            currentProject.FinDataBalance.TotalOwnCash2;
 
 
     };
@@ -272,7 +418,11 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
         calculateBalanceTotalShortAccountsPayable(currentProject);
         calculateBalanceTotalLongAccountsPayable(currentProject);
         calculateBalanceTotalPassive(currentProject);
+        calculateTotalBalanceOwnCash(currentProject);
+        setBalanceDataTotal(currentProject);
         calculateBalanceDesignValue(currentProject);
+
+
     }
 
 

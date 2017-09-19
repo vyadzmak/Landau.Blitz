@@ -12,13 +12,13 @@ namespace Landau.Blitz.Api.Controllers
     public class ClientTypeController : ApiController
     {
         // GET: api/ClientType
-        public string Get()
+        public string Get(int userId)
         {
-            return SerializeHelper.Serialize(ClientTypeHelper.GetToClientType());
+            return SerializeHelper.Serialize(ClientTypeHelper.GetToClientType(userId));
         }
 
         // GET: api/ClientType/5
-        public string Get(int id)
+        public string Get()
         {
             return "value";
         }
