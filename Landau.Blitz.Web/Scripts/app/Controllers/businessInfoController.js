@@ -195,47 +195,63 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
 
 
     $scope.showNewClientFounderInfo = function() {
-        var modalView = 'PartialViews/Modals/BusinessInfo/ClientFounderInfoModal.html';
-        var modalController = manageClientFounderInfoController;
-
-        if ($scope.currentProject.BusinessInfo.ClientFounderInfos == undefined) {
+        if (!$scope.currentProject.BusinessInfo.ClientFounderInfos) {
             $scope.currentProject.BusinessInfo.ClientFounderInfos = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.ClientFounderInfos);
+        $scope.currentProject.BusinessInfo.ClientFounderInfos.push({Id:$scope.currentProject.BusinessInfo.ClientFounderInfos.length+1});
+        //var modalView = 'PartialViews/Modals/BusinessInfo/ClientFounderInfoModal.html';
+        //var modalController = manageClientFounderInfoController;
+
+        //if ($scope.currentProject.BusinessInfo.ClientFounderInfos == undefined) {
+        //    $scope.currentProject.BusinessInfo.ClientFounderInfos = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.ClientFounderInfos);
     }
 
     $scope.showNewConsumerStructure = function() {
-        var modalView = 'PartialViews/Modals/BusinessInfo/ConsumerStructureModal.html';
-        var modalController = manageConsumerStructureController;
-
-        if ($scope.currentProject.BusinessInfo.ConsumerStructures == undefined) {
+        if (!$scope.currentProject.BusinessInfo.ConsumerStructures) {
             $scope.currentProject.BusinessInfo.ConsumerStructures = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.ConsumerStructures);
+        $scope.currentProject.BusinessInfo.ConsumerStructures.push({Id:$scope.currentProject.BusinessInfo.ConsumerStructures.length+1});
+        //var modalView = 'PartialViews/Modals/BusinessInfo/ConsumerStructureModal.html';
+        //var modalController = manageConsumerStructureController;
+
+        //if ($scope.currentProject.BusinessInfo.ConsumerStructures == undefined) {
+        //    $scope.currentProject.BusinessInfo.ConsumerStructures = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.ConsumerStructures);
     }
 
     $scope.showNewPeriodicityProcurement = function() {
-        var modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementModal.html';
-        var modalController = managePeriodicityProcurementController;
-
-        if ($scope.currentProject.BusinessInfo.PeriodicityProcurements == undefined) {
+        if (!$scope.currentProject.BusinessInfo.PeriodicityProcurements) {
             $scope.currentProject.BusinessInfo.PeriodicityProcurements = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.PeriodicityProcurements);
+        $scope.currentProject.BusinessInfo.PeriodicityProcurements.push({Id:$scope.currentProject.BusinessInfo.PeriodicityProcurements.length+1});
+        //var modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementModal.html';
+        //var modalController = managePeriodicityProcurementController;
+
+        //if ($scope.currentProject.BusinessInfo.PeriodicityProcurements == undefined) {
+        //    $scope.currentProject.BusinessInfo.PeriodicityProcurements = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.PeriodicityProcurements);
     }
 
     $scope.showNewSupplierStructure = function() {
-        var modalView = 'PartialViews/Modals/BusinessInfo/SupplierStructureModal.html';
-        var modalController = manageSupplierStructureController;
-
-        if ($scope.currentProject.BusinessInfo.SupplierStructures == undefined) {
+        if (!$scope.currentProject.BusinessInfo.SupplierStructures) {
             $scope.currentProject.BusinessInfo.SupplierStructures = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.SupplierStructures);
+        $scope.currentProject.BusinessInfo.SupplierStructures.push({Id:$scope.currentProject.BusinessInfo.SupplierStructures.length+1});
+        //var modalView = 'PartialViews/Modals/BusinessInfo/SupplierStructureModal.html';
+        //var modalController = manageSupplierStructureController;
+
+        //if ($scope.currentProject.BusinessInfo.SupplierStructures == undefined) {
+        //    $scope.currentProject.BusinessInfo.SupplierStructures = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.BusinessInfo.SupplierStructures);
     }
 
 };

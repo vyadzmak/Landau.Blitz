@@ -1,6 +1,6 @@
 <div ng-controller="clientDataController">
 
-    <div class="container">
+    <div>
 
         <!--Наименование компании-->
         <div class="row">
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <div class="row">
+       
 
             <div class="panel panel-primary">
                 <div class="panel-heading">Информация о заемщике</div>
@@ -94,7 +94,6 @@
             </div>
 
 
-        </div>
 
         <!-- unused properties
             currentProject.ClientData.OfficiallyEmployees
@@ -102,7 +101,6 @@
         -->
         <!--END BLOCK-->
         <!--Вид Деятельности-->
-        <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Адрес предприятия (место бизнеса) <button class="btn btn-primary pull-right" ng-click="showNewBusinessPlace();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -141,33 +139,10 @@
                         <label>Комментарии</label>
                         <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.ClientData.BusinessPlacesComment">
                     </div>
-                    <!--<table ng-table="businessPlacesParams" class="table">
-                        <tr ng-repeat="place in currentProject.ClientData.BusinessPlaces" ng-right-click="clickBusinessPlace(place.Id)" menu-items="menuItems">
-                            <td title="'Адрес'" sortable="'address'" class="col-md-6">
-                                {{place.Address}}
-                            </td>
-
-                            <td title="'Аренда'" sortable="'age'" class="col-md-2">
-                                <input type="checkbox" ng-model="place.IsRent"/>
-                            </td>
-
-                            <td title="'Филиал'" sortable="'rate'" class="col-md-2">
-                                <input type="checkbox" ng-model="place.IsFilial"/>
-                            </td>
-
-                            <td title="'Рейтинг'" sortable="'address'" class="col-md-2">
-                                {{place.Rate}}
-                            </td>
-
-
-                        </tr>
-                    </table>-->
                 </div>
             </div>
-        </div>
         <!--END BLOCK-->
         <!--Директор-->
-        <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Данные индивидуального предпринимателя (крестьянского хозяйства)/первого руководителя юридического лица):
@@ -215,41 +190,10 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <!--<div class="b-div">
-                        <table ng-table="directorInfosParams" class="table">
-                            <tr ng-repeat="director in currentProject.ClientData.DirectorInfos" ng-right-click="clickDirectorInfo(director.Id)" menu-items="menuItems">
-                                <td title="'ФИО'" sortable="'Name'">
-                                    {{director.Name}}</td>
-                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
-                                    <p ng-bind="director.DateOfBirth | date:'dd/MM/yyyy'"></p>
-                                </td>
-                                <td title="'Док-т'" sortable="'Document'">
-                                    {{director.Document}}</td>
-                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
-                                    {{director.PlaceOfRegistration}}</td>
-                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
-                                    {{director.PlaceOfResidence}}</td>
-                                <td title="'Тел'" sortable="'PhoneNumber'">
-                                    {{director.PhoneNumber}}</td>
-                                <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="director.IsMarried"> </td>
-
-                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                    {{director.ChildrenCount}} ({{director.ChildrenAge}})</td>
-                                <td title="'Супруги'" sortable="'partnerData'">
-                                    {{director.PartnerData}}</td>
-                                <td title="'Опыт'" sortable="'expirience'">
-                                    {{director.Expirience}}</td>
-
-                            </tr>
-                        </table>
-                    </div>-->
                 </div>
             </div>
-        </div>
         <!--END BLOCK-->
         <!--связанные компании-->
-        <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Аффилиированные компании/лица
@@ -289,6 +233,10 @@
                             </label>
                         </p>
                     </div>
+                    <div class="form-group">
+                        <label>Комментарии</label>
+                        <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.ClientData.RelatedCompanyComment">
+                    </div>
                     <table st-table="relCompsCollection" st-safe-src="currentProject.ClientData.RelatedCompanyInfos"
                            class="table table-bordered table-condensed ng-table"
                            ng-show="currentProject.ClientData.RelatedCompanyType==1 || currentProject.ClientData.RelatedCompanyType==2">
@@ -326,150 +274,86 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <!--<div class="b-div">
-                        <table ng-table="relatedCompanyInfosParams" class="table">
-                            <tr ng-repeat="company in currentProject.ClientData.RelatedCompanyInfos" ng-right-click="clickRelatedCompanyInfo(company.Id)" menu-items="menuItems">
-                                <td title="'Наименование организации'" sortable="'Companyame'">
-                                    {{company.CompanyName}}
-                                </td>
-
-                                <td title="'Вид деятельности'" sortable="'ActivityType'">
-                                    {{company.ActivityType}}
-                                </td>
-
-                                <td title="'Дата регистрации'" sortable="'RegistrationDate'">
-                                    <p ng-bind="company.RegistrationDate | date:'dd/MM/yyyy'"></p>
-                                </td>
-
-                                <td title="'ФИО директора'" sortable="'DirectorName'">
-                                    {{company.DirectorName}}
-                                </td>
-
-                                <td title="'Количество сотрудников'" sortable="'EmployeesCount'">
-                                    {{company.EmployeesCount}}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>-->
                 </div>
             </div>
-        </div>
-        <!--END BLOCK-->
+    <!--END BLOCK-->
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Финансовый анализ компаний
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>По скольким компаниям группы будет производиться финансовый анализ</label>
+                                <input type="number" class="form-control" placeholder="1" ng-model="currentProject.ClientData.FinAnalysisCompaniesCount" ng-change="finAnalysisCompaniesCountChanged()">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" ng-model="currentProject.ClientData.ForeignEarnings">
+                                    У заемщика имеется валютная выручка
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Введите наименования рассматриваемых компаний</label>
+                                <input type="text" class="form-control" placeholder="Название компании" ng-repeat="row in currentProject.ClientData.FinAnalysisCompanies" ng-model="row.Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <!--Юридические собственники компании-->
-        <div class="row"
-        <div class="row">
+        
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    Юридические собственники компании <button class="btn btn-primary pull-right" ng-click="showNewLegalOwnerCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    <div class="clearfix "></div>
+                    Данные юридических лиц <button class="btn btn-primary pull-right" ng-click="showNewLegalOwnerCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <div class="clearfix"></div>
                 </div>
-
                 <div class="panel-body">
-                    od
-                    <div class="b-div">
-                        <table ng-table="legalOwnerCompanyInfosParams" class="table">
-                            <tr ng-repeat="owner in currentProject.ClientData.LegalOwnerCompanyInfos" ng-right-click="clickLegalOwnerCompanyInfo(owner.Id)" menu-items="menuItems">
-                                <td title="'ФИО'" sortable="'Name'">
-                                    {{owner.Name}}
-                                </td>
-
-                                <td title="'%'" sortable="'Percent'">
-                                    {{owner.PercentOwnerShip}}
-                                </td>
-                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
-                                    <p ng-bind="owner.DateOfBirth | date:'dd/MM/yyyy'"></p>
-                                </td>
-                                <td title="'Док-т'" sortable="'Document'">
-                                    {{owner.Document}}
-                                </td>
-                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
-                                    {{owner.PlaceOfRegistration}}
-                                </td>
-                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
-                                    {{owner.PlaceOfResidence}}
-                                </td>
-                                <td title="'Тел'" sortable="'PhoneNumber'">
-                                    {{owner.PhoneNumber}}
-                                </td>
-                                <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="owner.IsMarried">
-                                </td>
-
-                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                    {{owner.ChildrenCount}} ({{owner.ChildrenAge}})
-                                </td>
-                                <td title="'Супруги'" sortable="'partnerData'">
-                                    {{owner.PartnerData}}
-                                </td>
-                                <td title="'Опыт'" sortable="'expirience'">
-                                    {{owner.Expirience}}
-                                </td>
-
+                    <table st-table="legOwnerCollection" st-safe-src="currentProject.ClientData.LegalOwnerCompanyInfos"
+                           class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th st-sort="Name"><span uib-tooltip="Указать заемщика, созаемщика (если имеется), гаранта (если имеется), собственника (-ов) крупных участников Заемщика (10% и более долей (акций) в уставном капитале) с указанием конечных собственников - физических лиц), %">Наименование организации</span></th>
+                                <th st-sort="State"><span uib-tooltip="Статус">Статус</span></th>
+                                <th st-sort="FirstChief"><span uib-tooltip="Первый руководитель, Ф.И.О">Первый руководитель</span></th>
+                                <th st-sort="OwnerCompanyName"><span uib-tooltip="Наименование организации собственника">Организация собственника</span></th>
+                                <th st-sort="PercentOwnerShip"><span uib-tooltip="Доля в УК, %">Доля в УК, %</span></th>
                             </tr>
-                        </table>
-                    </div>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in legOwnerCollection" ng-right-click="clickLegalOwnerCompanyInfo(row.Id)" menu-items="menuItems">
+                                <td ng-model="row.Name" content-editable></td>
+                                <td><select ng-model="row.State">
+                                    <option value="Заемщик">Заемщик</option>залогодатель, аффилированная компания, прочее
+                                    <option value="Созаемщик">Созаемщик</option>
+                                    <option value="Гарант">Гарант</option>
+                                    <option value="Учредитель заемщика">Учредитель заемщика</option>
+                                    <option value="Учредитель созаемщика">Учредитель созаемщика</option>
+                                    <option value="Учредитель гаранта">Учредитель гаранта</option>
+                                    <option value="Залогодатель">Залогодатель</option>
+                                    <option value="Аффилированная компания">Аффилированная компания</option>
+                                    <option value="Прочее">Прочее</option>
+                                </select></td>
+                                <td ng-model="row.FirstChief" content-editable></td>
+                                <td ng-model="row.OwnerCompanyName" content-editable></td>
+                                <td ng-model="row.PercentOwnerShip" content-editable></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-        </div>
-        <!--END BLOCK-->
-        <!--Фактические собственники компании-->
-        <div class="row">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Фактические собственники компании <button class="btn btn-primary pull-right" ng-click="showNewActualOwnerCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    <div class="clearfix "></div>
-                </div>
-
-                <div class="panel-body">
-                    <div class="b-div">
-                        <table ng-table="actualOwnerCompanyInfosParams" class="table">
-                            <tr ng-repeat="owner in currentProject.ClientData.ActualOwnerCompanyInfos" ng-right-click="clickActualOwnerCompanyInfo(owner.Id)" menu-items="menuItems">
-                                <td title="'ФИО'" sortable="'Name'">
-                                    {{owner.Name}}
-                                </td>
-
-                                <td title="'%'" sortable="'Percent'">
-                                    {{owner.PercentOwnerShip}}
-                                </td>
-
-                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
-                                    <p ng-bind="owner.DateOfBirth | date:'dd/MM/yyyy'"></p>
-                                </td>
-                                <td title="'Док-т'" sortable="'Document'">
-                                    {{owner.Document}}
-                                </td>
-                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
-                                    {{owner.PlaceOfRegistration}}
-                                </td>
-                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
-                                    {{owner.PlaceOfResidence}}
-                                </td>
-                                <td title="'Тел'" sortable="'PhoneNumber'">
-                                    {{owner.PhoneNumber}}
-                                </td>
-                                <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="owner.IsMarried">
-                                </td>
-
-                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                    {{owner.ChildrenCount}} ({{owner.ChildrenAge}})
-                                </td>
-                                <td title="'Супруги'" sortable="'partnerData'">
-                                    {{owner.PartnerData}}
-                                </td>
-                                <td title="'Опыт'" sortable="'expirience'">
-                                    {{owner.Expirience}}
-                                </td>
-
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--END BLOCK-->
         <!--Кредитная история-->
-        <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Кредитная история <button class="btn btn-primary pull-right" ng-click="showNewCreditHistoryInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -477,65 +361,100 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="b-div">
-                        <table ng-table="creditHistoryInfosParams" class="table">
-                            <tr ng-repeat="history in currentProject.ClientData.CreditHistoryInfos" ng-right-click="clickCreditHistoryInfo(history.Id)" menu-items="menuItems">
-                                <td title="'Заемщик'" sortable="'BorrowerName'">
-                                    {{history.BorrowerName}}
-                                </td>
-
-                                <td title="'Наименование Банка/кредитора'" sortable="'CompanyName'">
-                                    {{history.CompanyName}}
-                                </td>
-
-                                <td title="'Сумма займа'" sortable="'LoanAmount'">
-                                    {{history.LoanAmount}}
-                                </td>
-
-                                <td title="'Годовая % ставка'" sortable="'AnnualRate'">
-                                    {{history.AnnualRate}}
-                                </td>
-
-                                <td title="'Дата получения'" sortable="'DateOfReceiving'">
-                                    <p ng-bind="history.DateOfReceiving | date:'dd/MM/yyyy'"></p>
-                                </td>
-
-                                <td title="'Дата погашения по договору'" sortable="'DateOfRepaymentAgreement'">
-                                    <p ng-bind="history.DateOfRepaymentAgreement | date:'dd/MM/yyyy'"></p>
-                                </td>
-
-                                <td title="'Дата погашения по факту'" sortable="'DateOfRepaymentFact'">
-                                    <p ng-bind="history.DateOfRepaymentFact | date:'dd/MM/yyyy'"></p>
-                                </td>
-
-                                <td title="'Остаток задолженности'" sortable="'RemainingDebt'">
-                                    {{history.RemainingDebt}}
-                                </td>
-
-                                <td title="'Взнос ежемесячный'" sortable="'MonthlyFee'">
-                                    {{history.MonthlyFee}}
-                                </td>
-
-                                <td title="'Задолженность'" sortable="'DelayPay'">
-                                    <input type="checkbox" ng-model="history.DelayPay">
-                                </td>
-
-
-
+                    <table st-table="creditHistoryCollection" st-safe-src="currentProject.ClientData.CreditHistoryInfos"
+                           class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th st-sort="Id"><span uib-tooltip="Порядковый номер Банковского займа/Кредитной линии/Гарантии/Аккредитива">№</span></th>
+                                <th st-sort="BorrowerName"><span uib-tooltip="Наименование компании/лица (заемщик, созаемщик, гарант, учредитель, залогодатель и прочие связанные компании/лица)">Заемщик</span></th>
+                                <th st-sort="CompanyName"><span uib-tooltip="Наименование Банка/Кредитора">Кредитор</span></th>
+                                <th st-sort="LoanType"><span uib-tooltip="Вид финансирования">Вид</span></th>
+                                <th st-sort="LoanAmount"><span uib-tooltip="Сумма займа/Лимит кредитной линии">Сумма</span></th>
+                                <th st-sort="AnnualRate"><span uib-tooltip="Ставка вознаграждения">Ставка, %</span></th>
+                                <th st-sort="DateOfReceiving"><span uib-tooltip="Дата получения кредита/Открытия кредитной линии">Дата получения</span></th>
+                                <th st-sort="DateOfRepaymentAgreement"><span uib-tooltip="Дата погашения по договору/Дата завершения кредитной линии">Дата погашения<br/>по договору</span></th>
+                                <th st-sort="DateOfRepaymentFact"><span uib-tooltip="Дата погашения по факту/Дата завершения кредитной линии по факту">Дата погашения<br/>по факту</span></th>
+                                <th st-sort="RemainingDebt"><span uib-tooltip="Непогашенный остаток">Остаток</span></th>
+                                <th st-sort="LoanContribution"><span uib-tooltip="Взнос по кредиту/условному обязательству">Взнос</span></th>
+                                <th st-sort="LoanPurpose"><span uib-tooltip="Целевое назначение">Цель</span></th>
                             </tr>
-                        </table>
-
-                        <div>
-                            В таблице необходимо указать информацию только по действующим обязательствам Клиента. Комментарии о кредитной истории (допускались ли просрочки, причины, сроки просрочек в истории кредитования Клиента). В случае, если цель запрашиваемых
-                            средств – рефинансирование, необходимо обязательно указать в кредитной истории рефинансируемый заем, запросить информацию (документы) о целевом использовании, эффективности использования рефинансируемого займа.
-                        </div>
-                    </div>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat-start="row in creditHistoryCollection" ng-right-click="clickCreditHistoryInfo(row.Id)" menu-items="menuItems">
+                                <td ng-model="row.Id" content-editable></td>
+                                <td ng-model="row.BorrowerName" content-editable></td>
+                                <td ng-model="row.CompanyName" content-editable></td>
+                                <td>
+                                    <select ng-options="item as item.Name for item in loanTypes track by item.Id"
+                                            ng-model="row.LoanType"
+                                            ng-change="loanTypeChanged(row)"></select>
+                                </td>
+                                <td ng-model="row.LoanAmount" content-editable></td>
+                                <td ng-model="row.AnnualRate" content-editable></td>
+                                <td><input type="date" ng-model="row.DateOfReceiving"></td>
+                                <td><input type="date" ng-model="row.DateOfRepaymentAgreement"></td>
+                                <td><input type="date" ng-model="row.DateOfRepaymentFact"></td>
+                                <td ng-model="row.RemainingDebt" content-editable></td>
+                                <td ng-model="row.LoanContribution" content-editable></td>
+                                <td ng-model="row.LoanPurpose" content-editable></td>
+                            </tr>
+                        <tr ng-show="row.LoanType.Id==2 ||row.LoanType.Id==3 || row.LoanType.Id==4">
+                            <td colspan="12">
+                                <table st-table="row.LoanDetails" class="table table-bordered table-condensed ng-table">
+                                    <thead>
+                                    <tr>
+                                        <th><span uib-tooltip="Номер договора/порядковый номер транша">
+                                            <button class="btn btn-xs btn-success pull-left"
+                                                    ng-click="addLoanDetail(row, 1)"
+                                                    ng-if="row.LoanType.Id!=4">+</button>№ дог.
+                                        </span></th>
+                                        <th><span uib-tooltip="Сумма">Сумма</span></th>
+                                        <th><span uib-tooltip="Ставка вознаграждения">Ставка</span></th>
+                                        <th><span uib-tooltip="Дата получения кредита">Дата получения</span></th>
+                                        <th><span uib-tooltip="Дата погашения по договору">Погаш. дог.</span></th>
+                                        <th><span uib-tooltip="Дата погашения по факту">Погаш. факт.</span></th>
+                                        <th><span uib-tooltip="Непогашенный остаток">Остаток</span></th>
+                                        <th><span uib-tooltip="Взнос по кредиту/условному обязательству">Взнос</span></th>
+                                        <th><span uib-tooltip="Целевое назначение">Цель</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="detRow in row.LoanDetails" ng-right-click="loanDetailsRowClicked(detRow.Document, detRow.noEditing, row.Id)" menu-items="menuItems">
+                                        <td ng-if="detRow.noEditing">
+                                            <button class="btn btn-xs btn-success pull-left"
+                                                    ng-click="addLoanDetail(row, detRow.detType)">+</button>{{detRow.Document}}
+                                        </td>
+                                        <td ng-model="detRow.Document" content-editable ng-if="!detRow.noEditing"></td>
+                                        <td ng-model="detRow.LoanAmount" content-editable></td>
+                                        <td ng-model="detRow.AnnualRate" content-editable></td>
+                                        <td><input type="date" ng-model="detRow.DateOfReceiving"></td>
+                                        <td><input type="date" ng-model="detRow.DateOfRepaymentAgreement"></td>
+                                        <td><input type="date" ng-model="detRow.DateOfRepaymentFact"></td>
+                                        <td ng-model="detRow.RemainingDebt" content-editable></td>
+                                        <td ng-model="detRow.LoanContribution" content-editable></td>
+                                        <td ng-model="detRow.LoanPurpose" content-editable></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end>
+                            <td colspan="2"><span uib-tooltip="В комментариях указываем на что фактически брали кредит, использован ли по целевому назначению, график погашения, осуществлялись ли по кредиту реструктуризации, допускали ли просрочки (если да, то описать причины, сроки просрочек в истори кредитования Клиента). В случае, если цель запрашиваемых средств - рефинансирование, необходимо обязательно указать в кредитной истории рефинансируемый заем, запросить информацию (документы) о целевом использовании, эффективности использования рефинансируемого займа.">Комментарии</span></td>
+                            <td colspan="10" ng-model="row.Comments" content-editable></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="12" class="text-center">
+                                    <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-        </div>
         <!--END BLOCK-->
         <!--Банковские счета-->
-        <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Банковские счета<button class="btn btn-primary pull-right" ng-click="showNewBankAccountInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -543,37 +462,50 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="b-div">
-                        <table ng-table="bankAccountInfosParams" class="table">
-                            <tr ng-repeat="account in currentProject.ClientData.BankAccountInfos" ng-right-click="clickBankAccountInfo(account.Id)" menu-items="menuItems">
-                                <td title="'Наименование Банка'" sortable="'CompanyName'">
-                                    {{account.CompanyName}}
-                                </td>
-
-                                <td title="'Валюта'" sortable="'Currency'">
-                                    {{account.Currency}}
-                                </td>
-
-                                <td title="'№ счета'" sortable="'AccountNumber'">
-                                    {{account.AccountNumber}}
-                                </td>
-
-                                <td title="'Остаток'" sortable="'AccountBalance'">
-                                    {{account.AccountBalance}}
-                                </td>
-
-                                <td title="'Среднемесяцные обороты'" sortable="'AvgMonth'">
-                                    {{account.AvgMonth}}
-                                </td>
-
-
+                    <table st-table="bankAccountCollection" st-safe-src="currentProject.ClientData.BankAccountInfos"
+                           class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th st-sort="Owner"><span uib-tooltip="Владелец счета">Владелец</span></th>
+                                <th st-sort="CompanyName"><span uib-tooltip="Наименование Банка">Банк</span></th>
+                                <th st-sort="AccountNumber"><span uib-tooltip="№ счета">№ счета</span></th>
+                                <th st-sort="Currency"><span uib-tooltip="Валюта">Валюта</span></th>
+                                <th st-sort="AccountBalance"><span uib-tooltip="Остаток на момент анализа">Остаток</span></th>
+                                <th st-sort="DatePeriodStart" colspan="2"><span uib-tooltip="Период за который предосталены данные по оборотам">Период по оборотам</span></th>
+                                <th st-sort="Turnover"><span uib-tooltip="Оборот по счету за указанный период">Оборот</span></th>
+                                <th st-sort="AverageTurnover"><span uib-tooltip="Среднемесячный оборот">Мес. оборот</span></th>
+                                <th st-sort="Card"><span uib-tooltip="Имеется ли картотека">Картотека</span></th>
                             </tr>
-                        </table>
-                        <div>Комментарии о цели открытия счета (для обслуживания кредита, для осуществления операций по бизнесу с детальным описанием, для других целей - указать для каких), информация о наличии/отсутствии картотеки.</div>
-                    </div>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat-start="row in bankAccountCollection" ng-right-click="clickBankAccountInfo(row.Id)" menu-items="menuItems">
+                                <td ng-model="row.Owner" content-editable></td>
+                                <td ng-model="row.CompanyName" content-editable></td>
+                                <td ng-model="row.AccountNumber" content-editable></td>
+                                <td ng-model="row.Currency" content-editable></td>
+                                <td ng-model="row.AccountBalance" content-editable></td>
+                                <td><input type="date" ng-model="row.DatePeriodStart"></td>
+                                <td><input type="date" ng-model="row.DatePeriodEnd"></td>
+                                <td ng-model="row.Turnover" content-editable></td>
+                                <td ng-model="row.AverageTurnover" content-editable></td>
+                                <td><input type="checkbox" ng-model="row.Card" /></td>
+                            </tr>
+                            <tr ng-repeat-end>
+                                <td colspan="2"><span uib-tooltip="В комментариях указываем на что фактически брали кредит, использован ли по целевому назначению, график погашения, осуществлялись ли по кредиту реструктуризации, допускали ли просрочки (если да, то описать причины, сроки просрочек в истори кредитования Клиента). В случае, если цель запрашиваемых средств - рефинансирование, необходимо обязательно указать в кредитной истории рефинансируемый заем, запросить информацию (документы) о целевом использовании, эффективности использования рефинансируемого займа.">Комментарии</span></td>
+                                <td colspan="10" ng-model="row.Comments" content-editable></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="12" class="text-center">
+                                    <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div>Комментарии о цели открытия счета (для обслуживания кредита, для осуществления операций по бизнесу с детальным описанием, для других целей - указать для каких), информация о наличии/отсутствии картотеки.</div>
                 </div>
             </div>
-        </div>
         <!--END BLOCK-->
     </div>
 </div>

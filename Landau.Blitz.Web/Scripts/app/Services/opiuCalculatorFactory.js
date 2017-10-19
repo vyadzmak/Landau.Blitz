@@ -85,27 +85,27 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', function($rootScope) {
 
         //alert(JSON.stringify(currentProject.FinDataOpiu.Table));
 
-        for (var i = 0; i < currentProject.FinDataOpiu.Table.length; i++) {
-            //if (i == 0)
+        //for (var i = 0; i < currentProject.FinDataOpiu.Table.length; i++) {
+        //    //if (i == 0)
 
-            for (var j = 0; j < currentProject.FinDataOpiu.Table.length; j++) {
-                var ob = currentProject.FinDataOpiu.Table[j];
-                //                var sum = Number(ob.M1) + Number(ob.M2) + Number(ob.M3) + Number(ob.M4) + Number(ob.M5) + Number(ob.M6);
-                var sum = 0;
-                for (var z = 0; z < months.length; z++) {
-                    sum += Number(ob[months[z]]);
-                }
-                //Number(ob.M1) + Number(ob.M2) + Number(ob.M3) + Number(ob.M4) + Number(ob.M5) + Number(ob.M6);
+        //    for (var j = 0; j < currentProject.FinDataOpiu.Table.length; j++) {
+        //        var ob = currentProject.FinDataOpiu.Table[j];
+        //        //                var sum = Number(ob.M1) + Number(ob.M2) + Number(ob.M3) + Number(ob.M4) + Number(ob.M5) + Number(ob.M6);
+        //        var sum = 0;
+        //        for (var z = 0; z < months.length; z++) {
+        //            sum += Number(ob[months[z]]);
+        //        }
+        //        //Number(ob.M1) + Number(ob.M2) + Number(ob.M3) + Number(ob.M4) + Number(ob.M5) + Number(ob.M6);
 
-                var avg = Number((sum / 6).toFixed(2));
-                ob.Avg = avg;
-                //alert(currentProject.FinDataOpiu.Table[i])
-            }
-            //alert(JSON.stringify(currentProject.FinDataOpiu.Table[i]));
-        }
+        //        var avg = Number((sum / 6).toFixed(2));
+        //        ob.Avg = avg;
+        //        //alert(currentProject.FinDataOpiu.Table[i])
+        //    }
+        //    //alert(JSON.stringify(currentProject.FinDataOpiu.Table[i]));
+        //}
 
-        $('#opiuTable').bootstrapTable('load', currentProject.FinDataOpiu.Table);
-        $('#opiuTable').bootstrapTable('resetView');
+        //$('#opiuTable').bootstrapTable('load', currentProject.FinDataOpiu.Table);
+        //$('#opiuTable').bootstrapTable('resetView');
     }
 
     function sumArrays(data) {

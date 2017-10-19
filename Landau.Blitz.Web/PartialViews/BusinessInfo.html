@@ -1,10 +1,8 @@
 ﻿<div ng-controller="businessInfoController">
-
-    <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Организация о структуре бизнеса клиента, краткая информация о развитии бизнеса</div>
+                    <div class="panel-heading">Организация бизнеса клиента, стартовый капитал, краткая информация о развитии бизнеса, в том числе и по всем компаниям группы</div>
 
 
                     <div class="panel-body">
@@ -18,7 +16,7 @@
 
             <div class="col-md-6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Описание всех видов деятельности</div>
+                    <div class="panel-heading">Описание всех видов деятельности, в том числе и по всем компаниям группы</div>
 
 
                     <div class="panel-body">
@@ -32,7 +30,7 @@
         </div>
 
 
-        <div class="row">
+        
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Структура поставщиков <button class="btn btn-primary pull-right" ng-click="showNewSupplierStructure();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -40,24 +38,49 @@
                 </div>
 
                 <div class="panel-body">
-                    <table ng-table="supplierStructures" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.SupplierStructures" ng-right-click="clickSupplierStructure(item.Id)" menu-items="menuItems">
-                            <td title="'Наименование'" sortable="'Name'" class="col-md-6">
-                                {{item.Name}}
-                            </td>
-
-                            <td title="'Страна'" sortable="'Country'" class="col-md-2">
-                                {{item.Country}}
-                            </td>
-
-
+                    <table st-table="suplCollection" st-safe-src="currentProject.BusinessInfo.SupplierStructures" class="table table-bordered table-condensed ng-table">
+                        <thead>
+                        <tr>
+                            <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Наименование</span></th>
+                            <th st-sort="Country"><span uib-tooltip="Страна резиденства">Страна</span></th>
+                            <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
+                            <th st-sort="Sum"><span uib-tooltip="Валюта и сумма">Сумма</span></th>
+                            <th st-sort="UsedSum"><span uib-tooltip="Освоенная сумма">Освоенная сумма</span></th>
+                            <th st-sort="UseName"><span uib-tooltip="Наименование продукции/работ/услуг">Цель</span></th>
+                            <th st-sort="PaymentCondition"><span uib-tooltip="Условия расчета">Условия расчета</span></th>
+                            <th st-sort="DeliveryCondition"><span uib-tooltip="Условия поставок">Условия поставок</span></th>
+                            <th st-sort="Terms"><span uib-tooltip="Срок сотрудничества (в годах)">Срок, г.</span></th>
                         </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in suplCollection" ng-right-click="clickBusinessPlace(row.Id)" menu-items="menuItems">
+                            <td ng-model="row.Name" content-editable></td>
+                            <td ng-model="row.Country" content-editable></td>
+                            <td ng-model="row.Document" content-editable></td>
+                            <td ng-model="row.Sum" content-editable></td>
+                            <td ng-model="row.UsedSum" content-editable></td>
+                            <td ng-model="row.UseName" content-editable></td>
+                            <td ng-model="row.PaymentCondition" content-editable></td>
+                            <td ng-model="row.DeliveryCondition" content-editable></td>
+                            <td ng-model="row.Terms" content-editable></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="9" class="text-center">
+                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
                     </table>
+                    <div class="form-group">
+                        <label>Комментарии</label>
+                        <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.BusinessInfo.SupplierStructuresComment">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
+        
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Структура потребителей <button class="btn btn-primary pull-right" ng-click="showNewConsumerStructure();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -65,24 +88,49 @@
                 </div>
 
                 <div class="panel-body">
-                    <table ng-table="consumerStructures" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.ConsumerStructures" ng-right-click="clickConsumerStructure(item.Id)" menu-items="menuItems">
-                            <td title="'Наименование'" sortable="'Name'" class="col-md-6">
-                                {{item.Name}}
-                            </td>
-
-                            <td title="'Страна'" sortable="'Country'" class="col-md-2">
-                                {{item.Country}}
-                            </td>
-
-
-                        </tr>
+                    <table st-table="consCollection" st-safe-src="currentProject.BusinessInfo.ConsumerStructures" class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Наименование</span></th>
+                                <th st-sort="Country"><span uib-tooltip="Страна резиденства">Страна</span></th>
+                                <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
+                                <th st-sort="Sum"><span uib-tooltip="Валюта и сумма">Сумма</span></th>
+                                <th st-sort="UsedSum"><span uib-tooltip="Освоенная сумма">Освоенная сумма</span></th>
+                                <th st-sort="UseName"><span uib-tooltip="Наименование продукции/работ/услуг">Цель</span></th>
+                                <th st-sort="PaymentCondition"><span uib-tooltip="Условия расчета">Условия расчета</span></th>
+                                <th st-sort="DeliveryCondition"><span uib-tooltip="Условия поставок">Условия поставок</span></th>
+                                <th st-sort="Terms"><span uib-tooltip="Срок сотрудничества (в годах)">Срок, г.</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in consCollection" ng-right-click="clickConsumerStructure(row.Id)" menu-items="menuItems">
+                                <td ng-model="row.Name" content-editable></td>
+                                <td ng-model="row.Country" content-editable></td>
+                                <td ng-model="row.Document" content-editable></td>
+                                <td ng-model="row.Sum" content-editable></td>
+                                <td ng-model="row.UsedSum" content-editable></td>
+                                <td ng-model="row.UseName" content-editable></td>
+                                <td ng-model="row.PaymentCondition" content-editable></td>
+                                <td ng-model="row.DeliveryCondition" content-editable></td>
+                                <td ng-model="row.Terms" content-editable></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="9" class="text-center">
+                                    <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
+                    <div class="form-group">
+                        <label>Комментарии</label>
+                        <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.BusinessInfo.ConsumerStructuresComment">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
+        
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Периодичность закупа <button class="btn btn-primary pull-right" ng-click="showNewPeriodicityProcurement();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -90,32 +138,36 @@
                 </div>
 
                 <div class="panel-body">
-                    <table ng-table="periodicityProcurements" class="table">
-                        <tr ng-repeat="item in currentProject.BusinessInfo.PeriodicityProcurements" ng-right-click="clickPeriodicityProcurements(item.Id)" menu-items="menuItems">
-                            <td title="'Наименование'" sortable="'Name'" class="col-md-6">
-                                {{item.Name}}
-                            </td>
-
-                            <td title="'Периодичность'" sortable="'Periodicity'" class="col-md-2">
-                                {{item.Periodicity}}
-                            </td>
-
-                            <td title="'Условие'" sortable="'Condition'" class="col-md-2">
-                                {{item.Condition}}
-                            </td>
-
-                            <td title="'Место'" sortable="'Place'" class="col-md-2">
-                                {{item.Place}}
-                            </td>
-
-                        </tr>
+                    <table st-table="procurCollection" st-safe-src="currentProject.BusinessInfo.PeriodicityProcurements" class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
+                                <th st-sort="Periodicity"><span uib-tooltip="Периодичность">Периодичность</span></th>
+                                <th st-sort="Condition"><span uib-tooltip="Условия закупа">Условия</span></th>
+                                <th st-sort="Place"><span uib-tooltip="Место закупа (торговая точка, рынок, район, город, область, страна)">Место</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in procurCollection" ng-right-click="clickPeriodicityProcurements(row.Id)" menu-items="menuItems">
+                                <td ng-model="row.Name" content-editable></td>
+                                <td ng-model="row.Periodicity" content-editable></td>
+                                <td ng-model="row.Condition" content-editable></td>
+                                <td ng-model="row.Place" content-editable></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
-        </div>
 
 
-        <div class="row">
+        
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Если деятельность клиента – производство, то необходимо включить в резюме калькуляцию себестоимости производимой продукции (основные позиции)
@@ -125,7 +177,6 @@
 
                 </div>
             </div>
-        </div>
 
 
         <div class="row">
@@ -159,87 +210,114 @@
         </div>
 
 
-        <div class="row">
-            <div class="panel panel-primary">
+        <div class="panel panel-primary">
                 <div class="panel-heading">
                     Социальное положение клиента/ учредителя (семья, пожилые родители, количество лиц на иждивении, возраст, образование клиента и т.п.) в случае, когда право собственности и управление не разделены <button class="btn btn-primary pull-right"
                         ng-click="showNewClientFounderInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     <div class="clearfix "></div>
                 </div>
 
-                <div class="panel-body">
-                    <div class="b-div">
-                        <table ng-table="clientFounderInfos" class="table">
-                            <tr ng-repeat="item in currentProject.BusinessInfo.ClientFounderInfos" ng-right-click="clickClientFounderInfo(item.Id)" menu-items="menuItems">
-                                <td title="'ФИО'" sortable="'Name'">
-                                    {{item.Name}}
-                                </td>
-                                <td title="'Дата рож-я'" sortable="'DateOfBirth'">
-                                    <p ng-bind="item.DateOfBirth | date:'dd/MM/yyyy'"></p>
-                                </td>
-                                <td title="'Док-т'" sortable="'Document'">
-                                    {{item.Document}}
-                                </td>
-                                <td title="'Прописка'" sortable="'PlaceOfRegistration'">
-                                    {{item.PlaceOfRegistration}}
-                                </td>
-                                <td title="'Проживание'" sortable="'PlaceOfResidence'">
-                                    {{item.PlaceOfResidence}}
-                                </td>
-                                <td title="'Тел'" sortable="'PhoneNumber'">
-                                    {{item.PhoneNumber}}
-                                </td>
-                                <td title="'Жен/Зам'" sortable="'IsMarried'">
-                                    <input type="checkbox" ng-model="item.IsMarried">
-                                </td>
+            <div class="panel-body">
+                <table st-table="cliFounderCollection" st-safe-src="currentProject.BusinessInfo.ClientFounderInfos" class="table table-bordered table-condensed ng-table">
+                    <thead>
+                        <tr>
+                            <th st-sort="Name"><span uib-tooltip="Фамилия, имя, отчество полностью">Ф.И.О</span></th>
+                            <th st-sort="DateOfBirth"><span uib-tooltip="Дата рождения">Дата рож-я</span></th>
+                            <th st-sort="PlaceOfBirth"><span uib-tooltip="Место рождения">Место рож-я</span></th>
+                            <th st-sort="Document"><span uib-tooltip="№ удостоверения личности">№ док.</span></th>
+                            <th st-sort="DocumentDetails"><span uib-tooltip="Кем выдан/Дата выдачи/Срок действия">Выдан</span></th>
+                            <th st-sort="PlaceOfRegistration"><span uib-tooltip="Место прописки">Прописка</span></th>
+                            <th st-sort="PlaceOfResidence"><span uib-tooltip="Место проживания">Проживание</span></th>
+                            <th st-sort="PhoneNumber"><span uib-tooltip="Контактный телефон">Тел</span></th>
+                            <th st-sort="IsMarried"><span uib-tooltip="Семейное положение, отметить, если женат/замужем">Жен/Зам</span></th>
+                            <th st-sort="Spouse"><span uib-tooltip="Ф.И.О супруга (-и)">Супруг(-а)</span></th>
+                            <th st-sort="Children"><span uib-tooltip="Ф.И.О. детей и их возраст">Дети</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in cliFounderCollection" ng-right-click="clickClientFounderInfo(row.Id)" menu-items="menuItems">
+                            <td ng-model="row.Name" content-editable></td>
+                            <td><input type="date" ng-model="row.DateOfBirth"></td>
+                            <td ng-model="row.PlaceOfBirth" content-editable></td>
+                            <td ng-model="row.Document" content-editable></td>
+                            <td ng-model="row.DocumentDetails" content-editable></td>
+                            <td ng-model="row.PlaceOfRegistration" content-editable></td>
+                            <td ng-model="row.PlaceOfResidence" content-editable></td>
+                            <td ng-model="row.PhoneNumber" content-editable></td>
+                            <td><input type="checkbox" ng-model="row.IsMarried" /></td>
+                            <td ng-model="row.Spouse" content-editable></td>
+                            <td ng-model="row.Children" content-editable></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="11" class="text-center">
+                                <div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            </div>
 
-                                <td title="'Дети(возраст)'" sortable="'ChildrenCount'">
-                                    {{item.ChildrenCount}} ({{item.ChildrenAge}})
-                                </td>
-                                <td title="'Супруги'" sortable="'partnerData'">
-                                    {{item.PartnerData}}
-                                </td>
-                                <td title="'Опыт'" sortable="'expirience'">
-                                    {{item.Expirience}}
-                                </td>
 
-                            </tr>
-                        </table>
-                    </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">При повторном займе: какие изменения произошли в бизнесе</div>
+
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>При повторном займе: какие изменения произошли в бизнесе</label>
+                    <textarea type="text" class="form-control" placeholder="При повторном займе: какие изменения произошли в бизнесе" ng-model="currentProject.BusinessInfo.Changes"></textarea>
                 </div>
             </div>
         </div>
-
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">При повторном займе: какие изменения произошли в бизнесе</div>
-
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>При повторном займе: какие изменения произошли в бизнесе</label>
-                            <textarea type="text" class="form-control" placeholder="При повторном займе: какие изменения произошли в бизнесе" ng-model="currentProject.BusinessInfo.Changes"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Прочая информация на усмотрение эксперта</div>
-
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Прочая информация на усмотрение эксперта</label>
-                            <textarea type="text" class="form-control" placeholder="Прочая информация на усмотрение эксперта" ng-model="currentProject.BusinessInfo.Other"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Краткое описание целевого использования кредита</div>
+
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Краткое описание целевого использования кредита</label>
+                    <textarea type="text" class="form-control" placeholder="Краткое описание целевого использования кредита" ng-model="currentProject.BusinessInfo.IntendedUse"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Наличие действующих займов супруга(и), детей, родителей, либо других лиц, которые по мнению кредитного менеджера, имеют влияние на рассматриваемый бизнес</div>
+
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Наличие действующих займов супруга(и), детей, родителей, либо других лиц</label>
+                        <textarea type="text" class="form-control" placeholder="Наличие действующих займов супруга(и), детей, родителей, либо других лиц" ng-model="currentProject.BusinessInfo.OtherPeopleLoans"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Прочая информация на усмотрение эксперта</div>
+
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Прочая информация на усмотрение эксперта</label>
+                        <textarea type="text" class="form-control" placeholder="Прочая информация на усмотрение эксперта" ng-model="currentProject.BusinessInfo.Other"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

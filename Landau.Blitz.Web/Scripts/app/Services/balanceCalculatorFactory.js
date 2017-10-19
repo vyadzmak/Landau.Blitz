@@ -39,95 +39,95 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
     var setBalanceDataTotal = function(currentProject) {
         //currentProject = projectFactory.getToCurrentProject();
 
-        currentProject.FinDataBalance.Table.forEach(function(element) {
-            var activeName = element.ActiveName;
-            var passiveName = element.PassiveName;
+        //currentProject.FinDataBalance.Table.forEach(function(element) {
+        //    var activeName = element.ActiveName;
+        //    var passiveName = element.PassiveName;
 
-            if (currentProject.ParentExists) {
-                activeName = activeName.replace("2", "");
-                passiveName = passiveName.replace("2", "");
+        //    if (currentProject.ParentExists) {
+        //        activeName = activeName.replace("2", "");
+        //        passiveName = passiveName.replace("2", "");
 
-            }
-            if (activeName.startsWith('Total')) {
-                var lngt = Object.keys(currentProject.FinDataBalance).length;
-                var vIndex = -1;
-                for (var i = 0; i < lngt; i++) {
-                    if (Object.keys(currentProject.FinDataBalance)[i] == activeName) {
-                        vIndex = i;
-                        break;
-                    }
-                }
+        //    }
+        //    if (activeName.startsWith('Total')) {
+        //        var lngt = Object.keys(currentProject.FinDataBalance).length;
+        //        var vIndex = -1;
+        //        for (var i = 0; i < lngt; i++) {
+        //            if (Object.keys(currentProject.FinDataBalance)[i] == activeName) {
+        //                vIndex = i;
+        //                break;
+        //            }
+        //        }
 
-                if (vIndex != -1) {
+        //        if (vIndex != -1) {
 
-                    element.ActiveDate1 = currentProject.FinDataBalance[activeName];
+        //            element.ActiveDate1 = currentProject.FinDataBalance[activeName];
 
-                };
-            }
+        //        };
+        //    }
 
-            if (passiveName.startsWith('Total')) {
-                var lngt = Object.keys(currentProject.FinDataBalance).length;
-                var vIndex = -1;
-                for (var i = 0; i < lngt; i++) {
-                    if (Object.keys(currentProject.FinDataBalance)[i] == passiveName) {
-                        vIndex = i;
-                        break;
-                    }
-                }
+        //    if (passiveName.startsWith('Total')) {
+        //        var lngt = Object.keys(currentProject.FinDataBalance).length;
+        //        var vIndex = -1;
+        //        for (var i = 0; i < lngt; i++) {
+        //            if (Object.keys(currentProject.FinDataBalance)[i] == passiveName) {
+        //                vIndex = i;
+        //                break;
+        //            }
+        //        }
 
-                if (vIndex != -1) {
-                    element.PassiveDate1 = currentProject.FinDataBalance[passiveName];
+        //        if (vIndex != -1) {
+        //            element.PassiveDate1 = currentProject.FinDataBalance[passiveName];
 
-                };
-            }
-        });
-        //console.log("Work!");
-
-
-        if (currentProject.ParentExists) {
-            currentProject.FinDataBalance.Table.forEach(function(element) {
-                var activeName = element.ActiveName;
-                var passiveName = element.PassiveName;
-
-                if (activeName.startsWith('Total')) {
-                    var lngt = Object.keys(currentProject.FinDataBalance).length;
-                    var vIndex = -1;
-                    for (var i = 0; i < lngt; i++) {
-                        if (Object.keys(currentProject.FinDataBalance)[i] == activeName) {
-                            vIndex = i;
-                            break;
-                        }
-                    }
-
-                    if (vIndex != -1) {
-
-                        element.ActiveDate2 = currentProject.FinDataBalance[activeName];
-
-                    };
-                }
-
-                if (passiveName.startsWith('Total')) {
-                    var lngt = Object.keys(currentProject.FinDataBalance).length;
-                    var vIndex = -1;
-                    for (var i = 0; i < lngt; i++) {
-                        if (Object.keys(currentProject.FinDataBalance)[i] == passiveName) {
-                            vIndex = i;
-                            break;
-                        }
-                    }
-
-                    if (vIndex != -1) {
-                        element.PassiveDate2 = currentProject.FinDataBalance[passiveName];
-
-                    };
-                }
-            });
-        }
+        //        };
+        //    }
+        //});
+        ////console.log("Work!");
 
 
-        $('#balanceTable').bootstrapTable('load', currentProject.FinDataBalance.Table);
-        $('#balanceTable').bootstrapTable('resetView');
-        formatTable();
+        //if (currentProject.ParentExists) {
+        //    currentProject.FinDataBalance.Table.forEach(function(element) {
+        //        var activeName = element.ActiveName;
+        //        var passiveName = element.PassiveName;
+
+        //        if (activeName.startsWith('Total')) {
+        //            var lngt = Object.keys(currentProject.FinDataBalance).length;
+        //            var vIndex = -1;
+        //            for (var i = 0; i < lngt; i++) {
+        //                if (Object.keys(currentProject.FinDataBalance)[i] == activeName) {
+        //                    vIndex = i;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (vIndex != -1) {
+
+        //                element.ActiveDate2 = currentProject.FinDataBalance[activeName];
+
+        //            };
+        //        }
+
+        //        if (passiveName.startsWith('Total')) {
+        //            var lngt = Object.keys(currentProject.FinDataBalance).length;
+        //            var vIndex = -1;
+        //            for (var i = 0; i < lngt; i++) {
+        //                if (Object.keys(currentProject.FinDataBalance)[i] == passiveName) {
+        //                    vIndex = i;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (vIndex != -1) {
+        //                element.PassiveDate2 = currentProject.FinDataBalance[passiveName];
+
+        //            };
+        //        }
+        //    });
+        //}
+
+
+        //$('#balanceTable').bootstrapTable('load', currentProject.FinDataBalance.Table);
+        //$('#balanceTable').bootstrapTable('resetView');
+        //formatTable();
     }
 
     var calculateBalanceTotalCash = function(currentProject) {

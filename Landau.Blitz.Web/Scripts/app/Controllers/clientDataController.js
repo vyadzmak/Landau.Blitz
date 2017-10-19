@@ -5,6 +5,14 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
     $scope.eIndex = -1;
     $scope.init = function() {
         $scope.currentProject = projectFactory.getToCurrentProject();
+        $scope.loanTypes = [
+            {Id:1, Name:"Банковский заем" },
+            {Id:2, Name:"Возобновляемая кредитная линия" },
+            {Id:3, Name:"Невозобновляемая кредитная линия" },
+            {Id:4, Name:"Смешанная кредитная линия" },
+            {Id:5, Name:"Банковская гарантия" },
+            {Id:6, Name:"Аккредитив" }
+        ];
         if ($scope.currentProject != undefined) {
             $scope.businessPlacesParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.BusinessPlaces });
             $scope.directorInfosParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.DirectorInfos });
@@ -110,6 +118,25 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         $scope.mElement = $scope.editElement;
         $scope.elements = $scope.currentProject.ClientData.DirectorInfos;
 
+        //alert(id);
+    };
+
+    $scope.loanDetailsRowClicked = function(id, noEditing, loanId) {
+
+        if (noEditing) {
+            
+        }
+        else{
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        console.log(id);
+        $scope.editLoan =$scope.filterFromArray($scope.currentProject.ClientData.CreditHistoryInfos, loanId);
+        $scope.editElement = $scope.filterFromArray($scope.editLoan.LoanDetails, $scope.eIndex);
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.editLoan.LoanDetails;
+        }
         //alert(id);
     };
 
@@ -245,11 +272,12 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         dialog.setSize(BootstrapDialog.SIZE_SMALL);
     };
 
-    $scope.menuItems = [{
-            text: "Редактировать", //menu option text 
-            callback: $scope.EditElement, //function to be called on click  
-            disabled: false //No click event. Grayed out option. 
-        },
+    $scope.menuItems = [
+        //{
+        //    text: "Редактировать", //menu option text 
+        //    callback: $scope.EditElement, //function to be called on click  
+        //    disabled: false //No click event. Grayed out option. 
+        //},
         {
             text: "Удалить",
             callback: $scope.RemoveElement, //function to be called on click  
@@ -259,7 +287,10 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
 
     //----------------------------------------------------------------------------//
     $scope.showNewBusinessPlace = function() {
-        $scope.currentProject.ClientData.BusinessPlaces.push({});
+        if (!$scope.currentProject.ClientData.BusinessPlaces) {
+            $scope.currentProject.ClientData.BusinessPlaces = [];
+        }
+        $scope.currentProject.ClientData.BusinessPlaces.push({Id:$scope.currentProject.ClientData.BusinessPlaces.length+1});
         //var modalView = 'PartialViews/Modals/ClientData/BusinessPlaceModal.html';
         //var modalController = manageBusinessPlaceController;
 
@@ -271,20 +302,10 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
     }
 
     $scope.showNewDirectorInfo = function() {
-        var directorInfo = {
-            "Name": "",
-            "DateOfBirth": "",
-            "Document": "",
-            "PlaceOfRegistration": "",
-            "PlaceOfResidence": "",
-            "PhoneNumber": "",
-            "IsMarried": false,
-            "ChildrenCount": "",
-            "ChildrenAge": "",
-            "PartnerData": "",
-            "Expirience": ""
+        if (!$scope.currentProject.ClientData.DirectorInfos) {
+            $scope.currentProject.ClientData.DirectorInfos = [];
         }
-        $scope.currentProject.ClientData.DirectorInfos.push(directorInfo);
+        $scope.currentProject.ClientData.DirectorInfos.push({Id:$scope.currentProject.ClientData.DirectorInfos.length+1});
         //var modalView = 'PartialViews/Modals/ClientData/DirectorInfoModal.html';
         //var modalController = manageDirectorInfoController;
 
@@ -299,7 +320,7 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         if (!$scope.currentProject.ClientData.RelatedCompanyInfos) {
             $scope.currentProject.ClientData.RelatedCompanyInfos = [];
         }
-        $scope.currentProject.ClientData.RelatedCompanyInfos.push({});
+        $scope.currentProject.ClientData.RelatedCompanyInfos.push({Id:$scope.currentProject.ClientData.RelatedCompanyInfos.length+1});
         //var modalView = 'PartialViews/Modals/ClientData/RelatedCompanyModal.html';
         //var modalController = manageRelatedCompanyController;
 
@@ -311,14 +332,18 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
     }
 
     $scope.showNewLegalOwnerCompanyInfo = function() {
-        var modalView = 'PartialViews/Modals/ClientData/LegalOwnerCompanyModal.html';
-        var modalController = manageLegalOwnerCompanyController;
-
-        if ($scope.currentProject.ClientData.LegalOwnerCompanyInfos == undefined) {
+        if (!$scope.currentProject.ClientData.LegalOwnerCompanyInfos) {
             $scope.currentProject.ClientData.LegalOwnerCompanyInfos = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.LegalOwnerCompanyInfos);
+        $scope.currentProject.ClientData.LegalOwnerCompanyInfos.push({Id:$scope.currentProject.ClientData.LegalOwnerCompanyInfos.length+1});
+        //var modalView = 'PartialViews/Modals/ClientData/LegalOwnerCompanyModal.html';
+        //var modalController = manageLegalOwnerCompanyController;
+
+        //if ($scope.currentProject.ClientData.LegalOwnerCompanyInfos == undefined) {
+        //    $scope.currentProject.ClientData.LegalOwnerCompanyInfos = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.LegalOwnerCompanyInfos);
     }
 
     $scope.showNewActualOwnerCompanyInfo = function() {
@@ -333,25 +358,72 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
     }
 
     $scope.showNewCreditHistoryInfo = function() {
-        var modalView = 'PartialViews/Modals/ClientData/CreditHistoryModal.html';
-        var modalController = manageCreditHistoryController;
-
-        if ($scope.currentProject.ClientData.CreditHistoryInfos == undefined) {
+        if (!$scope.currentProject.ClientData.CreditHistoryInfos) {
             $scope.currentProject.ClientData.CreditHistoryInfos = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.CreditHistoryInfos);
+        $scope.currentProject.ClientData.CreditHistoryInfos.push({Id:$scope.currentProject.ClientData.CreditHistoryInfos.length+1});
+        //var modalView = 'PartialViews/Modals/ClientData/CreditHistoryModal.html';
+        //var modalController = manageCreditHistoryController;
+
+        //if ($scope.currentProject.ClientData.CreditHistoryInfos == undefined) {
+        //    $scope.currentProject.ClientData.CreditHistoryInfos = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.CreditHistoryInfos);
     }
 
     $scope.showNewBankAccountInfo = function() {
-        var modalView = 'PartialViews/Modals/ClientData/BankAccountModal.html';
-        var modalController = manageBankAccountController;
-
-        if ($scope.currentProject.ClientData.BankAccountInfos == undefined) {
+        if (!$scope.currentProject.ClientData.BankAccountInfos) {
             $scope.currentProject.ClientData.BankAccountInfos = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.BankAccountInfos);
+        $scope.currentProject.ClientData.BankAccountInfos.push({Id:$scope.currentProject.ClientData.BankAccountInfos.length+1});
+        //var modalView = 'PartialViews/Modals/ClientData/BankAccountModal.html';
+        //var modalController = manageBankAccountController;
+
+        //if ($scope.currentProject.ClientData.BankAccountInfos == undefined) {
+        //    $scope.currentProject.ClientData.BankAccountInfos = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.BankAccountInfos);
+    }
+
+    $scope.finAnalysisCompaniesCountChanged = function() {
+        if ($scope.currentProject.ClientData.FinAnalysisCompanies &&
+            $scope.currentProject.ClientData.FinAnalysisCompanies.length>0) {
+            $scope.currentProject.ClientData.FinAnalysisCompanies.length=$scope.currentProject.ClientData.FinAnalysisCompaniesCount
+            for (var i = 0; i < $scope.currentProject.ClientData.FinAnalysisCompanies.length; i++) {
+                if (!$scope.currentProject.ClientData.FinAnalysisCompanies[i]) {
+                    $scope.currentProject.ClientData.FinAnalysisCompanies[i] = {}
+                }
+            }
+        } else {
+            $scope.currentProject.ClientData.FinAnalysisCompanies = [];
+            for (var i = 0; i < $scope.currentProject.ClientData.FinAnalysisCompaniesCount; i++) {
+                $scope.currentProject.ClientData.FinAnalysisCompanies.push({});
+            }
+        }
+    }
+
+    $scope.loanTypeChanged = function(loan) {
+        loan.LoanDetails = [];
+        if (loan.LoanType.Id === 4) {
+            loan.LoanDetails.push({Id: 1, Document:'Возобновляемая часть', noEditing: true, detType:2});
+            loan.LoanDetails.push({Id: 2, Document:'Невозобновляемая часть', noEditing: true, detType:3});
+        }
+    }
+
+    $scope.addLoanDetail = function(loan, type) {
+        if (type === 2) {
+            var ind = loan.LoanDetails.length;
+            for (var i = 0; i < loan.LoanDetails.length; i++) {
+                if (loan.LoanDetails[i].detType === 3) {
+                    ind = i;
+                }
+            }
+            loan.LoanDetails.splice(ind,0,{Id:loan.LoanDetails.length+1});
+        } else {
+            loan.LoanDetails.push({});
+        }
     }
 };
 blitzApp.controller("clientDataController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", clientDataController]);
