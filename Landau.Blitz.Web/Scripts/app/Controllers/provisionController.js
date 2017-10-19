@@ -66,8 +66,7 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
     $scope.clickDeposit = function(id) {
         $scope.rmIndex = 1;
         $scope.eIndex = id;
-
-        console.log(id);
+        
         $scope.editElement = $scope.filterFromArray($scope.currentProject.Provision.Deposits, $scope.eIndex);
 
         $scope.modalView = 'PartialViews/Modals/Provision/DepositModal.html';
@@ -75,6 +74,27 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
 
         $scope.mElement = $scope.editElement;
         $scope.elements = $scope.currentProject.Provision.Deposits;
+    };
+
+    $scope.clickActiveDeposit = function(id) {
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+        
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.Provision.ActiveDeposits, $scope.eIndex);
+        
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.Provision.ActiveDeposits;
+    };
+
+    $scope.clickActiveDepositDetail = function(id, depositId) {
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        $scope.editDeposit =$scope.filterFromArray($scope.currentProject.Provision.ActiveDeposits, depositId);
+        $scope.editElement = $scope.filterFromArray($scope.editDeposit.DepositDetails, $scope.eIndex);
+        
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.editDeposit.DepositDetails;
     };
 
     $scope.EditElement = function() {
@@ -123,11 +143,12 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
         dialog.setSize(BootstrapDialog.SIZE_SMALL);
     };
 
-    $scope.menuItems = [{
-            text: "Редактировать", //menu option text 
-            callback: $scope.EditElement, //function to be called on click  
-            disabled: false //No click event. Grayed out option. 
-        },
+    $scope.menuItems = [
+        //{
+        //    text: "Редактировать", //menu option text 
+        //    callback: $scope.EditElement, //function to be called on click  
+        //    disabled: false //No click event. Grayed out option. 
+        //},
         {
             text: "Удалить",
             callback: $scope.RemoveElement, //function to be called on click  
@@ -136,14 +157,45 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
     ];
 
     $scope.showNewDeposit = function() {
-        var modalView = 'PartialViews/Modals/Provision/DepositModal.html';
-        var modalController = manageDepositController;
-
-        if ($scope.currentProject.Provision.Deposits == undefined) {
+        if (!$scope.currentProject.Provision.Deposits) {
             $scope.currentProject.Provision.Deposits = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.Provision.Deposits);
+        $scope.currentProject.Provision.Deposits.push({Id:$scope.currentProject.Provision.Deposits.length+1});
+        //var modalView = 'PartialViews/Modals/Provision/DepositModal.html';
+        //var modalController = manageDepositController;
+
+        //if ($scope.currentProject.Provision.Deposits == undefined) {
+        //    $scope.currentProject.Provision.Deposits = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.Provision.Deposits);
+    }
+
+    $scope.addNewActiveDeposit = function() {
+        if (!$scope.currentProject.Provision.ActiveDeposits) {
+            $scope.currentProject.Provision.ActiveDeposits = [];
+        }
+        $scope.currentProject.Provision.ActiveDeposits.push({
+            Id:$scope.currentProject.Provision.ActiveDeposits.length+1,
+            DepositDetails: [{Id:1}]
+        });
+    }
+
+    $scope.addDepositDetail = function(deposit) {
+        deposit.DepositDetails.push({ Id: deposit.DepositDetails.length + 1 });
+    }
+
+    $scope.calculateActiveDeposits = function() {
+        var marketValue = 0;
+        var assesedValue = 0;
+        angular.forEach($scope.currentProject.Provision.ActiveDeposits, function(item, key) {
+            angular.forEach(item.DepositDetails, function(detItem, detKey) {
+                marketValue += +detItem.MarketPrice;
+                assesedValue += +detItem.AssessedPrice;
+            });
+        });
+        $scope.currentProject.Provision.ActiveDepositsMarketTotal = marketValue;
+        $scope.currentProject.Provision.ActiveDepositsAssessedTotal = assesedValue;
     }
 };
 blitzApp.controller("provisionController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", provisionController]);

@@ -1,34 +1,141 @@
 ﻿<div ng-controller="financePlanningController">
 
-    <div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Цель кредита (подробное описание целевого назначения займа)</div>
 
-        <div class="row">
-
-
-            <div id="toolbar">
-                <button type="button" id="addFP" class="btn btn-primary orange-tooltip" ng-click="showNewFinPlan();" data-toggle="tooltip" title="Добавить" data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>
-                    </button>
-
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Запршенная сумма, тенге</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.RequestedSum">
+                    </div>
+                    <div class="form-group">
+                        <label>Запршенный срок, мес.</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.RequestedTerm">
+                    </div>
+                    <div class="form-group">
+                        <label>Запршенная ставка, %</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.RequestedRate">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Предложенная сумма итого, тенге</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedSum">
+                    </div>
+                    <div class="form-group">
+                        <label>Предложенная сумма наличными, тенге</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedCashSum">
+                    </div>
+                    <div class="form-group">
+                        <label>Предложенная сумма в безналичной форме, тенге</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedCashlessSum">
+                    </div>
+                    <div class="form-group">
+                        <label>Предложенный срок, мес.</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedTerm">
+                    </div>
+                    <div class="form-group">
+                        <label>Ежемесячный взнос, тенге</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.MonthlyFee">
+                    </div>
+                    <div class="form-group">
+                        <label>Ставка вознаграждения, %</label>
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedRate">
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            План финансирования проекта
+            <div class="clearfix "></div>
+        </div>
 
-            <table id="financePlanningTable" data-toolbar="#toolbar" data-row-style="rowStyle"></table>
-            <div>
-                <br/> План финансирования составляется для любой цели поэтапно. Если в рамках данного проекта были уже выполнены некоторые работы, они указываются в плане финансирования. Расшифровка этапов - по видам, срокам и источникам финансирования.
-                Этапы на строительство: квадратура, стоимость материалов и стоимость работ. Комментарии.
-
+        <div class="panel-body">
+            <button class="btn btn-primary btn-xs header-button" ng-click="addNewFinancePlan();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="planCollection" st-safe-src="currentProject.FinancePlanning.Plans" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Expenditure"><span uib-tooltip="Статья затрат">Статья затрат</span></th>
+                    <th st-sort="Provider"><span uib-tooltip="Поставщик">Поставщик</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                    <th st-sort="Source"><span uib-tooltip="Источник финансирования">Источник финансирования</span></th>
+                    <th st-sort="Date"><span uib-tooltip="Дата">Дата</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in planCollection" ng-right-click="clickFinancePlan(row.Id)" menu-items="menuItems">
+                    <td>
+                        <select ng-options="item as item.Name for item in expenditures track by item.Id"
+                                ng-model="row.Expenditure" style="width: 200px"></select>
+                    </td>
+                    <td ng-model="row.Provider" content-editable></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateFinancePlan()"><span>{{row.Sum | currency:'':2}}</span></td>
+                    <td>
+                        <select ng-options="item as item.Name for item in financialSources track by item.Id"
+                                ng-model="row.Source"
+                                ng-change="calculateFinancePlan()"></select>
+                    </td>
+                    <td><input type="date" ng-model="row.Date"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="2" class="text-center">Итого:</td>
+                    <td colspan="1" class="text-center">{{currentProject.FinancePlanning.OwnResources | currency:'':2}}</td>
+                    <td colspan="2" class="text-center">собственные средства</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center"></td>
+                    <td colspan="1" class="text-center">{{currentProject.FinancePlanning.BorrowedResources | currency:'':2}}</td>
+                    <td colspan="2" class="text-center">заемные средства</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">Всего:</td>
+                    <td colspan="1" class="text-center">{{currentProject.FinancePlanning.TotalResources | currency:'':2}}</td>
+                    <td colspan="2" class="text-center"></td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="20" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="form-group">
+                <label>Комментарии</label>
+                <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.FinancePlanning.PlansComment">
             </div>
-            <ul id="context-menu" class="dropdown-menu">
-                <li data-item="edit">
-                    <a>Редактировать</a>
-                </li>
-                <li data-item="delete">
-                    <a>Удалить</a>
-                </li>
-            </ul>
+        </div>
+    </div>
+    <div>
+        <div id="toolbar">
+            <button type="button" id="addFP" class="btn btn-primary orange-tooltip" ng-click="showNewFinPlan();" data-toggle="tooltip" title="Добавить" data-placement="bottom">
+
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
 
         </div>
+
+        <table id="financePlanningTable" data-toolbar="#toolbar" data-row-style="rowStyle"></table>
+        <div>
+            <br/> План финансирования составляется для любой цели поэтапно. Если в рамках данного проекта были уже выполнены некоторые работы, они указываются в плане финансирования. Расшифровка этапов - по видам, срокам и источникам финансирования.
+            Этапы на строительство: квадратура, стоимость материалов и стоимость работ. Комментарии.
+
+        </div>
+        <ul id="context-menu" class="dropdown-menu">
+            <li data-item="edit">
+                <a>Редактировать</a>
+            </li>
+            <li data-item="delete">
+                <a>Удалить</a>
+            </li>
+        </ul>
+
+    </div>
 
         <div class="row">
             <br/>
@@ -98,4 +205,3 @@
             </div>
         </div>
     </div>
-</div>

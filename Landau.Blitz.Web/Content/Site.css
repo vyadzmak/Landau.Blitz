@@ -694,3 +694,12 @@ HTML CSS JS Result Edit on .demoTable td:last-child {
     font-weight: bold;
     color: black;
 }
+
+.header-button {
+    position: absolute;
+    -moz-transform: translate(-14px, -14px);
+    -ms-transform: translate(-14px, -14px);
+    -o-transform: translate(-14px, -14px);
+    -webkit-transform: translate(-14px, -14px);
+    transform: translate(-14px, -14px);
+}

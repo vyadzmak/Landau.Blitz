@@ -24,55 +24,75 @@ this.setData = function(item) {
     }
 }
 
-var financePlanningController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory) {
+var financePlanningController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectHttpService, projectFactory) {
     usSpinnerService.stop("spinner-1");
 
     $scope.init = function() {
         $scope.currentProject = projectFactory.getToCurrentProject();
+        $scope.expenditures = [
+        { Id: 1, Name:"ПОС  (приобретение товаров, сырья, расходных материалов, кормов, семян, скота для откорма)"},
+        { Id: 2, Name:"Расходы по доставке, растамаживанию (товаров, сырья, расходных материалов, кормов, семян, скота для откорма)"},
+        { Id: 3, Name:"Приобретение оборудования, автотраспорта, мебели, техники, основного стада"},
+        { Id: 4, Name:"Приобретение коммерческой недвижимости (здания, сооружения, земля)"},
+        { Id: 5, Name:"Предоплата за оборудование, автотранспорт, мебель, технику, основное стадо"},
+        { Id: 6, Name: "Предоплата за коммерческую недвижимость" },
+        { Id: 7, Name: "Приобретение строительных материалов" },
+        { Id: 8, Name: "Оплата услуг, работ, связанных со строительством объектов коммерческого назначения" },
+        { Id: 9, Name: "Оплата расходов по оформлению, узаконению коммерческих объектов" },
+        { Id: 10, Name: "Расходы, связанные с монтажем, установкой, наладкой техники и оборудования" },
+        { Id: 11, Name: "Дополнительные расходы на рекламу, продвижение продуктов в рамках финансируемого проекта" },
+        { Id: 12, Name: "Расходы по обучению персонала для обслуживания оборудования, техники в рамках финансируемого проекта" },
+        { Id: 13, Name: "Прочие" }
+        ];
+        $scope.financialSources = [
+            {Id:1,Name:"собственные средства"},
+            {Id:2,Name:"заемные средства (кредит Банка)"},
+            {Id:3,Name:"заемные средства (частный заем)"}
+        ];
         //var t = JSON.parse($scope.currentProject.FinancePlanning.Table);
-        for (var i = 0; i < $scope.currentProject.FinancePlanning.Table.length; i++) {
-            var ob = ($scope.currentProject.FinancePlanning.Table[i]);
-            ob.Term = setData(ob.Term);
-            $scope.currentProject.FinancePlanning.Table[i] = ob;
-        }
+        //for (var i = 0; i < $scope.currentProject.FinancePlanning.Table.length; i++) {
+        //    var ob = ($scope.currentProject.FinancePlanning.Table[i]);
+        //    ob.Term = setData(ob.Term);
+        //    $scope.currentProject.FinancePlanning.Table[i] = ob;
+        //}
 
-        $('#financePlanningTable').bootstrapTable({
-            idField: 'CostItem',
-            pagination: false,
-            search: true,
-            data: $scope.currentProject.FinancePlanning.Table,
+        //$('#financePlanningTable').bootstrapTable({
+        //    idField: 'CostItem',
+        //    pagination: false,
+        //    search: true,
+        //    data: $scope.currentProject.FinancePlanning.Table,
 
-            columns: [{
-                    field: 'CostItem',
-                    title: 'Статья затрат',
-                }, {
-                    field: 'Supplier',
-                    title: 'Поставщик',
-                },
-                {
-                    field: 'Amount',
-                    title: 'Сумма',
-                },
-                {
-                    field: 'SourceOfFinancing',
-                    title: 'Источник финансирования',
-                },
-                {
-                    field: 'Term',
-                    title: 'Срок',
+        //    columns: [{
+        //            field: 'CostItem',
+        //            title: 'Статья затрат',
+        //        }, {
+        //            field: 'Supplier',
+        //            title: 'Поставщик',
+        //        },
+        //        {
+        //            field: 'Amount',
+        //            title: 'Сумма',
+        //        },
+        //        {
+        //            field: 'SourceOfFinancing',
+        //            title: 'Источник финансирования',
+        //        },
+        //        {
+        //            field: 'Term',
+        //            title: 'Срок',
 
-                }
-            ],
-            contextMenu: '#context-menu',
-            onContextMenuItem: function(row, $el) {
-                if ($el.data("item") == "edit") {
-                    $scope.updateItem(row);
-                };
-                if ($el.data("item") == "delete") {
-                    $scope.deleteItem(row);
-                };
-            }
-        });
+        //        }
+        //    ],
+        //    contextMenu: '#context-menu',
+        //    onContextMenuItem: function(row, $el) {
+        //        if ($el.data("item") == "edit") {
+        //            $scope.updateItem(row);
+        //        };
+        //        if ($el.data("item") == "delete") {
+        //            $scope.deleteItem(row);
+        //        };
+        //    }
+        //});
 
 
 
@@ -165,5 +185,103 @@ var financePlanningController = function($scope, $http, $location, $state, $uibM
     $("#addFP").click(function() {
         $scope.showNewFinPlan();
     });
+
+    $scope.addNewFinancePlan = function() {
+        if (!$scope.currentProject.FinancePlanning.Plans) {
+            $scope.currentProject.FinancePlanning.Plans = [];
+        }
+        $scope.currentProject.FinancePlanning.Plans.push({ Id: $scope.currentProject.FinancePlanning.Plans.length + 1 });
+    }
+
+    $scope.clickFinancePlan = function (id) {
+
+        $scope.rmIndex = 1;
+        $scope.eIndex = id;
+
+        $scope.editElement = $scope.filterFromArray($scope.currentProject.FinancePlanning.Plans, $scope.eIndex);
+
+        $scope.mElement = $scope.editElement;
+        $scope.elements = $scope.currentProject.FinancePlanning.Plans;
+
+        //alert(id);
+    };
+
+    $scope.deleteData = function () {
+        var ob = $scope.elements.filter(function (item) {
+            return item.Id == $scope.eIndex;
+        });
+
+        if (ob.length > 0) {
+            var dElement = ob[0];
+            var index = $scope.elements.indexOf(dElement);
+
+            if (index != -1) {
+                $scope.elements.splice(index, 1);
+            }
+        }
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+
+    }
+    $scope.RemoveElement = function () {
+        //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
+
+
+        var dialog = BootstrapDialog.confirm({
+            title: 'Предупреждение',
+            message: 'Вы действительно хотите удалить данные?',
+            type: BootstrapDialog.TYPE_WARNING,
+            size: BootstrapDialog.SIZE_SMALL,
+            closable: true,
+            btnCancelLabel: 'Нет',
+            btnOKLabel: 'Да',
+            btnOKClass: 'btn-warning',
+            callback: function (result) {
+                if (result) {
+                    $scope.deleteData();
+                }
+            }
+        });
+        dialog.setSize(BootstrapDialog.SIZE_SMALL);
+    };
+
+    $scope.menuItems = [
+        //{
+        //    text: "Редактировать", //menu option text 
+        //    callback: $scope.EditElement, //function to be called on click  
+        //    disabled: false //No click event. Grayed out option. 
+        //},
+        {
+            text: "Удалить",
+            callback: $scope.RemoveElement, //function to be called on click  
+            disabled: false
+        }
+    ];
+
+    $scope.filterFromArray = function (arr, id) {
+        var ob = arr.filter(function (item) {
+            return item.Id == id;
+        });
+
+        return ob[0];
+    }
+
+    $scope.calculateFinancePlan = function() {
+        var ownFunds = 0;
+        var borrowedFunds = 0;
+        var totalFunds = 0;
+        for (var i = 0; i < $scope.currentProject.FinancePlanning.Plans.length; i++) {
+            if ($scope.currentProject.FinancePlanning.Plans[i].Source.Id === 1) {
+                ownFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
+            } else {
+                borrowedFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
+            }
+            totalFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
+        }
+        $scope.currentProject.FinancePlanning.OwnResources = totalFunds;
+        $scope.currentProject.FinancePlanning.BorrowedResources = borrowedFunds;
+        $scope.currentProject.FinancePlanning.TotalResources = totalFunds;
+
+    }
+
 };
-blitzApp.controller("financePlanningController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", financePlanningController]);
+blitzApp.controller("financePlanningController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectHttpService", "projectFactory", financePlanningController]);

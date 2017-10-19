@@ -26,7 +26,8 @@ blitzApp.config(['KeepaliveProvider', 'IdleProvider', function(KeepaliveProvider
 blitzApp.config(function(contentEditableProvider) {
 
     contentEditableProvider.configure({
-        singleLine: true // single line for all elements
+        singleLine: true, // single line for all elements
+        renderHtml: true
     });
 
 });
