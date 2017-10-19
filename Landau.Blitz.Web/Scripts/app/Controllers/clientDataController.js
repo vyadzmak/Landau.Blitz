@@ -259,36 +259,55 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
 
     //----------------------------------------------------------------------------//
     $scope.showNewBusinessPlace = function() {
-        var modalView = 'PartialViews/Modals/ClientData/BusinessPlaceModal.html';
-        var modalController = manageBusinessPlaceController;
+        $scope.currentProject.ClientData.BusinessPlaces.push({});
+        //var modalView = 'PartialViews/Modals/ClientData/BusinessPlaceModal.html';
+        //var modalController = manageBusinessPlaceController;
 
-        if ($scope.currentProject.ClientData.BusinessPlaces == undefined) {
-            $scope.currentProject.ClientData.BusinessPlaces = [];
-        }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.BusinessPlaces);
+        //if ($scope.currentProject.ClientData.BusinessPlaces == undefined) {
+        //    $scope.currentProject.ClientData.BusinessPlaces = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.BusinessPlaces);
     }
 
     $scope.showNewDirectorInfo = function() {
-        var modalView = 'PartialViews/Modals/ClientData/DirectorInfoModal.html';
-        var modalController = manageDirectorInfoController;
-
-        if ($scope.currentProject.ClientData.DirectorInfos == undefined) {
-            $scope.currentProject.ClientData.DirectorInfos = [];
+        var directorInfo = {
+            "Name": "",
+            "DateOfBirth": "",
+            "Document": "",
+            "PlaceOfRegistration": "",
+            "PlaceOfResidence": "",
+            "PhoneNumber": "",
+            "IsMarried": false,
+            "ChildrenCount": "",
+            "ChildrenAge": "",
+            "PartnerData": "",
+            "Expirience": ""
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.DirectorInfos);
+        $scope.currentProject.ClientData.DirectorInfos.push(directorInfo);
+        //var modalView = 'PartialViews/Modals/ClientData/DirectorInfoModal.html';
+        //var modalController = manageDirectorInfoController;
+
+        //if ($scope.currentProject.ClientData.DirectorInfos == undefined) {
+        //    $scope.currentProject.ClientData.DirectorInfos = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.DirectorInfos);
     }
 
     $scope.showNewRelatedCompanyInfo = function() {
-        var modalView = 'PartialViews/Modals/ClientData/RelatedCompanyModal.html';
-        var modalController = manageRelatedCompanyController;
-
-        if ($scope.currentProject.ClientData.RelatedCompanyInfos == undefined) {
+        if (!$scope.currentProject.ClientData.RelatedCompanyInfos) {
             $scope.currentProject.ClientData.RelatedCompanyInfos = [];
         }
-        $scope.mElement = {};
-        $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.RelatedCompanyInfos);
+        $scope.currentProject.ClientData.RelatedCompanyInfos.push({});
+        //var modalView = 'PartialViews/Modals/ClientData/RelatedCompanyModal.html';
+        //var modalController = manageRelatedCompanyController;
+
+        //if ($scope.currentProject.ClientData.RelatedCompanyInfos == undefined) {
+        //    $scope.currentProject.ClientData.RelatedCompanyInfos = [];
+        //}
+        //$scope.mElement = {};
+        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.ClientData.RelatedCompanyInfos);
     }
 
     $scope.showNewLegalOwnerCompanyInfo = function() {

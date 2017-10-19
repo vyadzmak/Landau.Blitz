@@ -170,7 +170,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                 DBLogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
                                    innerException);
 
-                return model;
+                return null;
             }
         }
         /// <summary>

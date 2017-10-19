@@ -138,7 +138,9 @@ namespace Landau.Blitz.Api.Helpers.UserHelpers
                 
                 if (id == -1)
                 {
+                    Users user = DBUserHelper.GetToUserById(userId);
                     UserModel model = new UserModel();
+                    model.ClientId = user.ClientId;
                     model.Login = new UserLoginModel();
                     var ls = DBUserHelper.GetToAllUserLoginStates();
                     foreach (var state in ls)

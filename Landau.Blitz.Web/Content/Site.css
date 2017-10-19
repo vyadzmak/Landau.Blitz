@@ -14,17 +14,22 @@
 @media(max-width: 767px) {
     #page-wrapper {
         padding-top: 110px !important;
+        margin: 0px 0 0 0px !important;
     }
 }
 
 @media(min-width: 768px) {
     #page-wrapper {
         padding-top: 55px !important;
-        /*padding-top: 80px !important;*/
+        margin: 0px 0 0 130px !important;
     }
 }
 
-
+@media (min-width: 768px){
+.sidebar {
+    width: 130px !important;
+}
+}
 /* Set width on the form input elements since they're 100% wide by default */
 
 input,

@@ -418,7 +418,11 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ClientData = {};
     }
 
-    projectFactory.getToCurrentProject = function() {
+    projectFactory.getToCurrentProject = function () {
+        angular.forEach(this.currentProject.ClientData.DirectorInfos, function (value, key) {
+            value.DateOfBirth = new Date(value.DateOfBirth);
+        });
+        
             return this.currentProject;
         }
         //-------------------------------end init functions ---------------------------------//

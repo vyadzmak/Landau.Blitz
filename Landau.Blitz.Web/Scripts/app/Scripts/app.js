@@ -1,5 +1,5 @@
 ﻿var $$ApiUrl = "http://localhost/BlitzApi/api";
-var blitzApp = angular.module("blitzApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask', 'angularjs-dropdown-multiselect', 'isteven-multi-select', 'angularTreeview', 'treeControl', 'ngTable', 'initFromForm', 'ngRightClick']);
+var blitzApp = angular.module("blitzApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask', 'angularjs-dropdown-multiselect', 'isteven-multi-select', 'angularTreeview', 'treeControl', 'ngTable', 'initFromForm', 'ngRightClick', 'smart-table', 'angular-content-editable']);
 
 blitzApp.run([
     '$rootScope', '$state', '$stateParams', '$window', '$cookies',
@@ -10,35 +10,6 @@ blitzApp.run([
 ]);
 
 angular.module('initFromForm', [])
-    // .directive('input', function($parse) {
-    //     return {
-    //         restrict: 'E',
-    //         require: '?ngModel',
-    //         link: function(scope, element, attrs) {
-    //             // if (attrs.ngModel && attrs.value) {
-    //             //     $parse(attrs.ngModel).assign(scope, attrs.value);
-    //             // }
-
-//             var attr = attrs.initFromForm || attrs.ngModel || element.attrs('name'),
-//                 val = attrs.value;
-//             if (attrs.type === "number") {
-//                 val = parseFloat(val);
-//                 if (isNaN(val)) {
-//                     val = 0;
-//                     $parse(attr).assign(scope, val);
-//                 }
-//             }
-//             // else if (attrs.type === "text") {
-//             //     if (isNaN(val)) {
-//             //         val = "";
-//             //     }
-//             // }
-
-
-
-//         }
-//     };
-// });
 
 blitzApp.config(['usSpinnerConfigProvider', function(usSpinnerConfigProvider) {
     //usSpinnerConfigProvider.setTheme('bigBlue', { color: 'blue', radius: 20 });
@@ -51,6 +22,14 @@ blitzApp.config(['KeepaliveProvider', 'IdleProvider', function(KeepaliveProvider
     IdleProvider.timeout(30); // которое в течении 30 сек. будет висеть
     KeepaliveProvider.interval(10);
 }]);
+
+blitzApp.config(function(contentEditableProvider) {
+
+    contentEditableProvider.configure({
+        singleLine: true // single line for all elements
+    });
+
+});
 
 blitzApp.filter('myLimitTo', function() {
     return function(input, limit, begin) {

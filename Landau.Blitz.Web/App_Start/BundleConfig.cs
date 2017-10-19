@@ -90,6 +90,8 @@ namespace Landau.Blitz.Web
                 "~/Scripts/angular.treeview.js",
                 "~/Scripts/angular-tree-control.js",
                 "~/Scripts/ng-table.js",
+                "~/Scripts/smart-table.min.js",
+                "~/Scripts/angular-content-editable.min.js",
                 "~/Scripts/ng-right-click.js"
             
             ));

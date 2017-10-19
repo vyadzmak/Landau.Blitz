@@ -202,6 +202,8 @@ namespace Landau.Blitz.Api.DBHelpers.DBUserHelpers
                     db.UserLogins.Add(login);
                     db.SaveChanges();
                     model.Login.Id = login.Id;
+                    model.Login.RegistrationDate = login.RegistrationDate.ToString();
+                    model.Login.DecryptedPassword = model.Login.UserPassword;
                 }
                 return SerializeHelper.Serialize(model);
 

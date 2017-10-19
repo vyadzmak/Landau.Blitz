@@ -312,6 +312,7 @@
     <Content Include="PartialViews\FieldManagment.html" />
     <Content Include="PartialViews\FinancePlanning.html" />
     <Content Include="PartialViews\FinDataBalance.html" />
+    <Content Include="PartialViews\FinDataBalanceTable.html" />
     <Content Include="PartialViews\FinDataCrossChecking.html" />
     <Content Include="PartialViews\FinDataOdds.html" />
     <Content Include="PartialViews\FinDataOpiu.html" />
@@ -353,6 +354,7 @@
     <Content Include="PartialViews\Users.html" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\angular-content-editable.min.js" />
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-idle.js" />
     <Content Include="Scripts\angular-messages.js" />
@@ -383,6 +385,7 @@
     <Content Include="Scripts\app\Controllers\fieldDetailsController.js" />
     <Content Include="Scripts\app\Controllers\financePlanningController.js" />
     <Content Include="Scripts\app\Controllers\finDataBalanceController.js" />
+    <Content Include="Scripts\app\Controllers\finDataBalanceTableController.js" />
     <Content Include="Scripts\app\Controllers\finDataCrossCheckingController.js" />
     <Content Include="Scripts\app\Controllers\finDataOddsController.js" />
     <Content Include="Scripts\app\Controllers\finDataOpiuController.js" />
@@ -444,6 +447,7 @@
     <Content Include="Scripts\app\Services\financePlanningCalculatorFactory.js" />
     <Content Include="Scripts\app\Services\httpService.js" />
     <Content Include="Scripts\app\Services\initDirective.js" />
+    <Content Include="Scripts\app\Services\initializers\balanceTableFactory.js" />
     <Content Include="Scripts\app\Services\initializers\clientDataInitializer.js" />
     <Content Include="Scripts\app\Services\initializers\dataInitializer.js" />
     <Content Include="Scripts\app\Services\navigatorService.js" />
@@ -502,12 +506,14 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\ng-right-click.js" />
     <Content Include="Scripts\ng-table.js" />
     <Content Include="Scripts\notifier.js" />
     <Content Include="Scripts\numeric-input-example.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sb-admin-2.js" />
+    <Content Include="Scripts\smart-table.min.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-2.1.3.min.js" />
     <Content Include="Scripts\validator.js" />
