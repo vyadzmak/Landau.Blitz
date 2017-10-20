@@ -1,4 +1,4 @@
-<div ng-controller="projectAnalysisController">
+﻿<div ng-controller="projectAnalysisController">
 
     <div class="container">
 
@@ -8,9 +8,31 @@
                 </div>
                 <div class="panel panel-primary">
 
-                    <div class="panel-heading">Полная стоимость проекта</div>
+                    <div class="panel-heading">Инвестиционный проект</div>
 
                     <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-8">Наименование инвестиционного проекта </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" ng-model="currentProject.ProjectAnalysis.InvestmentProjectName">
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label class="col-sm-8">Размер собственных средств (исключая ПОС) </label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" format="currency" ng-model="currentProject.ProjectAnalysis.OwnFundsExcludePos">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-8">Размер заемных средств (исключая ПОС) </label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" format="currency" ng-model="currentProject.ProjectAnalysis.BorrowedFundsExcludePos">
+                            </div>
+
+                        </div>
+                        <br/>
                         <div class="form-group">
                             <label class="col-sm-8">Полная стоимость (исключая ПОС) </label>
                             <div class="col-sm-4">
@@ -50,14 +72,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-8">Альтернативная ставка</label>
+                            <label class="col-sm-8">Альтернативная ставка инвестирования (ставка вознаграждения при вложении средств на депозит)</label>
                             <div class="col-sm-4">
                                 <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.AlternativeBid">
                             </div>
 
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-8">Кредитная ставка</label>
+                            <label class="col-sm-8">Ставка вознаграждения по кредиту (предлагаемая ставка кредитования на данный инвестиционный проект)</label>
                             <div class="col-sm-4">
                                 <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.CreditBid">
                             </div>
@@ -65,20 +87,205 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-8">Средневзвешенная стоимость капитала</label>
+                            <label class="col-sm-8">Средневзвешенная стоимость капитала, %</label>
                             <div class="col-sm-4">
                                 <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.SSK">
                             </div>
 
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-8">Сроки ввода в проекта эксплуатацию</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" ng-model="currentProject.ProjectAnalysis.ProjectTerms">
+                            </div>
 
+                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
+        
+        
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Ожидаемая выручка (при выходе проекта на планируемую мощность)
+            <div class="clearfix "></div>
+        </div>
 
-        <div class="row">
+        <div class="panel-body">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewExpectedRevenue();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Income"><span uib-tooltip="Вид дохода (например: кухня, бар, бильярд)">Доход</span></th>
+                    <th st-sort="Revenue"><span uib-tooltip="Ожидаемая месячная выручка по данному виду дохода">Выручка</span></th>
+                    <th st-sort="ReachTerm"><span uib-tooltip="В течение скольки месяцев с момента ввода в эксплуатацию будет достигнута планируемая выручка. Указать число, например, 5">План, мес</span></th>
+                    <th><span uib-tooltip="Динамика выручки до момента выхода на планируемую мощность">Динамика выручки</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in expRevCollection" ng-right-click="clickExpectedRevenue(row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Income" content-editable></td>
+                    <td ng-model="row.Revenue" content-editable edit-callback="calculateCostPrice(text, text2, row)"></td>
+                    <td ng-model="row.ReachTerm" content-editable edit-callback="createRevenueDynamics(text, text2, row)"></td>
+                    <td style="padding: 0">
+                        <table>
+                            <tr>
+                                <td ng-repeat="mCell in row.RevenueDynamics" ng-model="mCell.Revenue" content-editable>
+                                            
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+        
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Наценка (маржа) (в случае если проект реализуется в сфере услуг (чистые услуги), например: химчистка, гостиница и т.д., то наценку указывать как 0)
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Income"><span uib-tooltip="Вид дохода">Доход</span></th>
+                    <th st-sort="Justification"><span uib-tooltip="Обоснование данного размера наценки, текст">Обоснование</span></th>
+                    <th st-sort="Markup"><span uib-tooltip="Ожидаемый размер наценки, %">Наценка, %</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in expRevCollection">
+                    <td>{{row.Income}}</td>
+                    <td ng-model="row.Justification" content-editable></td>
+                    <td ng-model="row.Markup" content-editable edit-callback="calculateCostPrice(text, text2, row)"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+        
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Себестоимость
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Income"><span uib-tooltip="Вид дохода">Доход</span></th>
+                    <th st-sort="Costprice"><span uib-tooltip="Ожидаемая себестоимость">Ожидаемая себестоимость</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in expRevCollection">
+                    <td>{{row.Income}}</td>
+                    <td>{{row.Costprice | currency:'':2}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+        
+        
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Переменные затраты
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewVarExpenses();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="varExpCollection" st-safe-src="currentProject.ProjectAnalysis.VarExpenses" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Type"><span uib-tooltip="Вид переменных затрат">Вид затрат</span></th>
+                    <th st-sort="Justification"><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in varExpCollection" ng-right-click="clickVarExpenses(row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Type" content-editable></td>
+                    <td ng-model="row.Justification" content-editable></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateTotalExpenses()"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Постоянные затраты
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewConstExpenses();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="constExpCollection" st-safe-src="currentProject.ProjectAnalysis.ConstExpenses" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Type"><span uib-tooltip="Вид переменных затрат">Вид затрат</span></th>
+                    <th st-sort="Justification"><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in constExpCollection" ng-right-click="clickConstExpenses(row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Type" content-editable></td>
+                    <td ng-model="row.Justification" content-editable></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateTotalExpenses()"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+    <!--<div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Сроки ввода проекта в эксплуатацию</div>
@@ -93,7 +300,7 @@
                 </div>
             </div>
 
-        </div>
+        </div>-->
 
         <div class="row">
             <div class="col-md-12">
@@ -101,6 +308,15 @@
                     <div class="panel-heading">Прогноз ОПиУ</div>
 
                     <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-8">Прибыль по проекту</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.ProfitForTheProject">
+                            </div>
+
+                        </div>
+                        
                         <div class="form-group">
                             <label class="col-sm-8">Ожидаемая выручка</label>
                             <div class="col-sm-4">
@@ -110,6 +326,62 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-8">Планируемый совокупный взнос по кредитам на данный инвестиционный проект (включая вознаграждение и основной долг)</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.ExpectedCumulativeFee">
+                            </div>
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-8">Коэффициент рентабельности продаж, %</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.SalesProfitability">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-8">Срок окупаемости проекта, мес</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.PaybackPeriod">
+                            </div>
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-8">Срок полного возврата инвестиций, мес.</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.InvestmentBackPeriod">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-8">ARR (учетная ставка доходности), %</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.ARR">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-8">Точка безубыточности</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.BreakevenPoint">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-8">Запас прочности</label>
+                            <div class="col-sm-4">
+                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.MarginOfSafety">
+                            </div>
+
+                        </div>
+
+                        <!--<div class="form-group">
                             <label class="col-sm-8">Наценка</label>
                             <div class="col-sm-4">
                                 <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.ExtraCharge">
@@ -146,55 +418,7 @@
                                 <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.FixedCosts">
                             </div>
 
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Прибыль по проекту</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.ProfitForTheProject">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Рентабельность продаж</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.SalesProfitability">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Срок окупаемости проекта</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.PaybackPeriod">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">ARR</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.ARR">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Точка безубыточности</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.BreakevenPoint">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Запас прочности</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.MarginOfSafety">
-                            </div>
-
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>

@@ -37,12 +37,12 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label>Запрашваемая программа кредитования</label>
-                            <select class="form-control" ng-options="item as item.Name for item in currentProject.ClientData.CreditProgramms track by item.Id" ng-model="currentProject.ClientData.CreditProgramm"></select>
+                            <select class="form-control" ng-options="item as item.Name for item in creditProgramms track by item.Id" ng-model="currentProject.ClientData.CreditProgramm"></select>
                         </div>
 
                         <div class="form-group">
                             <label for="exampleSelect1">Вид кредита</label>
-                            <select class="form-control" ng-options="item as item.Name for item in currentProject.ClientData.CreditTypes track by item.Id" ng-model="currentProject.ClientData.CreditType"></select>
+                            <select class="form-control" ng-options="item as item.Name for item in creditTypes track by item.Id" ng-model="currentProject.ClientData.CreditType"></select>
                         </div>
                         <div class="form-group">
                             <label>Запрашиваемая сумма финансирования</label>

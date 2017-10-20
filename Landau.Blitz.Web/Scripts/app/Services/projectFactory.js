@@ -327,6 +327,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.CreditData = {};
         currentProject.FinancePlanning = {};
         currentProject.ProjectAnalysis = {};
+        currentProject.ContractAnalysis = {};
         currentProject.BusinessInfo = {};
         currentProject.FinDataBalance = {};
         currentProject.FinDataCrossChecking = {};
@@ -335,10 +336,11 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.LargeExpenses = {};
         currentProject.Provision = {};
         currentProject.DataDamu = {};
+        currentProject.Appendix = {};
         currentProject.Conclusion = {};
         currentProject.FinDataBalance.Table = {};
         //currentProject.FinDataBalance.Date = currentProject.ProjectContent.BalanceDate;
-        //dataInitilizer.setBalanceData(currentProject);
+        dataInitilizer.setBalanceData(currentProject);
         //currentProject.ProjectContent = JSON.stringify(currentProject);
         this.currentProject = currentProject;
         return currentProject;
@@ -348,18 +350,19 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         //var currentProject = this.currentProject;
         if (currentProject.ParentExists) {
             currentProject.ClientData = angular.copy(currentProject.ParentProject.ClientData);
-            // currentProject.CreditData = {};
-            //currentProject.FinancePlanning = {};
-            //currentProject.ProjectAnalysis = {};
+             currentProject.CreditData = {};
+            currentProject.FinancePlanning = {};
+            currentProject.ProjectAnalysis = {};
+            currentProject.ContractAnalysis = angular.copy(currentProject.ParentProject.ContractAnalysis);;
             currentProject.BusinessInfo = angular.copy(currentProject.ParentProject.BusinessInfo);
-            //currentProject.FinDataBalance = {};
-            //currentProject.FinDataCrossChecking = {};
-            //currentProject.FinDataOpiu = {};
-            //currentProject.FinDataOdds = {};
+            currentProject.FinDataBalance = {};
+            currentProject.FinDataCrossChecking = {};
+            currentProject.FinDataOpiu = {};
+            currentProject.FinDataOdds = {};
             currentProject.LargeExpenses = angular.copy(currentProject.ParentProject.LargeExpenses);
             currentProject.Provision = angular.copy(currentProject.ParentProject.Provision);
-            //currentProject.DataDamu = angular.copy(currentProject.ParentProject.DataDamu);
-            //currentProject.Conclusion = angular.copy(currentProject.ParentProject.ClientData);
+            currentProject.DataDamu = angular.copy(currentProject.ParentProject.DataDamu);
+            currentProject.Conclusion = angular.copy(currentProject.ParentProject.ClientData);
         }
         dataInitilizer.setBalanceData(currentProject);
 
@@ -380,11 +383,11 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ProjectAnalysis = currentProject.ProjectContent.ProjectAnalysis;
         currentProject.BusinessInfo = currentProject.ProjectContent.BusinessInfo;
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
-        // currentProject.FinDataBalance.Date = new Date(currentProject.FinDataBalance.Date);
+         currentProject.FinDataBalance.Date = new Date(currentProject.FinDataBalance.Date);
 
-        // if (currentProject.ParentExists) {
-        //     currentProject.FinDataBalance.PreviousDate = new Date(currentProject.ParentProject.FinDataBalance.Date);
-        // }
+         if (currentProject.ParentExists) {
+             currentProject.FinDataBalance.PreviousDate = new Date(currentProject.ParentProject.FinDataBalance.Date);
+         }
 
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;

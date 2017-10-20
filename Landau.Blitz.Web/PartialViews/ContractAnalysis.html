@@ -1,0 +1,116 @@
+﻿<div ng-controller="contractAnalysisController">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Договоры/контракты на реализацию товаров/работ/услуг
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewSales();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="salesCollection" st-safe-src="currentProject.ContractAnalysis.Sales" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="Name"><span uib-tooltip="Покупатель/заказчик">Покупатель</span></th>
+                    <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
+                    <th st-sort="SignDate"><span uib-tooltip="Дата заключения">Дата заключения</span></th>
+                    <th st-sort="EndDate"><span uib-tooltip="Дата истечения (может бть не заполнено, т.к. контракт может быть до полного исполнения обязательств)">Дата истечения</span></th>
+                    <th st-sort="ContractSubject"><span uib-tooltip="Приобретение оборудования. выполнения работ по монтажу. программированию. наладке и внедрению систем АСУТП в соответствии с проектом «Увеличение производственной мощности на участке №1 »">Предмет договора</span></th>
+                    <th st-sort="TotalCost"><span uib-tooltip="Общая стоимость товаров/работ/услуг">Стоимость</span></th>
+                    <th st-sort="PaidSum"><span uib-tooltip="Оплаченная сумма, (тенге)">Оплачено, тенге</span></th>
+                    <th st-sort="UnpaidSum"><span uib-tooltip="Не оплаченная сумма (тенге)">Неоплачено, тенге</span></th>
+                    <th st-sort="PayCondition"><span uib-tooltip="Условия оплаты">Условия</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in salesCollection" ng-right-click="clickSales(row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Name" content-editable></td>
+                    <td ng-model="row.Document" content-editable></td>
+                    <td><input type="date" ng-model="row.SignDate"></td>
+                    <td><input type="date" ng-model="row.EndDate"></td>
+                    <td ng-model="row.ContractSubject" content-editable></td>
+                    <td ng-model="row.TotalCost" content-editable edit-callback="calculateTotalSales()"></td>
+                    <td ng-model="row.PaidSum" content-editable edit-callback="calculateTotalSales()"></td>
+                    <td>{{row.UnpaidSum}}</td>
+                    <td ng-model="row.PayCondition" content-editable></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="9" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">Итого</td>
+                    <td>{{currentProject.ContractAnalysis.TotalSales| currency:'':2}}</td>
+                    <td>{{currentProject.ContractAnalysis.TotalSalesPaid| currency:'':2}}</td>
+                    <td>{{currentProject.ContractAnalysis.TotalSalesUnpaid| currency:'':2}}</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="form-group">
+                <label>Комментарии</label>
+                <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.ContractAnalysis.SalesComment">
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Договоры/контракты на приобретение товаров/работ/услуг
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewPurchases();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="purchasesCollection" st-safe-src="currentProject.ContractAnalysis.Purchases" class="table table-bordered table-condensed ng-table">
+                <thead>
+                    <tr>
+                        <th st-sort="Name"><span uib-tooltip="Покупатель/заказчик">Покупатель</span></th>
+                        <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
+                        <th st-sort="SignDate"><span uib-tooltip="Дата заключения">Дата заключения</span></th>
+                        <th st-sort="EndDate"><span uib-tooltip="Дата истечения (может бть не заполнено, т.к. контракт может быть до полного исполнения обязательств)">Дата истечения</span></th>
+                        <th st-sort="ContractSubject"><span uib-tooltip="Поставка расходных материалов">Предмет договора</span></th>
+                        <th st-sort="TotalCost"><span uib-tooltip="Общая стоимость товаров/работ/услуг">Стоимость</span></th>
+                        <th st-sort="PaidSum"><span uib-tooltip="Оплаченная сумма, (тенге)">Оплачено, тенге</span></th>
+                        <th st-sort="UnpaidSum"><span uib-tooltip="Не оплаченная сумма (тенге)">Неоплачено, тенге</span></th>
+                        <th st-sort="PayCondition"><span uib-tooltip="Условия оплаты">Условия</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in purchasesCollection" ng-right-click="clickSales(row.Id)" menu-items="menuItems">
+                        <td ng-model="row.Name" content-editable></td>
+                        <td ng-model="row.Document" content-editable></td>
+                        <td><input type="date" ng-model="row.SignDate"></td>
+                        <td><input type="date" ng-model="row.EndDate"></td>
+                        <td ng-model="row.ContractSubject" content-editable></td>
+                        <td ng-model="row.TotalCost" content-editable edit-callback="calculateTotalPurchases()"></td>
+                        <td ng-model="row.PaidSum" content-editable edit-callback="calculateTotalPurchases()"></td>
+                        <td>{{row.UnpaidSum}}</td>
+                        <td ng-model="row.PayCondition" content-editable></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="9" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">Итого</td>
+                    <td>{{currentProject.ContractAnalysis.TotalPurchases| currency:'':2}}</td>
+                    <td>{{currentProject.ContractAnalysis.TotalPurchasesPaid| currency:'':2}}</td>
+                    <td>{{currentProject.ContractAnalysis.TotalPurchasesUnpaid| currency:'':2}}</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="form-group">
+                <label>Комментарии</label>
+                <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.ContractAnalysis.PurchasesComment">
+            </div>
+        </div>
+    </div>
+
+</div>

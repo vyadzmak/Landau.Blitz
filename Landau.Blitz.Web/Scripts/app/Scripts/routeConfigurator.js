@@ -259,6 +259,28 @@
         }
     })
 
+    .state("main.dashboard.project.appendix", {
+        url: "/appendix",
+        templateUrl: "PartialViews/Appendix.html",
+        onEnter: function ($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Приложение";
+        }
+    })
+
+    .state("main.dashboard.project.contractAnalysis", {
+        url: "/contractAnalysis",
+        templateUrl: "PartialViews/ContractAnalysis.html",
+        onEnter: function ($window, $state) {
+            if (!$window.sessionStorage.getItem("UserData")) {
+                $state.go("main.login");
+            }
+            $window.document.title = "Приложение";
+        }
+    })
+
     .state("main.dashboard.project.conclusion", {
         url: "/conclusion",
         templateUrl: "PartialViews/Conclusion.html",

@@ -13,6 +13,15 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
             {Id:5, Name:"Банковская гарантия" },
             {Id:6, Name:"Аккредитив" }
         ];
+        $scope.creditProgramms = [
+            {Id:1, Name:"Программа 1" },
+            {Id:2, Name:"Программа 2" },
+            {Id:3, Name:"Программа 3" }
+        ];
+        $scope.creditTypes = [
+            {Id:1, Name:"Микро-кредит" },
+            {Id:2, Name:"Старт-кредит" }
+        ];
         if ($scope.currentProject != undefined) {
             $scope.businessPlacesParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.BusinessPlaces });
             $scope.directorInfosParams = new NgTableParams({}, { dataset: $scope.currentProject.ClientData.DirectorInfos });

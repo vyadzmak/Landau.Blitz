@@ -292,6 +292,7 @@
     <Content Include="node_modules\angular-tree-view\src\eaTreeViewItem.directive.js" />
     <Content Include="node_modules\angular-tree-view\src\treeViewItem.html" />
     <Content Include="PartialViews\AdminStatistics.html" />
+    <Content Include="PartialViews\ContractAnalysis.html" />
     <Content Include="PartialViews\BlockDetails.html" />
     <Content Include="PartialViews\BlockManagment.html" />
     <Content Include="PartialViews\BusinessInfo.html" />
@@ -301,6 +302,7 @@
     <Content Include="PartialViews\Catalogs.html" />
     <Content Include="PartialViews\ClientData.html" />
     <Content Include="PartialViews\Companies.html" />
+    <Content Include="PartialViews\Appendix.html" />
     <Content Include="PartialViews\Conclusion.html" />
     <Content Include="PartialViews\CreditData.html" />
     <Content Include="PartialViews\Dashboard.html" />
@@ -370,12 +372,14 @@
     <Content Include="Scripts\angular.treeview.js" />
     <Content Include="Scripts\angularjs-dropdown-multiselect.min.js" />
     <Content Include="Scripts\app\Controllers\adminStatisticsController.js" />
+    <Content Include="Scripts\app\Controllers\contractAnalysisController.js" />
     <Content Include="Scripts\app\Controllers\blockDetailsController.js" />
     <Content Include="Scripts\app\Controllers\businessInfoController.js" />
     <Content Include="Scripts\app\Controllers\catalogFieldDetailsController.js" />
     <Content Include="Scripts\app\Controllers\catalogsController.js" />
     <Content Include="Scripts\app\Controllers\clientDataController.js" />
     <Content Include="Scripts\app\Controllers\companiesController.js" />
+    <Content Include="Scripts\app\Controllers\appendixController.js" />
     <Content Include="Scripts\app\Controllers\conclusionController.js" />
     <Content Include="Scripts\app\Controllers\creditDataController.js" />
     <Content Include="Scripts\app\Controllers\dashBoardController.js" />
