@@ -1,4 +1,4 @@
-﻿var contractAnalysisController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory) {
+﻿var contractAnalysisController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, projectHttpService) {
     usSpinnerService.stop("spinner-1");
 
     $scope.init = function() {
@@ -26,6 +26,7 @@
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.recalculateData();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
@@ -57,10 +58,6 @@
     ];
 
     $scope.showNewSales = function () {
-        if (!$scope.currentProject.ContractAnalysis) {
-            $scope.currentProject.ContractAnalysis = {};
-        }
-
         if (!$scope.currentProject.ContractAnalysis.Sales) {
             $scope.currentProject.ContractAnalysis.Sales = [];
         }
@@ -70,10 +67,6 @@
     }
 
     $scope.showNewPurchases = function () {
-        if (!$scope.currentProject.ContractAnalysis) {
-            $scope.currentProject.ContractAnalysis = {};
-        }
-
         if (!$scope.currentProject.ContractAnalysis.Purchases) {
             $scope.currentProject.ContractAnalysis.Purchases = [];
         }
@@ -141,8 +134,12 @@
         $scope.currentProject.ContractAnalysis.TotalPurchasesUnpaid = totalUnpaid;
     }
 
+    $scope.recalculateData = function() {
+        $scope.calculateTotalPurchases();
+        $scope.calculateTotalSales();
+    }
 
     $scope.init();
     
 };
-blitzApp.controller("contractAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", contractAnalysisController]);
+blitzApp.controller("contractAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", contractAnalysisController]);

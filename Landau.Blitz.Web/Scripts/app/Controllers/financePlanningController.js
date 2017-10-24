@@ -277,7 +277,7 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
             }
             totalFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
         }
-        $scope.currentProject.FinancePlanning.OwnResources = totalFunds;
+        $scope.currentProject.FinancePlanning.OwnResources = ownFunds;
         $scope.currentProject.FinancePlanning.BorrowedResources = borrowedFunds;
         $scope.currentProject.FinancePlanning.TotalResources = totalFunds;
 

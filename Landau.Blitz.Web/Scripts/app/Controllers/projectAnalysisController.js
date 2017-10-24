@@ -26,13 +26,13 @@ var projectAnalysisController = function($scope, $http, $location, $state, $uibM
     }
     $scope.RemoveElement = function () {
         var dialog = BootstrapDialog.confirm({
-            title: 'Предупреждение',
-            message: 'Вы действительно хотите удалить данные?',
+            title: 'РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ',
+            message: 'Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ РґР°РЅРЅС‹Рµ?',
             type: BootstrapDialog.TYPE_WARNING,
             size: BootstrapDialog.SIZE_SMALL,
             closable: true,
-            btnCancelLabel: 'Нет',
-            btnOKLabel: 'Да',
+            btnCancelLabel: 'РќРµС‚',
+            btnOKLabel: 'Р”Р°',
             btnOKClass: 'btn-warning',
             callback: function (result) {
                 if (result) {
@@ -45,7 +45,7 @@ var projectAnalysisController = function($scope, $http, $location, $state, $uibM
 
     $scope.menuItems = [
         {
-            text: "Удалить",
+            text: "РЈРґР°Р»РёС‚СЊ",
             callback: $scope.RemoveElement, //function to be called on click  
             disabled: false
         }

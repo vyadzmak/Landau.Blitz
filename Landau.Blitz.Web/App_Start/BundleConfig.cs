@@ -54,6 +54,7 @@ namespace Landau.Blitz.Web
                 "~/Content/tabs.css",
                 "~/Content/tabs.sideways.css",
                 "~/Content/ng-table.css",
+                "~/Content/angular-editable-text.css",
                 "~/Content/ng-right-click.css"
 
 
@@ -91,7 +92,9 @@ namespace Landau.Blitz.Web
                 "~/Scripts/angular-tree-control.js",
                 "~/Scripts/ng-table.js",
                 "~/Scripts/smart-table.min.js",
-                "~/Scripts/angular-content-editable.min.js",
+                "~/Scripts/angular-content-editable.js", //".min.js",
+                "~/Scripts/angular-elastic-input.min.js",
+                "~/Scripts/angular-editable-text.js", //".min.js",
                 "~/Scripts/ng-right-click.js"
             
             ));

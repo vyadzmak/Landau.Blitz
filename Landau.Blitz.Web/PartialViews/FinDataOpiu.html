@@ -1,7 +1,35 @@
 <div ng-controller="finDataOpiuController">
-    <div class="container">
-        <div class="row">
-            <table id="opiuTable" data-row-style="rowStyle"></table>
-        </div>
-    </div>
+    <table st-table="finDataCollection" st-safe-src="currentProject.FinDataOpiu.Table" class="table table-bordered table-condensed ng-table">
+        <thead>
+            <tr>
+                <th><span uib-tooltip="Наименование">Наименование</span></th>
+                <th><span uib-tooltip="1">1</span></th>
+                <th><span uib-tooltip="2">2</span></th>
+                <th><span uib-tooltip="3">3</span></th>
+                <th><span uib-tooltip="4">4</span></th>
+                <th><span uib-tooltip="5">5</span></th>
+                <th><span uib-tooltip="6">6</span></th>
+                <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in finDataCollection" 
+            ng-class="{'active bold-trow':row.Calculate}">
+            
+            <td>{{row.Title}}</td>
+
+            <td ng-model="row.M1" content-editable non-editable="{{row.Calculate}}"></td>
+            <td ng-model="row.M2" content-editable non-editable="{{row.Calculate}}"></td>
+            <td ng-model="row.M3" content-editable non-editable="{{row.Calculate}}"></td>
+            <td ng-model="row.M4" content-editable non-editable="{{row.Calculate}}"></td>
+            <td ng-model="row.M5" content-editable non-editable="{{row.Calculate}}"></td>
+            <td ng-model="row.M6" content-editable non-editable="{{row.Calculate}}"></td>
+
+            <td>{{row.Avg | currency:'':2}}</td>
+            <td>{{row.AvgPrognose | currency:'':2}}</td>
+
+        </tr>
+        </tbody>
+    </table>
 </div>

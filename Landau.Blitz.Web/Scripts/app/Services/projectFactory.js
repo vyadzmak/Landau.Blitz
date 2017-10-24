@@ -378,7 +378,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ParentProject = currentProject.ProjectContent.ParentProject;
         currentProject.ParentExists = currentProject.ProjectContent.ParentExists;
         // alert(currentProject.ParentExists);
-        currentProject.CreditData = currentProject.ProjectContent.CreditData;;
+        currentProject.CreditData = currentProject.ProjectContent.CreditData;
         currentProject.FinancePlanning = currentProject.ProjectContent.FinancePlanning;
         currentProject.ProjectAnalysis = currentProject.ProjectContent.ProjectAnalysis;
         currentProject.BusinessInfo = currentProject.ProjectContent.BusinessInfo;
@@ -410,7 +410,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.DataDamu = currentProject.ProjectContent.DataDamu;
         currentProject.Conclusion = currentProject.ProjectContent.Conclusion;
         currentProject.BalanceDate = currentProject.ProjectContent.BalanceDate;
-        //currentProject.FinDataBalance.Date = currentProject.ProjectContent.BalanceDate;
+        
+        currentProject.Appendix = currentProject.ProjectContent.Appendix;
+        currentProject.ContractAnalysis = currentProject.ProjectContent.ContractAnalysis;
 
         currentProject.ProjectContent = {};
         this.currentProject = currentProject;

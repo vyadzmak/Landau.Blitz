@@ -1,5 +1,5 @@
 ﻿var $$ApiUrl = "http://localhost/BlitzApi/api";
-var blitzApp = angular.module("blitzApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask', 'angularjs-dropdown-multiselect', 'isteven-multi-select', 'angularTreeview', 'treeControl', 'ngTable', 'initFromForm', 'ngRightClick', 'smart-table', 'angular-content-editable']);
+var blitzApp = angular.module("blitzApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask', 'angularjs-dropdown-multiselect', 'isteven-multi-select', 'angularTreeview', 'treeControl', 'ngTable', 'initFromForm', 'ngRightClick', 'smart-table', 'angular-content-editable', 'gg.editableText']);
 
 blitzApp.run([
     '$rootScope', '$state', '$stateParams', '$window', '$cookies',
@@ -27,7 +27,7 @@ blitzApp.config(function(contentEditableProvider) {
 
     contentEditableProvider.configure({
         singleLine: true, // single line for all elements
-        renderHtml: true
+        renderHtml: false
     });
 
 });
