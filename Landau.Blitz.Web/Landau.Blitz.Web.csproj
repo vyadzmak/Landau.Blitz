@@ -316,6 +316,19 @@
     <Content Include="PartialViews\FinancePlanning.html" />
     <Content Include="PartialViews\FinDataBalance.html" />
     <Content Include="PartialViews\FinDataBalanceTable.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\Checkout.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\RecievableAccounts.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\CurrentAccount.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\SavingsDeposit.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\OtherRecievables.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\Inventories.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\ForSaleGoods.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\Hardware.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\MotorTransport.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\RealEstate.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\SuppliersPrepayment.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\Investments.html" />
+    <Content Include="PartialViews\FinDataBalanceTables\TransitGoods.html" />
     <Content Include="PartialViews\FinDataCrossChecking.html" />
     <Content Include="PartialViews\FinDataOdds.html" />
     <Content Include="PartialViews\FinDataOpiu.html" />
@@ -335,6 +348,8 @@
     <Content Include="PartialViews\Modals\ClientData\RelatedCompanyModal.html" />
     <Content Include="PartialViews\Modals\Company\CompanyModal.html" />
     <Content Include="PartialViews\Modals\FinancePlanning\SupplierModal.html" />
+    <Content Include="PartialViews\Modals\FinDataBalance\BalanceModal.html" />
+    <Content Include="PartialViews\Modals\FinDataOpiu\OpiuModal.html" />
     <Content Include="PartialViews\Modals\LargeExpenses\InvestmentsModal.html" />
     <Content Include="PartialViews\Modals\LargeExpenses\OutOfBusinessPaymentModal.html" />
     <Content Include="PartialViews\Modals\Project\ProjectModal.html" />
@@ -420,6 +435,8 @@
     <Content Include="Scripts\app\Controllers\ModalControllers\ClientDataControllers\manageRelatedCompanyController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\CompanyControllers\manageCompanyController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinancePlanningControllers\manageSupplierController.js" />
+    <Content Include="Scripts\app\Controllers\ModalControllers\FinDataBalanceControllers\manageBalanceController.js" />
+    <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOpiuControllers\manageOpiuController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\LargeExpensesControllers\manageInvestmentController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\LargeExpensesControllers\manageOutOfBuisnessPaymentController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\ProjectControllers\manageProjectController.js" />

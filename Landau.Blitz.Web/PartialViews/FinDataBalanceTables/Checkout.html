@@ -1,0 +1,35 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Касса
+        <div class="clearfix "></div>
+    </div>
+
+    <div class="panel-body">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.Checkout.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Assets.Checkout.Rows" class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th st-sort="Name"><span uib-tooltip="Наименование (например: Касса магазин 'Магнит', вторая строка 'Касса центральный офис')">Наименование</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                    <th st-sort="NotConfirmed"><span uib-tooltip="Сумма не подтвержденная Кредитным экспертом">Сумма не подтв.</span></th>
+                    <th st-sort="OutBusiness"><span uib-tooltip="Сумма планируемого использования средств вне бизнеса">Сумма вне бизнеса</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in activeBalance.Assets.Checkout.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.Checkout.Rows, row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Name" content-editable></td>
+                    <td ng-model="row.Sum" content-editable></td>
+                    <td ng-model="row.NotConfirmed" content-editable></td>
+                    <td ng-model="row.OutBusiness" content-editable></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

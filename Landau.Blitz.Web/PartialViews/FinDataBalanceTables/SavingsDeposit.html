@@ -1,0 +1,33 @@
+﻿<div class="panel panel-primary" ng-repeat="liquid in assets.liquids">
+    <div class="panel-heading">
+        {{liquid.name}}
+        <div class="clearfix "></div>
+    </div>
+
+    <div class="panel-body">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets[liquid.varName].Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Assets[liquid.varName].Rows" class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                    <th st-sort="NotConfirmed"><span uib-tooltip="Сумма не подтвержденная Кредитным экспертом">Сумма не подтв.</span></th>
+                    <th st-sort="OutBusiness"><span uib-tooltip="Сумма планируемого использования средств вне бизнеса">Сумма вне бизнеса</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in activeBalance.Assets[liquid.varName].Rows" ng-right-click="clickRightTableRow(activeBalance.Assets[liquid.varName].Rows, row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Sum" content-editable></td>
+                    <td ng-model="row.NotConfirmed" content-editable></td>
+                    <td ng-model="row.OutBusiness" content-editable></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

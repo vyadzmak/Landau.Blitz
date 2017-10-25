@@ -1,0 +1,48 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Настройка Балансов
+        </h3>
+
+    </div>
+    <div class="modal-body">
+                <form class="form-horizontal" name="balanceForm" id="balanceForm" role="form" data-toggle="validator">
+
+                        <label>Для каждой компании укажите количество балансов и их даты</label>
+                        <div class="form-group" ng-repeat-start="company in mElement.Companies">
+                            <label class="col-lg-3">{{company.Name}}</label>
+                            <div class="col-lg-3">
+                                
+                                <label>Количество балансов</label>
+                                <input type="number" class="form-control" placeholder="1" ng-model="company.BalancesQuantity" ng-change="datesQuantityChanged(company)">
+                                
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Даты балансов</label>
+                                <input type="date" class="form-control" ng-repeat-start="row in company.BalanceDates" ng-model="row.Date">
+                                <hr ng-repeat-end/>
+                            </div>
+                        </div>
+                    <hr  ng-repeat-end/>
+                    
+                    <div class="form-group">
+                        <div class="form-group col-sm-11 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
+                <div>
+                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+                </div>
+    </div>
+
+</div>
+<script>
+    $('#balanceForm').validator({
+        disable: false
+    });
+</script>

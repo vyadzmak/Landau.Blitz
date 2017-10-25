@@ -1,0 +1,37 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Предоплата поставщиков
+        <div class="clearfix "></div>
+    </div>
+
+    <div class="panel-body">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.SuppliersPrepayment.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Assets.SuppliersPrepayment.Rows" class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Поставщик</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                    <th st-sort="GetDate"><span uib-tooltip="Дата получения">Дата получения</span></th>
+                    <th st-sort="IsRelatedCompany"><span uib-tooltip="Компания/лицо аффилированно с заемщиком">Аффилирован.</span></th>
+                    <th st-sort="Notes"><span uib-tooltip="Примечания">Примечания</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in activeBalance.Assets.SuppliersPrepayment.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.SuppliersPrepayment.Rows, row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Name" content-editable></td>
+                    <td ng-model="row.Sum" content-editable></td>
+                    <td><input type="date" ng-model="row.GetDate"></td>
+                    <td><input type="checkbox" ng-model="row.IsRelatedCompany" /></td>
+                    <td ng-model="row.Notes" content-editable></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

@@ -1,35 +1,34 @@
 <div ng-controller="finDataOpiuController">
-    <table st-table="finDataCollection" st-safe-src="currentProject.FinDataOpiu.Table" class="table table-bordered table-condensed ng-table">
-        <thead>
-            <tr>
-                <th><span uib-tooltip="Наименование">Наименование</span></th>
-                <th><span uib-tooltip="1">1</span></th>
-                <th><span uib-tooltip="2">2</span></th>
-                <th><span uib-tooltip="3">3</span></th>
-                <th><span uib-tooltip="4">4</span></th>
-                <th><span uib-tooltip="5">5</span></th>
-                <th><span uib-tooltip="6">6</span></th>
-                <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
-                <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="row in finDataCollection" 
-            ng-class="{'active bold-trow':row.Calculate}">
-            
-            <td>{{row.Title}}</td>
+    <div ng-repeat="opiu in currentProject.FinDataOpiu.Opius">
+        <table st-table="opiu.Table" class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th colspan="30">{{opiu.Name}}</th>
+                </tr>
+                <tr>
+                    <th><span uib-tooltip="Наименование">Наименование</span></th>
+                    <th ng-repeat="month in opiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                    <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                    <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in opiu.Table"
+                    ng-class="{'active bold-trow':row.Calculate}">
 
-            <td ng-model="row.M1" content-editable non-editable="{{row.Calculate}}"></td>
-            <td ng-model="row.M2" content-editable non-editable="{{row.Calculate}}"></td>
-            <td ng-model="row.M3" content-editable non-editable="{{row.Calculate}}"></td>
-            <td ng-model="row.M4" content-editable non-editable="{{row.Calculate}}"></td>
-            <td ng-model="row.M5" content-editable non-editable="{{row.Calculate}}"></td>
-            <td ng-model="row.M6" content-editable non-editable="{{row.Calculate}}"></td>
+                    <td>{{row.Title}}</td>
 
-            <td>{{row.Avg | currency:'':2}}</td>
-            <td>{{row.AvgPrognose | currency:'':2}}</td>
+                    <td ng-repeat="month in opiu.Months track by $index"
+                        ng-model="row['M'+month.Id]"
+                        content-editable
+                        non-editable="{{row.Calculate}}"
+                        edit-callback="calculateOpiu(opiu)"></td>
+                    
+                    <td>{{row.Avg | currency:'':2}}</td>
+                    <td>{{row.AvgPrognose | currency:'':2}}</td>
 
-        </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

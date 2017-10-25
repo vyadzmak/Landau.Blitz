@@ -127,7 +127,7 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         console.log(id);
         $scope.editElement = $scope.filterFromArray($scope.currentProject.BusinessInfo.PeriodicityProcurements, $scope.eIndex);
 
-        $scope.modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementModal.html';;
+        $scope.modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementModal.html';
         $scope.modalController = managePeriodicityProcurementController;
 
         $scope.mElement = $scope.editElement;

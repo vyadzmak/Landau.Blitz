@@ -28,6 +28,7 @@ namespace Landau.Blitz.Web
                 "~/Scripts/bootstrap-notify.js",
                 "~/Scripts/BootstrapMenu.min.js",
                 "~/Scripts/lightbox.js",
+                "~/Scripts/moment-with-locales.min.js",
                 "~/Scripts/validator.min.js",
                 "~/Scripts/validator.js"
                 // "~/Scripts/bootstrap-datetimepicker.min.js"
