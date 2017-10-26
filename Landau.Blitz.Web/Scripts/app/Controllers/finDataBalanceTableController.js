@@ -256,6 +256,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.calculateBalance($scope.activeBalance, $scope.activeCompany.Id);
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
@@ -306,7 +307,30 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         balance.TotalLongAccountsPayable = 0;
         balance.Equity = 0;
         balance.TotalLiabilities = 0;
-
+        //outbalance
+        balance.OutLiquidAssets = 0;
+        balance.OutReceivables = 0;
+        balance.OutInventories = 0;
+        balance.OutTotalCurrentAssets = 0;
+        balance.OutTotalFixedAssets = 0;
+        balance.OutTotalAssets = 0;
+        balance.OutTotalShortTermDebt = 0;
+        balance.OutTotalLongTermDebt = 0;
+        balance.OutTotalLongAccountsPayable = 0;
+        balance.OutEquity = 0;
+        balance.OutTotalLiabilities = 0;
+        //consbalance
+        balance.ConsLiquidAssets = 0;
+        balance.ConsReceivables = 0;
+        balance.ConsInventories = 0;
+        balance.ConsTotalCurrentAssets = 0;
+        balance.ConsTotalFixedAssets = 0;
+        balance.ConsTotalAssets = 0;
+        balance.ConsTotalShortTermDebt = 0;
+        balance.ConsTotalLongTermDebt = 0;
+        balance.ConsTotalLongAccountsPayable = 0;
+        balance.ConsEquity = 0;
+        balance.ConsTotalLiabilities = 0;
         // calculating liabilities
         var shortTermLiabilities = ['BudgetSettlements',
                     'RentalsArrears',
@@ -344,6 +368,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
 
             });
             balance.TotalShortTermDebt += balance.Liabilities[varName].Total;
+            balance.OutTotalShortTermDebt += balance.Liabilities[varName].OutTotal;
+            balance.ConsTotalShortTermDebt += balance.Liabilities[varName].ConsTotal;
         });
 
 
@@ -360,9 +386,13 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 balance.Liabilities[varName].Total += calculatorFactory.getFloat(tRow.Sum);
             });
             balance.TotalLongTermDebt += balance.Liabilities[varName].Total;
+            balance.OutTotalLongTermDebt += balance.Liabilities[varName].OutTotal;
+            balance.ConsTotalLongTermDebt += balance.Liabilities[varName].ConsTotal;
         });
 
         balance.TotalLongAccountsPayable = balance.TotalShortTermDebt + balance.TotalLongTermDebt;
+        balance.OutTotalLongAccountsPayable = balance.OutTotalShortTermDebt + balance.OutTotalLongTermDebt;
+        balance.ConsTotalLongAccountsPayable = balance.ConsTotalShortTermDebt + balance.ConsTotalLongTermDebt;
 
         // calculating assets
         // liquids
@@ -383,6 +413,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 balance.Assets[varName].Total += calculatorFactory.getFloat(tRow.Sum) - totalOut;
             });
             balance.LiquidAssets += balance.Assets[varName].Total;
+            balance.ConsLiquidAssets += balance.Assets[varName].ConsTotal;
+            balance.OutLiquidAssets += balance.Assets[varName].OutTotal;
         });
 
         balance.Assets.CurrentAccount.ConsTotal = 0;
@@ -392,6 +424,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             balance.Assets.CurrentAccount.Total += calculatorFactory.getFloat(tRow.Sum);
         });
         balance.LiquidAssets += balance.Assets.CurrentAccount.Total;
+        balance.ConsLiquidAssets += balance.Assets.CurrentAccount.ConsTotal;
+        balance.OutLiquidAssets += balance.Assets.CurrentAccount.OutTotal;
 
         // debt recievables
         //'RecievableAccounts','OtherRecievables',
@@ -413,6 +447,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 }
             });
             balance.Receivables += balance.Assets[varName].Total;
+            balance.ConsReceivables += balance.Assets[varName].ConsTotal;
+            balance.OutReceivables += balance.Assets[varName].OutTotal;
         });
         //'TransitGoods','SuppliersPrepayment',
         var tgsps = ['TransitGoods', 'SuppliersPrepayment'];
@@ -426,6 +462,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 balance.Assets[varName].Total +=  sum;
             });
             balance.Receivables += balance.Assets[varName].Total;
+            balance.ConsReceivables += balance.Assets[varName].ConsTotal;
+            balance.OutReceivables += balance.Assets[varName].OutTotal;
         });
         
         // TMZ
@@ -443,6 +481,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 balance.Assets[varName].Total +=  calculatorFactory.getFloat(tRow.Sum);
             });
             balance.Inventories += balance.Assets[varName].Total;
+            balance.ConsInventories += balance.Assets[varName].ConsTotal;
+            balance.OutInventories += balance.Assets[varName].OutTotal;
         });
         // ForSaleGoods
         balance.Assets.ForSaleGoods.ConsTotal = 0;
@@ -452,9 +492,13 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             balance.Assets.ForSaleGoods.Total += calculatorFactory.getFloat(tRow.Sum);
         });
         balance.Inventories += balance.Assets.ForSaleGoods.Total;
+        balance.ConsInventories += balance.Assets.ForSaleGoods.ConsTotal;
+        balance.OutInventories += balance.Assets.ForSaleGoods.OutTotal;
 
         //TotalCurrentAssets
         balance.TotalCurrentAssets = balance.Inventories + balance.LiquidAssets + balance.Receivables;
+        balance.OutTotalCurrentAssets = balance.OutInventories + balance.OutLiquidAssets + balance.OutReceivables;
+        balance.ConsTotalCurrentAssets = balance.ConsInventories + balance.ConsLiquidAssets + balance.ConsReceivables;
         
         //FixedAssets
         //Hardware, MotorTransport
@@ -479,6 +523,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 balance.Assets[varName].Total +=  (costB2*quantity).toFixed(2);
             });
             balance.TotalFixedAssets += balance.Assets[varName].Total;
+            balance.ConsTotalFixedAssets += balance.Assets[varName].ConsTotal;
+            balance.OutTotalFixedAssets += balance.Assets[varName].OutTotal;
         });
         // RealEstate
         balance.Assets.RealEstate.ConsTotal = 0;
@@ -491,6 +537,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             balance.Assets.RealEstate.Total +=  (costB2).toFixed(2);
         });
         balance.TotalFixedAssets += balance.Assets.RealEstate.Total;
+        balance.ConsTotalFixedAssets += balance.Assets.RealEstate.ConsTotal;
+        balance.OutTotalFixedAssets += balance.Assets.RealEstate.OutTotal;
 
         //Investments
         balance.Assets.Investments.ConsTotal = 0;
@@ -507,8 +555,22 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             calculatorFactory.getFloat(balance.TotalFixedAssets) + 
             calculatorFactory.getFloat(balance.Assets.Investments.Total);
 
+        balance.OutTotalAssets = 
+            calculatorFactory.getFloat(balance.OutTotalCurrentAssets) + 
+            calculatorFactory.getFloat(balance.OutTotalFixedAssets) + 
+            calculatorFactory.getFloat(balance.Assets.Investments.OutTotal);
+
+        balance.ConsTotalAssets = 
+            calculatorFactory.getFloat(balance.ConsTotalCurrentAssets) + 
+            calculatorFactory.getFloat(balance.ConsTotalFixedAssets) + 
+            calculatorFactory.getFloat(balance.Assets.Investments.ConsTotal);
+
         balance.Equity = balance.TotalAssets - balance.TotalLongAccountsPayable;
+        balance.OutEquity = balance.OutTotalAssets - balance.OutTotalLongAccountsPayable;
+        balance.ConsEquity = balance.ConsTotalAssets - balance.ConsTotalLongAccountsPayable;
         balance.TotalLiabilities = balance.Equity + balance.TotalLongAccountsPayable;
+        balance.OutTotalLiabilities = balance.OutEquity + balance.OutTotalLongAccountsPayable;
+        balance.ConsTotalLiabilities = balance.ConsEquity + balance.ConsTotalLongAccountsPayable;
 
         // save balance to factory
         projectFactory.setBalancesBalance(balance, companyId);

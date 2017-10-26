@@ -25,7 +25,7 @@
                         edit-callback="calculateOpiu(opiu)"></td>
                     
                     <td>{{row.Avg | currency:'':2}}</td>
-                    <td>{{row.AvgPrognose | currency:'':2}}</td>
+                    <td content-editable ng-model="row.AvgPrognose"></td>
 
                 </tr>
             </tbody>
