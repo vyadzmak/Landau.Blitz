@@ -215,8 +215,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 }
             } else {
                 projectFactory.initBalances($scope.currentProject.FinDataBalance.Companies);
-                $scope.currentProject = projectFactory.getToCurrentProject();
-                $scope.activeCompany = $scope.currentProject.FinDataBalance.Balances[0];
+
+                $scope.activeCompany = projectFactory.getActiveCompanyBalance($scope.activeCompany.Id);
                 if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
                     $scope.activeBalance = $scope.activeCompany.CompanyBalances[0];
                 }
