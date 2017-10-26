@@ -11,22 +11,21 @@
             <tr>
                 <th st-sort="Name"><span uib-tooltip="Наименование товара">Наименование</span></th>
                 <th st-sort="Quantity"><span uib-tooltip="Количество">Количество</span></th>
-                <th st-sort="СostPerUnit"><span uib-tooltip="Стоимость за еденицу">Стоимость за ед.</span></th>
-                <th st-sort="СostTotal"><span uib-tooltip="Сумма">Стоимость за ед.</span></th>
-                <th st-sort="NotConfirmed"><span uib-tooltip="Сумма не подтвержденная Кредитным экспертом">Сумма не подтв.</span></th>
-                <th st-sort="OutBusiness"><span uib-tooltip="Сумма планируемого использования средств вне бизнеса">Сумма вне бизнеса</span></th>
+                <th st-sort="CostPerUnit"><span uib-tooltip="Стоимость за еденицу">Стоимость за ед.</span></th>
+                <th st-sort="CostTotal"><span uib-tooltip="Стоимость общая">Стоимость общая</span></th>
             </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="row in activeBalance.Assets[liquid.varName].Rows" ng-right-click="clickRightTableRow(activeBalance.Assets[liquid.varName].Rows, row.Id)" menu-items="menuItems">
+                    <td ng-model="row.Name" content-editable></td>
                     <td ng-model="row.Sum" content-editable></td>
-                    <td ng-model="row.NotConfirmed" content-editable></td>
-                    <td ng-model="row.OutBusiness" content-editable></td>
+                    <td ng-model="row.CostPerUnit" content-editable></td>
+                    <td>{{row.CostTotal}}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3" class="text-center">
+                    <td colspan="4" class="text-center">
                         <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
                     </td>
                 </tr>

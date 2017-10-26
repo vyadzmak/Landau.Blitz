@@ -1,35 +1,31 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        Товары в пути
+        Инвестиции Компании
         <div class="clearfix "></div>
     </div>
 
     <div class="panel-body">
-        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.TransitGoods.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
-        <table st-table="activeBalance.Assets.TransitGoods.Rows" class="table table-bordered table-condensed ng-table">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.Investments.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Assets.Investments.Rows" class="table table-bordered table-condensed ng-table">
             <thead>
                 <tr>
-                    <th st-sort="Name"><span uib-tooltip="Наименование дебитора">Дебитор</span></th>
-                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
-                    <th st-sort="Provider"><span uib-tooltip="Наименование поставщика">Поставщик</span></th>
-                    <th st-sort="GetDate"><span uib-tooltip="Предполагаемая дата получения товара">Дата получения</span></th>
-                    <th st-sort="IsRelatedCompany"><span uib-tooltip="Компания/лицо аффилированно с заемщиком">Аффилирован.</span></th>
+                    <th st-sort="Name"><span uib-tooltip="Наименование инвестиций">Наименование</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Стоимость затрат">Стоимость затрат</span></th>
+                    <th st-sort="Date"><span uib-tooltip="Дата">Дата</span></th>
                     <th st-sort="Notes"><span uib-tooltip="Примечания">Примечания</span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in activeBalance.Assets.TransitGoods.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.TransitGoods.Rows, row.Id)" menu-items="menuItems">
+                <tr ng-repeat="row in activeBalance.Assets.Investments.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.Investments.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
                     <td ng-model="row.Sum" content-editable></td>
-                    <td ng-model="row.Provider" content-editable></td>
-                    <td><input type="date" ng-model="row.GetDate"></td>
-                    <td><input type="checkbox" ng-model="row.IsRelatedCompany" /></td>
+                    <td><input type="date" ng-model="row.Date"></td>
                     <td ng-model="row.Notes" content-editable></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6" class="text-center">
+                    <td colspan="4" class="text-center">
                         <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
                     </td>
                 </tr>
