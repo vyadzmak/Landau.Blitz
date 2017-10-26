@@ -217,7 +217,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                     $scope.mElement = {};
                 }
             } else {
-                $scope.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances($scope.currentProject.FinDataBalance.Companies);
+                projectFactory.initBalances($scope.currentProject.FinDataBalance.Companies);
+                $scope.currentProject = projectFactory.getToCurrentProject();
                 $scope.activeCompany = $scope.currentProject.FinDataBalance.Balances[0];
                 if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
                     $scope.activeBalance = $scope.activeCompany.CompanyBalances[0];
