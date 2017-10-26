@@ -352,6 +352,9 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
                         Total: 0,
                         Rows:[]
                     }
+                    if (value === 'MotorTransport' || value === 'Hardware') {
+                        assets[value].OwnRows = [];
+                    }
                 });
 
                 return assets;
