@@ -94,19 +94,18 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     //    }
     // var url = $$ApiUrl + "/companies";
 
-    $scope.initBalance = function() {
+    $scope.assets = {
+        liquids: [
+        {varName:'Savings', name: 'Сбережения'},
+        {varName:'Deposit', name: 'Депозит'}],
+        raws: [{varName:'Inventories', name:'ТМЗ'},
+        {varName:'FinishedGoods', name:'Готовая продукция'},
+        {varName:'RawMaterials', name:'Сырье'},
+        {varName:'SemiProducts', name:'Полуфабрикаты/материалы'}]
+    };
 
-        $scope.assets = {
-            liquids: [
-            {varName:'Savings', name: 'Сбережения'},
-            {varName:'Deposit', name: 'Депозит'}],
-            raws: [{varName:'Inventories', name:'ТМЗ'},
-            {varName:'FinishedGoods', name:'Готовая продукция'},
-            {varName:'RawMaterials', name:'Сырье'},
-            {varName:'SemiProducts', name:'Полуфабрикаты/материалы'}]
-        };
 
-        $scope.currentProject = projectFactory.getToCurrentProject();
+    $scope.currentProject = projectFactory.getToCurrentProject();
 
         if (!$scope.currentProject.FinDataBalance.Balances ||
             $scope.currentProject.FinDataBalance.Balances.length == 0) {
@@ -144,7 +143,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         }
 
 
-
+        $scope.initBalance = function() {
 
         //$scope.columns = [];
 
