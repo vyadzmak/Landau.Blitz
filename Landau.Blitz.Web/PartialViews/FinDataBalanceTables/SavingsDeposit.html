@@ -16,9 +16,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="row in activeBalance.Assets[liquid.varName].Rows" ng-right-click="clickRightTableRow(activeBalance.Assets[liquid.varName].Rows, row.Id)" menu-items="menuItems">
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance)"></td>
-                    <td ng-model="row.NotConfirmed" content-editable edit-callback="calculateBalance(activeBalance)"></td>
-                    <td ng-model="row.OutBusiness" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.NotConfirmed" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.OutBusiness" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                 </tr>
             </tbody>
             <tfoot>

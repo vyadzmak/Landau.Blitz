@@ -18,7 +18,7 @@
             <tbody>
                 <tr ng-repeat="row in activeBalance.Assets.Investments.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.Investments.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                     <td><input type="date" ng-model="row.Date"></td>
                     <td ng-model="row.Notes" content-editable></td>
                 </tr>

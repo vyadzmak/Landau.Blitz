@@ -22,8 +22,8 @@
                     <td ng-model="row.Name" content-editable></td>
                     <td ng-model="row.Address" content-editable></td>
                     <td ng-model="row.Area" content-editable></td>
-                    <td ng-model="row.CostB1" content-editable edit-callback="calculateBalance(activeBalance)"></td>
-                    <td ng-model="row.CostB2" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td ng-model="row.CostB1" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.CostB2" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                     <td>{{row.Revalue}}</td>
                 </tr>
             </tbody>

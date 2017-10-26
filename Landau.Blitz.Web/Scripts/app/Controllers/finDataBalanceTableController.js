@@ -93,7 +93,6 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     //        }
     //    }
     // var url = $$ApiUrl + "/companies";
-
     $scope.assets = {
         liquids: [
         {varName:'Savings', name: 'Сбережения'},
@@ -104,8 +103,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         {varName:'SemiProducts', name:'Полуфабрикаты/материалы'}]
     };
 
-
-    $scope.currentProject = projectFactory.getToCurrentProject();
+    $scope.initBalance = function() {$scope.currentProject = projectFactory.getToCurrentProject();
 
         if (!$scope.currentProject.FinDataBalance.Balances ||
             $scope.currentProject.FinDataBalance.Balances.length == 0) {
@@ -136,14 +134,14 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 dialog.open();
             }
         } else {
-            $scope.activeCompany = $scope.currentProject.FinDataBalance.Balances[0];
+            $scope.activeCompany = projectFactory.getActiveCompanyBalance(1);
             if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
                 $scope.activeBalance = $scope.activeCompany.CompanyBalances[0];
             }
         }
 
 
-        $scope.initBalance = function() {
+
 
         //$scope.columns = [];
 
@@ -235,6 +233,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     usSpinnerService.stop("spinner-1");
 
     $scope.activeCompanyChangedChanged = function() {
+        $scope.activeCompany = projectFactory.getActiveCompanyBalance($scope.activeCompany.Id);
         if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
             $scope.activeBalance = $scope.activeCompany.CompanyBalances[0];
         }
@@ -293,7 +292,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         }
     ];
 
-    $scope.calculateBalance = function(balance) {
+    $scope.calculateBalance = function(balance, companyId) {
         // null assets
         balance.LiquidAssets = 0;
         balance.Receivables = 0;
@@ -510,6 +509,9 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
 
         balance.Equity = balance.TotalAssets - balance.TotalLongAccountsPayable;
         balance.TotalLiabilities = balance.Equity + balance.TotalLongAccountsPayable;
+
+        // save balance to factory
+        projectFactory.setBalancesBalance(balance, companyId);
     }
 };
 blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "balanceTableFactory", "balanceCalculatorFactory", "calculatorFactory", "projectHttpService", finDataBalanceTableController]);
