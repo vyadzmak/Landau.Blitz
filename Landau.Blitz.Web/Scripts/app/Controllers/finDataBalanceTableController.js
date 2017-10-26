@@ -23,7 +23,7 @@
 //    //window.setDataToBalance();
 //}
 
-var finDataBalanceTableController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, balanceTableFactory, balanceCalculatorFactory, projectHttpService) {
+var finDataBalanceTableController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, balanceTableFactory, balanceCalculatorFactory, calculatorFactory, projectHttpService) {
     //var edit = false;
     //window.setDataToBalance = function() {
     //    if (edit) {
@@ -293,5 +293,223 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         }
     ];
 
+    $scope.calculateBalance = function(balance) {
+        // null assets
+        balance.LiquidAssets = 0;
+        balance.Receivables = 0;
+        balance.Inventories = 0;
+        balance.TotalCurrentAssets = 0;
+        balance.TotalFixedAssets = 0;
+        balance.TotalAssets = 0;
+        // null liabilities
+        balance.TotalShortTermDebt = 0;
+        balance.TotalLongTermDebt = 0;
+        balance.TotalLongAccountsPayable = 0;
+        balance.Equity = 0;
+        balance.TotalLiabilities = 0;
+
+        // calculating liabilities
+        var shortTermLiabilities = ['BudgetSettlements',
+                    'RentalsArrears',
+                    'ShortTermDebt',
+                    'PayableAccounts',
+                    'CommodityLoan',
+                    'CustomersPrepayment',
+                    'ShortPrivateLoans',
+                    'ShortWorkingCapitalCredit',
+                    'ShortFixedAssetsCredit',
+                    'OtherCurrentDebt'];
+
+        var longTermLiabilities = [
+            'LongPrivateLoans',
+            'LongWorkingCapitalCredit',
+            'LongFixedAssetsCredit',
+            'OtherLiabilities'
+        ];
+
+        angular.forEach(shortTermLiabilities, function(varName, varKey) {
+            balance.Liabilities[varName].Total = 0;
+            balance.Liabilities[varName].ConsTotal = 0;
+            balance.Liabilities[varName].OutTotal = 0;
+            angular.forEach(balance.Liabilities[varName].Rows, function(tRow, tKey) {
+                
+                if (!tRow.IsRelatedCompany) {
+                    balance.Liabilities[varName].ConsTotal += calculatorFactory.getFloat(tRow.Sum);
+                }
+
+                if(varName === 'PayableAccounts' && tRow.IsRelatedCompany){
+                    balance.Liabilities[varName].OutTotal += calculatorFactory.getFloat(tRow.Sum);
+                }else {
+                    balance.Liabilities[varName].Total += calculatorFactory.getFloat(tRow.Sum);
+                }
+
+            });
+            balance.TotalShortTermDebt += balance.Liabilities[varName].Total;
+        });
+
+
+
+        angular.forEach(longTermLiabilities, function(varName, varKey) {
+            balance.Liabilities[varName].Total = 0;
+            balance.Liabilities[varName].ConsTotal = 0;
+            balance.Liabilities[varName].OutTotal = 0;
+
+            angular.forEach(balance.Liabilities[varName].Rows, function(tRow, tKey) {
+                if (!tRow.IsRelatedCompany) {
+                    balance.Liabilities[varName].ConsTotal += calculatorFactory.getFloat(tRow.Sum);
+                }
+                balance.Liabilities[varName].Total += calculatorFactory.getFloat(tRow.Sum);
+            });
+            balance.TotalLongTermDebt += balance.Liabilities[varName].Total;
+        });
+
+        balance.TotalLongAccountsPayable = balance.TotalShortTermDebt + balance.TotalLongTermDebt;
+
+        // calculating assets
+        // liquids
+        var liqs = [
+            'Checkout',
+            'Savings',
+            'Deposit'
+        ];
+
+        angular.forEach(liqs, function(varName, varKey) {
+            balance.Assets[varName].Total = 0;
+            balance.Assets[varName].ConsTotal = 0;
+            balance.Assets[varName].OutTotal = 0;
+
+            angular.forEach(balance.Assets[varName].Rows, function(tRow, tKey) {
+                var totalOut = calculatorFactory.getFloat(tRow.NotConfirmed) + calculatorFactory.getFloat(tRow.OutBusiness);
+                balance.Assets[varName].OutTotal += totalOut;
+                balance.Assets[varName].Total += calculatorFactory.getFloat(tRow.Sum) - totalOut;
+            });
+            balance.LiquidAssets += balance.Assets[varName].Total;
+        });
+
+        balance.Assets.CurrentAccount.ConsTotal = 0;
+        balance.Assets.CurrentAccount.OutTotal = 0;
+        balance.Assets.CurrentAccount.Total = 0;
+        angular.forEach(balance.Assets.CurrentAccount.Rows, function(tRow, tKey) {
+            balance.Assets.CurrentAccount.Total += calculatorFactory.getFloat(tRow.Sum);
+        });
+        balance.LiquidAssets += balance.Assets.CurrentAccount.Total;
+
+        // debt recievables
+        //'RecievableAccounts','OtherRecievables',
+        var recvbls = ['RecievableAccounts', 'OtherRecievables'];
+        angular.forEach(recvbls, function(varName, varKey) {
+            balance.Assets[varName].Total = 0;
+            balance.Assets[varName].ConsTotal = 0;
+            balance.Assets[varName].OutTotal = 0;
+
+            angular.forEach(balance.Assets[varName].Rows, function(tRow, tKey) {
+                var sum = calculatorFactory.getFloat(tRow.Sum);
+                if (!tRow.IsRelatedCompany) {
+                    balance.Assets[varName].ConsTotal += sum;
+                }
+                if (tRow.NoReturn) {
+                    balance.Assets[varName].OutTotal += sum;
+                } else {
+                    balance.Assets[varName].Total +=  sum;
+                }
+            });
+            balance.Receivables += balance.Assets[varName].Total;
+        });
+        //'TransitGoods','SuppliersPrepayment',
+        var tgsps = ['TransitGoods', 'SuppliersPrepayment'];
+        angular.forEach(tgsps, function(varName, varKey) {
+            balance.Assets[varName].Total = 0;
+            balance.Assets[varName].ConsTotal = 0;
+            balance.Assets[varName].OutTotal = 0;
+
+            angular.forEach(balance.Assets[varName].Rows, function(tRow, tKey) {
+                var sum = calculatorFactory.getFloat(tRow.Sum);
+                balance.Assets[varName].Total +=  sum;
+            });
+            balance.Receivables += balance.Assets[varName].Total;
+        });
+        
+        // TMZ
+        // 'Inventories','FinishedGoods','RawMaterials','SemiProducts',
+        var ifrss = ['Inventories','FinishedGoods','RawMaterials','SemiProducts'];
+        angular.forEach(ifrss, function(varName, varKey) {
+            balance.Assets[varName].Total = 0;
+            balance.Assets[varName].ConsTotal = 0;
+            balance.Assets[varName].OutTotal = 0;
+
+            angular.forEach(balance.Assets[varName].Rows, function(tRow, tKey) {
+                var quantity = calculatorFactory.getFloat(tRow.Quantity);
+                var costPU = calculatorFactory.getFloat(tRow.CostPerUnit);
+                tRow.Sum = (quantity * costPU).toFixed(2);
+                balance.Assets[varName].Total +=  calculatorFactory.getFloat(tRow.Sum);
+            });
+            balance.Inventories += balance.Assets[varName].Total;
+        });
+        // ForSaleGoods
+        balance.Assets.ForSaleGoods.ConsTotal = 0;
+        balance.Assets.ForSaleGoods.OutTotal = 0;
+        balance.Assets.ForSaleGoods.Total = 0;
+        angular.forEach(balance.Assets.ForSaleGoods.Rows, function(tRow, tKey) {
+            balance.Assets.ForSaleGoods.Total += calculatorFactory.getFloat(tRow.Sum);
+        });
+        balance.Inventories += balance.Assets.ForSaleGoods.Total;
+
+        //TotalCurrentAssets
+        balance.TotalCurrentAssets = balance.Inventories + balance.LiquidAssets + balance.Receivables;
+        
+        //FixedAssets
+        //Hardware, MotorTransport
+        var hmts = ['Hardware','MotorTransport'];
+        angular.forEach(hmts, function(varName, varKey) {
+            balance.Assets[varName].Total = 0;
+            balance.Assets[varName].ConsTotal = 0;
+            balance.Assets[varName].OutTotal = 0;
+
+            angular.forEach(balance.Assets[varName].Rows, function(tRow, tKey) {
+                var quantity = calculatorFactory.getFloat(tRow.Quantity);
+                var costB1 = calculatorFactory.getFloat(tRow.CostB1);
+                var costB2 = calculatorFactory.getFloat(tRow.CostB2);
+                tRow.Revalue = (costB2-costB1).toFixed(2);
+                balance.Assets[varName].Total +=  (costB2*quantity).toFixed(2);
+            });
+            angular.forEach(balance.Assets[varName].OwnRows, function(tRow, tKey) {
+                var quantity = calculatorFactory.getFloat(tRow.Quantity);
+                var costB1 = calculatorFactory.getFloat(tRow.CostBuy);
+                var costB2 = calculatorFactory.getFloat(tRow.CostB2);
+                tRow.CostDiff = (costB2-costB1).toFixed(2);
+                balance.Assets[varName].Total +=  (costB2*quantity).toFixed(2);
+            });
+            balance.TotalFixedAssets += balance.Assets[varName].Total;
+        });
+        // RealEstate
+        balance.Assets.RealEstate.ConsTotal = 0;
+        balance.Assets.RealEstate.OutTotal = 0;
+        balance.Assets.RealEstate.Total = 0;
+        angular.forEach(balance.Assets.RealEstate.Rows, function(tRow, tKey) {
+            var costB1 = calculatorFactory.getFloat(tRow.CostB1);
+            var costB2 = calculatorFactory.getFloat(tRow.CostB2);
+            tRow.Revalue = (costB2-costB1).toFixed(2);
+            balance.Assets.RealEstate.Total +=  (costB2).toFixed(2);
+        });
+        balance.TotalFixedAssets += balance.Assets.RealEstate.Total;
+
+        //Investments
+        balance.Assets.Investments.ConsTotal = 0;
+        balance.Assets.Investments.OutTotal = 0;
+        balance.Assets.Investments.Total = 0;
+        angular.forEach(balance.Assets.Investments.Rows, function(tRow, tKey) {
+            balance.Assets.Investments.Total += calculatorFactory.getFloat(tRow.Sum);
+        });
+
+
+        //TotalAssets
+        balance.TotalAssets = 
+            calculatorFactory.getFloat(balance.TotalCurrentAssets) + 
+            calculatorFactory.getFloat(balance.TotalFixedAssets) + 
+            calculatorFactory.getFloat(balance.Assets.Investments.Total);
+
+        balance.Equity = balance.TotalAssets - balance.TotalLongAccountsPayable;
+        balance.TotalLiabilities = balance.Equity + balance.TotalLongAccountsPayable;
+    }
 };
-blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "balanceTableFactory", "balanceCalculatorFactory", "projectHttpService", finDataBalanceTableController]);
+blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "balanceTableFactory", "balanceCalculatorFactory", "calculatorFactory", "projectHttpService", finDataBalanceTableController]);

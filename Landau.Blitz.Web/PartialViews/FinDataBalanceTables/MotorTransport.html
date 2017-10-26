@@ -27,9 +27,9 @@
                     <td ng-model="row.ProdYear" content-editable></td>
                     <td ng-model="row.License" content-editable></td>
                     <td ng-model="row.Color" content-editable></td>
-                    <td ng-model="row.Quantity" content-editable></td>
-                    <td ng-model="row.CostB1" content-editable></td>
-                    <td ng-model="row.CostB2" content-editable></td>
+                    <td ng-model="row.Quantity" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td ng-model="row.CostB1" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td ng-model="row.CostB2" content-editable edit-callback="calculateBalance(activeBalance)"></td>
                     <td>{{row.Revalue}}</td>
                     <td ng-model="row.Notes" content-editable></td>
                 </tr>

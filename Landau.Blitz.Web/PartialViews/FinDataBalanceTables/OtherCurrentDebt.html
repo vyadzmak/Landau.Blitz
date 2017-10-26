@@ -1,29 +1,29 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        Товар, полученный на реализацию
+        Прочие текущие задолженности
         <div class="clearfix "></div>
     </div>
 
     <div class="panel-body">
-        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.ForSaleGoods.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
-        <table st-table="activeBalance.Assets.ForSaleGoods.Rows" class="table table-bordered table-condensed ng-table">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Liabilities.OtherCurrentDebt.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Liabilities.OtherCurrentDebt.Rows" class="table table-bordered table-condensed ng-table">
             <thead>
                 <tr>
-                    <th st-sort="Provider"><span uib-tooltip="Наименование поставщика">Поставщик</span></th>
+                    <th st-sort="Name"><span uib-tooltip="Наименование кредитора">Кредитор</span></th>
                     <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
-                    <th st-sort="Name"><span uib-tooltip="Наименование Товара">Товар</span></th>
-                    <th st-sort="GetDate"><span uib-tooltip="Предполагаемая дата">Дата получения</span></th>
+                    <th st-sort="ArrearsDate"><span uib-tooltip="Дата возникновения">Дата возникновения</span></th>
+                    <th st-sort="MaturityDate"><span uib-tooltip="Дата погашения">Дата погашения</span></th>
                     <th st-sort="IsRelatedCompany"><span uib-tooltip="Компания/лицо аффилированно с заемщиком">Аффилирован.</span></th>
                     <th st-sort="Notes"><span uib-tooltip="Примечания">Примечания</span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in activeBalance.Assets.ForSaleGoods.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.ForSaleGoods.Rows, row.Id)" menu-items="menuItems">
-                    <td ng-model="row.Provider" content-editable></td>
-                    <td ng-model="row.Sum" content-editable></td>
+                <tr ng-repeat="row in activeBalance.Liabilities.OtherCurrentDebt.Rows" ng-right-click="clickRightTableRow(activeBalance.Liabilities.OtherCurrentDebt.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td><input type="date" ng-model="row.GetDate"></td>
-                    <td><input type="checkbox" ng-model="row.IsRelatedCompany" /></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td><input type="date" ng-model="row.ArrearsDate"></td>
+                    <td><input type="date" ng-model="row.MaturityDate"></td>
+                    <td><input type="checkbox" ng-model="row.IsRelatedCompany"  ng-change="calculateBalance(activeBalance)"/></td>
                     <td ng-model="row.Notes" content-editable></td>
                 </tr>
             </tbody>

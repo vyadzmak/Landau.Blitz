@@ -350,6 +350,8 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
                 angular.forEach(assetsNames, function(value, key) {
                     assets[value]= {
                         Total: 0,
+                        OutTotal: 0,
+                        ConsTotal: 0,
                         Rows:[]
                     }
                     if (value === 'MotorTransport' || value === 'Hardware') {
@@ -379,8 +381,10 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
                     'OtherLiabilities'
                 ];
                 angular.forEach(liabilitiesNames, function(value, key) {
-                    liabilities[value]= {
+                    liabilities[value] = {
                         Total: 0,
+                        OutTotal: 0,
+                        ConsTotal: 0,
                         Rows:[]
                     }
                 });

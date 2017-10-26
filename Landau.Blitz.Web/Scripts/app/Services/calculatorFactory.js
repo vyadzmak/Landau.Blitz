@@ -41,7 +41,13 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
         calculateProjectAnalyzeData(currentProject);
     }
 
-
+    calculatorFactory.getFloat = function(value) {
+        if (!isNaN(parseFloat(value)) && isFinite(value)) {
+            return parseFloat(value);
+        } else {
+            return 0;
+        }
+    }
 
     return calculatorFactory;
 

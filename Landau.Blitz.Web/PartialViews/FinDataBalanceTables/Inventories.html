@@ -12,15 +12,15 @@
                 <th st-sort="Name"><span uib-tooltip="Наименование товара">Наименование</span></th>
                 <th st-sort="Quantity"><span uib-tooltip="Количество">Количество</span></th>
                 <th st-sort="CostPerUnit"><span uib-tooltip="Стоимость за еденицу">Стоимость за ед.</span></th>
-                <th st-sort="CostTotal"><span uib-tooltip="Стоимость общая">Стоимость общая</span></th>
+                <th st-sort="Sum"><span uib-tooltip="Стоимость общая">Стоимость общая</span></th>
             </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="row in activeBalance.Assets[liquid.varName].Rows" ng-right-click="clickRightTableRow(activeBalance.Assets[liquid.varName].Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Sum" content-editable></td>
-                    <td ng-model="row.CostPerUnit" content-editable></td>
-                    <td>{{row.CostTotal}}</td>
+                    <td ng-model="row.Quantity" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td ng-model="row.CostPerUnit" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                    <td>{{row.Sum}}</td>
                 </tr>
             </tbody>
             <tfoot>

@@ -23,9 +23,9 @@
             <tr ng-repeat="row in activeBalance.Assets.Hardware.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.Hardware.Rows, row.Id)" menu-items="menuItems">
                 <td ng-model="row.Name" content-editable></td>
                 <td ng-model="row.ProdYear" content-editable></td>
-                <td ng-model="row.Quantity" content-editable></td>
-                <td ng-model="row.CostB1" content-editable></td>
-                <td ng-model="row.CostB2" content-editable></td>
+                <td ng-model="row.Quantity" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                <td ng-model="row.CostB1" content-editable edit-callback="calculateBalance(activeBalance)"></td>
+                <td ng-model="row.CostB2" content-editable edit-callback="calculateBalance(activeBalance)"></td>
                 <td>{{row.Revalue}}</td>
                 <td ng-model="row.Notes" content-editable></td>
             </tr>
