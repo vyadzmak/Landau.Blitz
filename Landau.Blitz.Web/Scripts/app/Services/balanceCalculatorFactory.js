@@ -38,7 +38,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
 
     var setBalanceDataTotal = function(currentProject) {
         //currentProject = projectFactory.getToCurrentProject();
-
+        try {
         currentProject.FinDataBalance.Table.forEach(function(element) {
             var activeName = element.ActiveName;
             var passiveName = element.PassiveName;
@@ -82,7 +82,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
             }
         });
         //console.log("Work!");
-
+        
 
         if (currentProject.ParentExists) {
             currentProject.FinDataBalance.Table.forEach(function(element) {
@@ -128,6 +128,9 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', function($rootScope)
         $('#balanceTable').bootstrapTable('load', currentProject.FinDataBalance.Table);
         $('#balanceTable').bootstrapTable('resetView');
         formatTable();
+        } catch (e) {
+
+        }
     }
 
     var calculateBalanceTotalCash = function(currentProject) {

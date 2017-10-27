@@ -363,6 +363,7 @@
     <Content Include="PartialViews\Modals\Company\CompanyModal.html" />
     <Content Include="PartialViews\Modals\FinancePlanning\SupplierModal.html" />
     <Content Include="PartialViews\Modals\FinDataBalance\BalanceModal.html" />
+    <Content Include="PartialViews\Modals\FinDataOdds\OddsModal.html" />
     <Content Include="PartialViews\Modals\FinDataOpiu\OpiuModal.html" />
     <Content Include="PartialViews\Modals\LargeExpenses\InvestmentsModal.html" />
     <Content Include="PartialViews\Modals\LargeExpenses\OutOfBusinessPaymentModal.html" />
@@ -449,6 +450,7 @@
     <Content Include="Scripts\app\Controllers\ModalControllers\ClientDataControllers\manageRelatedCompanyController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\CompanyControllers\manageCompanyController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinancePlanningControllers\manageSupplierController.js" />
+    <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOddsControllers\manageOddsController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataBalanceControllers\manageBalanceController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOpiuControllers\manageOpiuController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\LargeExpensesControllers\manageInvestmentController.js" />

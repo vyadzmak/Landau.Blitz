@@ -110,6 +110,31 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
     }
 
+    function initLineOdds(title, varName, headers) {
+
+        
+
+        var calc = false;
+        if (varName.indexOf("!") != -1) {
+            calc = true;
+            varName = varName.replace('!', '');
+        }
+
+
+        if (checkAdd(varName)) {
+            var line = {};
+            line.Title = title;
+            line.Calculate = calc;
+            line.VarName = varName;
+            for (var i = 1; i <= headers; i++) {
+                line[headers[i].VarName] = 0.0;
+            }
+            return line;
+        } else {
+            return undefined;
+        }
+
+    }
 
     function initOdds() {
 
@@ -193,6 +218,113 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         ]
         for (var i = 0; i < positions.length; i++) {
             var l = initLine(positions[i], vNames[i]);
+            if (l != undefined)
+                lines.push(l);
+        }
+
+        return lines;
+    }
+
+    function initTableOdds(headers) {
+
+        var lines = [];
+
+        var positions = [
+            'ДЕН. СР-ВА НА НАЧАЛО ПЕРИОДА',
+            'ПРИХОД ДЕНЕЖНЫХ СРЕДСТВ',
+            'Выручка о реализации товаров/работ/услуг',
+            'Поступление авансов от покупателей/заказчиков за товары/работы/услуги',
+            'Возврат средств, выданных ранее в подотчет',
+            'Прочие поступления операционной деятельности',
+            'ИТОГО выручка от операционной деятельности по бизнесу',
+            'Кредит МСБ',
+            'Поступления от реализации долгосрочных активов',
+            'Поступление финансовой помощи',
+            'Прочие вне операционные поступления',
+            'ИТОГО выручка от вне операционной деятельности по бизнесу',
+            'РАСХОД ДЕНЕЖНЫХ СРЕДСТВ',
+            'Закуп товаров',
+            'Заработная плата',
+            'Аренда',
+            'Камера хранения',
+            'ГСМ',
+            'Путевка',
+            'Реклама',
+            'Таможня',
+            'Доставка',
+            'Транспортные расходы',
+            'Налоги, сборы',
+            'Коммунальные расходы',
+            'Охрана',
+            'Представительские расходы',
+            'Проценты по кредиту',
+            'Списание/брак',
+            'Услуги банка',
+            'Прочие расходы',
+            'ИТОГО операционные расходы по бизнесу:',
+            'Погашение по автокредиту',
+            'Погашение ОД по кредиту',
+            'Погашение по предпологаемому кредиту',
+            'Семейные расходы',
+            'Инвестиционные расходы',
+            'Приобретение основных средств',
+            'Выплата дивидендов',
+            'Возврат финансовой помощи',
+            'Прочие расходы',
+            'ИТОГО вне операционные расходы по бизнесу:',
+            'ДЕН. СР-ВА НА КОНЕЦ МЕСЯЦА',
+            'ДЕН. СР-ВА НА КОНЕЦ ПЕРИОДА'
+        ]
+
+
+        var vNames = [
+            'StartPeriod',
+            '!Income',
+            'RevenuesIncome',
+            'PrepaidIncome',
+            'ReturnIncome',
+            'OtherIncome',
+            '!TotalIncome',
+            'CreditIncome',
+            'SalesIncome',
+            'SponsorshipIncome',
+            'OtherOutOperationsIncome',
+            '!TotalOutOperationsIncome',
+            '!Expenses',
+            'Purchase',
+            'Wage',
+            'Rent',
+            'Storage',
+            'Fuels',
+            'Waybill',
+            'Advertising',
+            'Customs',
+            'DeliveryOfGoods',
+            'Fare',
+            'Taxes',
+            'Utilities',
+            'Security',
+            'Hospitality',
+            'LoanInterestPayment',
+            'MarriageDamageCancellation',
+            'BankServices',
+            'OtherBusinessExpenses',
+            '!TotalExpensesForBusiness',
+            'AutoLoanRepayment',
+            'LoanRepayment',
+            'ExpectedLoanRepayment',
+            'FamilyExpenses',
+            'InvestmentExpenses',
+            'FixedAssetsPurchase',
+            'DividendExpenses',
+            'AssistanceExpenses',
+            'OtherExpenses',
+            '!TotalExpensesOutBusiness',
+            '!EndMonth',
+            '!EndPeriod'
+        ];
+        for (var i = 0; i < positions.length; i++) {
+            var l = initLineOdds(positions[i], vNames[i], headers);
             if (l != undefined)
                 lines.push(l);
         }
@@ -674,13 +806,57 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         this.currentProject = currentProject;
     }
 
+    projectFactory.initOddsData = function (months, currentProject) {
+
+        currentProject.FinDataOdds.Odds = {};
+        currentProject.FinDataOdds.Odds.MonthsBefore = months.MonthsBefore;
+        currentProject.FinDataOdds.Odds.MonthsAfter = months.MonthsAfter;
+
+        var startDate = currentProject.FinDataBalance.Balances[currentProject.FinDataBalance.Balances.length - 1]
+            .CompanyBalances[currentProject.FinDataBalance.Balances[currentProject.FinDataBalance.Balances.length - 1].CompanyBalances.length - 1]
+            .Date;
+
+        currentProject.FinDataOdds.Odds.Header = [];
+
+        startDate = moment(startDate);
+
+        for (var i = 1; i <= months.MonthsBefore; i++) {
+            var befDate = angular.copy(startDate);
+            currentProject.FinDataOdds.Odds.Header.unshift({
+                Name: befDate.add(-i, 'months').format('MM.YY'),
+                VarName:'m'+i
+            });
+        }
+        currentProject.FinDataOdds.Odds.Header.push({
+            Name: startDate.format('MM.YY'),
+            VarName: 'm' + 0
+        });
+        currentProject.FinDataOdds.Odds.Header.push({
+            Name: startDate.format('MM.YY'),
+            VarName: 'M' + 0
+        });
+
+        for (var i = 1; i <= months.MonthsAfter; i++) {
+            var aftDate = angular.copy(startDate);
+            currentProject.FinDataOdds.Odds.Header.push({
+                Name: aftDate.add(i, 'months').format('MM.YY'),
+                VarName: 'M' + i
+            });
+        }
+
+        currentProject.FinDataOdds.Odds.Table = initTableOdds(currentProject.FinDataOdds.Odds.Header);
+
+        console.log(currentProject.FinDataOdds.Odds);
+        this.currentProject = currentProject;
+    };
+
     projectFactory.initBalances = function (companies) {
 
         this.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances(companies);
     }
 
 
-    projectFactory.setBalancesBalance = function(balance, companyId) {
+    projectFactory.setBalancesBalance = function (balance, companyId) {
         this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balance.Id - 1] = balance;
     }
 
@@ -688,8 +864,8 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         return this.currentProject.FinDataBalance.Balances[companyId - 1];
     }
 
-    projectFactory.getActiveBalance = function(companyId, balanceId) {
-        return this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balanceId-1];
+    projectFactory.getActiveBalance = function (companyId, balanceId) {
+        return this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balanceId - 1];
     }
 
     projectFactory.getToCurrentProject = function () {

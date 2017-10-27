@@ -1,0 +1,36 @@
+﻿<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Настройка ОДДС
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="oddsForm" id="oddsForm" role="form" data-toggle="validator">
+
+            <label>Введите количество месяцев CASH-Flow до момента анализа</label>
+            <input type="number" class="form-control" placeholder="1" ng-model="mElement.MonthsBefore" required>
+            <label>Введите количество месяцев CASH-Flow после момента анализа</label>
+            <input type="number" class="form-control" placeholder="1" ng-model="mElement.MonthsAfter" required>
+            <br/>
+    <div class="form-group">
+        <div class="form-group col-sm-11 text-right">
+            <!-- Indicates a successful or positive action -->
+            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+        </div>
+    </div>
+        </form>
+        <hr />
+        <div>
+            <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('#oddsForm').validator({
+        disable: false
+    });
+</script>

@@ -1,8 +1,31 @@
 <div ng-controller="finDataOddsController">
 
-    <div class="container">
+    <!--<div class="container">
         <div class="row">
             <table id="oddsTable" data-row-style="rowStyle"></table>
         </div>
-    </div>
+    </div>-->
+    
+    <table st-table="currentProject.FinDataOdds.Odds.Table" class="table table-bordered table-condensed ng-table">
+        <thead>
+            <tr>
+                <th><span uib-tooltip="Период">Период</span></th>
+                <th ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in currentProject.FinDataOdds.Odds.Table"
+                ng-class="{'active bold-trow':row.Calculate}">
+
+                <td>{{row.Title}}</td>
+
+                <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
+                    ng-model="row[month.VarName]"
+                    content-editable
+                    non-editable="{{row.Calculate}}"
+                    edit-callback="calculateOdds()"></td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
