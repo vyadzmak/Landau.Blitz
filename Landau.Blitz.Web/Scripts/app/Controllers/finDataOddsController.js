@@ -6,7 +6,7 @@
 //        //return "<i>" + value + "</i>"
 //}
 
-var finDataOddsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, projectHttpService) {
+var finDataOddsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, projectHttpService, calculatorFactory) {
     // var url = $$ApiUrl + "/companies";
     $scope.init = function() {
 
@@ -15,17 +15,17 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         if (!$scope.currentProject.FinDataOdds.Odds ||
             $scope.currentProject.FinDataOdds.Odds.length == 0) {
             
-                $scope.currentProject.FinDataBalance.Companies = angular
-                    .copy($scope.currentProject.ClientData.FinAnalysisCompanies);
+            $scope.currentProject.FinDataBalance.Companies = angular
+                .copy($scope.currentProject.ClientData.FinAnalysisCompanies);
 
-                $scope.mElement = {};
-                $scope.addNewModal('PartialViews/Modals/FinDataOdds/OddsModal.html',
-                    manageOddsController,
-                    $scope.mElement,
-                    'oddsData',
-                    $scope.mElement);
+            $scope.mElement = {};
+            $scope.addNewModal('PartialViews/Modals/FinDataOdds/OddsModal.html',
+                manageOddsController,
+                $scope.mElement,
+                'oddsData',
+                $scope.mElement);
 
-            }
+        }
         //$('#oddsTable').bootstrapTable({
         //    idField: 'Title',
         //    pagination: false,
@@ -146,39 +146,99 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
     $scope.init();
     usSpinnerService.stop("spinner-1");
 
-    $scope.SumsValues=[
-        {TotalName:''}
-    ]
+    $scope.SumsValues = [
+        {
+            TotalName: 'TotalIncome',
+            SubValues: [
+                'RevenuesIncome',
+                'PrepaidIncome',
+                'ReturnIncome',
+                'OtherIncome'
+            ]
+        },
+        {
+            TotalName: 'TotalOutOperationsIncome',
+            SubValues: [
+                'CreditIncome',
+            'SalesIncome',
+            'SponsorshipIncome',
+            'OtherOutOperationsIncome'
+            ]
+        },
+        {
+            TotalName: 'TotalExpensesForBusiness',
+            SubValues: [
+                'Purchase',
+            'Wage',
+            'Rent',
+            'Storage',
+            'Fuels',
+            'Waybill',
+            'Advertising',
+            'Customs',
+            'DeliveryOfGoods',
+            'Fare',
+            'Taxes',
+            'Utilities',
+            'Security',
+            'Hospitality',
+            'LoanInterestPayment',
+            'MarriageDamageCancellation',
+            'BankServices',
+            'OtherBusinessExpenses'
+            ]
+        },
+        {
+            TotalName: 'TotalExpensesOutBusiness',
+            SubValues: [
+                'AutoLoanRepayment',
+            'LoanRepayment',
+            'ExpectedLoanRepayment',
+            'FamilyExpenses',
+            'InvestmentExpenses',
+            'FixedAssetsPurchase',
+            'DividendExpenses',
+            'AssistanceExpenses',
+            'OtherExpenses'
+            ]
+        },
+        {
+            TotalName: 'Income',
+            SubValues: [
+                'TotalIncome',
+                'TotalOutOperationsIncome'
+            ]
+        },
+        {
+            TotalName: 'Expenses',
+            SubValues: [
+                'TotalExpensesOutBusiness',
+                'TotalExpensesForBusiness'
+            ]
+        },
+        {
+            TotalName: 'EndMonth',
+            SubValues: [
+                'Income',
+                'Expenses'
+            ]
+        }
+    ];
 
     $scope.calculateOdds = function() {
         
-        var income,
-            totalIncome,
-            totalOutOperationsIncome,
-            expenses,
-            totalExpensesForBusiness,
-            totalExpensesOutBusiness,
-            endMonth,
-            endPeriod;
-        angular.forEach($scope.currentProject.FinDataOdds.Odds.Table, function(tRow, rKey) {
-            if(tRow.Calculate)
-            {
-                switch(tRow.VarName) {
-                    case "Income": income = tRow; break;
-                    case "TotalIncome": totalIncome = tRow; break;
-                    case "TotalOutOperationsIncome": totalOutOperationsIncome = tRow; break;
-                    case "Expenses": expenses = tRow; break;
-                    case "TotalExpensesForBusiness": totalExpensesForBusiness = tRow; break;
-                    case "TotalExpensesOutBusiness": totalExpensesOutBusiness = tRow; break;
-                    case "EndMonth": endMonth = tRow; break;
-                    case "EndPeriod": endPeriod = tRow; break;
-                }
-            }
-        });
+        
         // calculate values
-        angular.forEach($scope.currentProject.FinDataOdds.Odds.Table, function(tRow, rKey) {
+        angular.forEach($scope.SumsValues, function(tSumV, tSumKey) {
+            var totalValue = $scope.getVarArrayByName($scope.currentProject.FinDataOdds.Odds, tSumV.TotalName);
+
+            
             angular.forEach($scope.currentProject.FinDataOdds.Odds.Header, function(month, mKey) {
-                
+                totalValue[month.VarName] = 0;
+                angular.forEach(tSumV.SubValues, function(subValue, sKey) {
+                    var sSubValue = $scope.getVarArrayByName($scope.currentProject.FinDataOdds.Odds, subValue);
+                    totalValue[month.VarName] += calculatorFactory.getFloat(sSubValue[month.VarName]);
+                });
             });
         });
 
@@ -192,12 +252,12 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         });
     }
 
-    $scope.getVarArrayByName = function(opiu, name) {
-        var ob = opiu.Table.filter(function(item) {
-            return item.VarName == name;
+    $scope.getVarArrayByName = function(odds, name) {
+        var ob = odds.Table.filter(function(item) {
+            return item.VarName === name;
         });
         if (ob == undefined || ob.length === 0) return null;
         return ob[0];
     }
 };
-blitzApp.controller("finDataOddsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", finDataOddsController]);
+blitzApp.controller("finDataOddsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", "calculatorFactory", finDataOddsController]);
