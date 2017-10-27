@@ -1,328 +1,215 @@
 <div ng-controller="finDataBalanceTableController">
     <div>
 
-    <table class="table table-bordered table-condensed ng-table">
-        <thead>
-        <tr>
-            <th colspan="30">
-                <select ng-options="item as item.CompanyName for item in currentProject.FinDataBalance.Balances track by item.Id"
-                        ng-model="activeCompany"
-                        ng-change="activeCompanyChangedChanged()"></select>
-            </th>
-        </tr>
-        <tr>
-            <th><span uib-tooltip="Актив">Актив</span></th>
-            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-            <th><span uib-tooltip="Пассив">Пассив</span></th>
-            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><span uib-tooltip="Касса">Касса</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Checkout.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Расчеты с бюджетом">Расчеты с бюджетом</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.BudgetSettlements.Total|currency:'':2}}</td>
-        </tr>
+        <table class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th colspan="30">
+                        <select ng-options="item as item.CompanyName for item in currentProject.FinDataBalance.Balances track by item.Id"
+                                ng-model="activeCompany"
+                                ng-change="activeCompanyChangedChanged()"></select>
+                    </th>
+                </tr>
+                <tr>
+                    <th><span uib-tooltip="Актив">Актив</span></th>
+                    <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                    <th><span uib-tooltip="Пассив">Пассив</span></th>
+                    <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span uib-tooltip="Касса">Касса</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Checkout.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Расчеты с бюджетом">Расчеты с бюджетом</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.BudgetSettlements.Total|currency:'':2}}</td>
+                </tr>
 
-        <tr>
-            <td><span uib-tooltip="Расчетный счет">Расчетный счет</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.CurrentAccount.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Задолженность по аренде, заработной плате">Зад-ть по аренде, з/п</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.RentalsArrears.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Сбережения">Сбережения</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Savings.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Прочая краткосрочная задолженность">Проч.краткосроч.зад-ть</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortTermDebt.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Депозит">Депозит</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Deposit.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Счета к оплате">Счета к оплате</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.PayableAccounts.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Ликвидные средства">Ликвидные средства</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.LiquidAssets|currency:'':2}}</td>
-            <td><span uib-tooltip="Товарный кредит">Товарный кредит</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CommodityLoan.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Счета к получению">Счета к получению</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RecievableAccounts.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Предоплата от покупателей">Предоплата от покупателей</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CustomersPrepayment.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Товары в пути">Товары в пути</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.TransitGoods.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Частные займы (менее 12 мес.)">Част.займы(мен. 12 мес.)</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortPrivateLoans.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Предоплата поставщиков">Предоплата поставщиков</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SuppliersPrepayment.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на оборотные средства">Банк.кр.(мен. 12 мес.) на об/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortWorkingCapitalCredit.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Прочая дебиторская задолженность">Проч. деб. задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.OtherRecievables.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на основные средства">Банк.кр.(мен. 12 мес.) на осн/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortFixedAssetsCredit.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Дебиторская задолженность">Дебиторская задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Receivables|currency:'':2}}</td>
-            <td><span uib-tooltip="Прочие текущие задолженности">Прочие тек.зад-ти</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherCurrentDebt.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="ТМЗ">ТМЗ</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Inventories.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Итого краткосрочная задолженность">Итого кр.-сроч. зад-ть</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalShortTermDebt|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Готовая продукция">Готовая продукция</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.FinishedGoods.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Частные займы (более 12 мес.)">Част.займы(бол. 12 мес.)</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongPrivateLoans.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Сырье">Сырье</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RawMaterials.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на оборотные средства">Банк.кр.(бол. 12 мес.) на об/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongWorkingCapitalCredit.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Полуфаб./метариалы">Полуфаб./метариалы</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SemiProducts.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на основные средства">Банк.кр.(бол. 12 мес.) на осн/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongFixedAssetsCredit.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Товары, полученные на реализацию">Тов., получ.на реал-ию</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.ForSaleGoods.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Прочие пассивы">Прочие пассивы</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherLiabilities.Total|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="ТМЗ">ТМЗ</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Inventories|currency:'':2}}</td>
-            <td><span uib-tooltip="Итого долгосрочная задолженность">Итого долгосрочная задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalLongTermDebt|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Всего оборотных средств">Всего оборотных средств</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalCurrentAssets|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Оборудование">Оборудование</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Hardware.Total|currency:'':2}}</td>
-            <td><span uib-tooltip="Всего кредиторская задолженность">Всего кредиторская задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalLongAccountsPayable|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Автотранспорт">Автотранспорт</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.MotorTransport.Total|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Недвижимость">Недвижимость</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RealEstate.Total|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Всего основных средств">Всего основных средств</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalFixedAssets|currency:'':2}}</td>
-            <td><span uib-tooltip="Собственный капитал">Собственный капитал</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Equity|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Инвестиции">Инвестиции</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Investments.Total|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalAssets|currency:'':2}}</td>
-            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalLiabilities|currency:'':2}}</td>
-        </tr>
-        </tbody>
-    </table>
+                <tr>
+                    <td><span uib-tooltip="Расчетный счет">Расчетный счет</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.CurrentAccount.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Задолженность по аренде, заработной плате">Зад-ть по аренде, з/п</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.RentalsArrears.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Сбережения">Сбережения</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Savings.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Прочая краткосрочная задолженность">Проч.краткосроч.зад-ть</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortTermDebt.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Депозит">Депозит</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Deposit.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Счета к оплате">Счета к оплате</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.PayableAccounts.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Ликвидные средства">Ликвидные средства</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.LiquidAssets|currency:'':2}}</td>
+                    <td><span uib-tooltip="Товарный кредит">Товарный кредит</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CommodityLoan.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Счета к получению">Счета к получению</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RecievableAccounts.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Предоплата от покупателей">Предоплата от покупателей</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CustomersPrepayment.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Товары в пути">Товары в пути</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.TransitGoods.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Частные займы (менее 12 мес.)">Част.займы(мен. 12 мес.)</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortPrivateLoans.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Предоплата поставщиков">Предоплата поставщиков</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SuppliersPrepayment.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на оборотные средства">Банк.кр.(мен. 12 мес.) на об/ср</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortWorkingCapitalCredit.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Прочая дебиторская задолженность">Проч. деб. задолженность</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.OtherRecievables.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на основные средства">Банк.кр.(мен. 12 мес.) на осн/ср</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortFixedAssetsCredit.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Дебиторская задолженность">Дебиторская задолженность</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Receivables|currency:'':2}}</td>
+                    <td><span uib-tooltip="Прочие текущие задолженности">Прочие тек.зад-ти</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherCurrentDebt.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="ТМЗ">ТМЗ</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Inventories.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Итого краткосрочная задолженность">Итого кр.-сроч. зад-ть</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalShortTermDebt|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Готовая продукция">Готовая продукция</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.FinishedGoods.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Частные займы (более 12 мес.)">Част.займы(бол. 12 мес.)</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongPrivateLoans.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Сырье">Сырье</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RawMaterials.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на оборотные средства">Банк.кр.(бол. 12 мес.) на об/ср</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongWorkingCapitalCredit.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Полуфаб./метариалы">Полуфаб./метариалы</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SemiProducts.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на основные средства">Банк.кр.(бол. 12 мес.) на осн/ср</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongFixedAssetsCredit.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Товары, полученные на реализацию">Тов., получ.на реал-ию</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.ForSaleGoods.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Прочие пассивы">Прочие пассивы</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherLiabilities.Total|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="ТМЗ">ТМЗ</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Inventories|currency:'':2}}</td>
+                    <td><span uib-tooltip="Итого долгосрочная задолженность">Итого долгосрочная задолженность</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalLongTermDebt|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Всего оборотных средств">Всего оборотных средств</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalCurrentAssets|currency:'':2}}</td>
+                    <td></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Оборудование">Оборудование</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Hardware.Total|currency:'':2}}</td>
+                    <td><span uib-tooltip="Всего кредиторская задолженность">Всего кредиторская задолженность</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalLongAccountsPayable|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Автотранспорт">Автотранспорт</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.MotorTransport.Total|currency:'':2}}</td>
+                    <td></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Недвижимость">Недвижимость</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RealEstate.Total|currency:'':2}}</td>
+                    <td></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Всего основных средств">Всего основных средств</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalFixedAssets|currency:'':2}}</td>
+                    <td><span uib-tooltip="Собственный капитал">Собственный капитал</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Equity|currency:'':2}}</td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="Инвестиции">Инвестиции</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Investments.Total|currency:'':2}}</td>
+                    <td></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
+                </tr>
+                <tr>
+                    <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalAssets|currency:'':2}}</td>
+                    <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                    <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalLiabilities|currency:'':2}}</td>
+                </tr>
+            </tbody>
+        </table>
         
-    <table class="table table-bordered table-condensed ng-table">
-        <thead>
-        <tr>
-            <th colspan="30">
-                ВЫНЕСЕНО ЗА БАЛАНС
-            </th>
-        </tr>
-        <tr>
-            <th><span uib-tooltip="Актив">Актив</span></th>
-            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-            <th><span uib-tooltip="Пассив">Пассив</span></th>
-            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><span uib-tooltip="Касса">Касса</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Checkout.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Расчеты с бюджетом">Расчеты с бюджетом</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.BudgetSettlements.OutTotal|currency:'':2}}</td>
-        </tr>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-bordered table-condensed ng-table">
+                    <thead>
+                    <tr>
+                        <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Актив">ВЫНЕСЕНО ЗА БАЛАНС<br />Актив</span></th>
+                        <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="outAsset in outBalanceAssets | filter:checkOutAssets">
+                            <td><span uib-tooltip="{{outAsset.name}}">{{outAsset.name}}</span></td>
+                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets[outAsset.varName].OutTotal|currency:'':2}}</td>
+                        </tr>
 
-        <tr>
-            <td><span uib-tooltip="Расчетный счет">Расчетный счет</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.CurrentAccount.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Задолженность по аренде, заработной плате">Зад-ть по аренде, з/п</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.RentalsArrears.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Сбережения">Сбережения</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Savings.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Прочая краткосрочная задолженность">Проч.краткосроч.зад-ть</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortTermDebt.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Депозит">Депозит</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Deposit.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Счета к оплате">Счета к оплате</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.PayableAccounts.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Ликвидные средства">Ликвидные средства</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutLiquidAssets|currency:'':2}}</td>
-            <td><span uib-tooltip="Товарный кредит">Товарный кредит</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CommodityLoan.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Счета к получению">Счета к получению</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RecievableAccounts.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Предоплата от покупателей">Предоплата от покупателей</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CustomersPrepayment.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Товары в пути">Товары в пути</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.TransitGoods.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Частные займы (менее 12 мес.)">Част.займы(мен. 12 мес.)</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortPrivateLoans.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Предоплата поставщиков">Предоплата поставщиков</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SuppliersPrepayment.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на оборотные средства">Банк.кр.(мен. 12 мес.) на об/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortWorkingCapitalCredit.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Прочая дебиторская задолженность">Проч. деб. задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.OtherRecievables.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на основные средства">Банк.кр.(мен. 12 мес.) на осн/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortFixedAssetsCredit.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Дебиторская задолженность">Дебиторская задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutReceivables|currency:'':2}}</td>
-            <td><span uib-tooltip="Прочие текущие задолженности">Прочие тек.зад-ти</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherCurrentDebt.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="ТМЗ">ТМЗ</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Inventories.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Итого краткосрочная задолженность">Итого кр.-сроч. зад-ть</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalShortTermDebt|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Готовая продукция">Готовая продукция</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.FinishedGoods.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Частные займы (более 12 мес.)">Част.займы(бол. 12 мес.)</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongPrivateLoans.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Сырье">Сырье</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RawMaterials.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на оборотные средства">Банк.кр.(бол. 12 мес.) на об/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongWorkingCapitalCredit.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Полуфаб./метариалы">Полуфаб./метариалы</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SemiProducts.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на основные средства">Банк.кр.(бол. 12 мес.) на осн/ср</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongFixedAssetsCredit.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Товары, полученные на реализацию">Тов., получ.на реал-ию</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.ForSaleGoods.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Прочие пассивы">Прочие пассивы</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherLiabilities.OutTotal|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="ТМЗ">ТМЗ</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutInventories|currency:'':2}}</td>
-            <td><span uib-tooltip="Итого долгосрочная задолженность">Итого долгосрочная задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLongTermDebt|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Всего оборотных средств">Всего оборотных средств</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalCurrentAssets|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Оборудование">Оборудование</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Hardware.OutTotal|currency:'':2}}</td>
-            <td><span uib-tooltip="Всего кредиторская задолженность">Всего кредиторская задолженность</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLongAccountsPayable|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Автотранспорт">Автотранспорт</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.MotorTransport.OutTotal|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Недвижимость">Недвижимость</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RealEstate.OutTotal|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Всего основных средств">Всего основных средств</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalFixedAssets|currency:'':2}}</td>
-            <td><span uib-tooltip="Собственный капитал">Собственный капитал</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutEquity|currency:'':2}}</td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="Инвестиции">Инвестиции</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Investments.OutTotal|currency:'':2}}</td>
-            <td></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances"></td>
-        </tr>
-        <tr>
-            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalAssets|currency:'':2}}</td>
-            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
-        </tr>
-        </tbody>
-    </table>
+                    <tr>
+                        <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered table-condensed ng-table">
+                    <thead>
+                        <tr>
+                            <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Пассив">ВЫНЕСЕНО ЗА БАЛАНС<br />Пассив</span></th>
+                            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="outLiability in outBalanceLiabilities | filter:checkOutLiabilities">
+                            <td><span uib-tooltip="{{outLiability.name}}">{{outLiability.name}}</span></td>
+                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities[outLiability.varName].OutTotal|currency:'':2}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         
 
-
-    <div class="row">
+        <div class="row">
             <div class="col-md-3">
                 <select class="form-control" ng-options="item as item.Name for item in activeCompany.CompanyBalances track by item.Id"
-                        ng-model="activeBalance"></select>
+                        ng-model="activeBalance" ng-change="activeBalanceChanged()"></select>
             </div>
         </div>
 

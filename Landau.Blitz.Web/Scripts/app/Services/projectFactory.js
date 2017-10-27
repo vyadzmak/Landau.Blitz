@@ -688,6 +688,10 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         return this.currentProject.FinDataBalance.Balances[companyId - 1];
     }
 
+    projectFactory.getActiveBalance = function(companyId, balanceId) {
+        return this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balanceId-1];
+    }
+
     projectFactory.getToCurrentProject = function () {
         angular.forEach(this.currentProject.ClientData.DirectorInfos, function (value, key) {
             value.DateOfBirth = new Date(value.DateOfBirth);
