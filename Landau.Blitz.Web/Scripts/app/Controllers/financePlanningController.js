@@ -24,7 +24,7 @@ this.setData = function(item) {
     }
 }
 
-var financePlanningController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectHttpService, projectFactory) {
+var financePlanningController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectHttpService, projectFactory, calculatorFactory) {
     usSpinnerService.stop("spinner-1");
 
     $scope.init = function() {
@@ -269,19 +269,49 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
         var ownFunds = 0;
         var borrowedFunds = 0;
         var totalFunds = 0;
-        for (var i = 0; i < $scope.currentProject.FinancePlanning.Plans.length; i++) {
-            if ($scope.currentProject.FinancePlanning.Plans[i].Source.Id === 1) {
-                ownFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
+
+        var woPosOwnFunds = 0;
+        var woPosBorrowedFunds = 0;
+        var woPosTotalFunds = 0;
+
+        angular.forEach($scope.currentProject.FinancePlanning.Plans, function(tRow, pKey) {
+            if (tRow.Source.Id === 1) {
+                ownFunds += calculatorFactory.getFloat(tRow.Sum);
+                if (tRow.Expenditure.Id !== 1 && tRow.Expenditure.Id !== 2) {
+                    woPosOwnFunds += calculatorFactory.getFloat(tRow.Sum);
+                }
             } else {
-                borrowedFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
+                borrowedFunds += calculatorFactory.getFloat(tRow.Sum);
+                if (tRow.Expenditure.Id !== 1 && tRow.Expenditure.Id !== 2) {
+                    woPosBorrowedFunds += calculatorFactory.getFloat(tRow.Sum);
+                }
             }
-            totalFunds += +$scope.currentProject.FinancePlanning.Plans[i].Sum;
-        }
+        });
+
+        totalFunds = borrowedFunds + ownFunds;
+        woPosTotalFunds = woPosOwnFunds + woPosBorrowedFunds;
+
         $scope.currentProject.FinancePlanning.OwnResources = ownFunds;
         $scope.currentProject.FinancePlanning.BorrowedResources = borrowedFunds;
         $scope.currentProject.FinancePlanning.TotalResources = totalFunds;
+        $scope.currentProject.FinancePlanning.WoPosOwnResources = woPosOwnFunds;
+        $scope.currentProject.FinancePlanning.WoPosBorrowedResources = woPosBorrowedFunds;
+        $scope.currentProject.FinancePlanning.WoPosTotalResources = woPosTotalFunds;
+    }
 
+    $scope.calculateCreditData = function() {
+        var proposedSum = calculatorFactory
+            .getFloat($scope.currentProject.FinancePlanning.ProposedSum);
+        var proposedCashSum = calculatorFactory
+            .getFloat($scope.currentProject.FinancePlanning.ProposedCashSum);
+        $scope.currentProject.FinancePlanning.ProposedCashlessSum = proposedSum - proposedCashSum;
+        var proposedTerm = calculatorFactory
+            .getFloat($scope.currentProject.FinancePlanning.ProposedTerm);
+        var proposedRate = calculatorFactory
+            .getFloat($scope.currentProject.FinancePlanning.ProposedRate);
+        $scope.currentProject.FinancePlanning
+            .MonthlyFee = (proposedSum + proposedTerm / 12 * proposedRate * proposedSum/100) / proposedTerm;
     }
 
 };
-blitzApp.controller("financePlanningController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectHttpService", "projectFactory", financePlanningController]);
+blitzApp.controller("financePlanningController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectHttpService", "projectFactory", "calculatorFactory", financePlanningController]);

@@ -138,6 +138,10 @@ var projectAnalysisController = function($scope, $http, $location, $state, $uibM
         $scope.currentProject.ProjectAnalysis.TotalExpenses = totalExpenses;
     }
 
+    $scope.calculateSSK = function() {
+        
+    }
+
     usSpinnerService.stop("spinner-1");
 };
 blitzApp.controller("projectAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "projectHttpService", "projectFactory", "usSpinnerService", projectAnalysisController]);

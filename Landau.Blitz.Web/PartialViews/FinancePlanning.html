@@ -22,27 +22,27 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Предложенная сумма итого, тенге</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedSum">
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedSum" ng-change="calculateCreditData()">
                     </div>
                     <div class="form-group">
                         <label>Предложенная сумма наличными, тенге</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedCashSum">
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedCashSum" ng-change="calculateCreditData()">
                     </div>
                     <div class="form-group">
                         <label>Предложенная сумма в безналичной форме, тенге</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedCashlessSum">
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedCashlessSum" disabled>
                     </div>
                     <div class="form-group">
                         <label>Предложенный срок, мес.</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedTerm">
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedTerm" ng-change="calculateCreditData()">
                     </div>
                     <div class="form-group">
                         <label>Ежемесячный взнос, тенге</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.MonthlyFee">
+                        <input type="number" step="0.01" class="form-control" ng-model="currentProject.FinancePlanning.MonthlyFee" disabled>
                     </div>
                     <div class="form-group">
                         <label>Ставка вознаграждения, %</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedRate">
+                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedRate" ng-change="calculateCreditData()">
                     </div>
                 </div>
             </div>
@@ -70,7 +70,8 @@
                 <tr ng-repeat="row in planCollection" ng-right-click="clickFinancePlan(row.Id)" menu-items="menuItems">
                     <td>
                         <select ng-options="item as item.Name for item in expenditures track by item.Id"
-                                ng-model="row.Expenditure" style="width: 200px"></select>
+                                ng-model="row.Expenditure"
+                                ng-change="calculateFinancePlan()" style="width: 200px"></select>
                     </td>
                     <td ng-model="row.Provider" content-editable></td>
                     <td ng-model="row.Sum" content-editable edit-callback="calculateFinancePlan()"></td>
@@ -107,11 +108,11 @@
             </table>
             <div class="form-group">
                 <label>Комментарии</label>
-                <input type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.FinancePlanning.PlansComment">
+                <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.FinancePlanning.PlansComment"></textarea>
             </div>
         </div>
     </div>
-    <div>
+    <!--<div>
         <div id="toolbar">
             <button type="button" id="addFP" class="btn btn-primary orange-tooltip" ng-click="showNewFinPlan();" data-toggle="tooltip" title="Добавить" data-placement="bottom">
 
@@ -203,5 +204,5 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
