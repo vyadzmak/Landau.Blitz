@@ -1,53 +1,81 @@
 <div ng-controller="finDataCrossCheckingController">
 
-    <div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Cross Checking</div>
 
-        <div class="row">
+        <div class="panel-body">
+            <table class="table table-bordered table-condensed ng-table">
+                <tbody>
+                    <tr>
+                        <td><strong>Фактический прирост СК</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.ActualIncreaseSK|currency:'':2}}
+                        </td>
+                        <td>СК2-СК1</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Ожидаемый прирост СК</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.ExpectedIncreaseSK|currency:'':2}}
+                        </td>
+                        <td>ЧП х Срок - % по кредиту (выплаченные)</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Фактический СК</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.ActualSK|currency:'':2}}
+                        </td>
+                        <td>СК2</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Ожидаемый СК</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.ExpectedSK|currency:'':2}}
+                        </td>
+                        <td>СК1 + ожидаемый прирост +/- факторы, влияющие на размер собственного капитала</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Разница</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.DiffSK|currency:'':2}}
+                        </td>
+                        <td>Фактический СК - Ожидаемый СК</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Чистая прибыль за период</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.PeriodNetProfit|currency:'':2}}
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Срок, мес.</strong></td>
+                        <td>
+                            {{currentProject.FinDataCrossChecking.Period|currency:'':1}}
+                        </td>
+                        <td></td>
+                    </tr>
 
 
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Cross Checking</div>
+                    <tr>
+                        <td><strong>% по кредиту (выплаченные)</strong></td>
+                        <td>
+                            <input type="number" class="form-control" ng-model="currentProject.FinDataCrossChecking.PaidInterest">
+                        </td>
+                        <td></td>
 
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-8">Фактический прирост СК </label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataCrossChecking.ActualIncreaseSK">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">% по кредиту (выплаченные)</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.FinDataCrossChecking.PaidInterest">
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-8">Ожидаемый прирост СК</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataCrossChecking.ExpectedIncreaseSK">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Фактический СК</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.FinDataCrossChecking.ActualSK">
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-
-
     </div>
+
+
+
 </div>
