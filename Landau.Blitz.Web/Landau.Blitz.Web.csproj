@@ -344,6 +344,7 @@
     <Content Include="PartialViews\FinDataBalanceTables\Investments.html" />
     <Content Include="PartialViews\FinDataBalanceTables\TransitGoods.html" />
     <Content Include="PartialViews\FinDataCrossChecking.html" />
+    <Content Include="PartialViews\ConsolidatedBalance.html" />
     <Content Include="PartialViews\FinDataOdds.html" />
     <Content Include="PartialViews\FinDataOpiu.html" />
     <Content Include="PartialViews\LargeExpenses.html" />
@@ -422,6 +423,7 @@
     <Content Include="Scripts\app\Controllers\fieldDetailsController.js" />
     <Content Include="Scripts\app\Controllers\financePlanningController.js" />
     <Content Include="Scripts\app\Controllers\finDataBalanceController.js" />
+    <Content Include="Scripts\app\Controllers\consolidatedBalanceController.js" />
     <Content Include="Scripts\app\Controllers\finDataBalanceTableController.js" />
     <Content Include="Scripts\app\Controllers\finDataCrossCheckingController.js" />
     <Content Include="Scripts\app\Controllers\finDataOddsController.js" />

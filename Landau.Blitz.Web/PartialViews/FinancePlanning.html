@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Запршенная сумма, тенге</label>
+                        <label>Запрошенная сумма, тенге</label>
                         <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.RequestedSum">
                     </div>
                     <div class="form-group">
@@ -54,7 +54,7 @@
             <div class="clearfix "></div>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body panel-table">
             <button class="btn btn-primary btn-xs header-button" ng-click="addNewFinancePlan();"><i class="fa fa-plus" aria-hidden="true"></i></button>
             <table st-table="planCollection" st-safe-src="currentProject.FinancePlanning.Plans" class="table table-bordered table-condensed ng-table">
                 <thead>

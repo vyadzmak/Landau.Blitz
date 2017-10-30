@@ -703,3 +703,7 @@ HTML CSS JS Result Edit on .demoTable td:last-child {
     -webkit-transform: translate(-14px, -14px);
     transform: translate(-14px, -14px);
 }
+
+.panel-body.panel-table {
+    overflow-x: scroll !important;
+}

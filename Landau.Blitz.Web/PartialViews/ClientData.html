@@ -107,7 +107,7 @@
                     <div class="clearfix "></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body panel-table">
                     <button class="btn btn-primary btn-xs header-button" ng-click="showNewBusinessPlace();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     <table st-table="bpsCollection" st-safe-src="currentProject.ClientData.BusinessPlaces" class="table table-bordered table-condensed ng-table">
                         <thead>
@@ -150,7 +150,7 @@
                     <div class="clearfix "></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body panel-table">
                     <button class="btn btn-primary btn-xs header-button" ng-click="showNewDirectorInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     <table st-table="directorCollection" st-safe-src="currentProject.ClientData.DirectorInfos" class="table table-bordered table-condensed ng-table">
                         <thead>
@@ -312,7 +312,7 @@
                     Данные юридических лиц
                     <div class="clearfix"></div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body panel-table">
                     <button class="btn btn-primary btn-xs header-button" ng-click="showNewLegalOwnerCompanyInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     <table st-table="legOwnerCollection" st-safe-src="currentProject.ClientData.LegalOwnerCompanyInfos"
                            class="table table-bordered table-condensed ng-table">
@@ -321,7 +321,7 @@
                             <th st-sort="Name"><span uib-tooltip="Указать заемщика, созаемщика (если имеется), гаранта (если имеется), собственника (-ов) крупных участников Заемщика (10% и более долей (акций) в уставном капитале) с указанием конечных собственников - физических лиц), %">Наименование организации</span></th>
                             <th st-sort="State"><span uib-tooltip="Статус">Статус</span></th>
                             <th st-sort="FirstChief"><span uib-tooltip="Первый руководитель, Ф.И.О">Первый руководитель</span></th>
-                            <th st-sort="OwnerCompanyName"><span uib-tooltip="Наименование организации собственника">Организация собственника</span></th>
+                            <th st-sort="OwnerCompanyName"><span uib-tooltip="Наименование организации собственника">Собственники</span></th>
                             <th st-sort="PercentOwnerShip"><span uib-tooltip="Доля в УК, %">Доля в УК, %</span></th>
                         </tr>
                         </thead>
@@ -362,7 +362,7 @@
                     <div class="clearfix "></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body panel-table">
                     <button class="btn btn-primary btn-xs header-button" ng-click="showNewCreditHistoryInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     <table st-table="creditHistoryCollection" st-safe-src="currentProject.ClientData.CreditHistoryInfos"
                            class="table table-bordered table-condensed ng-table">
@@ -471,7 +471,7 @@
                     <div class="clearfix "></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body panel-table">
                     <button class="btn btn-primary btn-xs header-button" ng-click="showNewBankAccountInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     <table st-table="bankAccountCollection" st-safe-src="currentProject.ClientData.BankAccountInfos"
                            class="table table-bordered table-condensed ng-table">
@@ -502,7 +502,7 @@
                                 <td><input type="checkbox" ng-model="row.Card" /></td>
                             </tr>
                             <tr ng-repeat-end>
-                                <td colspan="2"><span uib-tooltip="В комментариях указываем на что фактически брали кредит, использован ли по целевому назначению, график погашения, осуществлялись ли по кредиту реструктуризации, допускали ли просрочки (если да, то описать причины, сроки просрочек в истори кредитования Клиента). В случае, если цель запрашиваемых средств - рефинансирование, необходимо обязательно указать в кредитной истории рефинансируемый заем, запросить информацию (документы) о целевом использовании, эффективности использования рефинансируемого займа.">Комментарии</span></td>
+                                <td colspan="2"><span uib-tooltip="Комментарии о цели открытия счета (для обслуживания кредита, для осуществления операций по бизнесу с детальным описанием, для других целей - указать для каких), информация о наличии/отсутствии картотеки.">Комментарии</span></td>
                                 <td colspan="10" ng-model="row.Comments" content-editable></td>
                             </tr>
                         </tbody>
@@ -514,7 +514,6 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <div>Комментарии о цели открытия счета (для обслуживания кредита, для осуществления операций по бизнесу с детальным описанием, для других целей - указать для каких), информация о наличии/отсутствии картотеки.</div>
                 </div>
             </div>
         <!--END BLOCK-->

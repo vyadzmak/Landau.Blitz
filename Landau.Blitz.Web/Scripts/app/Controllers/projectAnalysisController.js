@@ -1,4 +1,4 @@
-var projectAnalysisController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, projectHttpService, projectFactory, usSpinnerService) {
+var projectAnalysisController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, projectHttpService, projectFactory, calculatorFactory, usSpinnerService) {
     // var url = $$ApiUrl + "/companies";
     $scope.filterFromArray = function (arr, id) {
         var ob = arr.filter(function (item) {
@@ -120,14 +120,14 @@ var projectAnalysisController = function($scope, $http, $location, $state, $uibM
         }
     }
 
-    $scope.calculateCostPrice = function(param1, param2, rev) {
+    $scope.calculateCostPrice = function (param1, param2, rev) {
         if (!isNaN(parseFloat(rev.Revenue)) && isFinite(rev.Revenue) &&
             !isNaN(parseFloat(rev.Markup)) && isFinite(rev.Markup)) {
             rev.Costprice = +rev.Revenue / (100 + (+rev.Markup)) * 100;
         }
     }
 
-    $scope.calculateTotalExpenses = function() {
+    $scope.calculateTotalExpenses = function () {
         var totalExpenses = 0;
         for (let i = 0; i < $scope.currentProject.ProjectAnalysis.VarExpenses.length; i++) {
             totalExpenses += +$scope.currentProject.ProjectAnalysis.VarExpenses[i].Sum;
@@ -138,10 +138,22 @@ var projectAnalysisController = function($scope, $http, $location, $state, $uibM
         $scope.currentProject.ProjectAnalysis.TotalExpenses = totalExpenses;
     }
 
-    $scope.calculateSSK = function() {
-        
+    $scope.calculateSSK = function () {
+        $scope.ssk = $scope.currentProject.FinancePlanning.WoPosOwnResources /
+            $scope.currentProject.FinancePlanning.WoPosTotalResources *
+            $scope.currentProject.ProjectAnalysis.AlternativeBid +
+            $scope.currentProject.FinancePlanning.WoPosBorrowedResources /
+            $scope.currentProject.FinancePlanning.WoPosTotalResources *
+            $scope.currentProject.ProjectAnalysis.CreditBid;
+        $scope.ssk = calculatorFactory.getFloat($scope.ssk);
+        $scope.currentProject.ProjectAnalysis.SSK = calculatorFactory.getFloat($scope.ssk);
     }
 
+    $scope.init = function () {
+        $scope.currentProject = projectFactory.getToCurrentProject();
+        $scope.calculateSSK();
+    }
+    $scope.init();
     usSpinnerService.stop("spinner-1");
 };
-blitzApp.controller("projectAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "projectHttpService", "projectFactory", "usSpinnerService", projectAnalysisController]);
+blitzApp.controller("projectAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "projectHttpService", "projectFactory", "calculatorFactory", "usSpinnerService", projectAnalysisController]);

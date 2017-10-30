@@ -458,6 +458,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                             calculatorFactory.getFloat(tRow.OutBusiness);
                         balance.Assets[varName].OutTotal += totalOut;
                         balance.Assets[varName].Total += calculatorFactory.getFloat(tRow.Sum) - totalOut;
+                        balance.Assets[varName].ConsTotal += calculatorFactory.getFloat(tRow.Sum) - totalOut;
                     });
                 balance.LiquidAssets += balance.Assets[varName].Total;
                 balance.ConsLiquidAssets += balance.Assets[varName].ConsTotal;
@@ -470,6 +471,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         angular.forEach(balance.Assets.CurrentAccount.Rows,
             function(tRow, tKey) {
                 balance.Assets.CurrentAccount.Total += calculatorFactory.getFloat(tRow.Sum);
+                balance.Assets.CurrentAccount.ConsTotal += calculatorFactory.getFloat(tRow.Sum);
             });
         balance.LiquidAssets += balance.Assets.CurrentAccount.Total;
         balance.ConsLiquidAssets += balance.Assets.CurrentAccount.ConsTotal;
@@ -512,6 +514,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                     function(tRow, tKey) {
                         var sum = calculatorFactory.getFloat(tRow.Sum);
                         balance.Assets[varName].Total += sum;
+                        balance.Assets[varName].ConsTotal += sum;
                     });
                 balance.Receivables += balance.Assets[varName].Total;
                 balance.ConsReceivables += balance.Assets[varName].ConsTotal;
@@ -533,6 +536,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                         var costPU = calculatorFactory.getFloat(tRow.CostPerUnit);
                         tRow.Sum = (quantity * costPU).toFixed(2);
                         balance.Assets[varName].Total += calculatorFactory.getFloat(tRow.Sum);
+                        balance.Assets[varName].ConsTotal += calculatorFactory.getFloat(tRow.Sum);
                     });
                 balance.Inventories += balance.Assets[varName].Total;
                 balance.ConsInventories += balance.Assets[varName].ConsTotal;
@@ -545,6 +549,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         angular.forEach(balance.Assets.ForSaleGoods.Rows,
             function(tRow, tKey) {
                 balance.Assets.ForSaleGoods.Total += calculatorFactory.getFloat(tRow.Sum);
+                balance.Assets.ForSaleGoods.ConsTotal += calculatorFactory.getFloat(tRow.Sum);
             });
         balance.Inventories += balance.Assets.ForSaleGoods.Total;
         balance.ConsInventories += balance.Assets.ForSaleGoods.ConsTotal;
@@ -569,16 +574,22 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                         var quantity = calculatorFactory.getFloat(tRow.Quantity);
                         var costB1 = calculatorFactory.getFloat(tRow.CostB1);
                         var costB2 = calculatorFactory.getFloat(tRow.CostB2);
-                        tRow.Revalue = (costB2 - costB1).toFixed(2);
-                        balance.Assets[varName].Total += (costB2 * quantity).toFixed(2);
+                        if(costB1>0){
+                            tRow.Revalue = (costB2 - costB1).toFixed(2);
+                        }
+                        balance.Assets[varName].Total += (costB2 * quantity);
+                        balance.Assets[varName].ConsTotal += (costB2 * quantity);
                     });
                 angular.forEach(balance.Assets[varName].OwnRows,
                     function(tRow, tKey) {
                         var quantity = calculatorFactory.getFloat(tRow.Quantity);
                         var costB1 = calculatorFactory.getFloat(tRow.CostBuy);
                         var costB2 = calculatorFactory.getFloat(tRow.CostB2);
-                        tRow.CostDiff = (costB2 - costB1).toFixed(2);
-                        balance.Assets[varName].Total += (costB2 * quantity).toFixed(2);
+                        if(costB1>0){
+                            tRow.CostDiff = (costB2 - costB1).toFixed(2);
+                        }
+                        balance.Assets[varName].Total += (costB2 * quantity);
+                        balance.Assets[varName].ConsTotal += (costB2 * quantity);
                     });
                 balance.TotalFixedAssets += balance.Assets[varName].Total;
                 balance.ConsTotalFixedAssets += balance.Assets[varName].ConsTotal;
@@ -592,8 +603,11 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             function(tRow, tKey) {
                 var costB1 = calculatorFactory.getFloat(tRow.CostB1);
                 var costB2 = calculatorFactory.getFloat(tRow.CostB2);
-                tRow.Revalue = (costB2 - costB1).toFixed(2);
-                balance.Assets.RealEstate.Total += (costB2).toFixed(2);
+                if(costB1>0){
+                    tRow.Revalue = (costB2 - costB1).toFixed(2);
+                }
+                balance.Assets.RealEstate.Total += (costB2);
+                balance.Assets.RealEstate.ConsTotal += (costB2);
             });
         balance.TotalFixedAssets += balance.Assets.RealEstate.Total;
         balance.ConsTotalFixedAssets += balance.Assets.RealEstate.ConsTotal;
@@ -606,6 +620,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         angular.forEach(balance.Assets.Investments.Rows,
             function(tRow, tKey) {
                 balance.Assets.Investments.Total += calculatorFactory.getFloat(tRow.Sum);
+                balance.Assets.Investments.ConsTotal += calculatorFactory.getFloat(tRow.Sum);
             });
 
 

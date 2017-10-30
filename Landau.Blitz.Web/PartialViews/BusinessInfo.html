@@ -1,228 +1,182 @@
 ﻿<div ng-controller="businessInfoController">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Организация бизнеса клиента, стартовый капитал, краткая информация о развитии бизнеса, в том числе и по всем компаниям группы</div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Информация о бизнесе</div>
 
 
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Организация о структуре бизнеса клиента, краткая информация о развитии бизнеса</label>
-                            <textarea type="text" class="form-control" placeholder="Организация о структуре бизнеса клиента, краткая информация о развитии бизнеса." ng-model="currentProject.BusinessInfo.Development"></textarea>
-                        </div>
-                    </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Обязательно указать следующую информацию:</label>
+                    <ol>
+                        <li>Краткую историю (происхождение капитала, основные этапы развития) по каждой связанной компании;</li>
+                        <li>Описать места бизнеса (желательно включение в проект фотографий объектов);</li>
+                        <li>Раскрыть все виды деятельности по каждой связанной компании;</li>
+                        <li>Описать схему бизнеса (производственный цикл, организация бизнеса);</li>
+                        <li>Указать каналы сбыта товаров/работ/услуг;</li>
+                        <li>Описать схему межфирменных расчетов между связанными компаниями (кто у кого арендует, у кого покупает или кому  продает и т.д.).</li>
+                        <li>Справочно: если деятельность клиента – производство, то необходимо включить в резюме калькуляцию себестоимости производимой продукции (основные позиции)»</li>
+                    </ol>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Описание всех видов деятельности, в том числе и по всем компаниям группы</div>
-
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Описание всех видов деятельности</label>
-                            <textarea type="text" class="form-control" placeholder="Описание всех видов деятельности" ng-model="currentProject.BusinessInfo.Activities"></textarea>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <textarea type="text" class="form-control" placeholder="Организация о структуре бизнеса клиента, краткая информация о развитии бизнеса." ng-model="currentProject.BusinessInfo.Development"></textarea>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Структура поставщиков
-                    <div class="clearfix "></div>
-                </div>
 
-                <div class="panel-body">
-                    <button class="btn btn-primary btn-xs header-button" ng-click="showNewSupplierStructure();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    <table st-table="suplCollection" st-safe-src="currentProject.BusinessInfo.SupplierStructures" class="table table-bordered table-condensed ng-table">
-                        <thead>
-                        <tr>
-                            <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Наименование</span></th>
-                            <th st-sort="Country"><span uib-tooltip="Страна резиденства">Страна</span></th>
-                            <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
-                            <th st-sort="Sum"><span uib-tooltip="Валюта и сумма">Сумма</span></th>
-                            <th st-sort="UsedSum"><span uib-tooltip="Освоенная сумма">Освоенная сумма</span></th>
-                            <th st-sort="UseName"><span uib-tooltip="Наименование продукции/работ/услуг">Цель</span></th>
-                            <th st-sort="PaymentCondition"><span uib-tooltip="Условия расчета">Условия расчета</span></th>
-                            <th st-sort="DeliveryCondition"><span uib-tooltip="Условия поставок">Условия поставок</span></th>
-                            <th st-sort="Terms"><span uib-tooltip="Срок сотрудничества (в годах)">Срок, г.</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="row in suplCollection" ng-right-click="clickBusinessPlace(row.Id)" menu-items="menuItems">
-                            <td ng-model="row.Name" content-editable></td>
-                            <td ng-model="row.Country" content-editable></td>
-                            <td ng-model="row.Document" content-editable></td>
-                            <td ng-model="row.Sum" content-editable></td>
-                            <td ng-model="row.UsedSum" content-editable></td>
-                            <td ng-model="row.UseName" content-editable></td>
-                            <td ng-model="row.PaymentCondition" content-editable></td>
-                            <td ng-model="row.DeliveryCondition" content-editable></td>
-                            <td ng-model="row.Terms" content-editable></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="9" class="text-center">
-                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                    <div class="form-group">
-                        <label>Комментарии</label>
-                        <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.BusinessInfo.SupplierStructuresComment"></textarea>
-                    </div>
-                </div>
-            </div>
-
-        
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Структура потребителей
-                    <div class="clearfix "></div>
-                </div>
-
-                <div class="panel-body">
-                    <button class="btn btn-primary btn-xs header-button" ng-click="showNewConsumerStructure();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    <table st-table="consCollection" st-safe-src="currentProject.BusinessInfo.ConsumerStructures" class="table table-bordered table-condensed ng-table">
-                        <thead>
-                        <tr>
-                            <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Наименование</span></th>
-                            <th st-sort="Country"><span uib-tooltip="Страна резиденства">Страна</span></th>
-                            <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
-                            <th st-sort="Sum"><span uib-tooltip="Валюта и сумма">Сумма</span></th>
-                            <th st-sort="UsedSum"><span uib-tooltip="Освоенная сумма">Освоенная сумма</span></th>
-                            <th st-sort="UseName"><span uib-tooltip="Наименование продукции/работ/услуг">Цель</span></th>
-                            <th st-sort="PaymentCondition"><span uib-tooltip="Условия расчета">Условия расчета</span></th>
-                            <th st-sort="DeliveryCondition"><span uib-tooltip="Условия поставок">Условия поставок</span></th>
-                            <th st-sort="Terms"><span uib-tooltip="Срок сотрудничества (в годах)">Срок, г.</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="row in consCollection" ng-right-click="clickConsumerStructure(row.Id)" menu-items="menuItems">
-                            <td ng-model="row.Name" content-editable></td>
-                            <td ng-model="row.Country" content-editable></td>
-                            <td ng-model="row.Document" content-editable></td>
-                            <td ng-model="row.Sum" content-editable></td>
-                            <td ng-model="row.UsedSum" content-editable></td>
-                            <td ng-model="row.UseName" content-editable></td>
-                            <td ng-model="row.PaymentCondition" content-editable></td>
-                            <td ng-model="row.DeliveryCondition" content-editable></td>
-                            <td ng-model="row.Terms" content-editable></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="9" class="text-center">
-                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                    <div class="form-group">
-                        <label>Комментарии</label>
-                        <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.BusinessInfo.ConsumerStructuresComment"></textarea>
-                    </div>
-                </div>
-            </div>
-
-        
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Периодичность закупа
-                    <div class="clearfix "></div>
-                </div>
-
-                <div class="panel-body">
-                    <button class="btn btn-primary btn-xs header-button" ng-click="showNewPeriodicityProcurement();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    <table st-table="procurCollection" st-safe-src="currentProject.BusinessInfo.PeriodicityProcurements" class="table table-bordered table-condensed ng-table">
-                        <thead>
-                        <tr>
-                            <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
-                            <th st-sort="Periodicity"><span uib-tooltip="Периодичность">Периодичность</span></th>
-                            <th st-sort="Condition"><span uib-tooltip="Условия закупа">Условия</span></th>
-                            <th st-sort="Place"><span uib-tooltip="Место закупа (торговая точка, рынок, район, город, область, страна)">Место</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="row in procurCollection" ng-right-click="clickPeriodicityProcurements(row.Id)" menu-items="menuItems">
-                            <td ng-model="row.Name" content-editable></td>
-                            <td ng-model="row.Periodicity" content-editable></td>
-                            <td ng-model="row.Condition" content-editable></td>
-                            <td ng-model="row.Place" content-editable></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="4" class="text-center">
-                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-
-
-        
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Если деятельность клиента – производство, то необходимо включить в резюме калькуляцию себестоимости производимой продукции (основные позиции)
-                </div>
-
-                <div class="panel-body">
-
-                </div>
-            </div>
-
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Расшифровка целевого использования кредитных средств. Дальнейший план развития бизнеса клиента. Как повлияет получение займа на общее состояние текущего бизнеса</div>
-
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Расшифровка целевого использования кредитных средств. Дальнейший план развития бизнеса клиента. Как повлияет получение займа на общее состояние текущего бизнеса</label>
-                            <textarea type="text" class="form-control" placeholder="Расшифровка целевого использования кредитных средств. Дальнейший план развития бизнеса клиента. Как повлияет получение займа на общее состояние текущего бизнеса" ng-model="currentProject.BusinessInfo.Plans"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Описание конкуренции и собственного положения на рынке</div>
-
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Описание конкуренции и собственного положения на рынке</label>
-                            <textarea type="text" class="form-control" placeholder="Описание конкуренции и собственного положения на рынке" ng-model="currentProject.BusinessInfo.MarketCompetition"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Структура поставщиков
+            <div class="clearfix "></div>
         </div>
 
+        <div class="panel-body panel-table">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewSupplierStructure();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="suplCollection" st-safe-src="currentProject.BusinessInfo.SupplierStructures" class="table table-bordered table-condensed ng-table">
+                <thead>
+                    <tr>
+                        <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Наименование</span></th>
+                        <th st-sort="Country"><span uib-tooltip="Страна резиденства">Страна</span></th>
+                        <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
+                        <th st-sort="Sum"><span uib-tooltip="Валюта и сумма">Сумма</span></th>
+                        <th st-sort="UsedSum"><span uib-tooltip="Освоенная сумма">Освоенная сумма</span></th>
+                        <th st-sort="UseName"><span uib-tooltip="Наименование продукции/работ/услуг">Цель</span></th>
+                        <th st-sort="PaymentCondition"><span uib-tooltip="Условия расчета">Условия расчета</span></th>
+                        <th st-sort="DeliveryCondition"><span uib-tooltip="Условия поставок">Условия поставок</span></th>
+                        <th st-sort="Terms"><span uib-tooltip="Срок сотрудничества (в годах)">Срок, г.</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in suplCollection" ng-right-click="clickBusinessPlace(row.Id)" menu-items="menuItems">
+                        <td ng-model="row.Name" content-editable></td>
+                        <td ng-model="row.Country" content-editable></td>
+                        <td ng-model="row.Document" content-editable></td>
+                        <td ng-model="row.Sum" content-editable></td>
+                        <td ng-model="row.UsedSum" content-editable></td>
+                        <td ng-model="row.UseName" content-editable></td>
+                        <td ng-model="row.PaymentCondition" content-editable></td>
+                        <td ng-model="row.DeliveryCondition" content-editable></td>
+                        <td ng-model="row.Terms" content-editable></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="9" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="form-group">
+                <label>Комментарии</label>
+                <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.BusinessInfo.SupplierStructuresComment"></textarea>
+            </div>
+        </div>
+    </div>
 
-        <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Социальное положение клиента/ учредителя (семья, пожилые родители, количество лиц на иждивении, возраст, образование клиента и т.п.) в случае, когда право собственности и управление не разделены 
-                    <div class="clearfix "></div>
-                </div>
 
-            <div class="panel-body">
-                <button class="btn btn-primary btn-xs header-button" ng-click="showNewClientFounderInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                <table st-table="cliFounderCollection" st-safe-src="currentProject.BusinessInfo.ClientFounderInfos" class="table table-bordered table-condensed ng-table">
-                    <thead>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Структура потребителей
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body panel-table">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewConsumerStructure();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="consCollection" st-safe-src="currentProject.BusinessInfo.ConsumerStructures" class="table table-bordered table-condensed ng-table">
+                <thead>
+                    <tr>
+                        <th st-sort="Name"><span uib-tooltip="Наименование поставщика">Наименование</span></th>
+                        <th st-sort="Country"><span uib-tooltip="Страна резиденства">Страна</span></th>
+                        <th st-sort="Document"><span uib-tooltip="Номер и дата договора (при наличии)">Договор</span></th>
+                        <th st-sort="Sum"><span uib-tooltip="Валюта и сумма">Сумма</span></th>
+                        <th st-sort="UsedSum"><span uib-tooltip="Освоенная сумма">Освоенная сумма</span></th>
+                        <th st-sort="UseName"><span uib-tooltip="Наименование продукции/работ/услуг">Цель</span></th>
+                        <th st-sort="PaymentCondition"><span uib-tooltip="Условия расчета">Условия расчета</span></th>
+                        <th st-sort="DeliveryCondition"><span uib-tooltip="Условия поставок">Условия поставок</span></th>
+                        <th st-sort="Terms"><span uib-tooltip="Срок сотрудничества (в годах)">Срок, г.</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in consCollection" ng-right-click="clickConsumerStructure(row.Id)" menu-items="menuItems">
+                        <td ng-model="row.Name" content-editable></td>
+                        <td ng-model="row.Country" content-editable></td>
+                        <td ng-model="row.Document" content-editable></td>
+                        <td ng-model="row.Sum" content-editable></td>
+                        <td ng-model="row.UsedSum" content-editable></td>
+                        <td ng-model="row.UseName" content-editable></td>
+                        <td ng-model="row.PaymentCondition" content-editable></td>
+                        <td ng-model="row.DeliveryCondition" content-editable></td>
+                        <td ng-model="row.Terms" content-editable></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="9" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="form-group">
+                <label>Комментарии</label>
+                <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.BusinessInfo.ConsumerStructuresComment"></textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Периодичность закупа
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body panel-table">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewPeriodicityProcurement();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="procurCollection" st-safe-src="currentProject.BusinessInfo.PeriodicityProcurements" class="table table-bordered table-condensed ng-table">
+                <thead>
+                    <tr>
+                        <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
+                        <th st-sort="Periodicity"><span uib-tooltip="Периодичность">Периодичность</span></th>
+                        <th st-sort="Condition"><span uib-tooltip="Условия закупа">Условия</span></th>
+                        <th st-sort="Place"><span uib-tooltip="Место закупа (торговая точка, рынок, район, город, область, страна)">Место</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in procurCollection" ng-right-click="clickPeriodicityProcurements(row.Id)" menu-items="menuItems">
+                        <td ng-model="row.Name" content-editable></td>
+                        <td ng-model="row.Periodicity" content-editable></td>
+                        <td ng-model="row.Condition" content-editable></td>
+                        <td ng-model="row.Place" content-editable></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Социальное положение клиента/ учредителя (семья, пожилые родители, количество лиц на иждивении, возраст, образование клиента и т.п.) в случае, когда право собственности и управление не разделены
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body panel-table">
+            <button class="btn btn-primary btn-xs header-button" ng-click="showNewClientFounderInfo();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="cliFounderCollection" st-safe-src="currentProject.BusinessInfo.ClientFounderInfos" class="table table-bordered table-condensed ng-table">
+                <thead>
                     <tr>
                         <th st-sort="Name"><span uib-tooltip="Фамилия, имя, отчество полностью">Ф.И.О</span></th>
                         <th st-sort="DateOfBirth"><span uib-tooltip="Дата рождения">Дата рож-я</span></th>
@@ -236,8 +190,8 @@
                         <th st-sort="Spouse"><span uib-tooltip="Ф.И.О супруга (-и)">Супруг(-а)</span></th>
                         <th st-sort="Children"><span uib-tooltip="Ф.И.О. детей и их возраст">Дети</span></th>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     <tr ng-repeat="row in cliFounderCollection" ng-right-click="clickClientFounderInfo(row.Id)" menu-items="menuItems">
                         <td ng-model="row.Name" content-editable></td>
                         <td><input type="date" ng-model="row.DateOfBirth"></td>
@@ -247,52 +201,83 @@
                         <td ng-model="row.PlaceOfRegistration" content-editable></td>
                         <td ng-model="row.PlaceOfResidence" content-editable></td>
                         <td ng-model="row.PhoneNumber" content-editable></td>
-                        <td><input type="checkbox" ng-model="row.IsMarried"/></td>
+                        <td><input type="checkbox" ng-model="row.IsMarried" /></td>
                         <td ng-model="row.Spouse" content-editable></td>
                         <td ng-model="row.Children" content-editable></td>
                     </tr>
-                    </tbody>
-                    <tfoot>
+                </tbody>
+                <tfoot>
                     <tr>
                         <td colspan="11" class="text-center">
                             <div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
                         </td>
                     </tr>
-                    </tfoot>
-                </table>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Кратко опишите запрашиваемую цель финансирования.  Распишите дальнейший план развития бизнеса клиента. Как повлияет получение займа на общее состояние текущего бизнеса.</div>
+
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Кратко опишите запрашиваемую цель финансирования.  Распишите дальнейший план развития бизнеса клиента. Как повлияет получение займа на общее состояние текущего бизнеса.</label>
+                        <textarea type="text" class="form-control" placeholder="Кратко опишите запрашиваемую цель финансирования.  Распишите дальнейший план развития бизнеса клиента. Как повлияет получение займа на общее состояние текущего бизнеса." ng-model="currentProject.BusinessInfo.Plans"></textarea>
+                    </div>
+                </div>
             </div>
-            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Описание конкуренции и собственного положения на рынке</div>
 
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">При повторном займе: какие изменения произошли в бизнесе</div>
-
-
-            <div class="panel-body">
-                <div class="form-group">
-                    <label>При повторном займе: какие изменения произошли в бизнесе</label>
-                    <textarea type="text" class="form-control" placeholder="При повторном займе: какие изменения произошли в бизнесе" ng-model="currentProject.BusinessInfo.Changes"></textarea>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Описание конкуренции и собственного положения на рынке</label>
+                        <textarea type="text" class="form-control" placeholder="Описание конкуренции и собственного положения на рынке" ng-model="currentProject.BusinessInfo.MarketCompetition"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Краткое описание целевого использования кредита</div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">При повторном займе: какие изменения произошли в бизнесе с момента последнего анализа</div>
 
 
-            <div class="panel-body">
-                <div class="form-group">
-                    <label>Краткое описание целевого использования кредита</label>
-                    <textarea type="text" class="form-control" placeholder="Краткое описание целевого использования кредита" ng-model="currentProject.BusinessInfo.IntendedUse"></textarea>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>При повторном займе: какие изменения произошли в бизнесе с момента последнего анализа</label>
+                        <textarea type="text" class="form-control" placeholder="При повторном займе: какие изменения произошли в бизнесе с момента последнего анализа" ng-model="currentProject.BusinessInfo.Changes"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Укажите какие были произведены инвестиции за последний период, включая крупные приобретения вне бизнеса, для личных целей</div>
+
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Укажите какие были произведены инвестиции за последний период, включая крупные приобретения вне бизнеса, для личных целей</label>
+                        <textarea type="text" class="form-control" placeholder="Укажите какие были произведены инвестиции за последний период, включая крупные приобретения вне бизнеса, для личных целей" ng-model="currentProject.BusinessInfo.IntendedUse"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-primary">

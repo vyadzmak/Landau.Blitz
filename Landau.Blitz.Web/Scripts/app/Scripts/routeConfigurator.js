@@ -192,6 +192,17 @@
         }
     })
 
+        .state("main.dashboard.project.consolidatedBalance", {
+            url: "/consolidatedBalance",
+            templateUrl: "PartialViews/ConsolidatedBalance.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Консолидированный баланс";
+            }
+        })
+
     .state("main.dashboard.project.finDataCrossChecking", {
         url: "/finDataCrossChecking",
         templateUrl: "PartialViews/FinDataCrossChecking.html",

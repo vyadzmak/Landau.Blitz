@@ -44,14 +44,14 @@
                         <div class="form-group">
                             <label class="col-sm-8">Альтернативная ставка инвестирования (ставка вознаграждения при вложении средств на депозит)</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.AlternativeBid">
+                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.AlternativeBid" ng-change="calculateSSK()">
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label class="col-sm-8">Ставка вознаграждения по кредиту (предлагаемая ставка кредитования на данный инвестиционный проект)</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.CreditBid">
+                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.CreditBid" ng-change="calculateSSK()">
                             </div>
 
                         </div>
@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label class="col-sm-8">Средневзвешенная стоимость капитала, %</label>
                             <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.SSK">
+                                <input type="number" disabled class="form-control" ng-model="ssk">
                             </div>
 
                         </div>
@@ -83,7 +83,7 @@
             <div class="clearfix "></div>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body panel-table">
             <button class="btn btn-primary btn-xs header-button" ng-click="showNewExpectedRevenue();"><i class="fa fa-plus" aria-hidden="true"></i></button>
             <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
                 <thead>
@@ -127,7 +127,7 @@
             <div class="clearfix "></div>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body panel-table">
             <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
@@ -160,7 +160,7 @@
             <div class="clearfix "></div>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body panel-table">
             <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
@@ -226,12 +226,12 @@
             <div class="clearfix "></div>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body panel-table">
             <button class="btn btn-primary btn-xs header-button" ng-click="showNewConstExpenses();"><i class="fa fa-plus" aria-hidden="true"></i></button>
             <table st-table="constExpCollection" st-safe-src="currentProject.ProjectAnalysis.ConstExpenses" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Type"><span uib-tooltip="Вид переменных затрат">Вид затрат</span></th>
+                    <th st-sort="Type"><span uib-tooltip="Вид постоянных затрат">Вид затрат</span></th>
                     <th st-sort="Justification"><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
                     <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
                 </tr>
