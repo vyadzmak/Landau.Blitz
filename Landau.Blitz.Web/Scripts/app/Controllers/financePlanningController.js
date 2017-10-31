@@ -1,28 +1,3 @@
-function rowStyle(row, index) {
-    var classes = ['active bold-trow', 'success', 'info', 'warning', 'danger'];
-
-    if (row.Calculate) {
-        return {
-            classes: classes[0]
-        }
-    }
-
-    return {};
-}
-
-this.setData = function(item) {
-    try {
-        if (item == undefined || item == null) return "-";
-        var d = new Date(item);
-        var curr_date = d.getDate();
-        var curr_month = d.getMonth() + 1;
-        var curr_year = d.getFullYear();
-        item = curr_date + "/" + curr_month + "/" + curr_year;
-        return item;
-    } catch (e) {
-        return "-"
-    }
-}
 
 var financePlanningController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectHttpService, projectFactory, calculatorFactory) {
     usSpinnerService.stop("spinner-1");
@@ -49,78 +24,9 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
             {Id:2,Name:"заемные средства (кредит Банка)"},
             {Id:3,Name:"заемные средства (частный заем)"}
         ];
-        //var t = JSON.parse($scope.currentProject.FinancePlanning.Table);
-        //for (var i = 0; i < $scope.currentProject.FinancePlanning.Table.length; i++) {
-        //    var ob = ($scope.currentProject.FinancePlanning.Table[i]);
-        //    ob.Term = setData(ob.Term);
-        //    $scope.currentProject.FinancePlanning.Table[i] = ob;
-        //}
-
-        //$('#financePlanningTable').bootstrapTable({
-        //    idField: 'CostItem',
-        //    pagination: false,
-        //    search: true,
-        //    data: $scope.currentProject.FinancePlanning.Table,
-
-        //    columns: [{
-        //            field: 'CostItem',
-        //            title: 'Статья затрат',
-        //        }, {
-        //            field: 'Supplier',
-        //            title: 'Поставщик',
-        //        },
-        //        {
-        //            field: 'Amount',
-        //            title: 'Сумма',
-        //        },
-        //        {
-        //            field: 'SourceOfFinancing',
-        //            title: 'Источник финансирования',
-        //        },
-        //        {
-        //            field: 'Term',
-        //            title: 'Срок',
-
-        //        }
-        //    ],
-        //    contextMenu: '#context-menu',
-        //    onContextMenuItem: function(row, $el) {
-        //        if ($el.data("item") == "edit") {
-        //            $scope.updateItem(row);
-        //        };
-        //        if ($el.data("item") == "delete") {
-        //            $scope.deleteItem(row);
-        //        };
-        //    }
-        //});
-
-
-
-
     };
     $scope.init();
-
-    $scope.deleteItem = function(row) {
-        for (var i = 0; i < $scope.currentProject.FinancePlanning.Table.length; i++) {
-            if ($scope.currentProject.FinancePlanning.Table[i].Id == row.Id) {
-                $scope.currentProject.FinancePlanning.Table.splice(i, 1);
-                $('#financePlanningTable').bootstrapTable('load', $scope.currentProject.FinancePlanning.Table);
-                $('#financePlanningTable').bootstrapTable('resetView');
-            }
-        }
-    }
-
-    $scope.updateItem = function(row) {
-        var modalView = 'PartialViews/Modals/FinancePlanning/SupplierModal.html';
-        var modalController = manageSupplierController;
-        var found = $filter('filter')($scope.currentProject.FinancePlanning.Table, { Id: row.Id }, true);
-        if (found.length > 0) {
-            var element = found[0];
-            element.Term = new Date(element.Term);
-            $scope.addNewModal(modalView, modalController, element, $scope.currentProject.FinancePlanning.Table);
-        }
-    }
-
+    
     $scope.addNewModal = function(modalView, modalCtrl, element, elements) {
 
 
@@ -160,11 +66,6 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
             }
             $scope.mElement = {};
 
-            $('#financePlanningTable').bootstrapTable('load', $scope.currentProject.FinancePlanning.Table);
-            $('#financePlanningTable').bootstrapTable('resetView');
-            ///alert(JSON.stringify($scope.currentProject.ClientData.BusinessPlaces));
-            // templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
-
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -181,11 +82,7 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
         $scope.mElement = {};
         $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.FinancePlanning.Table);
     }
-
-    $("#addFP").click(function() {
-        $scope.showNewFinPlan();
-    });
-
+    
     $scope.addNewFinancePlan = function() {
         if (!$scope.currentProject.FinancePlanning.Plans) {
             $scope.currentProject.FinancePlanning.Plans = [];
@@ -202,8 +99,6 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
 
         $scope.mElement = $scope.editElement;
         $scope.elements = $scope.currentProject.FinancePlanning.Plans;
-
-        //alert(id);
     };
 
     $scope.deleteData = function () {
@@ -245,11 +140,6 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
     };
 
     $scope.menuItems = [
-        //{
-        //    text: "Редактировать", //menu option text 
-        //    callback: $scope.EditElement, //function to be called on click  
-        //    disabled: false //No click event. Grayed out option. 
-        //},
         {
             text: "Удалить",
             callback: $scope.RemoveElement, //function to be called on click  
@@ -266,51 +156,11 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
     }
 
     $scope.calculateFinancePlan = function() {
-        var ownFunds = 0;
-        var borrowedFunds = 0;
-        var totalFunds = 0;
-
-        var woPosOwnFunds = 0;
-        var woPosBorrowedFunds = 0;
-        var woPosTotalFunds = 0;
-
-        angular.forEach($scope.currentProject.FinancePlanning.Plans, function(tRow, pKey) {
-            if (tRow.Source.Id === 1) {
-                ownFunds += calculatorFactory.getFloat(tRow.Sum);
-                if (tRow.Expenditure.Id !== 1 && tRow.Expenditure.Id !== 2) {
-                    woPosOwnFunds += calculatorFactory.getFloat(tRow.Sum);
-                }
-            } else {
-                borrowedFunds += calculatorFactory.getFloat(tRow.Sum);
-                if (tRow.Expenditure.Id !== 1 && tRow.Expenditure.Id !== 2) {
-                    woPosBorrowedFunds += calculatorFactory.getFloat(tRow.Sum);
-                }
-            }
-        });
-
-        totalFunds = borrowedFunds + ownFunds;
-        woPosTotalFunds = woPosOwnFunds + woPosBorrowedFunds;
-
-        $scope.currentProject.FinancePlanning.OwnResources = ownFunds;
-        $scope.currentProject.FinancePlanning.BorrowedResources = borrowedFunds;
-        $scope.currentProject.FinancePlanning.TotalResources = totalFunds;
-        $scope.currentProject.FinancePlanning.WoPosOwnResources = woPosOwnFunds;
-        $scope.currentProject.FinancePlanning.WoPosBorrowedResources = woPosBorrowedFunds;
-        $scope.currentProject.FinancePlanning.WoPosTotalResources = woPosTotalFunds;
+        calculatorFactory.calculateFinancePlanningData($scope.currentProject);
     }
 
     $scope.calculateCreditData = function() {
-        var proposedSum = calculatorFactory
-            .getFloat($scope.currentProject.FinancePlanning.ProposedSum);
-        var proposedCashSum = calculatorFactory
-            .getFloat($scope.currentProject.FinancePlanning.ProposedCashSum);
-        $scope.currentProject.FinancePlanning.ProposedCashlessSum = proposedSum - proposedCashSum;
-        var proposedTerm = calculatorFactory
-            .getFloat($scope.currentProject.FinancePlanning.ProposedTerm);
-        var proposedRate = calculatorFactory
-            .getFloat($scope.currentProject.FinancePlanning.ProposedRate);
-        $scope.currentProject.FinancePlanning
-            .MonthlyFee = (proposedSum + proposedTerm / 12 * proposedRate * proposedSum/100) / proposedTerm;
+        calculatorFactory.calculateCreditData($scope.currentProject);
     }
 
 };

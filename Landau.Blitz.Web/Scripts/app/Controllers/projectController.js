@@ -125,6 +125,11 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
 
     }
 
+    $scope.$on('$destroy', function () {
+        alert("Destroying scope");
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+    });
+
     $scope.$watch('currentProject', function(newValue, oldValue) {
         if (newValue != oldValue) {
             calculatorFactory.calculateData($scope.currentProject);
@@ -152,6 +157,6 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
         e.preventDefault()
 
         $(this).tab('show')
-    })
+    });
 };
 blitzApp.controller("projectController", ["$scope", "$stateParams", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "$interval", "usSpinnerService", "projectFactory", "calculatorFactory", "projectHttpService", projectController]);

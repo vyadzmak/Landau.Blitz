@@ -6,49 +6,10 @@ var finDataCrossCheckingController = function ($scope, $http, $location, $state,
             $scope.currentProject.FinDataCrossChecking.Factors = [];
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
         }
-        $scope.calculateCrossChecking();
     }
 
     $scope.calculateCrossChecking = function () {
-        try {
-            var len = $scope.currentProject.ConsolidatedBalance.length;
-            $scope.currentProject.FinDataCrossChecking.Period =
-                moment($scope.currentProject.ConsolidatedBalance[len - 1].Date) - moment($scope.currentProject.ConsolidatedBalance[len - 2].Date);
-            $scope.currentProject.FinDataCrossChecking
-                .Period = $scope.currentProject.FinDataCrossChecking.Period / 3600 / 1000 / 24 / 30;
-            $scope.currentProject.FinDataCrossChecking.ActualIncreaseSK =
-                calculatorFactory.getFloat($scope.currentProject.ConsolidatedBalance[len - 1].ConsEquity) -
-                calculatorFactory.getFloat($scope.currentProject.ConsolidatedBalance[len - 2].ConsEquity);
-            $scope.currentProject.FinDataCrossChecking.ActualSK = calculatorFactory
-                .getFloat($scope.currentProject.ConsolidatedBalance[len - 1].ConsEquity);
-
-            var totalFactors = 0;
-            angular.forEach($scope.currentProject.FinDataCrossChecking.Factors, function (factor, fKey) {
-                totalFactors += calculatorFactory.getFloat(factor.Sum);
-            });
-            $scope.currentProject.FinDataCrossChecking.ExpectedSK =
-                calculatorFactory.getFloat($scope.currentProject.ConsolidatedBalance[len - 2].ConsEquity) +
-                totalFactors +
-                calculatorFactory.getFloat($scope.currentProject.FinDataCrossChecking.ExpectedIncreaseSK);
-
-            $scope.currentProject.FinDataCrossChecking.DiffSK =
-                calculatorFactory.getFloat($scope.currentProject.FinDataCrossChecking.ActualSK) -
-                calculatorFactory.getFloat($scope.currentProject.FinDataCrossChecking.ExpectedSK);
-
-            projectFactory.setCrossChecking($scope.currentProject.FinDataCrossChecking);
-            $scope.currentProject = projectFactory.getToCurrentProject();
-        }
-        catch (except) {
-            var dialog = BootstrapDialog.alert({
-                title: 'Невозможно построить Cross-Checking',
-                message: 'Не удалось рассчитать Cross-Checking. Проверьте правильность заполнения баланса',
-                type: BootstrapDialog.TYPE_DANGER,
-                size: BootstrapDialog.SIZE_SMALL,
-                closable: true
-            });
-            dialog.setSize(BootstrapDialog.SIZE_SMALL);
-        }
-
+        calculatorFactory.calculateCrossCheckData($scope.currentProject);
     }
 
     $scope.addNewRow = function (rows) {

@@ -480,6 +480,7 @@
     <Content Include="Scripts\app\Services\adminStatisticsHttpService.js" />
     <Content Include="Scripts\app\Services\analyzeProjectCalculatorFactory.js" />
     <Content Include="Scripts\app\Services\balanceCalculatorFactory.js" />
+    <Content Include="Scripts\app\Services\mathFactory.js" />
     <Content Include="Scripts\app\Services\calculatorFactory.js" />
     <Content Include="Scripts\app\Services\catalogsHttpService.js" />
     <Content Include="Scripts\app\Services\companiesHttpService.js" />

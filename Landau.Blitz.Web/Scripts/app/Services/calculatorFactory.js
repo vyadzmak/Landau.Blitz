@@ -1,48 +1,53 @@
-blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'oddsCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', 'analyzeProjectCalculatorFactory', function($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, oddsCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory, analyzeProjectCalculatorFactory) {
+blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'oddsCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', 'analyzeProjectCalculatorFactory', 'projectFactory', function ($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, oddsCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory, analyzeProjectCalculatorFactory, projectFactory) {
     var calculatorFactory = {};
-    var currentProject = {};
 
-    var calculateBalanceData = function(currentProject) {
-        balanceCalculatorFactory.calculateData(currentProject);
-
-    };
-
-    var calculateOpiuData = function(currentProject) {
-        opiuCalculatorFactory.calculateData(currentProject);
-
-    };
-
-    var calculateOddsData = function(currentProject) {
-        oddsCalculatorFactory.calculateData(currentProject);
-
-    };
-
-    var calculateCrossCheckData = function(currentProject) {
-        crossCheckCalculatorFactory.calculateData(currentProject);
-
-    };
-
-    var calculateFinancePlanningData = function(currentProject) {
-        financePlanningCalculatorFactory.calculateData(currentProject);
-
-    };
-
-    var calculateProjectAnalyzeData = function(currentProject) {
-        analyzeProjectCalculatorFactory.calculateData(currentProject);
-
-    };
-
-    calculatorFactory.calculateData = function(currentProject) {
-        console.log('Заглушка калькуляции данных');
-        console.log(currentProject);
-    }
-
-    calculatorFactory.getFloat = function(value) {
+    calculatorFactory.getFloat = function (value) {
         if (!isNaN(parseFloat(value)) && isFinite(value)) {
             return parseFloat(value);
         } else {
             return 0;
         }
+    }
+
+    calculatorFactory.calculateBalanceData = function (currentProject, balanceId, companyBalanceId) {
+        currentProject = balanceCalculatorFactory.calculateData(currentProject, balanceId, companyBalanceId);
+        currentProject = balanceCalculatorFactory.calculateConsolidatedBalance(currentProject);
+        currentProject = crossCheckCalculatorFactory.calculateData(currentProject);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateOpiuData = function (currentProject, opiu) {
+        opiuCalculatorFactory.calculateData(currentProject, opiu);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateOddsData = function (currentProject) {
+        oddsCalculatorFactory.calculateData(currentProject);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateCrossCheckData = function (currentProject) {
+        currentProject = crossCheckCalculatorFactory.calculateData(currentProject);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateFinancePlanningData = function (currentProject) {
+        currentProject = financePlanningCalculatorFactory.calculateData(currentProject);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateCreditData = function (currentProject) {
+        currentProject = financePlanningCalculatorFactory.calculateCreditData(currentProject);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateProjectAnalyzeData = function (currentProject) {
+        analyzeProjectCalculatorFactory.calculateData(currentProject);
+        projectFactory.setProject(currentProject);
+    };
+
+    calculatorFactory.calculateData = function (currentProject) {
+        console.log(currentProject);
     }
 
     return calculatorFactory;

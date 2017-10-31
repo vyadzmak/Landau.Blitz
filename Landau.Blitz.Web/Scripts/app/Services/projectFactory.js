@@ -1,6 +1,5 @@
 blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'dataInitializer', 'balanceTableFactory', function ($rootScope, clientDataInitializer, dataInitilizer, balanceTableFactory) {
     var projectFactory = {};
-    var currentProject = {};
 
     function initLineOpiu(title, varName, activity) {
 
@@ -260,7 +259,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
     //-------------------------------init functions --------------------------------------//
     projectFactory.initProject = function () {
-        currentProject = {};
+        var currentProject = {};
         currentProject.Id = -1;
         currentProject.ParentProject = {};
         currentProject.ParentExists = false;
@@ -270,6 +269,8 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ProjectAnalysis = {};
         currentProject.ContractAnalysis = {};
         currentProject.BusinessInfo = {};
+        currentProject.ConsolidatedBalance = [];
+        currentProject.ConsolidatedOpiu = [];
         currentProject.FinDataBalance = {};
         currentProject.FinDataCrossChecking = {};
         currentProject.FinDataOpiu = {};
@@ -302,6 +303,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ProjectAnalysis = currentProject.ProjectContent.ProjectAnalysis;
         currentProject.BusinessInfo = currentProject.ProjectContent.BusinessInfo;
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
+        currentProject.ConsolidatedBalance = currentProject.ProjectContent.ConsolidatedBalance;
 
         if (currentProject.ParentExists) {
             currentProject.FinDataBalance.PreviousDate = new Date();// указать дату б2
@@ -433,6 +435,10 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         });
 
         return this.currentProject;
+    }
+
+    projectFactory.setProject = function (currentProject) {
+        this.currentProject = currentProject;
     }
     //-------------------------------end init functions ---------------------------------//
 
