@@ -123,18 +123,6 @@
         }
     })
 
-
-    .state("main.dashboard.project.creditData", {
-        url: "/creditData",
-        templateUrl: "PartialViews/CreditData.html",
-        onEnter: function($window, $state) {
-            if (!$window.sessionStorage.getItem("UserData")) {
-                $state.go("main.login");
-            }
-            $window.document.title = "Данные о кредите";
-        }
-    })
-
     .state("main.dashboard.project.financePlanning", {
         url: "/financePlanning",
         templateUrl: "PartialViews/FinancePlanning.html",
@@ -236,18 +224,7 @@
             $window.document.title = "Финдата ОДДС";
         }
     })
-
-    .state("main.dashboard.project.largeExpenses", {
-        url: "/largeExpenses",
-        templateUrl: "PartialViews/LargeExpenses.html",
-        onEnter: function($window, $state) {
-            if (!$window.sessionStorage.getItem("UserData")) {
-                $state.go("main.login");
-            }
-            $window.document.title = "Крупные расходы";
-        }
-    })
-
+        
     .state("main.dashboard.project.provision", {
         url: "/provision",
         templateUrl: "PartialViews/Provision.html",
@@ -258,18 +235,7 @@
             $window.document.title = "Обеспечение";
         }
     })
-
-    .state("main.dashboard.project.dataDamu", {
-        url: "/dataDamu",
-        templateUrl: "PartialViews/DataDamu.html",
-        onEnter: function($window, $state) {
-            if (!$window.sessionStorage.getItem("UserData")) {
-                $state.go("main.login");
-            }
-            $window.document.title = "Данные по гарантии ДАМУ";
-        }
-    })
-
+        
     .state("main.dashboard.project.appendix", {
         url: "/appendix",
         templateUrl: "PartialViews/Appendix.html",

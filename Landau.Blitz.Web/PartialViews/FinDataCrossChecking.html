@@ -76,6 +76,42 @@
         </div>
     </div>
 
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            ФАКТОРЫ ВЛИЯЮЩИЕ НА РАЗМЕР СК
+            <div class="clearfix "></div>
+        </div>
 
+        <div class="panel-body panel-table">
+            <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(currentProject.FinDataCrossChecking.Factors);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="currentProject.FinDataCrossChecking.Factors" class="table table-bordered table-condensed ng-table">
+                <thead>
+                <tr>
+                    <th st-sort="IsMoney"><span uib-tooltip="Денежная статья/Неденежная статья. Отметить, если статья является денежной.
+                                                Под денежными понимается расходы повлекшие рельный отток денег, например, 'путешествие за границу' и т.д. под
+                                                'не денежными' понимается методологические изменения, например, сбережения, заемщика вынесены за баланс, т.к.
+                                                не были подтверждены, либо их конечная цель не связана с бизнесом. Либо 'Переоценка активов в сторону
+                                                увеличения/уменьшения' и т.д.">Денежная статья</span></th>
+                    <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Сумма. Нужно указывать отрицательные значения, если фактор привел к уменьшению СК">Сумма</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in currentProject.FinDataCrossChecking.Factors" ng-right-click="clickRightTableRow(currentProject.FinDataCrossChecking.Factors, row.Id)" menu-items="menuItems">
+                    <td><input type="checkbox" ng-model="row.IsMoney"/></td>
+                    <td ng-model="row.Name" content-editable></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateCrossChecking()"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 
 </div>

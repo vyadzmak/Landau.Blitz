@@ -305,7 +305,6 @@
     <Content Include="PartialViews\Companies.html" />
     <Content Include="PartialViews\Appendix.html" />
     <Content Include="PartialViews\Conclusion.html" />
-    <Content Include="PartialViews\CreditData.html" />
     <Content Include="PartialViews\Dashboard.html" />
     <Content Include="PartialViews\DataDamu.html" />
     <Content Include="PartialViews\Editor.html" />
@@ -415,7 +414,6 @@
     <Content Include="Scripts\app\Controllers\companiesController.js" />
     <Content Include="Scripts\app\Controllers\appendixController.js" />
     <Content Include="Scripts\app\Controllers\conclusionController.js" />
-    <Content Include="Scripts\app\Controllers\creditDataController.js" />
     <Content Include="Scripts\app\Controllers\dashBoardController.js" />
     <Content Include="Scripts\app\Controllers\dataDamuController.js" />
     <Content Include="Scripts\app\Controllers\editorController.js" />

@@ -176,19 +176,12 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
         });
 
         modalInstance.result.then(function() {
-            var url = $$ApiUrl + "/projects"
+            var url = $$ApiUrl + "/projects";
             $scope.mElement = projectFactory.initProjectData($scope.mElement);
             $scope.mElement.ClientData.OrganizationName = $scope.mElement.ProjectSetting.SelectedClient.Name;
 
-            $scope.mElement.ProjectAnalysis.CreditBid = $scope.mElement.PercentBid;
             $scope.mElement.ProjectAnalysis.DollarRate = $scope.mElement.DollarRate;
-            $scope.mElement.ProjectAnalysis.AlternativeBid = $scope.mElement.AlternateBid;
 
-            $scope.mElement.ProjectAnalysis.ActivityService = $scope.mElement.ActivityService;
-            $scope.mElement.ProjectAnalysis.ActivityTrade = $scope.mElement.ActivityTrade;
-            $scope.mElement.ProjectAnalysis.ActivityAgriculture = $scope.mElement.ActivityAgriculture;
-            $scope.mElement.ProjectAnalysis.ActivityProduction = $scope.mElement.ActivityProduction;
-            $scope.mElement.ProjectAnalysis.BalanceDate = $scope.mElement.BalanceDate;
 
 
 
@@ -295,13 +288,6 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
                 $scope.mElement = {};
                 $scope.mElement = projectFactory.initProject();
                 $scope.mElement.CreatorId = $scope.userData.UserId;
-                $scope.mElement.ActivityService = $scope.projectSetting.ActivityService;
-                $scope.mElement.ActivityTrade = $scope.projectSetting.ActivityTrade;
-                $scope.mElement.ActivityAgriculture = $scope.projectSetting.ActivityAgriculture;
-                $scope.mElement.ActivityProduction = $scope.projectSetting.ActivityProduction;
-                $scope.mElement.BalanceDate = $scope.projectSetting.BalanceDate;
-
-
 
                 $scope.mElement.ProjectSetting = $scope.projectSetting;
                 $scope.selectClient();

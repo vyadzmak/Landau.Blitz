@@ -33,12 +33,8 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     };
 
     calculatorFactory.calculateData = function(currentProject) {
-        calculateBalanceData(currentProject);
-        calculateOpiuData(currentProject);
-        calculateOddsData(currentProject);
-        calculateCrossCheckData(currentProject);
-        calculateFinancePlanningData(currentProject);
-        calculateProjectAnalyzeData(currentProject);
+        console.log('Заглушка калькуляции данных');
+        console.log(currentProject);
     }
 
     calculatorFactory.getFloat = function(value) {

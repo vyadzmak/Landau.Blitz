@@ -28,7 +28,7 @@
                                 <label>Дата начала ОПиУ</label>
                                 <input class="form-control" type="month" ng-model="row.OpiuStartMonth" />
                                 <label ng-show="!row.Seasonality">Количество месяцев(не касается сезонного бизнеса)</label>
-                                <input ng-show="!row.Seasonality" class="form-control" type="number" min="6" maxlength="2" ng-model="row.OpiuMonthsQuantity" />
+                                <input ng-show="!row.Seasonality" class="form-control" type="number" maxlength="2" ng-model="row.OpiuMonthsQuantity" />
                                 <hr ng-repeat-end/>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-lg-6" ng-show="!company.Seasonality">
                             <label>Количество месяцев(не касается сезонного бизнеса)</label>
-                            <input class="form-control" type="number" min="6" maxlength="2" ng-model="company.OpiuMonthsQuantity" />
+                            <input class="form-control" type="number" maxlength="2" ng-model="company.OpiuMonthsQuantity" />
                         </div>
                     </div>
                     <hr  ng-repeat-end/>
