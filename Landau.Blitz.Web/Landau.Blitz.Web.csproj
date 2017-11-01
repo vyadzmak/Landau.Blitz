@@ -293,6 +293,7 @@
     <Content Include="node_modules\angular-tree-view\src\eaTreeViewItem.directive.js" />
     <Content Include="node_modules\angular-tree-view\src\treeViewItem.html" />
     <Content Include="PartialViews\AdminStatistics.html" />
+    <Content Include="PartialViews\ConsolidatedOpiu.html" />
     <Content Include="PartialViews\ContractAnalysis.html" />
     <Content Include="PartialViews\BlockDetails.html" />
     <Content Include="PartialViews\BlockManagment.html" />
@@ -405,6 +406,7 @@
     <Content Include="Scripts\angular.treeview.js" />
     <Content Include="Scripts\angularjs-dropdown-multiselect.min.js" />
     <Content Include="Scripts\app\Controllers\adminStatisticsController.js" />
+    <Content Include="Scripts\app\Controllers\consolidatedOpiuController.js" />
     <Content Include="Scripts\app\Controllers\contractAnalysisController.js" />
     <Content Include="Scripts\app\Controllers\blockDetailsController.js" />
     <Content Include="Scripts\app\Controllers\businessInfoController.js" />

@@ -44,14 +44,14 @@
                         <div class="form-group">
                             <label class="col-sm-8">Альтернативная ставка инвестирования (ставка вознаграждения при вложении средств на депозит)</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.AlternativeBid" ng-change="calculateSSK()">
+                                <input type="number" step="0.01" class="form-control" ng-model="currentProject.ProjectAnalysis.AlternativeBid" ng-change="calculateProjectAnalysis()">
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label class="col-sm-8">Ставка вознаграждения по кредиту (предлагаемая ставка кредитования на данный инвестиционный проект)</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.CreditBid" ng-change="calculateSSK()">
+                                <input type="number" step="0.01" class="form-control" ng-model="currentProject.ProjectAnalysis.CreditBid" ng-change="calculateProjectAnalysis()">
                             </div>
 
                         </div>
@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label class="col-sm-8">Средневзвешенная стоимость капитала, %</label>
                             <div class="col-sm-4">
-                                <input type="number" disabled class="form-control" ng-model="ssk">
+                                <input type="number" disabled class="form-control" ng-model="currentProject.ProjectAnalysis.SSK">
                             </div>
 
                         </div>
@@ -97,15 +97,15 @@
                 <tbody>
                 <tr ng-repeat="row in expRevCollection" ng-right-click="clickExpectedRevenue(row.Id)" menu-items="menuItems">
                     <td ng-model="row.Income" content-editable></td>
-                    <td ng-model="row.Revenue" content-editable edit-callback="calculateCostPrice(text, text2, row)"></td>
+                    <td ng-model="row.Revenue" content-editable edit-callback="calculateProjectAnalysis()"></td>
                     <td ng-model="row.ReachTerm" content-editable edit-callback="createRevenueDynamics(text, text2, row)"></td>
                     <td style="padding: 0">
                         <table>
-                            <tr>
-                                <td ng-repeat="mCell in row.RevenueDynamics" ng-model="mCell.Revenue" content-editable>
-                                            
-                                </td>
-                            </tr>
+                            <tbody style="padding: 0">
+                                <tr>
+                                    <td ng-repeat="mCell in row.RevenueDynamics track by mCell.Id" ng-model="mCell.Revenue" content-editable></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </td>
                 </tr>
@@ -140,7 +140,7 @@
                 <tr ng-repeat="row in expRevCollection">
                     <td>{{row.Income}}</td>
                     <td ng-model="row.Justification" content-editable></td>
-                    <td ng-model="row.Markup" content-editable edit-callback="calculateCostPrice(text, text2, row)"></td>
+                    <td ng-model="row.Markup" content-editable edit-callback="calculateProjectAnalysis()"></td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -206,7 +206,7 @@
                 <tr ng-repeat="row in varExpCollection" ng-right-click="clickVarExpenses(row.Id)" menu-items="menuItems">
                     <td ng-model="row.Type" content-editable></td>
                     <td ng-model="row.Justification" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateTotalExpenses()"></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateProjectAnalysis()"></td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -240,7 +240,7 @@
                 <tr ng-repeat="row in constExpCollection" ng-right-click="clickConstExpenses(row.Id)" menu-items="menuItems">
                     <td ng-model="row.Type" content-editable></td>
                     <td ng-model="row.Justification" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateTotalExpenses()"></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateProjectAnalysis()"></td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -253,24 +253,6 @@
             </table>
         </div>
     </div>
-
-
-    <!--<div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Сроки ввода проекта в эксплуатацию</div>
-
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Описание</label>
-                            <textarea type="text" class="form-control" placeholder="Сроки" ng-model="currentProject.ProjectAnalysis.ProjectTerms"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>-->
 
         <div class="row">
             <div class="col-md-12">
@@ -344,52 +326,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-8">Запас прочности</label>
+                            <label class="col-sm-8">Запас прочности, %</label>
                             <div class="col-sm-4">
                                 <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.MarginOfSafety">
                             </div>
 
                         </div>
-
-                        <!--<div class="form-group">
-                            <label class="col-sm-8">Наценка</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.ExtraCharge">
-                            </div>
-
-                        </div>
                         <div class="form-group">
-                            <label class="col-sm-8">Себестоимость</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.SelfCost">
-                            </div>
-
+                            <label>Комментарии</label>
+                            <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.ProjectAnalysis.Comments"></textarea>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Валовая прибыль</label>
-                            <div class="col-sm-4">
-                                <input type="number" readonly class="form-control" ng-model="currentProject.ProjectAnalysis.AGrossProfit">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Переменные затраты</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.VariableCosts">
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-8">Постоянные затраты</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.FixedCosts">
-                            </div>
-
-                        </div>-->
-
                     </div>
                 </div>
             </div>

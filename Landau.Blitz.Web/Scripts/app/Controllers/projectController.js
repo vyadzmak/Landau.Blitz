@@ -113,22 +113,31 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
             $state.go("main.dashboard.project.clientData");
             $scope.initTabs();
 
-            var timer;
-            if (!timer) {
-                timer = $interval(function() {
-                    console.log("Save project");
-                    //console.log('Start silence!');
-                    projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
-                }, 30000);
-            }
+            //var timer;
+            //if (!timer) {
+            //    timer = $interval(function() {
+            //        console.log("Save project");
+            //        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+            //    }, 30000);
+            //}
         }
 
     }
 
+
+    var handler = function (e) {
+        var confirmationMessage = "\o/";
+
+        (e || window.event).returnValue = confirmationMessage;
+        return confirmationMessage;
+    }
+
     $scope.$on('$destroy', function () {
-        alert("Destroying scope");
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+        window.removeEventListener("beforeunload", handler);
     });
+    
+    window.addEventListener("beforeunload", handler);
 
     $scope.$watch('currentProject', function(newValue, oldValue) {
         if (newValue != oldValue) {

@@ -191,6 +191,17 @@
             }
         })
 
+        .state("main.dashboard.project.consolidatedOpiu", {
+            url: "/consolidatedOpiu",
+            templateUrl: "PartialViews/ConsolidatedOpiu.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Консолидированный ОПИУ";
+            }
+        })
+
     .state("main.dashboard.project.finDataCrossChecking", {
         url: "/finDataCrossChecking",
         templateUrl: "PartialViews/FinDataCrossChecking.html",

@@ -1,4 +1,4 @@
-var projectAnalysisController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, projectHttpService, projectFactory, calculatorFactory, usSpinnerService) {
+var projectAnalysisController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, projectHttpService, projectFactory, calculatorFactory, mathFactory, usSpinnerService) {
     // var url = $$ApiUrl + "/companies";
     $scope.filterFromArray = function (arr, id) {
         var ob = arr.filter(function (item) {
@@ -112,7 +112,9 @@ var projectAnalysisController = function ($scope, $http, $location, $state, $uib
     $scope.createRevenueDynamics = function (text, elem, rev) {
         rev.RevenueDynamics.splice(0, rev.RevenueDynamics.length);
         if (!isNaN(parseInt(rev.ReachTerm)) && isFinite(rev.ReachTerm)) {
-            for (var i = 0; i < +rev.ReachTerm; i++) {
+            var dynamicsLength = mathFactory.getFloat(rev.ReachTerm) > 12 ? 12 : mathFactory.getFloat(rev.ReachTerm);
+            rev.ReachTerm = dynamicsLength;
+            for (var i = 0; i < dynamicsLength; i++) {
                 rev.RevenueDynamics.push({ Id: rev.RevenueDynamics.length + 1, Revenue: 0 });
             }
         } else {
@@ -120,40 +122,14 @@ var projectAnalysisController = function ($scope, $http, $location, $state, $uib
         }
     }
 
-    $scope.calculateCostPrice = function (param1, param2, rev) {
-        if (!isNaN(parseFloat(rev.Revenue)) && isFinite(rev.Revenue) &&
-            !isNaN(parseFloat(rev.Markup)) && isFinite(rev.Markup)) {
-            rev.Costprice = +rev.Revenue / (100 + (+rev.Markup)) * 100;
-        }
-    }
-
-    $scope.calculateTotalExpenses = function () {
-        var totalExpenses = 0;
-        for (let i = 0; i < $scope.currentProject.ProjectAnalysis.VarExpenses.length; i++) {
-            totalExpenses += +$scope.currentProject.ProjectAnalysis.VarExpenses[i].Sum;
-        }
-        for (let i = 0; i < $scope.currentProject.ProjectAnalysis.ConstExpenses.length; i++) {
-            totalExpenses += +$scope.currentProject.ProjectAnalysis.ConstExpenses[i].Sum;
-        }
-        $scope.currentProject.ProjectAnalysis.TotalExpenses = totalExpenses;
-    }
-
-    $scope.calculateSSK = function () {
-        $scope.ssk = $scope.currentProject.FinancePlanning.WoPosOwnResources /
-            $scope.currentProject.FinancePlanning.WoPosTotalResources *
-            $scope.currentProject.ProjectAnalysis.AlternativeBid +
-            $scope.currentProject.FinancePlanning.WoPosBorrowedResources /
-            $scope.currentProject.FinancePlanning.WoPosTotalResources *
-            $scope.currentProject.ProjectAnalysis.CreditBid;
-        $scope.ssk = calculatorFactory.getFloat($scope.ssk);
-        $scope.currentProject.ProjectAnalysis.SSK = calculatorFactory.getFloat($scope.ssk);
+    $scope.calculateProjectAnalysis = function () {
+        calculatorFactory.calculateProjectAnalyzeData($scope.currentProject);
     }
 
     $scope.init = function () {
         $scope.currentProject = projectFactory.getToCurrentProject();
-        $scope.calculateSSK();
     }
     $scope.init();
     usSpinnerService.stop("spinner-1");
 };
-blitzApp.controller("projectAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "projectHttpService", "projectFactory", "calculatorFactory", "usSpinnerService", projectAnalysisController]);
+blitzApp.controller("projectAnalysisController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "projectHttpService", "projectFactory", "calculatorFactory", "mathFactory", "usSpinnerService", projectAnalysisController]);

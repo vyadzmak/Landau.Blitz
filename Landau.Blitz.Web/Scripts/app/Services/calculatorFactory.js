@@ -17,7 +17,8 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     };
 
     calculatorFactory.calculateOpiuData = function (currentProject, opiu) {
-        opiuCalculatorFactory.calculateData(currentProject, opiu);
+        currentProject = opiuCalculatorFactory.calculateData(currentProject, opiu);
+        currentProject = opiuCalculatorFactory.calculateConsolidatedData(currentProject);
         projectFactory.setProject(currentProject);
     };
 
@@ -42,7 +43,7 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     };
 
     calculatorFactory.calculateProjectAnalyzeData = function (currentProject) {
-        analyzeProjectCalculatorFactory.calculateData(currentProject);
+        currentProject = analyzeProjectCalculatorFactory.calculateData(currentProject);
         projectFactory.setProject(currentProject);
     };
 

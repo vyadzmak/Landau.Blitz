@@ -1,0 +1,39 @@
+<div ng-controller="consolidatedOpiuController">
+    <table st-table="currentProject.ConsolidatedOpiu.Opiu.Table" class="table table-bordered table-condensed ng-table">
+        <thead>
+            <tr>
+                <th><span uib-tooltip="Наименование">Наименование</span></th>
+                <th ng-repeat="month in currentProject.ConsolidatedOpiu.Opiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in currentProject.ConsolidatedOpiu.Opiu.Table"
+                ng-class="{'active bold-trow':row.Calculate}">
+
+                <td>{{row.Title}}</td>
+
+                <td ng-repeat="month in currentProject.ConsolidatedOpiu.Opiu.Months track by $index"
+                    >{{row['M'+month.Id]|currency:'':2}}</td>
+
+                <td>{{row.Avg|currency:'':2}}</td>
+                <td>{{row.AvgPrognose|currency:'':2}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Комментарии
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Комментарии</label>
+                <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="currentProject.ConsolidatedOpiu.Comments"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

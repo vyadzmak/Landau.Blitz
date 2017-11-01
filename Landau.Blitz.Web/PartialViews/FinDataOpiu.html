@@ -1,34 +1,158 @@
 <div ng-controller="finDataOpiuController">
-    <div ng-repeat="opiu in currentProject.FinDataOpiu.Opius">
-        <table st-table="opiu.Table" class="table table-bordered table-condensed ng-table">
+    <div ng-show="activeOpiu">
+        <table st-table="activeOpiu.Table" class="table table-bordered table-condensed ng-table">
             <thead>
                 <tr>
-                    <th colspan="30">{{opiu.Name}}</th>
+                    <th colspan="30">
+                        <select ng-model="activeOpiu"
+                                ng-options="item as item.Name for item in currentProject.FinDataOpiu.Opius track by item.Id"
+                                ng-change="activeOpiuChanged()"></select>
+                    </th>
                 </tr>
                 <tr>
                     <th><span uib-tooltip="Наименование">Наименование</span></th>
-                    <th ng-repeat="month in opiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                    <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
                     <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
                     <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in opiu.Table"
+                <tr ng-repeat="row in activeOpiu.Table"
                     ng-class="{'active bold-trow':row.Calculate}">
 
                     <td>{{row.Title}}</td>
 
-                    <td ng-repeat="month in opiu.Months track by $index"
+                    <td ng-repeat="month in activeOpiu.Months track by $index"
                         ng-model="row['M'+month.Id]"
                         content-editable
                         non-editable="{{row.Calculate}}"
-                        edit-callback="calculateOpiu(opiu)"></td>
-                    
-                    <td>{{row.Avg | currency:'':2}}</td>
+                        edit-callback="calculateOpiu(activeOpiu)"></td>
+
+                    <td ng-model="row.Avg"
+                        content-editable
+                        non-editable="{{row.VarName!=='LoanPayment'}}"
+                        edit-callback="calculateOpiu(activeOpiu)"></td>
                     <td content-editable ng-model="row.AvgPrognose"></td>
 
                 </tr>
             </tbody>
         </table>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{activeOpiu.Name}} ВЫРУЧКА ОТ РЕАЛИЗАЦИИ СВЯЗАННЫМ КОМПАНИЯМ
+                <div class="clearfix "></div>
+            </div>
+
+            <div class="panel-body panel-table">
+                <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeOpiu.RelatedCompanyRevenues);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <table st-table="activeOpiu.RelatedCompanyRevenues" class="table table-bordered table-condensed ng-table">
+                    <thead>
+                        <tr>
+                            <th st-sort="Name"><span uib-tooltip="Наименование аффилированной компании/лица">Наименование</span></th>
+                            <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                            <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in activeOpiu.RelatedCompanyRevenues" ng-right-click="clickRightTableRow(activeOpiu.RelatedCompanyRevenues, row.Id)" menu-items="menuItems">
+                            <td ng-model="row.Name" content-editable></td>
+                            <td ng-repeat="month in activeOpiu.Months track by $index"
+                                ng-model="row['M'+month.Id]"
+                                content-editable
+                                edit-callback="calculateOpiu(activeOpiu)"></td>
+
+                            <td>{{row.Avg|currency:'':2}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><strong>Итого</strong></td>
+                            <td ng-repeat="month in activeOpiu.Months track by $index">
+                                {{activeOpiu.TotalRealtedCompanyRevenue['M'+month.Id]|currency:'':2}}
+                            </td>
+
+                            <td>{{activeOpiu.TotalRealtedCompanyRevenue.Avg|currency:'':2}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="30" class="text-center">
+                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{activeOpiu.Name}} РАСШИФРОВКА ВЗНОСОВ ПО КРЕДИТУ
+                <div class="clearfix "></div>
+            </div>
+
+            <div class="panel-body panel-table">
+                <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeOpiu.LoanContributionDetails.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <table st-table="activeOpiu.LoanContributionDetails.Rows" class="table table-bordered table-condensed ng-table">
+                    <thead>
+                    <tr>
+                        <th><span uib-tooltip="Наименование Заемщика">Заемщик</span></th>
+                        <th><span uib-tooltip="Наименование БВУ">БВУ</span></th>
+                        <th><span uib-tooltip="Отметить, если данные обязательства являются действующими. Если не отмечено - планируемые обязательства">Действующие об.</span></th>
+                        <th><span uib-tooltip="Стоимость затрат">Стоимость затрат</span></th>
+                        <th><span uib-tooltip="Лимит финансирования">Лимит финансирования</span></th>
+                        <th><span uib-tooltip="Сумма взноса основного долга">Сумма взноса основного долга</span></th>
+                        <th><span uib-tooltip="Сумма взноса вознаграждения">Сумма взноса вознаграждения</span></th>
+                        <th><span uib-tooltip="Если отмечено, то учитывается полный взнос (основной долг + вознаграждение), иначе только вознаграждение">Учитывать полный взнос</span></th>
+                        <th><span uib-tooltip="Итого сумма взноса учитываемая в ОПиУ">Итого</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in activeOpiu.LoanContributionDetails.Rows" ng-right-click="clickRightTableRow(activeOpiu.LoanContributionDetails.Rows, row.Id)" menu-items="menuItems">
+                        <td ng-model="row.Name" content-editable></td>
+                        <td ng-model="row.BankName" content-editable></td>
+                        <td><input type="checkbox" ng-model="row.IsCurrent"></td>
+                        <td>
+                            <select ng-options="item as item.Name for item in loanTypes track by item.Id"
+                                    ng-model="row.LoanType"></select>
+                        </td>
+                        <td ng-model="row.LimitSum" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                        <td ng-model="row.Principal" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                        <td ng-model="row.Fee" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                        <td><input type="checkbox" ng-model="row.IsPrincipal" ng-change="calculateOpiu(activeOpiu)"></td>
+                        <td>{{row.ForOpiu|currency:'':2}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5"><strong>Итого</strong></td>
+                        <td>{{activeOpiu.LoanContributionDetails.TotalPrincipal|currency:'':2}}</td>
+                        <td>{{activeOpiu.LoanContributionDetails.TotalFee|currency:'':2}}</td>
+                        <td></td>
+                        <td>{{activeOpiu.LoanContributionDetails.TotalForOpiu|currency:'':2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="30" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                <div class="form-group">
+                    <label>Комментарии</label>
+                    <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="activeOpiu.LoanContributionDetails.Comments"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{activeOpiu.Name}} КОММЕНТАРИИ
+                <div class="clearfix "></div>
+            </div>
+
+            <div class="panel-body">
+                <div class="row"  ng-repeat="row in activeOpiu.Table | filter:opiuItemHasData">
+                    <label class="col-md-3">{{row.Title}}</label>
+                    <div class="col-md-9"><textarea type="text" class="form-control" placeholder="Комментарии" ng-model="row.Comments"></textarea></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

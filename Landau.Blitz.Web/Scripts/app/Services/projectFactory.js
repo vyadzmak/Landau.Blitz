@@ -12,27 +12,27 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         }
 
 
-            var line = {};
-            line.Title = title;
-            line.Calculate = calc;
-            line.VarName = varName;
-            for (var i = 1; i <= months; i++) {
-                line['M' + i] = 0.0;
+        var line = {};
+        line.Title = title;
+        line.Calculate = calc;
+        line.VarName = varName;
+        for (var i = 1; i <= months; i++) {
+            line['M' + i] = 0.0;
+        }
+        if (activity.Seasonality) {
+            for (var i = 0; i < activity.SeasonMonths.length; i++) {
+                line['S' + activity.SeasonMonths[i].Id] = true;
             }
-            if (activity.Seasonality) {
-                for (var i = 0; i < activity.SeasonMonths.length; i++) {
-                    line['S' + activity.SeasonMonths[i].Id] = true;
-                }
-            }
-            line.Avg = 0.0;
-            line.AvgPrognose = 0.0;
-            return line;
+        }
+        line.Avg = 0.0;
+        line.AvgPrognose = 0.0;
+        return line;
 
     }
 
     function initLineOdds(title, varName, headers) {
 
-        
+
 
         var calc = false;
         if (varName.indexOf("!") != -1) {
@@ -41,15 +41,15 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         }
 
 
-        
-            var line = {};
-            line.Title = title;
-            line.Calculate = calc;
-            line.VarName = varName;
-            for (var i = 1; i <= headers; i++) {
-                line[headers[i].VarName] = 0.0;
-            }
-            return line;
+
+        var line = {};
+        line.Title = title;
+        line.Calculate = calc;
+        line.VarName = varName;
+        for (var i = 1; i <= headers; i++) {
+            line[headers[i].VarName] = 0.0;
+        }
+        return line;
 
     }
 
@@ -182,7 +182,6 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Коммунальные расходы',
             'Охрана',
             'Представительские расходы',
-            'Проценты по кредиту',
             'Брак/порча/списания',
             'Услуги банка',
             'Прочие расходы',
@@ -219,7 +218,6 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Utilities',
             'Security',
             'Hospitality',
-            'LoanInterestPayment',
             'MarriageDamageCancellation',
             'BankServices',
             'OtherBusinessExpenses',
@@ -270,7 +268,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ContractAnalysis = {};
         currentProject.BusinessInfo = {};
         currentProject.ConsolidatedBalance = [];
-        currentProject.ConsolidatedOpiu = [];
+        currentProject.ConsolidatedOpiu = {};
         currentProject.FinDataBalance = {};
         currentProject.FinDataCrossChecking = {};
         currentProject.FinDataOpiu = {};
@@ -304,6 +302,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.BusinessInfo = currentProject.ProjectContent.BusinessInfo;
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
         currentProject.ConsolidatedBalance = currentProject.ProjectContent.ConsolidatedBalance;
+        currentProject.ConsolidatedOpiu = currentProject.ProjectContent.ConsolidatedOpiu;
 
         if (currentProject.ParentExists) {
             currentProject.FinDataBalance.PreviousDate = new Date();// указать дату б2
@@ -311,9 +310,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
-        
+
         currentProject.FinDataOdds = currentProject.ProjectContent.FinDataOdds;
-        
+
         currentProject.Provision = currentProject.ProjectContent.Provision;
         currentProject.Conclusion = currentProject.ProjectContent.Conclusion;
         currentProject.BalanceDate = currentProject.ProjectContent.BalanceDate;
@@ -332,32 +331,43 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
     projectFactory.initOpius = function (currentProject) {
         currentProject.FinDataOpiu.Opius = [];
+        var counter = 1;
         angular.forEach(currentProject.FinDataOpiu.Companies, function (company, companyKey) {
             if (company.MultipleActivities && company.ActivitiesQuantity > 1) {
                 angular.forEach(company.Activities,
                     function (activity, activityKey) {
                         var aTable = {
+                            Id: counter,
                             Name: company.Name + " (" + activity.Name + ")",
                             StartMonth: activity.OpiuStartMonth,
                             OpiuMonthsQuantity: activity.Seasonality ? 12 : activity.OpiuMonthsQuantity > 24 ? 24 : activity.OpiuMonthsQuantity,
+                            RelatedCompanyRevenues: [],
+                            TotalRealtedCompanyRevenue: {},
+                            LoanContributionDetails: {Comments:"", Rows:[], TotalPrincipal:0, TotalFee:0, TotalForOpiu:0}
                         }
 
                         aTable.Months = initOpiuMonth(aTable.StartMonth, aTable.OpiuMonthsQuantity);
                         aTable.Table = initTableOpiu(activity);
 
                         currentProject.FinDataOpiu.Opius.push(aTable);
+                        counter++;
                     });
             } else {
                 var aTable = {
+                    Id: counter,
                     Name: company.Name,
                     StartMonth: company.OpiuStartMonth,
                     OpiuMonthsQuantity: company.Seasonality ? 12 : company.OpiuMonthsQuantity > 24 ? 24 : company.OpiuMonthsQuantity,
+                    RelatedCompanyRevenues: [],
+                    TotalRealtedCompanyRevenue: {},
+                    LoanContributionDetails: { Comments: "", Rows: [], TotalPrincipal: 0, TotalFee: 0, TotalForOpiu: 0 }
                 }
 
                 aTable.Months = initOpiuMonth(aTable.StartMonth, aTable.OpiuMonthsQuantity);
                 aTable.Table = initTableOpiu(company);
 
                 currentProject.FinDataOpiu.Opius.push(aTable);
+                counter++;
             }
         });
         this.currentProject = currentProject;
@@ -381,7 +391,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             var befDate = angular.copy(startDate);
             currentProject.FinDataOdds.Odds.Header.unshift({
                 Name: befDate.add(-i, 'months').format('MM.YY'),
-                VarName:'m'+i
+                VarName: 'm' + i
             });
         }
         currentProject.FinDataOdds.Odds.Header.push({
@@ -425,13 +435,138 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         return this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balanceId - 1];
     }
 
-    projectFactory.setCrossChecking= function(finDataCrossChecking) {
+    projectFactory.getActiveOpiu = function (ind) {
+        return this.currentProject.FinDataOpiu.Opius[ind-1];
+    }
+
+    projectFactory.setCrossChecking = function (finDataCrossChecking) {
         this.currentProject.FinDataCrossChecking = finDataCrossChecking;
     }
 
     projectFactory.getToCurrentProject = function () {
         angular.forEach(this.currentProject.ClientData.DirectorInfos, function (value, key) {
             value.DateOfBirth = new Date(value.DateOfBirth);
+        });
+        angular.forEach(this.currentProject.BusinessInfo.ClientFounderInfos, function (value, key) {
+            value.DateOfBirth = new Date(value.DateOfBirth);
+        });
+
+        this.currentProject.ClientData.RegistrationDate = new Date(this.currentProject.ClientData.RegistrationDate);
+
+        angular.forEach(this.currentProject.BusinessInfo.RelatedCompanyInfos, function (value, key) {
+            value.RegistrationDate = new Date(value.RegistrationDate);
+        });
+        angular.forEach(this.currentProject.BusinessInfo.CreditHistoryInfos, function (value, key) {
+            value.DateOfReceiving = new Date(value.DateOfReceiving);
+            value.DateOfRepaymentAgreement = new Date(value.DateOfRepaymentAgreement);
+            value.DateOfRepaymentFact = new Date(value.DateOfRepaymentFact);
+            angular.forEach(value.LoanDetails, function (vDet, vDetKey) {
+                vDet.DateOfReceiving = new Date(vDet.DateOfReceiving);
+                vDet.DateOfRepaymentAgreement = new Date(vDet.DateOfRepaymentAgreement);
+                vDet.DateOfRepaymentFact = new Date(vDet.DateOfRepaymentFact);
+            });
+        });
+        angular.forEach(this.currentProject.BusinessInfo.BankAccountInfos, function (value, key) {
+            value.DatePeriodStart = new Date(value.DatePeriodStart);
+            value.DatePeriodEnd = new Date(value.DatePeriodEnd);
+        });
+
+        angular.forEach(this.currentProject.ContractAnalysis.Sales, function (value, key) {
+            value.SignDate = new Date(value.SignDate);
+            value.EndDate = new Date(value.EndDate);
+        });
+        angular.forEach(this.currentProject.ContractAnalysis.Purchases, function (value, key) {
+            value.SignDate = new Date(value.SignDate);
+            value.EndDate = new Date(value.EndDate);
+        });
+
+        this.currentProject.ProjectAnalysis.ProjectTerms = new Date(this.currentProject.ProjectAnalysis.ProjectTerms);
+
+        angular.forEach(this.currentProject.FinDataBalance.Balances, function (balance, balKey) {
+            angular.forEach(balance.CompanyBalances, function (compBalance, compBalKey) {
+                angular.forEach(compBalance.Assets.TransitGoods.Rows, function (row, rowKey) {
+                    row.GetDate = new Date(row.GetDate);
+                });
+                angular.forEach(compBalance.Assets.SuppliersPrepayment.Rows, function (row, rowKey) {
+                    row.GetDate = new Date(row.GetDate);
+                });
+                angular.forEach(compBalance.Liabilities.ShortWorkingCapitalCredit.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.ShortTermDebt.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.ShortPrivateLoans.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.ShortFixedAssetsCredit.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.RentalsArrears.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Assets.RecievableAccounts.Rows, function (row, rowKey) {
+                    row.OccurDate = new Date(row.OccurDate);
+                    row.ReturnDate = new Date(row.ReturnDate);
+                });
+                angular.forEach(compBalance.Assets.OtherRecievables.Rows, function (row, rowKey) {
+                    row.OccurDate = new Date(row.OccurDate);
+                    row.ReturnDate = new Date(row.ReturnDate);
+                });
+                angular.forEach(compBalance.Liabilities.PayableAccounts.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.OtherLiabilities.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.OtherCurrentDebt.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.LongWorkingCapitalCredit.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.LongPrivateLoans.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.LongFixedAssetsCredit.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Assets.Investments.Rows, function (row, rowKey) {
+                    row.Date = new Date(row.Date);
+                });
+                angular.forEach(compBalance.Assets.ForSaleGoods.Rows, function (row, rowKey) {
+                    row.GetDate = new Date(row.GetDate);
+                });
+                angular.forEach(compBalance.Liabilities.CustomersPrepayment.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+                angular.forEach(compBalance.Liabilities.CommodityLoan.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+
+                angular.forEach(compBalance.Liabilities.BudgetSettlements.Rows, function (row, rowKey) {
+                    row.ArrearsDate = new Date(row.ArrearsDate);
+                    row.MaturityDate = new Date(row.MaturityDate);
+                });
+            });
+        });
+
+
+        angular.forEach(this.currentProject.FinancePlanning.Plans, function (value, key) {
+            value.Date = new Date(value.Date);
         });
 
         return this.currentProject;
