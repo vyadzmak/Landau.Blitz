@@ -66,7 +66,9 @@
                     <tr>
                         <td><strong>% по кредиту (выплаченные)</strong></td>
                         <td>
-                            <input type="number" class="form-control" ng-model="currentProject.FinDataCrossChecking.PaidInterest">
+                            <input type="number" class="form-control" 
+                                   ng-change="calculateCrossChecking()"
+                                   ng-model="currentProject.FinDataCrossChecking.PaidInterest">
                         </td>
                         <td></td>
 

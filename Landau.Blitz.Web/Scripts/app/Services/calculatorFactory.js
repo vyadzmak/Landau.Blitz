@@ -19,6 +19,7 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     calculatorFactory.calculateOpiuData = function (currentProject, opiu) {
         currentProject = opiuCalculatorFactory.calculateData(currentProject, opiu);
         currentProject = opiuCalculatorFactory.calculateConsolidatedData(currentProject);
+        currentProject = crossCheckCalculatorFactory.calculateData(currentProject);
         projectFactory.setProject(currentProject);
     };
 
