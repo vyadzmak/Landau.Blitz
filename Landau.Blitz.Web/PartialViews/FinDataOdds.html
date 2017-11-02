@@ -27,5 +27,17 @@
             </tr>
         </tbody>
     </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            КОММЕНТАРИИ
+            <div class="clearfix "></div>
+        </div>
 
+        <div class="panel-body">
+            <div class="row" ng-repeat="row in currentProject.FinDataOdds.Odds.Table | filter:oddsItemHasData">
+                <label class="col-md-3">{{row.Title}}</label>
+                <div class="col-md-9"><textarea type="text" class="form-control" placeholder="Комментарии" ng-model="row.Comments"></textarea></div>
+            </div>
+        </div>
+    </div>
 </div>

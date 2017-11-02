@@ -106,7 +106,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
 
         var vNames = [
-            'StartPeriod',
+            '!StartPeriod',
             '!Income',
             'RevenuesIncome',
             'PrepaidIncome',
@@ -304,11 +304,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
         currentProject.ConsolidatedBalance = currentProject.ProjectContent.ConsolidatedBalance;
         currentProject.ConsolidatedOpiu = currentProject.ProjectContent.ConsolidatedOpiu;
-
-        if (currentProject.ParentExists) {
-            currentProject.FinDataBalance.PreviousDate = new Date();// указать дату б2
-        }
-
+        
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
 

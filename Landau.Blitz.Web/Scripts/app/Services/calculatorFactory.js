@@ -1,17 +1,10 @@
 blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'balanceCoefsCalculatorFactory', 'oddsCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', 'analyzeProjectCalculatorFactory', 'projectFactory', function ($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, balanceCoefsCalculatorFactory, oddsCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory, analyzeProjectCalculatorFactory, projectFactory) {
     var calculatorFactory = {};
-
-    calculatorFactory.getFloat = function (value) {
-        if (!isNaN(parseFloat(value)) && isFinite(value)) {
-            return parseFloat(value);
-        } else {
-            return 0;
-        }
-    }
-
+    
     calculatorFactory.calculateBalanceData = function (currentProject, balanceId, companyBalanceId) {
         currentProject = balanceCalculatorFactory.calculateData(currentProject, balanceId, companyBalanceId);
         currentProject = balanceCalculatorFactory.calculateConsolidatedBalance(currentProject);
+        currentProject = oddsCalculatorFactory.calculateData(currentProject);
         currentProject = balanceCoefsCalculatorFactory.calculateData(currentProject);
         currentProject = crossCheckCalculatorFactory.calculateData(currentProject);
         projectFactory.setProject(currentProject);
@@ -26,7 +19,7 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     };
 
     calculatorFactory.calculateOddsData = function (currentProject) {
-        oddsCalculatorFactory.calculateData(currentProject);
+        currentProject = oddsCalculatorFactory.calculateData(currentProject);
         projectFactory.setProject(currentProject);
     };
 

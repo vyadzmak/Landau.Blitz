@@ -74,121 +74,29 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
 
     };
 
-    $scope.init();
     usSpinnerService.stop("spinner-1");
-
-    $scope.SumsValues = [
-        {
-            TotalName: 'TotalIncome',
-            SubValues: [
-                'RevenuesIncome',
-                'PrepaidIncome',
-                'ReturnIncome',
-                'OtherIncome'
-            ]
-        },
-        {
-            TotalName: 'TotalOutOperationsIncome',
-            SubValues: [
-                'CreditIncome',
-            'SalesIncome',
-            'SponsorshipIncome',
-            'OtherOutOperationsIncome'
-            ]
-        },
-        {
-            TotalName: 'TotalExpensesForBusiness',
-            SubValues: [
-                'Purchase',
-            'Wage',
-            'Rent',
-            'Storage',
-            'Fuels',
-            'Waybill',
-            'Advertising',
-            'Customs',
-            'DeliveryOfGoods',
-            'Fare',
-            'Taxes',
-            'Utilities',
-            'Security',
-            'Hospitality',
-            'LoanInterestPayment',
-            'MarriageDamageCancellation',
-            'BankServices',
-            'OtherBusinessExpenses'
-            ]
-        },
-        {
-            TotalName: 'TotalExpensesOutBusiness',
-            SubValues: [
-                'AutoLoanRepayment',
-            'LoanRepayment',
-            'ExpectedLoanRepayment',
-            'FamilyExpenses',
-            'InvestmentExpenses',
-            'FixedAssetsPurchase',
-            'DividendExpenses',
-            'AssistanceExpenses',
-            'OtherExpenses'
-            ]
-        },
-        {
-            TotalName: 'Income',
-            SubValues: [
-                'TotalIncome',
-                'TotalOutOperationsIncome'
-            ]
-        },
-        {
-            TotalName: 'Expenses',
-            SubValues: [
-                'TotalExpensesOutBusiness',
-                'TotalExpensesForBusiness'
-            ]
-        },
-        {
-            TotalName: 'EndMonth',
-            SubValues: [
-                'Income',
-                'Expenses'
-            ]
-        }
-    ];
-
+    
     $scope.calculateOdds = function() {
-        
-        
-        // calculate values
-        angular.forEach($scope.SumsValues, function(tSumV, tSumKey) {
-            var totalValue = $scope.getVarArrayByName($scope.currentProject.FinDataOdds.Odds, tSumV.TotalName);
-
-            
-            angular.forEach($scope.currentProject.FinDataOdds.Odds.Header, function(month, mKey) {
-                totalValue[month.VarName] = 0;
-                angular.forEach(tSumV.SubValues, function(subValue, sKey) {
-                    var sSubValue = $scope.getVarArrayByName($scope.currentProject.FinDataOdds.Odds, subValue);
-                    totalValue[month.VarName] += calculatorFactory.getFloat(sSubValue[month.VarName]);
-                });
-            });
-        });
-
-        //calculate average for all rows
-        angular.forEach($scope.currentProject.FinDataOdds.Odds.Table, function(tRow, rKey) {
-            var totalByMonths = 0;
-            angular.forEach($scope.currentProject.FinDataOdds.Odds.Months, function(month, mKey) {
-                totalByMonths += +tRow['M' + month.Id];
-            });
-            tRow.Avg = totalByMonths / $scope.currentProject.FinDataOdds.Odds.Months.length;
-        });
+        calculatorFactory.calculateOddsData($scope.currentProject);
+        $scope.currentProject = projectFactory.getToCurrentProject();
     }
 
-    $scope.getVarArrayByName = function(odds, name) {
-        var ob = odds.Table.filter(function(item) {
-            return item.VarName === name;
+    $scope.oddsItemHasData = function(value, array) {
+        if (value.Calculate) {
+            return false;
+        }
+        var res = false;
+        angular.forEach($scope.currentProject.FinDataOdds.Odds.Header, function(month, mKey) {
+            if (value[month.VarName]) {
+                res = true;
+            }
         });
-        if (ob == undefined || ob.length === 0) return null;
-        return ob[0];
+        if (!res) {
+            value.Comments = undefined;
+        }
+        return res;
     }
+    
+    $scope.init();
 };
 blitzApp.controller("finDataOddsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", "calculatorFactory", finDataOddsController]);

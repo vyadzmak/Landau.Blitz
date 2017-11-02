@@ -31,6 +31,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
         balance.OutTotalLiabilities = 0;
         //consbalance
         balance.ConsLiquidAssets = 0;
+        balance.ConsLiquidAssetsWoDeposit = 0;
         balance.ConsReceivables = 0;
         balance.ConsInventories = 0;
         balance.ConsTotalCurrentAssets = 0;
@@ -133,6 +134,9 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
                     });
                 balance.LiquidAssets += balance.Assets[varName].Total;
                 balance.ConsLiquidAssets += balance.Assets[varName].ConsTotal;
+                if (varName !== 'Deposit') {
+                    balance.ConsLiquidAssetsWoDeposit += balance.Assets[varName].ConsTotal;
+                }
                 balance.OutLiquidAssets += balance.Assets[varName].OutTotal;
             });
 
@@ -146,6 +150,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
             });
         balance.LiquidAssets += balance.Assets.CurrentAccount.Total;
         balance.ConsLiquidAssets += balance.Assets.CurrentAccount.ConsTotal;
+        balance.ConsLiquidAssetsWoDeposit += balance.Assets.CurrentAccount.ConsTotal;
         balance.OutLiquidAssets += balance.Assets.CurrentAccount.OutTotal;
 
         // debt recievables
@@ -361,6 +366,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
 
     var totalNames = [
                     "ConsLiquidAssets",
+                    "ConsLiquidAssetsWoDeposit",
 					"ConsReceivables",
 					"ConsInventories",
 					"ConsTotalCurrentAssets",

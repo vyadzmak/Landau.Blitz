@@ -1,5 +1,5 @@
 
-var finDataBalanceTableController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, balanceTableFactory, balanceCalculatorFactory, calculatorFactory, projectHttpService) {
+var finDataBalanceTableController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, mathFactory, calculatorFactory, projectHttpService) {
     
 
     $scope.assets = {
@@ -220,7 +220,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     $scope.checkOutAssets = function(value) {
         var found = false;
         angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
-            if (calculatorFactory.getFloat(balance.Assets[value.varName].OutTotal) > 0) {
+            if (mathFactory.getFloat(balance.Assets[value.varName].OutTotal) > 0) {
                 found = true;
             }
         });
@@ -230,11 +230,11 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     $scope.checkOutLiabilities = function(value) {
         var found = false;
         angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
-            if (calculatorFactory.getFloat(balance.Liabilities[value.varName].OutTotal) > 0) {
+            if (mathFactory.getFloat(balance.Liabilities[value.varName].OutTotal) > 0) {
                 found = true;
             }
         });
         return found;
     }
 };
-blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "balanceTableFactory", "balanceCalculatorFactory", "calculatorFactory", "projectHttpService", finDataBalanceTableController]);
+blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "mathFactory", "calculatorFactory", "projectHttpService", finDataBalanceTableController]);
