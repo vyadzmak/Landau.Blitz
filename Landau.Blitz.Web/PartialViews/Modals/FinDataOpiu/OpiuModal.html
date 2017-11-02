@@ -7,61 +7,65 @@
 
     </div>
     <div class="modal-body">
-                <form class="form-horizontal" name="opiuForm" id="opiuForm" role="form" data-toggle="validator">
+        <form class="form-horizontal" name="opiuForm" id="opiuForm" role="form" data-toggle="validator">
 
-                    
-                        <label>В случае наличия у компании несколько видов деятельности, имеются ли обособленные данные по доходам и расходам от каждого вида деятельности?</label>
-                        <div class="form-group" ng-repeat-start="company in mElement.Companies">
-                            <label class="col-lg-3"><input type="checkbox" ng-model="company.MultipleActivities" /> {{company.Name}}</label>
-                            <div class="col-lg-3" ng-show="company.MultipleActivities">
-                                
-                                <label>Количество видов деятельности</label>
-                                <input type="number" class="form-control" placeholder="1" ng-model="company.ActivitiesQuantity" ng-change="activitiesQuantityChanged(company)">
-                                
-                            </div>
-                            <div class="col-lg-6" ng-show="company.MultipleActivities">
-                                <label>Названия видов деятельности</label>
-                                <input type="text" class="form-control" placeholder="Название" ng-repeat-start="row in company.Activities" ng-model="row.Name">
-                                <label><input type="checkbox" ng-model="row.Seasonality" /> Имеет ли бизнес ярко выраженную сезонность сезонность?</label>
-                                <label ng-show="row.Seasonality">Выберите сезонные месяцы</label>
-                                <select  ng-show="row.Seasonality" multiple class="form-control" ng-model="row.SeasonMonths" ng-options="item as item.Name for item in months track by item.Id"></select>
-                                <label>Дата начала ОПиУ</label>
-                                <input class="form-control" type="month" ng-model="row.OpiuStartMonth" />
-                                <label ng-show="!row.Seasonality">Количество месяцев(не касается сезонного бизнеса)</label>
-                                <input ng-show="!row.Seasonality" class="form-control" type="number" maxlength="2" ng-model="row.OpiuMonthsQuantity" />
-                                <hr ng-repeat-end/>
-                            </div>
-                        </div>
-                    <div ng-show="!company.MultipleActivities">
-                        <label><input type="checkbox" ng-model="company.Seasonality" /> Имеет ли бизнес ярко выраженную сезонность сезонность?</label>
-                        <label ng-show="company.Seasonality">Выберите сезонные месяцы</label>
-                        <select ng-show="company.Seasonality" multiple class="form-control" ng-model="company.SeasonMonths"  ng-options="item as item.Name for item in months track by item.Id">
-                        </select>
-                    </div>
-                    <div class="form-group" ng-show="!company.MultipleActivities">
-                        <div class="col-lg-6">
-                            <label>Дата начала ОПиУ</label>
-                            <input class="form-control" type="month" ng-model="company.OpiuStartMonth" />
-                        </div>
-                        <div class="col-lg-6" ng-show="!company.Seasonality">
-                            <label>Количество месяцев(не касается сезонного бизнеса)</label>
-                            <input class="form-control" type="number" maxlength="2" ng-model="company.OpiuMonthsQuantity" />
-                        </div>
-                    </div>
-                    <hr  ng-repeat-end/>
-                    
-                    <div class="form-group">
-                        <div class="form-group col-sm-11 text-right">
-                            <!-- Indicates a successful or positive action -->
-                            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
-                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
-                        </div>
-                    </div>
-                </form>
-                <hr/>
-                <div>
-                    <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+
+            <label>Является ли компания стартовой</label>
+            <div class="form-group" ng-repeat-start="company in mElement.Companies">
+                <label class="col-lg-3"><input type="checkbox" ng-model="company.IsStarting" /> {{company.Name}}</label>
+                <!--<div class="col-lg-3" ng-show="company.MultipleActivities">
+
+                    <label>Количество видов деятельности</label>
+                    <input type="number" class="form-control" placeholder="1" ng-model="company.ActivitiesQuantity" ng-change="activitiesQuantityChanged(company)">
+
                 </div>
+                <div class="col-lg-6" ng-show="company.MultipleActivities">
+                    <label>Названия видов деятельности</label>
+                    <input type="text" class="form-control" placeholder="Название" ng-repeat-start="row in company.Activities" ng-model="row.Name">
+                    <label><input type="checkbox" ng-model="row.Seasonality" /> Имеет ли бизнес ярко выраженную сезонность сезонность?</label>
+                    <label ng-show="row.Seasonality">Выберите сезонные месяцы</label>
+                    <select  ng-show="row.Seasonality" multiple class="form-control" ng-model="row.SeasonMonths" ng-options="item as item.Name for item in months track by item.Id"></select>
+                    <label>Дата начала ОПиУ</label>
+                    <input class="form-control" type="month" ng-model="row.OpiuStartMonth" />
+                    <label ng-show="!row.Seasonality">Количество месяцев(не касается сезонного бизнеса)</label>
+                    <input ng-show="!row.Seasonality" class="form-control" type="number" maxlength="2" ng-model="row.OpiuMonthsQuantity" />
+                    <hr ng-repeat-end/>
+                </div>-->
+            </div>
+            <div ng-show="!company.IsStarting">
+                <label><input type="checkbox" ng-model="company.Seasonality" /> Имеет ли бизнес ярко выраженную сезонность сезонность?</label>
+                <label ng-show="company.Seasonality">Выберите сезонные месяцы</label>
+                <select ng-show="company.Seasonality" multiple class="form-control"
+                        ng-required="company.Seasonality"
+                        ng-model="company.SeasonMonths"
+                        ng-options="item as item.Name for item in months track by item.Id"></select>
+            </div>
+            <div class="form-group" ng-show="!company.IsStarting">
+                <!--<div class="col-lg-6">
+                    <label>Дата начала ОПиУ</label>
+                    <input class="form-control" type="month" ng-model="company.OpiuStartMonth" />
+                </div>-->
+                <div class="col-lg-6" ng-show="!company.Seasonality">
+                    <label>Количество месяцев(не касается сезонного бизнеса)</label>
+                    <input class="form-control" type="number" maxlength="2"
+                           ng-required="!company.IsStarting && !company.Seasonality"
+                           ng-model="company.OpiuMonthsQuantity" />
+                </div>
+            </div>
+            <hr ng-repeat-end />
+
+            <div class="form-group">
+                <div class="form-group col-sm-11 text-right">
+                    <!-- Indicates a successful or positive action -->
+                    <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                    <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                </div>
+            </div>
+        </form>
+        <hr />
+        <div>
+            <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+        </div>
     </div>
 
 </div>

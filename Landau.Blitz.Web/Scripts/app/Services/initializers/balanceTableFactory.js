@@ -67,7 +67,7 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
                 return liabilities;
             }
 
-           balanceTableFactory.initBalances = function(companies) {
+           balanceTableFactory.initBalances = function(companies, currentProject) {
                 var balances = [];
                 angular.forEach(companies, function(company, key) {
                     var balance = {
@@ -75,11 +75,16 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
                         CompanyName: company.Name,
                         CompanyBalances: []
                     }
-                    angular.forEach(company.BalanceDates, function(bDate, key) {
+                    var dates = [];
+                    if (currentProject.FinDataBalance.PreviousFinAnalysisDate) {
+                        dates.push(currentProject.FinDataBalance.PreviousFinAnalysisDate);
+                    }
+                    dates.push(currentProject.FinDataBalance.CurrentFinAnalysisDate);
+                    angular.forEach(dates, function (bDate, key) {
                         var cBalance = {
                             Id:key+1,
-                            Name: 'Баланс от '+moment(bDate.Date).format('DD.MM.YY'),
-                            Date: bDate.Date
+                            Name: 'Баланс от '+moment(bDate).format('DD.MM.YY'),
+                            Date: bDate
                         }
                         cBalance.Assets = initAssets();
                         cBalance.Liabilities = initLiabilities();

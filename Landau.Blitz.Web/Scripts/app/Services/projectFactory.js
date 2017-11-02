@@ -243,12 +243,13 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         return lines;
     }
 
-    function initOpiuMonth(startMonth, monthsQuantity) {
+    function initOpiuMonth(endMonth, monthsQuantity) {
+        var startMonth = moment(endMonth).add(-monthsQuantity, 'months');
         var months = [];
-        for (var i = 0; i < monthsQuantity; i++) {
+        for (var i = 1; i <= monthsQuantity; i++) {
             var startDate = moment(startMonth);
             months.push({
-                Id: i + 1,
+                Id: i,
                 Name: startDate.add(i, 'months').format('MM.YY')
             });
         }
@@ -333,42 +334,46 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.FinDataOpiu.Opius = [];
         var counter = 1;
         angular.forEach(currentProject.FinDataOpiu.Companies, function (company, companyKey) {
-            if (company.MultipleActivities && company.ActivitiesQuantity > 1) {
-                angular.forEach(company.Activities,
-                    function (activity, activityKey) {
-                        var aTable = {
-                            Id: counter,
-                            Name: company.Name + " (" + activity.Name + ")",
-                            StartMonth: activity.OpiuStartMonth,
-                            OpiuMonthsQuantity: activity.Seasonality ? 12 : activity.OpiuMonthsQuantity > 24 ? 24 : activity.OpiuMonthsQuantity,
-                            RelatedCompanyRevenues: [],
-                            TotalRealtedCompanyRevenue: {},
-                            LoanContributionDetails: {Comments:"", Rows:[], TotalPrincipal:0, TotalFee:0, TotalForOpiu:0}
-                        }
+            //if (company.MultipleActivities && company.ActivitiesQuantity > 1) {
+            //    angular.forEach(company.Activities,
+            //        function (activity, activityKey) {
+            //            var aTable = {
+            //                Id: counter,
+            //                Name: company.Name + " (" + activity.Name + ")",
+            //                StartMonth: activity.OpiuStartMonth,
+            //                OpiuMonthsQuantity: activity.Seasonality ? 12 : activity.OpiuMonthsQuantity > 24 ? 24 : activity.OpiuMonthsQuantity,
+            //                RelatedCompanyRevenues: [],
+            //                TotalRealtedCompanyRevenue: {},
+            //                LoanContributionDetails: {Comments:"", Rows:[], TotalPrincipal:0, TotalFee:0, TotalForOpiu:0}
+            //            }
 
-                        aTable.Months = initOpiuMonth(aTable.StartMonth, aTable.OpiuMonthsQuantity);
-                        aTable.Table = initTableOpiu(activity);
+            //            aTable.Months = initOpiuMonth(aTable.StartMonth, aTable.OpiuMonthsQuantity);
+            //            aTable.Table = initTableOpiu(activity);
 
-                        currentProject.FinDataOpiu.Opius.push(aTable);
-                        counter++;
-                    });
-            } else {
+            //            currentProject.FinDataOpiu.Opius.push(aTable);
+            //            counter++;
+            //        });
+            //}
+            var monthQuantity = company.Seasonality ? 12
+                : company.IsStarting ? 0
+                : company.OpiuMonthsQuantity > 24 ? 24
+                : company.OpiuMonthsQuantity;
                 var aTable = {
                     Id: counter,
                     Name: company.Name,
-                    StartMonth: company.OpiuStartMonth,
-                    OpiuMonthsQuantity: company.Seasonality ? 12 : company.OpiuMonthsQuantity > 24 ? 24 : company.OpiuMonthsQuantity,
+                    BalanceData: currentProject.FinDataBalance.CurrentFinAnalysisDate,
+                    OpiuMonthsQuantity: monthQuantity,
                     RelatedCompanyRevenues: [],
                     TotalRealtedCompanyRevenue: {},
                     LoanContributionDetails: { Comments: "", Rows: [], TotalPrincipal: 0, TotalFee: 0, TotalForOpiu: 0 }
                 }
 
-                aTable.Months = initOpiuMonth(aTable.StartMonth, aTable.OpiuMonthsQuantity);
+                aTable.Months = initOpiuMonth(aTable.BalanceData, aTable.OpiuMonthsQuantity);
                 aTable.Table = initTableOpiu(company);
 
                 currentProject.FinDataOpiu.Opius.push(aTable);
                 counter++;
-            }
+            
         });
         this.currentProject = currentProject;
     }
@@ -419,7 +424,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
     projectFactory.initBalances = function (companies) {
 
-        this.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances(companies);
+        this.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances(companies, this.currentProject);
     }
 
 

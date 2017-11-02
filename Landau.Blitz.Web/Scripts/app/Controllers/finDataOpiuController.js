@@ -6,7 +6,8 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         
         if (!$scope.currentProject.FinDataOpiu.Opius || $scope.currentProject.FinDataOpiu.Opius.length == 0) {
             if ($scope.currentProject.ClientData.FinAnalysisCompanies &&
-                $scope.currentProject.ClientData.FinAnalysisCompanies.length > 0) {
+                $scope.currentProject.ClientData.FinAnalysisCompanies.length > 0 &&
+                $scope.currentProject.FinDataBalance.CurrentFinAnalysisDate) {
                 $scope.currentProject.FinDataOpiu.Companies = angular
                     .copy($scope.currentProject.ClientData.FinAnalysisCompanies);
 
@@ -24,6 +25,7 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                     message:
                         '<div style="text-align:center">Во вкладке "Данные о клиенте" подпункте "Финансовый анализ компаний" укажите количество компаний и их названия.' +
                             ' По данным компаниям будет проведен финансовый анализ.' +
+                            ' Также заполните данные на вкладке Финданные Баланс' +
                             '</div>'
                 });
                 dialog.setSize(BootstrapDialog.SIZE_SMALL);
