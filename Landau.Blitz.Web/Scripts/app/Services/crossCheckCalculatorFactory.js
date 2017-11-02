@@ -12,17 +12,17 @@ blitzApp.factory('crossCheckCalculatorFactory', ['$rootScope', 'mathFactory', fu
     crossCheckCalculatorFactory.calculateData = function (currentProject) {
 
         try {
-            var len = currentProject.ConsolidatedBalance.length;
+            var len = currentProject.ConsolidatedBalance.CompanyBalances.length;
             if (len > 1) {
                 currentProject.FinDataCrossChecking.Period =
-                    moment(currentProject.ConsolidatedBalance[len - 1].Date) - moment(currentProject.ConsolidatedBalance[len - 2].Date);
+                    moment(currentProject.ConsolidatedBalance.CompanyBalances[len - 1].Date) - moment(currentProject.ConsolidatedBalance.CompanyBalances[len - 2].Date);
                 currentProject.FinDataCrossChecking
                     .Period = currentProject.FinDataCrossChecking.Period / 3600 / 1000 / 24 / 30;
                 currentProject.FinDataCrossChecking.ActualIncreaseSK =
-                    mathFactory.getFloat(currentProject.ConsolidatedBalance[len - 1].ConsEquity) -
-                    mathFactory.getFloat(currentProject.ConsolidatedBalance[len - 2].ConsEquity);
+                    mathFactory.getFloat(currentProject.ConsolidatedBalance.CompanyBalances[len - 1].ConsEquity) -
+                    mathFactory.getFloat(currentProject.ConsolidatedBalance.CompanyBalances[len - 2].ConsEquity);
                 currentProject.FinDataCrossChecking.ActualSK = mathFactory
-                    .getFloat(currentProject.ConsolidatedBalance[len - 1].ConsEquity);
+                    .getFloat(currentProject.ConsolidatedBalance.CompanyBalances[len - 1].ConsEquity);
 
                 var totalFactors = 0;
                 angular.forEach(currentProject.FinDataCrossChecking.Factors, function (factor, fKey) {
@@ -59,7 +59,7 @@ blitzApp.factory('crossCheckCalculatorFactory', ['$rootScope', 'mathFactory', fu
                     mathFactory.getFloat(currentProject.FinDataCrossChecking.PaidInterest);
                     // expected sk and sk difference
                     currentProject.FinDataCrossChecking.ExpectedSK =
-                    mathFactory.getFloat(currentProject.ConsolidatedBalance[len - 2].ConsEquity) +
+                    mathFactory.getFloat(currentProject.ConsolidatedBalance.CompanyBalances[len - 2].ConsEquity) +
                     totalFactors +
                     mathFactory.getFloat(currentProject.FinDataCrossChecking.ExpectedIncreaseSK);
 

@@ -1,6 +1,58 @@
 <div ng-controller="finDataBalanceTableController">
     <div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Коэфициенты</div>
 
+            <div class="panel-body">
+                <table class="table table-bordered table-condensed ng-table">
+                    <tbody>
+                    <tr>
+                        <td><strong>Коэффициент текущей ликвидности</strong></td>
+                        <td>
+                            {{activeCompany.CurrentLiquidityCoef|currency:'':2}}
+                        </td>
+                        <td>Оборотные средства/краткосрочные обязательства</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Скорость товарооборота</strong></td>
+                        <td>
+                            {{activeCompany.TurnoverSpeedCoef|currency:'':2}}
+                        </td>
+                        <td>ТМЗ/Себестоимость*30дней</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Коэффициент оборачиваемости запасов</strong></td>
+                        <td>
+                            {{activeCompany.TurnoverInventoryCoef|currency:'':2}}
+                        </td>
+                        <td>Себестоимость/ТМЗ</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Коэффициент автономии</strong></td>
+                        <td>
+                            {{activeCompany.AutonomyCoef|currency:'':2}}
+                        </td>
+                        <td>Собственный капитал/Валюта баланса</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Коэффициент собственного капитала №1</strong></td>
+                        <td>
+                            {{activeCompany.Equity1Coef|currency:'':2}}
+                        </td>
+                        <td>Заемные средства/Собственный капитал</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <label>Изменение Собственного капитала</label>
+                    <textarea type="text" class="form-control" placeholder="Комментарии по данной статье" ng-model="activeCompany.Comments"></textarea>
+                </div>
+            </div>
+        </div>
         <table class="table table-bordered table-condensed ng-table">
             <thead>
                 <tr>
@@ -159,15 +211,15 @@
                 </tr>
             </tbody>
         </table>
-        
+
         <div class="row">
             <div class="col-md-6">
                 <table class="table table-bordered table-condensed ng-table">
                     <thead>
-                    <tr>
-                        <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Актив">ВЫНЕСЕНО ЗА БАЛАНС<br />Актив</span></th>
-                        <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-                    </tr>
+                        <tr>
+                            <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Актив">ВЫНЕСЕНО ЗА БАЛАНС<br />Актив</span></th>
+                            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="outAsset in outBalanceAssets | filter:checkOutAssets">
@@ -175,10 +227,10 @@
                             <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets[outAsset.varName].OutTotal|currency:'':2}}</td>
                         </tr>
 
-                    <tr>
-                        <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-                        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
-                    </tr>
+                        <tr>
+                            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -204,7 +256,7 @@
                 </table>
             </div>
         </div>
-        
+
 
         <div class="row">
             <div class="col-md-3">
@@ -295,6 +347,6 @@
 
         <!-- OtherLiabilities -->
         <ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/OtherLiabilities.html'"></ng-include>
-        
+
     </div>
 </div>

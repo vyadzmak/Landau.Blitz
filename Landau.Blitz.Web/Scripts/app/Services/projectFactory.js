@@ -268,7 +268,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ProjectAnalysis = {};
         currentProject.ContractAnalysis = {};
         currentProject.BusinessInfo = {};
-        currentProject.ConsolidatedBalance = [];
+        currentProject.ConsolidatedBalance = {};
         currentProject.ConsolidatedOpiu = {};
         currentProject.FinDataBalance = {};
         currentProject.FinDataCrossChecking = {};
@@ -449,19 +449,22 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
     }
 
     projectFactory.getToCurrentProject = function () {
+        angular.forEach(this.currentProject.BusinessInfo.ClientFounderInfos, function (value, key) {
+            value.DateOfBirth = new Date(value.DateOfBirth);
+        });
         angular.forEach(this.currentProject.ClientData.DirectorInfos, function (value, key) {
             value.DateOfBirth = new Date(value.DateOfBirth);
         });
-        angular.forEach(this.currentProject.BusinessInfo.ClientFounderInfos, function (value, key) {
-            value.DateOfBirth = new Date(value.DateOfBirth);
+        angular.forEach(this.currentProject.ClientData.RelatedCompanyType, function (value, key) {
+            value.DateOfBirth = new Date(value.RegistrationDate);
         });
 
         this.currentProject.ClientData.RegistrationDate = new Date(this.currentProject.ClientData.RegistrationDate);
 
-        angular.forEach(this.currentProject.BusinessInfo.RelatedCompanyInfos, function (value, key) {
+        angular.forEach(this.currentProject.ClientData.RelatedCompanyInfos, function (value, key) {
             value.RegistrationDate = new Date(value.RegistrationDate);
         });
-        angular.forEach(this.currentProject.BusinessInfo.CreditHistoryInfos, function (value, key) {
+        angular.forEach(this.currentProject.ClientData.CreditHistoryInfos, function (value, key) {
             value.DateOfReceiving = new Date(value.DateOfReceiving);
             value.DateOfRepaymentAgreement = new Date(value.DateOfRepaymentAgreement);
             value.DateOfRepaymentFact = new Date(value.DateOfRepaymentFact);
@@ -471,7 +474,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
                 vDet.DateOfRepaymentFact = new Date(vDet.DateOfRepaymentFact);
             });
         });
-        angular.forEach(this.currentProject.BusinessInfo.BankAccountInfos, function (value, key) {
+        angular.forEach(this.currentProject.ClientData.BankAccountInfos, function (value, key) {
             value.DatePeriodStart = new Date(value.DatePeriodStart);
             value.DatePeriodEnd = new Date(value.DatePeriodEnd);
         });

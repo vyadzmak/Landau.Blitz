@@ -1,4 +1,4 @@
-blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'oddsCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', 'analyzeProjectCalculatorFactory', 'projectFactory', function ($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, oddsCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory, analyzeProjectCalculatorFactory, projectFactory) {
+blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory', 'opiuCalculatorFactory', 'balanceCoefsCalculatorFactory', 'oddsCalculatorFactory', 'crossCheckCalculatorFactory', 'financePlanningCalculatorFactory', 'analyzeProjectCalculatorFactory', 'projectFactory', function ($rootScope, balanceCalculatorFactory, opiuCalculatorFactory, balanceCoefsCalculatorFactory, oddsCalculatorFactory, crossCheckCalculatorFactory, financePlanningCalculatorFactory, analyzeProjectCalculatorFactory, projectFactory) {
     var calculatorFactory = {};
 
     calculatorFactory.getFloat = function (value) {
@@ -12,6 +12,7 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     calculatorFactory.calculateBalanceData = function (currentProject, balanceId, companyBalanceId) {
         currentProject = balanceCalculatorFactory.calculateData(currentProject, balanceId, companyBalanceId);
         currentProject = balanceCalculatorFactory.calculateConsolidatedBalance(currentProject);
+        currentProject = balanceCoefsCalculatorFactory.calculateData(currentProject);
         currentProject = crossCheckCalculatorFactory.calculateData(currentProject);
         projectFactory.setProject(currentProject);
     };
@@ -19,6 +20,7 @@ blitzApp.factory('calculatorFactory', ['$rootScope', 'balanceCalculatorFactory',
     calculatorFactory.calculateOpiuData = function (currentProject, opiu) {
         currentProject = opiuCalculatorFactory.calculateData(currentProject, opiu);
         currentProject = opiuCalculatorFactory.calculateConsolidatedData(currentProject);
+        currentProject = balanceCoefsCalculatorFactory.calculateData(currentProject);
         currentProject = crossCheckCalculatorFactory.calculateData(currentProject);
         projectFactory.setProject(currentProject);
     };

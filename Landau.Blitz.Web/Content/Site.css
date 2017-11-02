@@ -707,3 +707,7 @@ HTML CSS JS Result Edit on .demoTable td:last-child {
 .panel-body.panel-table {
     overflow-x: scroll !important;
 }
+
+.active-tab {
+    background-color: #d3d3d3;
+}
