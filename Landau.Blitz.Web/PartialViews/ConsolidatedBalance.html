@@ -6,43 +6,140 @@
             <table class="table table-bordered table-condensed ng-table">
                 <tbody>
                     <tr>
-                        <td><strong>Коэффициент текущей ликвидности</strong></td>
+                        <td colspan="2"><strong>Показатели ликвидности</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Коэффициент срочной ликвидности</td>
+                        <td>
+                            <strong>{{currentProject.ConsolidatedBalance.UrgentLiquidityCoef|currency:'':2}}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Коэффициент текущей ликвидности</td>
                         <td>
                             {{currentProject.ConsolidatedBalance.CurrentLiquidityCoef|currency:'':2}}
                         </td>
-                        <td>Оборотные средства/краткосрочные обязательства</td>
                     </tr>
-
                     <tr>
-                        <td><strong>Скорость товарооборота</strong></td>
+                        <td colspan="2"><strong>Показатели управления рабочим капиталом</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Чистый оборотный капитал</td>
+                        <td>
+                            <strong>{{currentProject.ConsolidatedBalance.NetWorkingCapital|currency:'':2}}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Срок оборачиваемости дебиторов (дн.)</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.DebtorsTurnoverTerm|currency:'':2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Срок оборачиваемости ТМЗ (дн.)</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.InventoriesTurnoverTerm|currency:'':2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Срок оборачиваемости кредиторов (дн.)</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.CreditorsTurnoverTerm|currency:'':2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Операционный цикл (дн.)</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.OperationCycle|currency:'':2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Финансовый цикл (дн.)</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.FinancialCycle|currency:'':2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>Показатели рентабельности, в %</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Валовая рентабельность</td>
+                        <td>
+                            <strong>{{currentProject.ConsolidatedBalance.GrossProfitability|currency:'':2}}%</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Рентабельность до уплаты %% и КПН</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.ProfitabilityBeforeTaxes|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Рентабельность до уплаты %% и КПН</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.ProfitabilityBeforeTaxes|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Чистая рентабельность</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.NetProfitability|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Коэффициент покрытия %%</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.CoverageRate|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ROE</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.ROE|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ROA</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.ROA|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>Показатели финансовой устойчивости</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Отношение фин. долга к активам</td>
+                        <td>
+                            <strong>{{currentProject.ConsolidatedBalance.DebtAssetsRatio|currency:'':2}}%</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Доля собственного капитала в активах, (коэффициент автономии)</td>
+                        <td>
+                            {{currentProject.ConsolidatedBalance.AutonomyCoef|currency:'':2}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>Прочие показатели</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Скорость товарооборота</td>
                         <td>
                             {{currentProject.ConsolidatedBalance.TurnoverSpeedCoef|currency:'':2}}
                         </td>
-                        <td>ТМЗ/Себестоимость*30дней</td>
                     </tr>
 
                     <tr>
-                        <td><strong>Коэффициент оборачиваемости запасов</strong></td>
+                        <td>Коэффициент оборачиваемости запасов</td>
                         <td>
                             {{currentProject.ConsolidatedBalance.TurnoverInventoryCoef|currency:'':2}}
                         </td>
-                        <td>Себестоимость/ТМЗ</td>
                     </tr>
-
-                    <tr>
-                        <td><strong>Коэффициент автономии</strong></td>
-                        <td>
-                            {{currentProject.ConsolidatedBalance.AutonomyCoef|currency:'':2}}
-                        </td>
-                        <td>Собственный капитал/Валюта баланса</td>
-                    </tr>
-
                     <tr>
                         <td><strong>Коэффициент собственного капитала №1</strong></td>
                         <td>
                             {{currentProject.ConsolidatedBalance.Equity1Coef|currency:'':2}}
                         </td>
-                        <td>Заемные средства/Собственный капитал</td>
                     </tr>
                 </tbody>
             </table>

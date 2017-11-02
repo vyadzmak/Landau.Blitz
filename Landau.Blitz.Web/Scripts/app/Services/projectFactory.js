@@ -25,7 +25,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             }
         }
         line.Avg = 0.0;
-        line.AvgPrognose = 0.0;
+        line.AvgPrediction = 0.0;
         return line;
 
     }
@@ -182,6 +182,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Коммунальные расходы',
             'Охрана',
             'Представительские расходы',
+            'Проценты по кредиту',
             'Брак/порча/списания',
             'Услуги банка',
             'Прочие расходы',
@@ -218,6 +219,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             'Utilities',
             'Security',
             'Hospitality',
+            'LoanInterest',
             'MarriageDamageCancellation',
             'BankServices',
             'OtherBusinessExpenses',
@@ -274,6 +276,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.FinDataCrossChecking = {};
         currentProject.FinDataOpiu = {};
         currentProject.FinDataOdds = {};
+        currentProject.Coefs = {};
         currentProject.Provision = {};
         currentProject.Appendix = {};
         currentProject.Conclusion = {};
@@ -304,6 +307,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.FinDataBalance = currentProject.ProjectContent.FinDataBalance;
         currentProject.ConsolidatedBalance = currentProject.ProjectContent.ConsolidatedBalance;
         currentProject.ConsolidatedOpiu = currentProject.ProjectContent.ConsolidatedOpiu;
+        currentProject.Coefs = currentProject.ProjectContent.Coefs;
         
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
@@ -398,6 +402,10 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.FinDataOdds.Odds.Header.push({
             Name: startDate.format('MM.YY'),
             VarName: 'm' + 0
+        });
+        currentProject.FinDataOdds.Odds.Header.push({
+            Name: 'Прогноз',
+            VarName: 'Prediction'
         });
         currentProject.FinDataOdds.Odds.Header.push({
             Name: startDate.format('MM.YY'),

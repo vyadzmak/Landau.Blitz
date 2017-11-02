@@ -111,7 +111,10 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
         var endMonth = getVarArrayByName(currentProject.FinDataOdds.Odds, 'EndMonth');
         var currentBalance = currentProject.ConsolidatedBalance
             .CompanyBalances[currentProject.ConsolidatedBalance.CompanyBalances.length - 1];
-        startPeriod.M0 = mathFactory.getFloat(currentBalance.ConsLiquidAssetsWoDeposit);
+        var consLiquidAssetsWoDepoit = mathFactory.getFloat(currentBalance.Assets.Checkout.ConsTotal) +
+            mathFactory.getFloat(currentBalance.Assets.Savings.ConsTotal) +
+            mathFactory.getFloat(currentBalance.Assets.CurrentAccount.ConsTotal);
+        startPeriod.M0 = consLiquidAssetsWoDepoit;
         endPeriod.m0 = startPeriod.M0;
         startPeriod.m0 = endPeriod.m0 + mathFactory.getFloat(endMonth.m0);
         for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsBefore; i++) {

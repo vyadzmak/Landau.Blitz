@@ -167,8 +167,8 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
     ];
 
     $scope.opiuItemHasData = function(value, array) {
-        var res = (value.Avg > 0 || value.AvgPrognose > 0) && !value.Calculate;
-        if (!(value.Avg > 0 || value.AvgPrognose > 0)) {
+        var res = (value.Avg > 0 || value.AvgPrediction > 0) && !value.Calculate;
+        if (!(value.Avg > 0 || value.AvgPrediction > 0)) {
             value.Comments = undefined;
         }
         return res;

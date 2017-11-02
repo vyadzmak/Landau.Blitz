@@ -14,6 +14,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         'Utilities',
         'Security',
         'Hospitality',
+        'LoanInterest',
         'MarriageDamageCancellation',
         'BankServices',
         'OtherBusinessExpenses'
@@ -167,7 +168,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         // make all data as numbers and consolidate this opiu, which is main
         angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Table, function (row, rKey) {
             row.Avg = mathFactory.getFloat(row.Avg);
-            row.AvgPrognose = mathFactory.getFloat(row.AvgPrognose);
+            row.AvgPrediction = mathFactory.getFloat(row.AvgPrediction);
             angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Months, function (month, mKey) {
                 row['M' + month.Id] = mathFactory.getFloat(row['M' + month.Id]);
                 if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods') {
@@ -193,7 +194,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                         }
                     });
                     currentProject.ConsolidatedOpiu.Opiu
-                                .Table[rKey].AvgPrognose += mathFactory.getFloat(row.AvgPrognose);
+                                .Table[rKey].AvgPrediction += mathFactory.getFloat(row.AvgPrediction);
                 });
             }
         });
