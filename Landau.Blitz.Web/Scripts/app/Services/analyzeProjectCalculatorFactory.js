@@ -26,6 +26,7 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', 'mathFactory'
             currentProject.FinancePlanning.WoPosBorrowedResources /
             currentProject.FinancePlanning.WoPosTotalResources *
             currentProject.ProjectAnalysis.CreditBid;
+        currentProject.ProjectAnalysis.SSK = mathFactory.round(currentProject.ProjectAnalysis.SSK, 2);
         // calculating total expenses
         var totalVarExpenses = 0;
         var totalConstExpenses = 0;
@@ -39,13 +40,16 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', 'mathFactory'
 
         currentProject.ProjectAnalysis.ProfitForTheProject = totalRevenue - totalCostPrice -
             mathFactory.getFloat(currentProject.ProjectAnalysis.TotalExpenses);
-        currentProject.ProjectAnalysis.ExpectedRevenue = totalRevenue;
+        currentProject.ProjectAnalysis.ProfitForTheProject = mathFactory.round(currentProject.ProjectAnalysis.ProfitForTheProject, 2);
+        currentProject.ProjectAnalysis.ExpectedRevenue = mathFactory.round(totalRevenue,2);
         currentProject.ProjectAnalysis
             .SalesProfitability = currentProject.ProjectAnalysis.ProfitForTheProject / totalRevenue * 100;
+        currentProject.ProjectAnalysis.SalesProfitability = mathFactory.round(currentProject.ProjectAnalysis.SalesProfitability, 2);
+
 
         currentProject.ProjectAnalysis.PaybackPeriod = currentProject.FinancePlanning.WoPosTotalResources /
             currentProject.ProjectAnalysis.ProfitForTheProject;
-
+        currentProject.ProjectAnalysis.PaybackPeriod = mathFactory.round(currentProject.ProjectAnalysis.PaybackPeriod, 1);
         // finding min date in finance planning
         var minDate;
         angular.forEach(currentProject.FinancePlanning.Plans, function (tRow, pKey) {
@@ -66,20 +70,20 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', 'mathFactory'
         currentProject.ProjectAnalysis.InvestmentBackPeriod = monthBeforeProjectStarts +
             maxReachTerm +
             mathFactory.getFloat(currentProject.ProjectAnalysis.PaybackPeriod);
-
+        currentProject.ProjectAnalysis.InvestmentBackPeriod = mathFactory.round(currentProject.ProjectAnalysis.InvestmentBackPeriod, 1);
         currentProject.ProjectAnalysis.ARR = currentProject.ProjectAnalysis.ProfitForTheProject *
             12 /
             currentProject.FinancePlanning.WoPosTotalResources *
             100;
-
+        currentProject.ProjectAnalysis.ARR = mathFactory.round(currentProject.ProjectAnalysis.ARR, 2);
         currentProject.ProjectAnalysis.BreakevenPoint = (totalRevenue * totalConstExpenses) /
             (totalRevenue - totalVarExpenses - totalCostPrice);
-
+        currentProject.ProjectAnalysis.BreakevenPoint = mathFactory.round(currentProject.ProjectAnalysis.BreakevenPoint, 2);
         currentProject.ProjectAnalysis.MarginOfSafety = (totalRevenue -
                 mathFactory.getFloat(currentProject.ProjectAnalysis.BreakevenPoint)) /
             totalRevenue *
             100;
-
+        currentProject.ProjectAnalysis.MarginOfSafety = mathFactory.round(currentProject.ProjectAnalysis.MarginOfSafety, 2);
         return currentProject;
     }
 
