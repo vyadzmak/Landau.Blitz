@@ -32,6 +32,16 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
     function initLineOdds(title, varName, headers) {
 
+        var isPredefined = [
+            'RevenuesIncome',
+            'PrepaidIncome',
+            'ReturnIncome',
+            'OtherIncome',
+            'CreditIncome',
+            'SalesIncome',
+            'SponsorshipIncome',
+            'OtherOutOperationsIncome'
+        ];
 
 
         var calc = false;
@@ -46,8 +56,13 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         line.Title = title;
         line.Calculate = calc;
         line.VarName = varName;
-        for (var i = 1; i <= headers; i++) {
-            line[headers[i].VarName] = 0.0;
+        for (var i = 0; i < headers.length; i++) {
+            if (isPredefined.indexOf(varName) !== -1 && headers[i].VarName === 'Prediction') {
+                line[headers[i].VarName] = 25;
+            } else {
+                line[headers[i].VarName] = 0.0;
+            }
+            
         }
         return line;
 

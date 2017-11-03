@@ -22,7 +22,7 @@
                 <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
                     ng-model="row[month.VarName]"
                     content-editable
-                    non-editable="{{row.Calculate}}"
+                    non-editable="{{checkEditability(row, month.VarName)}}"
                     edit-callback="calculateOdds()"></td>
             </tr>
         </tbody>

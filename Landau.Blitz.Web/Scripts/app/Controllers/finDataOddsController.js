@@ -96,7 +96,14 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         }
         return res;
     }
-    
+    $scope.isPredicted = ['TotalIncome', 'TotalOutOperationsIncome'];
+    $scope.checkEditability = function(row, hVarName) {
+        var result = row.Calculate;
+        if ($scope.isPredicted.indexOf(row.VarName) !== -1 && hVarName === 'Prediction') {
+            result = false;
+        }
+        return result;
+    }
     $scope.init();
 };
 blitzApp.controller("finDataOddsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", "calculatorFactory", finDataOddsController]);

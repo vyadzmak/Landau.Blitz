@@ -8,7 +8,14 @@ blitzApp.factory('mathFactory', ['$rootScope', function ($rootScope) {
             return 0;
         }
     }
-    
+
+    mathFactory.round = function (value, precision) {
+
+        var result = Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
+        return result;
+
+    }
+
     return mathFactory;
 
 }]);
