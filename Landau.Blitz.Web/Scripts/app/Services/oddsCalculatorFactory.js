@@ -102,6 +102,7 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                         var sSubValue = getVarArrayByName(currentProject.FinDataOdds.Odds, subValue);
                         totalValue[month.VarName] += mathFactory.getFloat(sSubValue[month.VarName]);
                     });
+                    totalValue[month.VarName] = mathFactory.round(totalValue[month.VarName], 2);
                 }
             });
         });
@@ -206,14 +207,14 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
         for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsBefore; i++) {
             endPeriod['m' + i] = startPeriod['m' + (i - 1)];
             startPeriod['m' + i] = endPeriod['m' + i] + mathFactory.getFloat(endMonth['m' + i]);
-            startPeriod['m' + i] = mathFactory.round(startPeriod['m' + i]);
+            startPeriod['m' + i] = mathFactory.round(startPeriod['m' + i], 2);
         }
         endPeriod.M0 = startPeriod.M0 + mathFactory.getFloat(endMonth.M0);
-        endPeriod.M0 = mathFactory.round(endPeriod.M0);
+        endPeriod.M0 = mathFactory.round(endPeriod.M0, 2);
         for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsAfter; i++) {
             startPeriod['M' + i] = endPeriod['M' + (i - 1)];
             endPeriod['M' + i] = startPeriod['M' + i] + mathFactory.getFloat(endMonth['M' + i]);
-            endPeriod['M' + i] = mathFactory.round(endPeriod['M' + i]);
+            endPeriod['M' + i] = mathFactory.round(endPeriod['M' + i], 2);
         }
         return currentProject;
     }
