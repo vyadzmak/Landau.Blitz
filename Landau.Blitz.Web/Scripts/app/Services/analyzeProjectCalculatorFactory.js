@@ -10,8 +10,11 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', 'mathFactory'
         var totalRevenue = 0;
         var maxReachTerm = 0;
         angular.forEach(currentProject.ProjectAnalysis.ExcpectedRevenues, function (rev, revKey) {
-            rev.Costprice = mathFactory.getFloat(rev.Revenue) / (100
-                + (mathFactory.getFloat(rev.Markup))) * 100;
+            if (mathFactory.getFloat(rev.Markup) > 0) {
+                rev.Costprice = mathFactory.getFloat(rev.Revenue) / (100 + (mathFactory.getFloat(rev.Markup))) * 100;
+            } else {
+                rev.Costprice = 0;
+            }
             totalRevenue += mathFactory.getFloat(rev.Revenue);
             totalCostPrice += rev.Costprice;
             maxReachTerm = maxReachTerm > rev.ReachTerm ? maxReachTerm : rev.ReachTerm;
