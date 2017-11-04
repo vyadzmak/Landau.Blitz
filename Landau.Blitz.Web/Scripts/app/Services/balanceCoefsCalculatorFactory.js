@@ -35,7 +35,7 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) /
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
-        balance.NewWorkingCapital =
+        balance.NetWorkingCapital =
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
@@ -43,8 +43,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
                 mathFactory.getFloat(previousBalance.Assets.RecievableAccounts.Total)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
-        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.Inventories) +
-                mathFactory.getFloat(previousBalance.Assets.Inventories)) /
+        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Inventories) +
+                mathFactory.getFloat(previousBalance.Inventories)) /
             2 * period / mathFactory.getFloat(costOfGoodsAvg);
 
         balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.Total) +
@@ -133,8 +133,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
                 mathFactory.getFloat(previousBalance.Assets.RecievableAccounts.ConsTotal)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
-        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.ConsInventories) +
-                mathFactory.getFloat(previousBalance.Assets.ConsInventories)) /
+        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsInventories) +
+                mathFactory.getFloat(previousBalance.ConsInventories)) /
             2 * period / mathFactory.getFloat(costOfGoodsAvg);
 
         balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.ConsTotal) +

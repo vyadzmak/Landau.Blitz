@@ -144,7 +144,9 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
     }
 
     opiuCalculatorFactory.calculateData = function (currentProject, opiu) {
-
+        if (!currentProject.FinDataOpiu.Opius || currentProject.FinDataOpiu.Opius.length===0) {
+            return currentProject;
+        }
 
         opiu = calculateOpiu(opiu);
 

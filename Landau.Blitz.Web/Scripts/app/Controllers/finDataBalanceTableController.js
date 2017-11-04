@@ -213,27 +213,32 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     ];
 
     $scope.calculateBalance = function(balance, companyId) {
-        calculatorFactory.calculateBalanceData($scope.currentProject, companyId, balance.Id);
-        $scope.activeBalance = projectFactory.getActiveBalance(companyId, balance.Id);
+        calculatorFactory.calculateBalanceData($scope.currentProject, companyId, $scope.activeBalance.Id);
+        $scope.activeBalance = projectFactory.getActiveBalance(companyId, $scope.activeBalance.Id);
     };
 
     $scope.checkOutAssets = function(value) {
         var found = false;
-        angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
-            if (mathFactory.getFloat(balance.Assets[value.varName].OutTotal) > 0) {
-                found = true;
-            }
-        });
+        if ($scope.activeCompany) {
+            angular.forEach($scope.activeCompany.CompanyBalances,
+                function(balance, balanceKey) {
+                    if (mathFactory.getFloat(balance.Assets[value.varName].OutTotal) > 0) {
+                        found = true;
+                    }
+                });
+        }
         return found;
     }
 
     $scope.checkOutLiabilities = function(value) {
         var found = false;
-        angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
-            if (mathFactory.getFloat(balance.Liabilities[value.varName].OutTotal) > 0) {
-                found = true;
-            }
-        });
+        if($scope.activeCompany){
+            angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
+                if (mathFactory.getFloat(balance.Liabilities[value.varName].OutTotal) > 0) {
+                    found = true;
+                }
+            });
+        }
         return found;
     }
 };

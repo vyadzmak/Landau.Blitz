@@ -113,13 +113,13 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
             $state.go("main.dashboard.project.clientData");
             $scope.initTabs();
 
-            //var timer;
-            //if (!timer) {
-            //    timer = $interval(function() {
-            //        console.log("Save project");
-            //        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
-            //    }, 30000);
-            //}
+            var timer;
+            if (!timer) {
+                timer = $interval(function() {
+                    console.log("Save project");
+                    projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+                }, 60000);
+            }
         }
 
     }

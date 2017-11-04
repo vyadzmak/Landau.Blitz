@@ -180,7 +180,9 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
     }
 
     oddsCalculatorFactory.calculateData = function (currentProject) {
-
+        if (!currentProject.FinDataOdds.Odds) {
+            return currentProject;
+        }
         // calculate historical values
         calculateValues(currentProject, 'm');
 
