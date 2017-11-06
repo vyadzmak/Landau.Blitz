@@ -1,15 +1,30 @@
-var provisionController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory, projectHttpService) {
+var provisionController = function ($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, NgTableParams, projectFactory, projectHttpService, mathFactory) {
     usSpinnerService.stop("spinner-1");
-
-    $scope.init = function() {
+    $scope.provisionTypes = [
+    { Id: 1, Name: 'Квартира' },
+    { Id: 2, Name: 'Жилой дом' },
+    { Id: 3, Name: 'Нежилое/коммерческое помещение' },
+    { Id: 4, Name: 'Оборудование' },
+    { Id: 5, Name: 'Товары в обороте' },
+    { Id: 6, Name: 'Транспортное средство' },
+    { Id: 7, Name: 'Гарантия ДАМУ' },
+    { Id: 8, Name: 'Прочее' }
+    ];
+    $scope.init = function () {
         $scope.currentProject = projectFactory.getToCurrentProject();
-        if ($scope.currentProject != undefined) {
-            $scope.deposits = new NgTableParams({}, { dataset: $scope.currentProject.Provision.Deposits });
+        if (!$scope.currentProject.Provision.Deposits) {
+            $scope.currentProject.Provision.Deposits = [];
+        }
+        if (!$scope.currentProject.Provision.ActiveDeposits) {
+            $scope.currentProject.Provision.ActiveDeposits = [];
+        }
+        if (!$scope.currentProject.Provision.ActiveLiabilities) {
+            $scope.currentProject.Provision.ActiveLiabilities = [];
         }
     };
     $scope.init();
-    $scope.filterFromArray = function(arr, id) {
-        var ob = arr.filter(function(item) {
+    $scope.filterFromArray = function (arr, id) {
+        var ob = arr.filter(function (item) {
             return item.Id == id;
         });
 
@@ -17,96 +32,35 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
     }
 
 
-    $scope.calculateLiquidityRatio = function() {
-            try {
-                $scope.mElement.LiquidityRatio = +($scope.mElement.AssessedPrice / $scope.mElement.MarketPrice).toFixed(2);
-
-            } catch (e) {
-                $scope.mElement.LiquidityRatio = 0;
+    $scope.calculateDeposits = function () {
+        var totalDeposits = 0;
+        var totalWODamu = 0;
+        angular.forEach($scope.currentProject.Provision.Deposits, function (item, key) {
+            if (item.Name.Id !== 7) {
+                totalWODamu += mathFactory.getFloat(item.AssessedPrice);
             }
-        }
-        //------------------���� ��� ������ � ���������� ������---------------------------//
-        //add new user btn event
-        //��� �����, ����������, ������ �������, ���� �����, ��� �����
-    $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
-
-
-        if (element != {}) {
-            $scope.isEdit = true;
-        }
-
-        currentElement = element;
-        var modalInstance = $uibModal.open({
-            templateUrl: modalView,
-            controller: modalCtrl,
-            controllerAs: 'vm',
-            scope: $scope
-
+            totalDeposits += mathFactory.getFloat(item.AssessedPrice);
+            //item.LiquidityRatio = mathFactory.getFloat(item.AssessedPrice) / mathFactory.getFloat(item.MarketPrice);
+            //item.LiquidityRatio = mathFactory.round(item.LiquidityRatio, 2);
         });
-
-        modalInstance.result.then(function() {
-            //alert(JSON.stringify($scope.mElement));
-            var id = 1;
-            if (elements.length > 0) {
-                id = elements[elements.length - 1].Id + 1;
-            }
-            $scope.mElement.Id = id;
-            elements.push($scope.mElement);
-            $scope.mElement = {};
-
-            ///alert(JSON.stringify($scope.currentProject.ClientData.BusinessPlaces));
-            // templatesHttpService.updateTemplate($http, $scope, $state, $scope.template);
-
-        }, function() {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-    };
-    //-----------����� ����� ��� ������ � ���������� ������---------------------------//
-
-    $scope.clickDeposit = function(id) {
-        $scope.rmIndex = 1;
-        $scope.eIndex = id;
-        
-        $scope.editElement = $scope.filterFromArray($scope.currentProject.Provision.Deposits, $scope.eIndex);
-
-        $scope.modalView = 'PartialViews/Modals/Provision/DepositModal.html';
-        $scope.modalController = manageDepositController;
-
-        $scope.mElement = $scope.editElement;
-        $scope.elements = $scope.currentProject.Provision.Deposits;
-    };
-
-    $scope.clickActiveDeposit = function(id) {
-        $scope.rmIndex = 1;
-        $scope.eIndex = id;
-        
-        $scope.editElement = $scope.filterFromArray($scope.currentProject.Provision.ActiveDeposits, $scope.eIndex);
-        
-        $scope.mElement = $scope.editElement;
-        $scope.elements = $scope.currentProject.Provision.ActiveDeposits;
-    };
-
-    $scope.clickActiveDepositDetail = function(id, depositId) {
-        $scope.rmIndex = 1;
-        $scope.eIndex = id;
-
-        $scope.editDeposit =$scope.filterFromArray($scope.currentProject.Provision.ActiveDeposits, depositId);
-        $scope.editElement = $scope.filterFromArray($scope.editDeposit.DepositDetails, $scope.eIndex);
-        
-        $scope.mElement = $scope.editElement;
-        $scope.elements = $scope.editDeposit.DepositDetails;
-    };
-
-    $scope.EditElement = function() {
-
-        $scope.addNewModal($scope.modalView, $scope.modalController, $scope.mElement, $scope.elements, $scope.mElement);
-
-        //alert("ED Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
-    };
+        $scope.currentProject.Provision.DepositsRatio = totalWODamu /
+            mathFactory.getFloat($scope.currentProject.FinancePlanning.ProposedSum) *
+            100;
+        $scope.currentProject.Provision.DepositsRatio = mathFactory
+            .round($scope.currentProject.Provision.DepositsRatio, 2);
+        $scope.currentProject.Provision.DepositsTotal = mathFactory
+            .round(totalDeposits, 2);
+        $scope.currentProject.Provision.DepositsWODamuTotal = mathFactory
+            .round(totalWODamu, 2);
+    }
 
 
-    $scope.deleteData = function() {
-        var ob = $scope.elements.filter(function(item) {
+    $scope.addNewRow = function (rows) {
+        rows.push({ Id: rows.length + 1 });
+    }
+
+    $scope.deleteData = function () {
+        var ob = $scope.elements.filter(function (item) {
             return item.Id == $scope.eIndex;
         });
 
@@ -118,13 +72,18 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.calculateDeposits();
+        $scope.calculateLiabilities();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
-    $scope.RemoveElement = function() {
-        //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
 
+    $scope.clickRightTableRow = function (rows, rowId) {
+        $scope.eIndex = rowId;
+        $scope.elements = rows;
+    };
 
+    $scope.removeElement = function () {
         var dialog = BootstrapDialog.confirm({
             title: 'Предупреждение',
             message: 'Вы действительно хотите удалить данные?',
@@ -134,7 +93,7 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
             btnCancelLabel: 'Нет',
             btnOKLabel: 'Да',
             btnOKClass: 'btn-warning',
-            callback: function(result) {
+            callback: function (result) {
                 if (result) {
                     $scope.deleteData();
                 }
@@ -144,58 +103,27 @@ var provisionController = function($scope, $http, $location, $state, $uibModal, 
     };
 
     $scope.menuItems = [
-        //{
-        //    text: "Редактировать", //menu option text 
-        //    callback: $scope.EditElement, //function to be called on click  
-        //    disabled: false //No click event. Grayed out option. 
-        //},
         {
             text: "Удалить",
-            callback: $scope.RemoveElement, //function to be called on click  
+            callback: $scope.removeElement, //function to be called on click  
             disabled: false
         }
     ];
 
-    $scope.showNewDeposit = function() {
-        if (!$scope.currentProject.Provision.Deposits) {
-            $scope.currentProject.Provision.Deposits = [];
-        }
-        $scope.currentProject.Provision.Deposits.push({Id:$scope.currentProject.Provision.Deposits.length+1});
-        //var modalView = 'PartialViews/Modals/Provision/DepositModal.html';
-        //var modalController = manageDepositController;
-
-        //if ($scope.currentProject.Provision.Deposits == undefined) {
-        //    $scope.currentProject.Provision.Deposits = [];
-        //}
-        //$scope.mElement = {};
-        //$scope.addNewModal(modalView, modalController, $scope.mElement, $scope.currentProject.Provision.Deposits);
-    }
-
-    $scope.addNewActiveDeposit = function() {
-        if (!$scope.currentProject.Provision.ActiveDeposits) {
-            $scope.currentProject.Provision.ActiveDeposits = [];
-        }
-        $scope.currentProject.Provision.ActiveDeposits.push({
-            Id:$scope.currentProject.Provision.ActiveDeposits.length+1,
-            DepositDetails: [{Id:1}]
+    $scope.calculateLiabilities = function () {
+        var totalActiveLiabilities = 0;
+        var totalActiveDepositsWoDamu = 0;
+        angular.forEach($scope.currentProject.Provision.ActiveDeposits, function (item, key) {
+            if (item.Name.Id !== 7) {
+                totalActiveDepositsWoDamu += mathFactory.getFloat(item.AssessedPrice);
+            }
         });
-    }
-
-    $scope.addDepositDetail = function(deposit) {
-        deposit.DepositDetails.push({ Id: deposit.DepositDetails.length + 1 });
-    }
-
-    $scope.calculateActiveDeposits = function() {
-        var marketValue = 0;
-        var assesedValue = 0;
-        angular.forEach($scope.currentProject.Provision.ActiveDeposits, function(item, key) {
-            angular.forEach(item.DepositDetails, function(detItem, detKey) {
-                marketValue += +detItem.MarketPrice;
-                assesedValue += +detItem.AssessedPrice;
-            });
+        angular.forEach($scope.currentProject.Provision.ActiveLiabilities, function (item, key) {
+            totalActiveLiabilities += mathFactory.getFloat(item.Sum);
         });
-        $scope.currentProject.Provision.ActiveDepositsMarketTotal = marketValue;
-        $scope.currentProject.Provision.ActiveDepositsAssessedTotal = assesedValue;
+        $scope.currentProject.Provision.ActiveDepositsWoDamuTotal = mathFactory.round(totalActiveDepositsWoDamu, 2);
+        $scope.currentProject.Provision.ActiveLiabilitiesTotal = mathFactory.round(totalActiveLiabilities, 2);
+        $scope.currentProject.Provision.ActiveDepositsRatio = mathFactory.round(totalActiveDepositsWoDamu/totalActiveLiabilities*100, 2);
     }
 };
-blitzApp.controller("provisionController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", provisionController]);
+blitzApp.controller("provisionController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectFactory", "projectHttpService", "mathFactory", provisionController]);

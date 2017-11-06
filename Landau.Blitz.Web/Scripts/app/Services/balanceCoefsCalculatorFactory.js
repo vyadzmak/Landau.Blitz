@@ -27,8 +27,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         var netProfitAvg = getVarArrayByName(opiu, 'NetProfit').Avg;
 
         balance.UrgentLiquidityCoef =
-            (mathFactory.getFloat(currentBalance.TotalCurrentAssets)
-            + mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.Total)) /
+            (mathFactory.getFloat(currentBalance.LiquidAssets)
+            + mathFactory.getFloat(currentBalance.Recievables)) /
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
         balance.CurrentLiquidityCoef =
@@ -39,8 +39,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.Total) +
-                mathFactory.getFloat(previousBalance.Assets.RecievableAccounts.Total)) /
+        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Recievables) +
+                mathFactory.getFloat(previousBalance.Recievables)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
         balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Inventories) +
@@ -117,8 +117,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         var netProfitAvg = getVarArrayByName(opiu, 'NetProfit').Avg;
 
         balance.UrgentLiquidityCoef =
-            (mathFactory.getFloat(currentBalance.ConsTotalCurrentAssets)
-            + mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.ConsTotal)) /
+            (mathFactory.getFloat(currentBalance.ConsLiquidAssets)
+            + mathFactory.getFloat(currentBalance.ConsRecievables)) /
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
 
         balance.CurrentLiquidityCoef =
@@ -129,8 +129,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
             mathFactory.getFloat(currentBalance.ConsTotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.ConsTotal) +
-                mathFactory.getFloat(previousBalance.Assets.RecievableAccounts.ConsTotal)) /
+        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsRecievables) +
+                mathFactory.getFloat(previousBalance.ConsRecievables)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
         balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsInventories) +

@@ -206,20 +206,20 @@
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CommodityLoan.Total|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Счета к получению">Счета к получению</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RecievableAccounts.Total|currency:'':2}}</td>
+        <td><span uib-tooltip="Дебиторская задолженность">Дебиторская задолженность</span></td>
+        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.Recievables.Total|currency:'':2}}</td>
         <td><span uib-tooltip="Предоплата от покупателей">Предоплата от покупателей</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.CustomersPrepayment.Total|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Товары в пути">Товары в пути</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.TransitGoods.Total|currency:'':2}}</td>
+        <td></td>
+        <td></td>
         <td><span uib-tooltip="Частные займы (менее 12 мес.)">Част.займы(мен. 12 мес.)</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortPrivateLoans.Total|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Предоплата поставщиков">Предоплата поставщиков</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SuppliersPrepayment.Total|currency:'':2}}</td>
+        <td></td>
+        <td></td>
         <td><span uib-tooltip="Банковский кредит (менее 12 месяцев) на оборотные средства">Банк.кр.(мен. 12 мес.) на об/ср</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.ShortWorkingCapitalCredit.Total|currency:'':2}}</td>
     </tr>
@@ -242,26 +242,26 @@
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.TotalShortTermDebt|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Готовая продукция">Готовая продукция</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.FinishedGoods.Total|currency:'':2}}</td>
+        <td></td>
+        <td></td>
         <td><span uib-tooltip="Частные займы (более 12 мес.)">Част.займы(бол. 12 мес.)</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongPrivateLoans.Total|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Сырье">Сырье</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.RawMaterials.Total|currency:'':2}}</td>
+        <td></td>
+        <td></td>
         <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на оборотные средства">Банк.кр.(бол. 12 мес.) на об/ср</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongWorkingCapitalCredit.Total|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Полуфаб./метариалы">Полуфаб./метариалы</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.SemiProducts.Total|currency:'':2}}</td>
+        <td></td>
+        <td></td>
         <td><span uib-tooltip="Банковский кредит (более 12 месяцев) на основные средства">Банк.кр.(бол. 12 мес.) на осн/ср</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.LongFixedAssetsCredit.Total|currency:'':2}}</td>
     </tr>
     <tr>
-        <td><span uib-tooltip="Товары, полученные на реализацию">Тов., получ.на реал-ию</span></td>
-        <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets.ForSaleGoods.Total|currency:'':2}}</td>
+        <td></td>
+        <td></td>
         <td><span uib-tooltip="Прочие пассивы">Прочие пассивы</span></td>
         <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities.OtherLiabilities.Total|currency:'':2}}</td>
     </tr>
@@ -374,16 +374,16 @@
 <ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/RecievableAccounts.html'"></ng-include>
 
 <!--TransitGoods-->
-<ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/TransitGoods.html'"></ng-include>
+<!--<ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/TransitGoods.html'"></ng-include>-->
 
 <!--SuppliersPrepayment-->
-<ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/SuppliersPrepayment.html'"></ng-include>
+<!--<ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/SuppliersPrepayment.html'"></ng-include>-->
 
 <!-- Inventories 'FinishedGoods', 'RawMaterials', SemiProducts',-->
 <ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/Inventories.html'"></ng-include>
 
 <!-- ForSaleGoods -->
-<ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/ForSaleGoods.html'"></ng-include>
+<!--<ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/ForSaleGoods.html'"></ng-include>-->
 
 <!-- OtherRecievables -->
 <ng-include src="'/landaublitz/PartialViews/FinDataBalanceTables/OtherRecievables.html'"></ng-include>

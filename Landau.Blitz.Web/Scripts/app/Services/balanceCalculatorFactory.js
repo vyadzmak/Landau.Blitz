@@ -151,7 +151,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
 
             // debt recievables
             //'RecievableAccounts','OtherRecievables',
-            var recvbls = ['RecievableAccounts', 'OtherRecievables'];
+            var recvbls = ['Recievables', 'OtherRecievables'];
             angular.forEach(recvbls,
                 function (varName, varKey) {
                     balance.Assets[varName].Total = 0;
@@ -175,27 +175,27 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
                     balance.OutReceivables += balance.Assets[varName].OutTotal;
                 });
             //'TransitGoods','SuppliersPrepayment',
-            var tgsps = ['TransitGoods', 'SuppliersPrepayment'];
-            angular.forEach(tgsps,
-                function (varName, varKey) {
-                    balance.Assets[varName].Total = 0;
-                    balance.Assets[varName].ConsTotal = 0;
-                    balance.Assets[varName].OutTotal = 0;
+            //var tgsps = ['TransitGoods', 'SuppliersPrepayment'];
+            //angular.forEach(tgsps,
+            //    function (varName, varKey) {
+            //        balance.Assets[varName].Total = 0;
+            //        balance.Assets[varName].ConsTotal = 0;
+            //        balance.Assets[varName].OutTotal = 0;
 
-                    angular.forEach(balance.Assets[varName].Rows,
-                        function (tRow, tKey) {
-                            var sum = mathFactory.getFloat(tRow.Sum);
-                            balance.Assets[varName].Total += sum;
-                            balance.Assets[varName].ConsTotal += sum;
-                        });
-                    balance.Receivables += balance.Assets[varName].Total;
-                    balance.ConsReceivables += balance.Assets[varName].ConsTotal;
-                    balance.OutReceivables += balance.Assets[varName].OutTotal;
-                });
+            //        angular.forEach(balance.Assets[varName].Rows,
+            //            function (tRow, tKey) {
+            //                var sum = mathFactory.getFloat(tRow.Sum);
+            //                balance.Assets[varName].Total += sum;
+            //                balance.Assets[varName].ConsTotal += sum;
+            //            });
+            //        balance.Receivables += balance.Assets[varName].Total;
+            //        balance.ConsReceivables += balance.Assets[varName].ConsTotal;
+            //        balance.OutReceivables += balance.Assets[varName].OutTotal;
+            //    });
 
             // TMZ
             // 'Inventories','FinishedGoods','RawMaterials','SemiProducts',
-            var ifrss = ['Inventories', 'FinishedGoods', 'RawMaterials', 'SemiProducts'];
+            var ifrss = ['Inventories'];
             angular.forEach(ifrss,
                 function (varName, varKey) {
                     balance.Assets[varName].Total = 0;
@@ -215,17 +215,17 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
                     balance.OutInventories += balance.Assets[varName].OutTotal;
                 });
             // ForSaleGoods
-            balance.Assets.ForSaleGoods.ConsTotal = 0;
-            balance.Assets.ForSaleGoods.OutTotal = 0;
-            balance.Assets.ForSaleGoods.Total = 0;
-            angular.forEach(balance.Assets.ForSaleGoods.Rows,
-                function (tRow, tKey) {
-                    balance.Assets.ForSaleGoods.Total += mathFactory.getFloat(tRow.Sum);
-                    balance.Assets.ForSaleGoods.ConsTotal += mathFactory.getFloat(tRow.Sum);
-                });
-            balance.Inventories += balance.Assets.ForSaleGoods.Total;
-            balance.ConsInventories += balance.Assets.ForSaleGoods.ConsTotal;
-            balance.OutInventories += balance.Assets.ForSaleGoods.OutTotal;
+            //balance.Assets.ForSaleGoods.ConsTotal = 0;
+            //balance.Assets.ForSaleGoods.OutTotal = 0;
+            //balance.Assets.ForSaleGoods.Total = 0;
+            //angular.forEach(balance.Assets.ForSaleGoods.Rows,
+            //    function (tRow, tKey) {
+            //        balance.Assets.ForSaleGoods.Total += mathFactory.getFloat(tRow.Sum);
+            //        balance.Assets.ForSaleGoods.ConsTotal += mathFactory.getFloat(tRow.Sum);
+            //    });
+            //balance.Inventories += balance.Assets.ForSaleGoods.Total;
+            //balance.ConsInventories += balance.Assets.ForSaleGoods.ConsTotal;
+            //balance.OutInventories += balance.Assets.ForSaleGoods.OutTotal;
 
             //TotalCurrentAssets
             balance.TotalCurrentAssets = balance.Inventories + balance.LiquidAssets + balance.Receivables;
@@ -330,15 +330,16 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
                     'CurrentAccount',
                     'Savings',
                     'Deposit',
-                    'RecievableAccounts',
-                    'TransitGoods',
-                    'SuppliersPrepayment',
+                    'Recievables',
+                    //'RecievableAccounts',
+                    //'TransitGoods',
+                    //'SuppliersPrepayment',
                     'OtherRecievables',
                     'Inventories',
-                    'FinishedGoods',
-                    'RawMaterials',
-                    'SemiProducts',
-                    'ForSaleGoods',
+                    //'FinishedGoods',
+                    //'RawMaterials',
+                    //'SemiProducts',
+                    //'ForSaleGoods',
                     'Hardware',
                     'MotorTransport',
                     'RealEstate',

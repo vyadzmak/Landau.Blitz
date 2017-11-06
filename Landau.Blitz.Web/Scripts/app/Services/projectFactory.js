@@ -511,12 +511,12 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
         angular.forEach(this.currentProject.FinDataBalance.Balances, function (balance, balKey) {
             angular.forEach(balance.CompanyBalances, function (compBalance, compBalKey) {
-                angular.forEach(compBalance.Assets.TransitGoods.Rows, function (row, rowKey) {
-                    row.GetDate = new Date(row.GetDate);
-                });
-                angular.forEach(compBalance.Assets.SuppliersPrepayment.Rows, function (row, rowKey) {
-                    row.GetDate = new Date(row.GetDate);
-                });
+                //angular.forEach(compBalance.Assets.TransitGoods.Rows, function (row, rowKey) {
+                //    row.GetDate = new Date(row.GetDate);
+                //});
+                //angular.forEach(compBalance.Assets.SuppliersPrepayment.Rows, function (row, rowKey) {
+                //    row.GetDate = new Date(row.GetDate);
+                //});
                 angular.forEach(compBalance.Liabilities.ShortWorkingCapitalCredit.Rows, function (row, rowKey) {
                     row.ArrearsDate = new Date(row.ArrearsDate);
                     row.MaturityDate = new Date(row.MaturityDate);
@@ -537,7 +537,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
                     row.ArrearsDate = new Date(row.ArrearsDate);
                     row.MaturityDate = new Date(row.MaturityDate);
                 });
-                angular.forEach(compBalance.Assets.RecievableAccounts.Rows, function (row, rowKey) {
+                angular.forEach(compBalance.Assets.Recievables.Rows, function (row, rowKey) {
                     row.OccurDate = new Date(row.OccurDate);
                     row.ReturnDate = new Date(row.ReturnDate);
                 });
@@ -572,9 +572,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
                 angular.forEach(compBalance.Assets.Investments.Rows, function (row, rowKey) {
                     row.Date = new Date(row.Date);
                 });
-                angular.forEach(compBalance.Assets.ForSaleGoods.Rows, function (row, rowKey) {
-                    row.GetDate = new Date(row.GetDate);
-                });
+                //angular.forEach(compBalance.Assets.ForSaleGoods.Rows, function (row, rowKey) {
+                //    row.GetDate = new Date(row.GetDate);
+                //});
                 angular.forEach(compBalance.Liabilities.CustomersPrepayment.Rows, function (row, rowKey) {
                     row.ArrearsDate = new Date(row.ArrearsDate);
                     row.MaturityDate = new Date(row.MaturityDate);

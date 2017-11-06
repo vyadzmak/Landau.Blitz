@@ -6,25 +6,27 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         liquids: [
         {varName:'Savings', name: 'Сбережения'},
         {varName:'Deposit', name: 'Депозит'}],
-        raws: [{varName:'Inventories', name:'ТМЗ'},
-        {varName:'FinishedGoods', name:'Готовая продукция'},
-        {varName:'RawMaterials', name:'Сырье'},
-        {varName:'SemiProducts', name:'Полуфабрикаты/материалы'}]
+        raws: [{varName:'Inventories', name:'ТМЗ'}
+        //{varName:'FinishedGoods', name:'Готовая продукция'},
+        //{varName:'RawMaterials', name:'Сырье'},
+        //{varName:'SemiProducts', name:'Полуфабрикаты/материалы'}
+        ]
     };
     
     $scope.outBalanceAssets = [{varName:'Checkout', name:'Касса'},
         {varName:'CurrentAccount', name: 'Расчетный счет'},
         {varName:'Savings', name: 'Сбережения'},
         {varName:'Deposit', name: 'Депозит'},
-        {varName:'RecievableAccounts', name: 'Счета к получению'},
-        {varName:'TransitGoods', name: 'Товары в пути'},
-        {varName:'SuppliersPrepayment', name: 'Предоплата поставщиков'},
+        {varName:'Recievables', name: 'Дебиторская задолженность'},
+        //{varName:'RecievableAccounts', name: 'Счета к получению'},
+        //{varName:'TransitGoods', name: 'Товары в пути'},
+        //{varName:'SuppliersPrepayment', name: 'Предоплата поставщиков'},
         {varName:'OtherRecievables', name: 'Проч. деб. задолженность'},
         {varName:'Inventories', name: 'ТМЗ'},
-        {varName:'FinishedGoods', name: 'Готовая продукция'},
-        {varName:'RawMaterials', name: 'Сырье'},
-        {varName:'SemiProducts', name: 'Полуфаб./метариалы'},
-        {varName:'ForSaleGoods', name: 'Тов., получ.на реал-ию'},
+        //{varName:'FinishedGoods', name: 'Готовая продукция'},
+        //{varName:'RawMaterials', name: 'Сырье'},
+        //{varName:'SemiProducts', name: 'Полуфаб./метариалы'},
+        //{varName:'ForSaleGoods', name: 'Тов., получ.на реал-ию'},
         {varName:'Hardware', name: 'Обородуование'},
         {varName:'MotorTransport', name: 'Автотранспорт'},
         {varName:'RealEstate', name: 'Недвижимость'},

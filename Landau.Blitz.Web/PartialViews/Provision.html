@@ -1,6 +1,6 @@
 ﻿<div ng-controller="provisionController">
 
- 
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             Обеспечение по предлагаемому банковскому займу/кредитной линии
@@ -8,29 +8,93 @@
         </div>
 
         <div class="panel-body panel-table">
-            <button class="btn btn-primary pull-left btn-xs header-button" ng-click="showNewDeposit();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button class="btn btn-primary pull-left btn-xs header-button" ng-click="addNewRow(currentProject.Provision.Deposits);"><i class="fa fa-plus" aria-hidden="true"></i></button>
             <table st-table="dpsCollection" st-safe-src="currentProject.Provision.Deposits"
                    class="table table-bordered table-condensed ng-table">
                 <thead>
+                    <tr>
+                        <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
+                        <th st-sort="Description"><span uib-tooltip="Описание">Описание</span></th>
+                        <th st-sort="Owner"><span uib-tooltip="Владелец">Владелец</span></th>
+                        <th st-sort="Location"><span uib-tooltip="Местонахождение">Местонахождение</span></th>
+                        <th st-sort="MarketPrice"><span uib-tooltip="Рыночная стоимость">Рыночная<br />стоимость</span></th>
+                        <th st-sort="AssessedPrice"><span uib-tooltip="Залоговая стоимость">Залоговая<br />стоимость</span></th>
+                        <th st-sort="LiquidityRatio"><span uib-tooltip="Коэффициент ликвидности">Коэффициент<br />ликвидности</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in dpsCollection" 
+                    ng-right-click="clickRightTableRow(currentProject.Provision.Deposits, row.Id)" menu-items="menuItems">
+                        <td>
+                            <select ng-options="item as item.Name for item in provisionTypes track by item.Id"
+                                    ng-model="row.Name"
+                                    ng-change="calculateDeposits()"></select>
+                        </td>
+                        <td ng-model="row.Owner" content-editable></td>
+                        <td ng-model="row.Location" content-editable></td>
+                        <td ng-model="row.OwnerCompanyName" content-editable></td>
+                        <td ng-model="row.MarketPrice" content-editable></td>
+                        <td ng-model="row.AssessedPrice" content-editable edit-callback="calculateDeposits()"></td>
+                        <td ng-model="row.LiquidityRatio" content-editable></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2">Итого</td>
+                        <td>{{currentProject.Provision.DepositsTotal | currency:'':2}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2">Итого без гарантий ДАМУ</td>
+                        <td>{{currentProject.Provision.DepositsWODamuTotal | currency:'':2}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2">Сумма обязательств</td>
+                        <td>{{currentProject.FinancePlanning.ProposedSum | currency:'':2}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="2">Покрытие, %</td>
+                        <td>{{currentProject.Provision.DepositsRatio | currency:'':2}}</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            В случае, если предоставляемое залоговое обеспечение выступает по иным обязательствам, необходимо привести расчет достаточности залогового обеспечения на основании предоставленных справок из Банка об остатке ОД.
+            <div class="clearfix "></div>
+        </div>
+
+        <div class="panel-body panel-table">
+            <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(currentProject.Provision.ActiveLiabilities);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="alsCollection" st-safe-src="currentProject.Provision.ActiveLiabilities"
+                   class="table table-bordered table-condensed ng-table">
+                <thead>
                 <tr>
-                    <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
-                    <th st-sort="Description"><span uib-tooltip="Описание">Описание</span></th>
-                    <th st-sort="Owner"><span uib-tooltip="Владелец">Владелец</span></th>
-                    <th st-sort="Location"><span uib-tooltip="Местонахождение">Местонахождение</span></th>
-                    <th st-sort="MarketPrice"><span uib-tooltip="Рыночная стоимость">Рыночная<br />стоимость</span></th>
-                    <th st-sort="AssessedPrice"><span uib-tooltip="Залоговая стоимость">Залоговая<br />стоимость</span></th>
-                    <th st-sort="LiquidityRatio"><span uib-tooltip="Коэффициент ликвидности">Коэффициент<br />ликвидности</span></th>
+                    <th st-sort="Name"><span uib-tooltip="Наименование СПЧ">Наименование СПЧ</span></th>
+                    <th st-sort="Limit"><span uib-tooltip="Лимит финансирования (перечислить ДБЗ/СОКЛ по действующим займам/Предполагаемые займы)">Лимит финансирования</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Основной долг">Основной долг</span></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in dpsCollection" ng-right-click="clickDeposit(row.Id)" menu-items="menuItems">
+                <tr ng-repeat="row in alsCollection" ng-right-click="clickRightTableRow(currentProject.Provision.ActiveLiabilities, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Owner" content-editable></td>
-                    <td ng-model="row.Location" content-editable></td>
-                    <td ng-model="row.OwnerCompanyName" content-editable></td>
-                    <td ng-model="row.MarketPrice" content-editable></td>
-                    <td ng-model="row.AssessedPrice" content-editable></td>
-                    <td ng-model="row.LiquidityRatio" content-editable></td>
+                    <td ng-model="row.Limit" content-editable></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="calculateLiabilities()"></td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -39,100 +103,50 @@
                         <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">Итого</td>
+                    <td>{{currentProject.Provision.ActiveLiabilitiesTotal | currency:'':2}}</td>
+                </tr>
                 </tfoot>
             </table>
-        </div>
-    </div>
-    
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            Обеспечение по действующим обязательствам заемщика
-            <div class="clearfix "></div>
-        </div>
-
-        <div class="panel-body panel-table">
-            <button class="btn btn-primary btn-xs header-button" ng-click="addNewActiveDeposit();"><i class="fa fa-plus" aria-hidden="true"></i></button>
-            <table st-table="actDepCollection" st-safe-src="currentProject.Provision.ActiveDeposits"
+            
+            <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(currentProject.Provision.ActiveDeposits);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <table st-table="adsCollection" st-safe-src="currentProject.Provision.ActiveDeposits"
                    class="table table-bordered table-condensed ng-table">
                 <thead>
-                    <tr>
-                        <th st-sort="Name"><span uib-tooltip="Наименование обязательств (вид, сумма, наименование БВУ)">Наименование обязательств (вид, сумма, наименование БВУ)</span></th>
-                    </tr>
+                <tr>
+                    <th st-sort="Name"><span uib-tooltip="Наименование">Наименование</span></th>
+                    <th st-sort="Description"><span uib-tooltip="Описание (площадь, адрес)">Описание</span></th>
+                    <th st-sort="Limit"><span uib-tooltip="Отношение к ОБЗ/ВКЛ/НКЛ">Отношение к ОБЗ/ВКЛ/НКЛ</span></th>
+                    <th st-sort="Sum"><span uib-tooltip="Залоговая стоимость">Залоговая стоимость</span></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat-start="row in actDepCollection" ng-right-click="clickActiveDeposit(row.Id)" menu-items="menuItems">
-                        <td ng-model="row.Name" content-editable></td>
-                    </tr>
-                    <tr ng-repeat-end>
-                        <td>
-                            <table st-table="row.DepositDetails" class="table table-bordered table-condensed ng-table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <button class="btn btn-primary btn-xs pull-left"
-                                                    ng-click="addDepositDetail(row)">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </button>
-                                            <span uib-tooltip="Наименование">Наименование</span>
-                                        </th>
-                                        <th><span uib-tooltip="Описание">Описание</span></th>
-                                        <th><span uib-tooltip="Владелец">Владелец</span></th>
-                                        <th><span uib-tooltip="Местонахождение">Местонахождение</span></th>
-                                        <th><span uib-tooltip="Рыночная стоимость">Рыночная<br />стоимость</span></th>
-                                        <th><span uib-tooltip="Залоговая стоимость">Залоговая<br />стоимость</span></th>
-                                        <th><span uib-tooltip="Коэффициент ликвидности">Коэффициент<br/>ликвидности</span></th>
-                                        <th><span uib-tooltip="Примечание">Примечание</span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="depRow in row.DepositDetails" ng-right-click="clickActiveDepositDetail(depRow.Id, row.Id)" menu-items="menuItems">
-                                        <td ng-model="depRow.Name" content-editable></td>
-                                        <td ng-model="depRow.Owner" content-editable></td>
-                                        <td ng-model="depRow.Location" content-editable></td>
-                                        <td ng-model="depRow.OwnerCompanyName" content-editable></td>
-                                        <td ng-model="depRow.MarketPrice" content-editable edit-callback="calculateActiveDeposits()"></td>
-                                        <td ng-model="depRow.AssessedPrice" content-editable edit-callback="calculateActiveDeposits()"></td>
-                                        <td ng-model="depRow.LiquidityRatio" content-editable></td>
-                                        <td ng-model="depRow.Note" content-editable></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
+                <tr ng-repeat="row in adsCollection" ng-right-click="clickRightTableRow(currentProject.Provision.ActiveDeposits, row.Id)" menu-items="menuItems">
+                    <td>
+                        <select ng-options="item as item.Name for item in provisionTypes track by item.Id"
+                                ng-model="row.Name"
+                                ng-change="calculateLiabilities()"></select>
+                    </td>
+                    <td ng-model="row.Description" content-editable></td>
+                    <td ng-model="row.Relation" content-editable></td>
+                    <td ng-model="row.AssessedPrice" content-editable edit-callback="calculateLiabilities()"></td>
+                </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="1" class="text-center">
+                    <td colspan="7" class="text-center">
                         <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <table class="table table-bordered table-condensed ng-table">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Рыночная стоимость</th>
-                                <th>Залоговая стоимость</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Итого</td>
-                                <td>{{currentProject.Provision.ActiveDepositsMarketTotal|currency:'':2}}</td>
-                                <td>{{currentProject.Provision.ActiveDepositsAssessedTotal|currency:'':2}}</td>
-                            </tr>
-                                <tr>
-                                    <td>Сумма обязательств</td>
-                                    <td></td>
-                                    <td ng-model="currentProject.Provision.ActiveDepositsObligationsTotal" content-editable></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
+                    <td></td>
+                    <td colspan="2">Итого без гарантий ДАМУ</td>
+                    <td>{{currentProject.Provision.ActiveDepositsWoDamuTotal | currency:'':2}}</td>
                 </tr>
                 </tfoot>
             </table>
+            <div>Коэффициент покрытия обязательств залоговым обеспечением составляет {{currentProject.Provision.ActiveDepositsRatio | currency:'':2}}%</div>
         </div>
     </div>
 
