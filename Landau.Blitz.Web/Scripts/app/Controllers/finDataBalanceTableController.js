@@ -48,7 +48,7 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     $scope.initBalance = function() {$scope.currentProject = projectFactory.getToCurrentProject();
 
         if (!$scope.currentProject.FinDataBalance.Balances ||
-            $scope.currentProject.FinDataBalance.Balances.length == 0) {
+            $scope.currentProject.FinDataBalance.Balances.length === 0) {
             if ($scope.currentProject.ClientData.FinAnalysisCompanies &&
                 $scope.currentProject.ClientData.FinAnalysisCompanies.length > 0) {
 

@@ -180,43 +180,44 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
     }
 
     oddsCalculatorFactory.calculateData = function (currentProject) {
-        if (!currentProject.FinDataOdds.Odds) {
-            return currentProject;
-        }
-        // calculate historical values
-        calculateValues(currentProject, 'm');
+        try {
+            // calculate historical values
+            calculateValues(currentProject, 'm');
 
-        var avgHistoricalIncome = calculateAvgHistoricalIncome(currentProject);
+            var avgHistoricalIncome = calculateAvgHistoricalIncome(currentProject);
 
-        calculateExpensesForBusinessPercentage(currentProject, avgHistoricalIncome);
+            calculateExpensesForBusinessPercentage(currentProject, avgHistoricalIncome);
 
-        populatingPredictionData(currentProject);
+            populatingPredictionData(currentProject);
 
-        calculateValues(currentProject, 'M');
+            calculateValues(currentProject, 'M');
 
-        // calculate startPeriod and endPeriod values
-        var startPeriod = getVarArrayByName(currentProject.FinDataOdds.Odds, 'StartPeriod');
-        var endPeriod = getVarArrayByName(currentProject.FinDataOdds.Odds, 'EndPeriod');
-        var endMonth = getVarArrayByName(currentProject.FinDataOdds.Odds, 'EndMonth');
-        var currentBalance = currentProject.ConsolidatedBalance
-            .CompanyBalances[currentProject.ConsolidatedBalance.CompanyBalances.length - 1];
-        var consLiquidAssetsWoDepoit = mathFactory.getFloat(currentBalance.Assets.Checkout.ConsTotal) +
-            mathFactory.getFloat(currentBalance.Assets.Savings.ConsTotal) +
-            mathFactory.getFloat(currentBalance.Assets.CurrentAccount.ConsTotal);
-        startPeriod.M0 = mathFactory.round(consLiquidAssetsWoDepoit,2);
-        endPeriod.m0 = startPeriod.M0;
-        startPeriod.m0 = mathFactory.round(endPeriod.m0 + mathFactory.getFloat(endMonth.m0),2);
-        for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsBefore; i++) {
-            endPeriod['m' + i] = startPeriod['m' + (i - 1)];
-            startPeriod['m' + i] = endPeriod['m' + i] + mathFactory.getFloat(endMonth['m' + i]);
-            startPeriod['m' + i] = mathFactory.round(startPeriod['m' + i], 2);
-        }
-        endPeriod.M0 = startPeriod.M0 + mathFactory.getFloat(endMonth.M0);
-        endPeriod.M0 = mathFactory.round(endPeriod.M0, 2);
-        for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsAfter; i++) {
-            startPeriod['M' + i] = endPeriod['M' + (i - 1)];
-            endPeriod['M' + i] = startPeriod['M' + i] + mathFactory.getFloat(endMonth['M' + i]);
-            endPeriod['M' + i] = mathFactory.round(endPeriod['M' + i], 2);
+            // calculate startPeriod and endPeriod values
+            var startPeriod = getVarArrayByName(currentProject.FinDataOdds.Odds, 'StartPeriod');
+            var endPeriod = getVarArrayByName(currentProject.FinDataOdds.Odds, 'EndPeriod');
+            var endMonth = getVarArrayByName(currentProject.FinDataOdds.Odds, 'EndMonth');
+            var currentBalance = currentProject.ConsolidatedBalance
+                .CompanyBalances[currentProject.ConsolidatedBalance.CompanyBalances.length - 1];
+            var consLiquidAssetsWoDepoit = mathFactory.getFloat(currentBalance.Assets.Checkout.ConsTotal) +
+                mathFactory.getFloat(currentBalance.Assets.Savings.ConsTotal) +
+                mathFactory.getFloat(currentBalance.Assets.CurrentAccount.ConsTotal);
+            startPeriod.M0 = mathFactory.round(consLiquidAssetsWoDepoit, 2);
+            endPeriod.m0 = startPeriod.M0;
+            startPeriod.m0 = mathFactory.round(endPeriod.m0 + mathFactory.getFloat(endMonth.m0), 2);
+            for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsBefore; i++) {
+                endPeriod['m' + i] = startPeriod['m' + (i - 1)];
+                startPeriod['m' + i] = endPeriod['m' + i] + mathFactory.getFloat(endMonth['m' + i]);
+                startPeriod['m' + i] = mathFactory.round(startPeriod['m' + i], 2);
+            }
+            endPeriod.M0 = startPeriod.M0 + mathFactory.getFloat(endMonth.M0);
+            endPeriod.M0 = mathFactory.round(endPeriod.M0, 2);
+            for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsAfter; i++) {
+                startPeriod['M' + i] = endPeriod['M' + (i - 1)];
+                endPeriod['M' + i] = startPeriod['M' + i] + mathFactory.getFloat(endMonth['M' + i]);
+                endPeriod['M' + i] = mathFactory.round(endPeriod['M' + i], 2);
+            }
+        } catch (except) {
+            console.log(except);
         }
         return currentProject;
     }

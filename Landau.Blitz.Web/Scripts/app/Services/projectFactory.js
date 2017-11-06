@@ -62,7 +62,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             } else {
                 line[headers[i].VarName] = 0.0;
             }
-            
+
         }
         return line;
 
@@ -323,7 +323,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         currentProject.ConsolidatedBalance = currentProject.ProjectContent.ConsolidatedBalance;
         currentProject.ConsolidatedOpiu = currentProject.ProjectContent.ConsolidatedOpiu;
         currentProject.Coefs = currentProject.ProjectContent.Coefs;
-        
+
         currentProject.FinDataCrossChecking = currentProject.ProjectContent.FinDataCrossChecking;
         currentProject.FinDataOpiu = currentProject.ProjectContent.FinDataOpiu;
 
@@ -373,22 +373,22 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
                 : company.IsStarting ? 0
                 : company.OpiuMonthsQuantity > 24 ? 24
                 : company.OpiuMonthsQuantity;
-                var aTable = {
-                    Id: counter,
-                    Name: company.Name,
-                    BalanceData: currentProject.FinDataBalance.CurrentFinAnalysisDate,
-                    OpiuMonthsQuantity: monthQuantity,
-                    RelatedCompanyRevenues: [],
-                    TotalRealtedCompanyRevenue: {},
-                    LoanContributionDetails: { Comments: "", Rows: [], TotalPrincipal: 0, TotalFee: 0, TotalForOpiu: 0 }
-                }
+            var aTable = {
+                Id: counter,
+                Name: company.Name,
+                BalanceData: currentProject.FinDataBalance.CurrentFinAnalysisDate,
+                OpiuMonthsQuantity: monthQuantity,
+                RelatedCompanyRevenues: [],
+                TotalRealtedCompanyRevenue: {},
+                LoanContributionDetails: { Comments: "", Rows: [], TotalPrincipal: 0, TotalFee: 0, TotalForOpiu: 0 }
+            }
 
-                aTable.Months = initOpiuMonth(aTable.BalanceData, aTable.OpiuMonthsQuantity);
-                aTable.Table = initTableOpiu(company);
+            aTable.Months = initOpiuMonth(aTable.BalanceData, aTable.OpiuMonthsQuantity);
+            aTable.Table = initTableOpiu(company);
 
-                currentProject.FinDataOpiu.Opius.push(aTable);
-                counter++;
-            
+            currentProject.FinDataOpiu.Opius.push(aTable);
+            counter++;
+
         });
         this.currentProject = currentProject;
     }
@@ -460,7 +460,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
     }
 
     projectFactory.getActiveOpiu = function (ind) {
-        return this.currentProject.FinDataOpiu.Opius[ind-1];
+        return this.currentProject.FinDataOpiu.Opius[ind - 1];
     }
 
     projectFactory.setCrossChecking = function (finDataCrossChecking) {
