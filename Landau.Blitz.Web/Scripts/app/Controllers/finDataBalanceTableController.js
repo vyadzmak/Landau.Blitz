@@ -32,19 +32,20 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         {varName:'RealEstate', name: 'Недвижимость'},
         {varName:'Investments', name: 'Инвестиции'}];
     
-    $scope.outBalanceLiabilities = [{varName:'BudgetSettlements', name:'Расчеты с бюджетом'},
-    {varName:'RentalsArrears', name:'Зад-ть по аренде, з/п'},
-    {varName:'ShortTermDebt', name:'Проч.краткосроч.зад-ть'},
+    $scope.outBalanceLiabilities = [
+        //{varName:'BudgetSettlements', name:'Расчеты с бюджетом'},
+    //{varName:'RentalsArrears', name:'Зад-ть по аренде, з/п'},
+    //{varName:'ShortTermDebt', name:'Проч.краткосроч.зад-ть'},
     {varName:'PayableAccounts', name:'Счета к оплате'},
-    {varName:'CommodityLoan', name:'Товарный кредит'},
-    {varName:'CustomersPrepayment', name:'Предоплата от покупателей'},
+    //{varName:'CommodityLoan', name:'Товарный кредит'},
+    //{varName:'CustomersPrepayment', name:'Предоплата от покупателей'},
     {varName:'ShortPrivateLoans', name:'Част.займы(мен. 12 мес.)'},
-    {varName:'ShortWorkingCapitalCredit', name:'Банк.кр.(мен. 12 мес.) на об/ср'},
-    {varName:'ShortFixedAssetsCredit', name:'Банк.кр.(мен. 12 мес.) на осн/ср'},
+    {varName:'ShortCredit', name:'Банк.кр.(мен. 12 мес.)'},
+    //{varName:'ShortFixedAssetsCredit', name:'Банк.кр.(мен. 12 мес.) на осн/ср'},
     {varName:'OtherCurrentDebt', name:'Прочие тек.зад-ти'},
     {varName:'LongPrivateLoans', name:'Част.займы(бол. 12 мес.'},
-    {varName:'LongWorkingCapitalCredit', name:'Банк.кр.(бол. 12 мес.) на об/ср'},
-    {varName:'LongFixedAssetsCredit', name:'Банк.кр.(бол. 12 мес.) на осн/ср'},
+    {varName:'LongCredit', name:'Банк.кр.(бол. 12 мес.)'},
+    //{varName:'LongFixedAssetsCredit', name:'Банк.кр.(бол. 12 мес.) на осн/ср'},
     {varName:'OtherLiabilities', name:'Прочие пассивы'}];
 
     $scope.initBalance = function() {$scope.currentProject = projectFactory.getToCurrentProject();

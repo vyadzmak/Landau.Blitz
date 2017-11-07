@@ -77,10 +77,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         balance.ROA = mathFactory.getFloat(netProfitAvg) /
             mathFactory.getFloat(currentBalance.TotalAssets);
 
-        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortWorkingCapitalCredit.Total)
-            + mathFactory.getFloat(currentBalance.Liabilities.ShortFixedAssetsCredit.Total)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongWorkingCapitalCredit.Total)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongFixedAssetsCredit.Total)) /
+        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortCredit.Total)
+            + mathFactory.getFloat(currentBalance.Liabilities.LongCredit.Total)) /
             mathFactory.getFloat(currentBalance.TotalAssets);
 
         balance.AutonomyCoef = mathFactory.getFloat(currentBalance.Equity) /
@@ -167,10 +165,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         balance.ROA = mathFactory.getFloat(netProfitAvg) /
             mathFactory.getFloat(currentBalance.ConsTotalAssets);
 
-        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortWorkingCapitalCredit.ConsTotal)
-            + mathFactory.getFloat(currentBalance.Liabilities.ShortFixedAssetsCredit.ConsTotal)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongWorkingCapitalCredit.ConsTotal)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongFixedAssetsCredit.ConsTotal)) /
+        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortCredit.ConsTotal)
+            + mathFactory.getFloat(currentBalance.Liabilities.LongCredit.ConsTotal)) /
             mathFactory.getFloat(currentBalance.ConsTotalAssets);
 
         balance.AutonomyCoef = mathFactory.getFloat(currentBalance.ConsEquity) /

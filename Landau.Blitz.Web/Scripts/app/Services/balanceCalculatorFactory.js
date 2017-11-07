@@ -44,22 +44,22 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
             balance.ConsTotalLiabilities = 0;
             // calculating liabilities
             var shortTermLiabilities = [
-                'BudgetSettlements',
-                'RentalsArrears',
-                'ShortTermDebt',
+                //'BudgetSettlements',
+                //'RentalsArrears',
+                //'ShortTermDebt',
                 'PayableAccounts',
-                'CommodityLoan',
-                'CustomersPrepayment',
+                //'CommodityLoan',
+                //'CustomersPrepayment',
                 'ShortPrivateLoans',
-                'ShortWorkingCapitalCredit',
-                'ShortFixedAssetsCredit',
+                'ShortCredit',
+                //'ShortFixedAssetsCredit',
                 'OtherCurrentDebt'
             ];
 
             var longTermLiabilities = [
                 'LongPrivateLoans',
-                'LongWorkingCapitalCredit',
-                'LongFixedAssetsCredit',
+                'LongCredit',
+                //'LongFixedAssetsCredit',
                 'OtherLiabilities'
             ];
 
@@ -347,19 +347,19 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
     ];
 
     var liabilitiesNames = [
-                    'BudgetSettlements',
-                    'RentalsArrears',
-                    'ShortTermDebt',
+                    //'BudgetSettlements',
+                    //'RentalsArrears',
+                    //'ShortTermDebt',
                     'PayableAccounts',
-                    'CommodityLoan',
-                    'CustomersPrepayment',
+                    //'CommodityLoan',
+                    //'CustomersPrepayment',
                     'ShortPrivateLoans',
-                    'ShortWorkingCapitalCredit',
-                    'ShortFixedAssetsCredit',
+                    'ShortCredit',
+                    //'ShortFixedAssetsCredit',
                     'OtherCurrentDebt',
                     'LongPrivateLoans',
-                    'LongWorkingCapitalCredit',
-                    'LongFixedAssetsCredit',
+                    'LongCredit',
+                    //'LongFixedAssetsCredit',
                     'OtherLiabilities'
     ];
 

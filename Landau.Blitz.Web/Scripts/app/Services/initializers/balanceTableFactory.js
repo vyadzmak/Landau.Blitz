@@ -42,19 +42,21 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
             function initLiabilities() {
                 var liabilities = {};
                 var liabilitiesNames = [
-                    'BudgetSettlements',
-                    'RentalsArrears',
-                    'ShortTermDebt',
+                    //'BudgetSettlements',
+                    //'RentalsArrears',
+                    //'ShortTermDebt',
                     'PayableAccounts',
-                    'CommodityLoan',
-                    'CustomersPrepayment',
+                    //'CommodityLoan',
+                    //'CustomersPrepayment',
                     'ShortPrivateLoans',
-                    'ShortWorkingCapitalCredit',
-                    'ShortFixedAssetsCredit',
+                    'ShortCredit',
+                    //'ShortWorkingCapitalCredit',
+                    //'ShortFixedAssetsCredit',
                     'OtherCurrentDebt',
                     'LongPrivateLoans',
-                    'LongWorkingCapitalCredit',
-                    'LongFixedAssetsCredit',
+                    'LongCredit',
+                    //'LongWorkingCapitalCredit',
+                    //'LongFixedAssetsCredit',
                     'OtherLiabilities'
                 ];
                 angular.forEach(liabilitiesNames, function(value, key) {
