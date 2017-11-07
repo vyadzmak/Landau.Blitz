@@ -28,7 +28,7 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
 
         balance.UrgentLiquidityCoef =
             (mathFactory.getFloat(currentBalance.LiquidAssets)
-            + mathFactory.getFloat(currentBalance.Recievables)) /
+            + mathFactory.getFloat(currentBalance.Receivables)) /
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
         balance.CurrentLiquidityCoef =
@@ -39,8 +39,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Recievables) +
-                mathFactory.getFloat(previousBalance.Recievables)) /
+        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Receivables) +
+                mathFactory.getFloat(previousBalance.Receivables)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
         balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Inventories) +
@@ -116,7 +116,7 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
 
         balance.UrgentLiquidityCoef =
             (mathFactory.getFloat(currentBalance.ConsLiquidAssets)
-            + mathFactory.getFloat(currentBalance.ConsRecievables)) /
+            + mathFactory.getFloat(currentBalance.ConsReceivables)) /
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
 
         balance.CurrentLiquidityCoef =
@@ -127,8 +127,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
             mathFactory.getFloat(currentBalance.ConsTotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsRecievables) +
-                mathFactory.getFloat(previousBalance.ConsRecievables)) /
+        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsReceivables) +
+                mathFactory.getFloat(previousBalance.ConsReceivables)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
         balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsInventories) +
