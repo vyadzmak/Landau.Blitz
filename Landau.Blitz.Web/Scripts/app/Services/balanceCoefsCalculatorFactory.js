@@ -10,10 +10,10 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
     }
 
     var calculateCoefsData = function (balance, opiu, borrowedResources) {
-        var currentBalance = balance.CompanyBalances[1];
-        var previousBalance = balance.CompanyBalances[0];
+        var currentBalance = balance.CompanyBalances.length > 1 ? balance.CompanyBalances[1] : balance.CompanyBalances[0];
+        var previousBalance = balance.CompanyBalances.length > 1 ? balance.CompanyBalances[0] : undefined;
         var currentDate = moment(currentBalance.Date);
-        var previousDate = moment(previousBalance.Date);
+        var previousDate = previousBalance ? moment(previousBalance.Date) : currentDate;
         var period = currentDate.diff(previousDate, 'days');
 
         var costOfGoodsAvg = getVarArrayByName(opiu, 'CostOfGoods').Avg;
@@ -38,19 +38,19 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         balance.NetWorkingCapital =
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
+        if (previousBalance) {
+            balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Receivables) +
+                    mathFactory.getFloat(previousBalance.Receivables)) /
+                2 * period / mathFactory.getFloat(revenuesAvg);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Receivables) +
-                mathFactory.getFloat(previousBalance.Receivables)) /
-            2 * period / mathFactory.getFloat(revenuesAvg);
+            balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Inventories) +
+                    mathFactory.getFloat(previousBalance.Inventories)) /
+                2 * period / mathFactory.getFloat(costOfGoodsAvg);
 
-        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Inventories) +
-                mathFactory.getFloat(previousBalance.Inventories)) /
-            2 * period / mathFactory.getFloat(costOfGoodsAvg);
-
-        balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.Total) +
-                mathFactory.getFloat(previousBalance.Liabilities.PayableAccounts.Total)) /
-            2 * period / mathFactory.getFloat(costOfGoodsAvg);
-
+            balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.Total) +
+                    mathFactory.getFloat(previousBalance.Liabilities.PayableAccounts.Total)) /
+                2 * period / mathFactory.getFloat(costOfGoodsAvg);
+        }
         balance.OperationCycle = mathFactory.getFloat(balance.DebtorsTurnoverTerm) +
             mathFactory.getFloat(balance.InventoriesTurnoverTerm);
 
@@ -98,10 +98,10 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
     }
 
     var calculateConsCoefsData = function (balance, opiu, borrowedResources) {
-        var currentBalance = balance.CompanyBalances[1];
-        var previousBalance = balance.CompanyBalances[0];
+        var currentBalance = balance.CompanyBalances.length > 1 ? balance.CompanyBalances[1] : balance.CompanyBalances[0];
+        var previousBalance = balance.CompanyBalances.length > 1 ? balance.CompanyBalances[0] : undefined;
         var currentDate = moment(currentBalance.Date);
-        var previousDate = moment(previousBalance.Date);
+        var previousDate = previousBalance ? moment(previousBalance.Date) : currentDate;
         var period = currentDate.diff(previousDate, 'days');
 
         var costOfGoodsAvg = getVarArrayByName(opiu, 'CostOfGoods').Avg;
@@ -126,19 +126,19 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         balance.NetWorkingCapital =
             mathFactory.getFloat(currentBalance.ConsTotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
+        if (previousBalance) {
+            balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsReceivables) +
+                    mathFactory.getFloat(previousBalance.ConsReceivables)) /
+                2 * period / mathFactory.getFloat(revenuesAvg);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsReceivables) +
-                mathFactory.getFloat(previousBalance.ConsReceivables)) /
-            2 * period / mathFactory.getFloat(revenuesAvg);
+            balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsInventories) +
+                    mathFactory.getFloat(previousBalance.ConsInventories)) /
+                2 * period / mathFactory.getFloat(costOfGoodsAvg);
 
-        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsInventories) +
-                mathFactory.getFloat(previousBalance.ConsInventories)) /
-            2 * period / mathFactory.getFloat(costOfGoodsAvg);
-
-        balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.ConsTotal) +
-                mathFactory.getFloat(previousBalance.Liabilities.PayableAccounts.ConsTotal)) /
-            2 * period / mathFactory.getFloat(costOfGoodsAvg);
-
+            balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.ConsTotal) +
+                    mathFactory.getFloat(previousBalance.Liabilities.PayableAccounts.ConsTotal)) /
+                2 * period / mathFactory.getFloat(costOfGoodsAvg);
+        }
         balance.OperationCycle = mathFactory.getFloat(balance.DebtorsTurnoverTerm) +
             mathFactory.getFloat(balance.InventoriesTurnoverTerm);
 
