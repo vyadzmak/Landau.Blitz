@@ -4,8 +4,7 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
 
 
         $scope.currentProject = projectFactory.getToCurrentProject();
-        if (!$scope.currentProject.FinDataOdds.Odds ||
-            $scope.currentProject.FinDataOdds.Odds.length == 0) {
+        if (!$scope.currentProject.FinDataOdds.Odds) {
             
             $scope.currentProject.FinDataBalance.Companies = angular
                 .copy($scope.currentProject.ClientData.FinAnalysisCompanies);

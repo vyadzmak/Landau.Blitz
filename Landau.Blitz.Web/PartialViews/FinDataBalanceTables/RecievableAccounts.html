@@ -1,12 +1,12 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        Счета к получению
+        Дебиторская задолженность
         <div class="clearfix "></div>
     </div>
 
     <div class="panel-body panel-table">
-        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.RecievableAccounts.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
-        <table st-table="activeBalance.Assets.RecievableAccounts.Rows" class="table table-bordered table-condensed ng-table">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Assets.Recievables.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Assets.Recievables.Rows" class="table table-bordered table-condensed ng-table">
             <thead>
                 <tr>
                     <th st-sort="Name"><span uib-tooltip="Наименование дебитора">Дебитор</span></th>
@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in activeBalance.Assets.RecievableAccounts.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.RecievableAccounts.Rows, row.Id)" menu-items="menuItems">
+                <tr ng-repeat="row in activeBalance.Assets.Recievables.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.Recievables.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
                     <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                     <td><input type="date" ng-model="row.OccurDate"></td>

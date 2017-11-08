@@ -1,12 +1,12 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        Банковские кредиты (не более 12 мес.) на оборотные средства
+        Банковские кредиты (не более 12 мес.)
         <div class="clearfix "></div>
     </div>
 
     <div class="panel-body panel-table">
-        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Liabilities.ShortWorkingCapitalCredit.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
-        <table st-table="activeBalance.Liabilities.ShortWorkingCapitalCredit.Rows" class="table table-bordered table-condensed ng-table">
+        <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeBalance.Liabilities.ShortCredit.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="activeBalance.Liabilities.ShortCredit.Rows" class="table table-bordered table-condensed ng-table">
             <thead>
                 <tr>
                     <th st-sort="Name"><span uib-tooltip="Наименование банка/финансового института">Банк</span></th>
@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in activeBalance.Liabilities.ShortWorkingCapitalCredit.Rows" ng-right-click="clickRightTableRow(activeBalance.Liabilities.ShortWorkingCapitalCredit.Rows, row.Id)" menu-items="menuItems">
+                <tr ng-repeat="row in activeBalance.Liabilities.ShortCredit.Rows" ng-right-click="clickRightTableRow(activeBalance.Liabilities.ShortCredit.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
                     <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                     <td><input type="date" ng-model="row.ArrearsDate"></td>

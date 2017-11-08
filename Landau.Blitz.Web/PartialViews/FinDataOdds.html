@@ -1,42 +1,38 @@
 <div ng-controller="finDataOddsController">
 
-    <!--<div class="container">
-        <div class="row">
-            <table id="oddsTable" data-row-style="rowStyle"></table>
-        </div>
-    </div>-->
-    
-    <table st-table="currentProject.FinDataOdds.Odds.Table" class="table table-bordered table-condensed ng-table">
-        <thead>
-            <tr>
-                <th><span uib-tooltip="Период">Период</span></th>
-                <th ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="row in currentProject.FinDataOdds.Odds.Table"
-                ng-class="{'active bold-trow':row.Calculate}">
+    <div ng-if="currentProject.FinDataOdds.Odds.Header">
+        <table st-table="currentProject.FinDataOdds.Odds.Table" class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th><span uib-tooltip="Период">Период</span></th>
+                    <th ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in currentProject.FinDataOdds.Odds.Table"
+                    ng-class="{'active bold-trow':row.Calculate}">
 
-                <td>{{row.Title}}</td>
+                    <td>{{row.Title}}</td>
 
-                <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
-                    ng-model="row[month.VarName]"
-                    content-editable
-                    non-editable="{{checkEditability(row, month.VarName)}}"
-                    edit-callback="calculateOdds()"></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            КОММЕНТАРИИ
-            <div class="clearfix "></div>
-        </div>
+                    <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
+                        ng-model="row[month.VarName]"
+                        content-editable
+                        non-editable="{{checkEditability(row, month.VarName)}}"
+                        edit-callback="calculateOdds()"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                КОММЕНТАРИИ
+                <div class="clearfix "></div>
+            </div>
 
-        <div class="panel-body">
-            <div class="row" ng-repeat="row in currentProject.FinDataOdds.Odds.Table | filter:oddsItemHasData">
-                <label class="col-md-3">{{row.Title}}</label>
-                <div class="col-md-9"><textarea type="text" class="form-control" placeholder="Комментарии" ng-model="row.Comments"></textarea></div>
+            <div class="panel-body">
+                <div class="row" ng-repeat="row in currentProject.FinDataOdds.Odds.Table | filter:oddsItemHasData">
+                    <label class="col-md-3">{{row.Title}}</label>
+                    <div class="col-md-9"><textarea type="text" class="form-control" placeholder="Комментарии" ng-model="row.Comments"></textarea></div>
+                </div>
             </div>
         </div>
     </div>

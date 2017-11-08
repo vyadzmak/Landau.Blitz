@@ -6,49 +6,52 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         liquids: [
         {varName:'Savings', name: 'Сбережения'},
         {varName:'Deposit', name: 'Депозит'}],
-        raws: [{varName:'Inventories', name:'ТМЗ'},
-        {varName:'FinishedGoods', name:'Готовая продукция'},
-        {varName:'RawMaterials', name:'Сырье'},
-        {varName:'SemiProducts', name:'Полуфабрикаты/материалы'}]
+        raws: [{varName:'Inventories', name:'ТМЗ'}
+        //{varName:'FinishedGoods', name:'Готовая продукция'},
+        //{varName:'RawMaterials', name:'Сырье'},
+        //{varName:'SemiProducts', name:'Полуфабрикаты/материалы'}
+        ]
     };
     
     $scope.outBalanceAssets = [{varName:'Checkout', name:'Касса'},
         {varName:'CurrentAccount', name: 'Расчетный счет'},
         {varName:'Savings', name: 'Сбережения'},
         {varName:'Deposit', name: 'Депозит'},
-        {varName:'RecievableAccounts', name: 'Счета к получению'},
-        {varName:'TransitGoods', name: 'Товары в пути'},
-        {varName:'SuppliersPrepayment', name: 'Предоплата поставщиков'},
+        {varName:'Recievables', name: 'Дебиторская задолженность'},
+        //{varName:'RecievableAccounts', name: 'Счета к получению'},
+        //{varName:'TransitGoods', name: 'Товары в пути'},
+        //{varName:'SuppliersPrepayment', name: 'Предоплата поставщиков'},
         {varName:'OtherRecievables', name: 'Проч. деб. задолженность'},
         {varName:'Inventories', name: 'ТМЗ'},
-        {varName:'FinishedGoods', name: 'Готовая продукция'},
-        {varName:'RawMaterials', name: 'Сырье'},
-        {varName:'SemiProducts', name: 'Полуфаб./метариалы'},
-        {varName:'ForSaleGoods', name: 'Тов., получ.на реал-ию'},
+        //{varName:'FinishedGoods', name: 'Готовая продукция'},
+        //{varName:'RawMaterials', name: 'Сырье'},
+        //{varName:'SemiProducts', name: 'Полуфаб./метариалы'},
+        //{varName:'ForSaleGoods', name: 'Тов., получ.на реал-ию'},
         {varName:'Hardware', name: 'Обородуование'},
         {varName:'MotorTransport', name: 'Автотранспорт'},
         {varName:'RealEstate', name: 'Недвижимость'},
         {varName:'Investments', name: 'Инвестиции'}];
     
-    $scope.outBalanceLiabilities = [{varName:'BudgetSettlements', name:'Расчеты с бюджетом'},
-    {varName:'RentalsArrears', name:'Зад-ть по аренде, з/п'},
-    {varName:'ShortTermDebt', name:'Проч.краткосроч.зад-ть'},
+    $scope.outBalanceLiabilities = [
+        //{varName:'BudgetSettlements', name:'Расчеты с бюджетом'},
+    //{varName:'RentalsArrears', name:'Зад-ть по аренде, з/п'},
+    //{varName:'ShortTermDebt', name:'Проч.краткосроч.зад-ть'},
     {varName:'PayableAccounts', name:'Счета к оплате'},
-    {varName:'CommodityLoan', name:'Товарный кредит'},
-    {varName:'CustomersPrepayment', name:'Предоплата от покупателей'},
+    //{varName:'CommodityLoan', name:'Товарный кредит'},
+    //{varName:'CustomersPrepayment', name:'Предоплата от покупателей'},
     {varName:'ShortPrivateLoans', name:'Част.займы(мен. 12 мес.)'},
-    {varName:'ShortWorkingCapitalCredit', name:'Банк.кр.(мен. 12 мес.) на об/ср'},
-    {varName:'ShortFixedAssetsCredit', name:'Банк.кр.(мен. 12 мес.) на осн/ср'},
+    {varName:'ShortCredit', name:'Банк.кр.(мен. 12 мес.)'},
+    //{varName:'ShortFixedAssetsCredit', name:'Банк.кр.(мен. 12 мес.) на осн/ср'},
     {varName:'OtherCurrentDebt', name:'Прочие тек.зад-ти'},
     {varName:'LongPrivateLoans', name:'Част.займы(бол. 12 мес.'},
-    {varName:'LongWorkingCapitalCredit', name:'Банк.кр.(бол. 12 мес.) на об/ср'},
-    {varName:'LongFixedAssetsCredit', name:'Банк.кр.(бол. 12 мес.) на осн/ср'},
+    {varName:'LongCredit', name:'Банк.кр.(бол. 12 мес.)'},
+    //{varName:'LongFixedAssetsCredit', name:'Банк.кр.(бол. 12 мес.) на осн/ср'},
     {varName:'OtherLiabilities', name:'Прочие пассивы'}];
 
     $scope.initBalance = function() {$scope.currentProject = projectFactory.getToCurrentProject();
 
         if (!$scope.currentProject.FinDataBalance.Balances ||
-            $scope.currentProject.FinDataBalance.Balances.length == 0) {
+            $scope.currentProject.FinDataBalance.Balances.length === 0) {
             if ($scope.currentProject.ClientData.FinAnalysisCompanies &&
                 $scope.currentProject.ClientData.FinAnalysisCompanies.length > 0) {
 
@@ -213,27 +216,32 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     ];
 
     $scope.calculateBalance = function(balance, companyId) {
-        calculatorFactory.calculateBalanceData($scope.currentProject, companyId, balance.Id);
-        $scope.activeBalance = projectFactory.getActiveBalance(companyId, balance.Id);
+        calculatorFactory.calculateBalanceData($scope.currentProject, companyId, $scope.activeBalance.Id);
+        $scope.activeBalance = projectFactory.getActiveBalance(companyId, $scope.activeBalance.Id);
     };
 
     $scope.checkOutAssets = function(value) {
         var found = false;
-        angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
-            if (mathFactory.getFloat(balance.Assets[value.varName].OutTotal) > 0) {
-                found = true;
-            }
-        });
+        if ($scope.activeCompany) {
+            angular.forEach($scope.activeCompany.CompanyBalances,
+                function(balance, balanceKey) {
+                    if (mathFactory.getFloat(balance.Assets[value.varName].OutTotal) > 0) {
+                        found = true;
+                    }
+                });
+        }
         return found;
     }
 
     $scope.checkOutLiabilities = function(value) {
         var found = false;
-        angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
-            if (mathFactory.getFloat(balance.Liabilities[value.varName].OutTotal) > 0) {
-                found = true;
-            }
-        });
+        if($scope.activeCompany){
+            angular.forEach($scope.activeCompany.CompanyBalances, function(balance, balanceKey) {
+                if (mathFactory.getFloat(balance.Liabilities[value.varName].OutTotal) > 0) {
+                    found = true;
+                }
+            });
+        }
         return found;
     }
 };

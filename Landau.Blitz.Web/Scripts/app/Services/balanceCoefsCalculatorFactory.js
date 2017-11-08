@@ -27,24 +27,24 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         var netProfitAvg = getVarArrayByName(opiu, 'NetProfit').Avg;
 
         balance.UrgentLiquidityCoef =
-            (mathFactory.getFloat(currentBalance.TotalCurrentAssets)
-            + mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.Total)) /
+            (mathFactory.getFloat(currentBalance.LiquidAssets)
+            + mathFactory.getFloat(currentBalance.Receivables)) /
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
         balance.CurrentLiquidityCoef =
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) /
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
-        balance.NewWorkingCapital =
+        balance.NetWorkingCapital =
             mathFactory.getFloat(currentBalance.TotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.TotalShortTermDebt);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.Total) +
-                mathFactory.getFloat(previousBalance.Assets.RecievableAccounts.Total)) /
+        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Receivables) +
+                mathFactory.getFloat(previousBalance.Receivables)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
-        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.Inventories) +
-                mathFactory.getFloat(previousBalance.Assets.Inventories)) /
+        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Inventories) +
+                mathFactory.getFloat(previousBalance.Inventories)) /
             2 * period / mathFactory.getFloat(costOfGoodsAvg);
 
         balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.Total) +
@@ -77,10 +77,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         balance.ROA = mathFactory.getFloat(netProfitAvg) /
             mathFactory.getFloat(currentBalance.TotalAssets);
 
-        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortWorkingCapitalCredit.Total)
-            + mathFactory.getFloat(currentBalance.Liabilities.ShortFixedAssetsCredit.Total)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongWorkingCapitalCredit.Total)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongFixedAssetsCredit.Total)) /
+        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortCredit.Total)
+            + mathFactory.getFloat(currentBalance.Liabilities.LongCredit.Total)) /
             mathFactory.getFloat(currentBalance.TotalAssets);
 
         balance.AutonomyCoef = mathFactory.getFloat(currentBalance.Equity) /
@@ -117,8 +115,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         var netProfitAvg = getVarArrayByName(opiu, 'NetProfit').Avg;
 
         balance.UrgentLiquidityCoef =
-            (mathFactory.getFloat(currentBalance.ConsTotalCurrentAssets)
-            + mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.ConsTotal)) /
+            (mathFactory.getFloat(currentBalance.ConsLiquidAssets)
+            + mathFactory.getFloat(currentBalance.ConsReceivables)) /
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
 
         balance.CurrentLiquidityCoef =
@@ -129,12 +127,12 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
             mathFactory.getFloat(currentBalance.ConsTotalCurrentAssets) -
             mathFactory.getFloat(currentBalance.ConsTotalShortTermDebt);
 
-        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.RecievableAccounts.ConsTotal) +
-                mathFactory.getFloat(previousBalance.Assets.RecievableAccounts.ConsTotal)) /
+        balance.DebtorsTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsReceivables) +
+                mathFactory.getFloat(previousBalance.ConsReceivables)) /
             2 * period / mathFactory.getFloat(revenuesAvg);
 
-        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.Assets.ConsInventories) +
-                mathFactory.getFloat(previousBalance.Assets.ConsInventories)) /
+        balance.InventoriesTurnoverTerm = (mathFactory.getFloat(currentBalance.ConsInventories) +
+                mathFactory.getFloat(previousBalance.ConsInventories)) /
             2 * period / mathFactory.getFloat(costOfGoodsAvg);
 
         balance.CreditorsTurnoverTerm = (mathFactory.getFloat(currentBalance.Liabilities.PayableAccounts.ConsTotal) +
@@ -167,10 +165,8 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         balance.ROA = mathFactory.getFloat(netProfitAvg) /
             mathFactory.getFloat(currentBalance.ConsTotalAssets);
 
-        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortWorkingCapitalCredit.ConsTotal)
-            + mathFactory.getFloat(currentBalance.Liabilities.ShortFixedAssetsCredit.ConsTotal)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongWorkingCapitalCredit.ConsTotal)
-            + mathFactory.getFloat(currentBalance.Liabilities.LongFixedAssetsCredit.ConsTotal)) /
+        balance.DebtAssetsRatio = (mathFactory.getFloat(currentBalance.Liabilities.ShortCredit.ConsTotal)
+            + mathFactory.getFloat(currentBalance.Liabilities.LongCredit.ConsTotal)) /
             mathFactory.getFloat(currentBalance.ConsTotalAssets);
 
         balance.AutonomyCoef = mathFactory.getFloat(currentBalance.ConsEquity) /

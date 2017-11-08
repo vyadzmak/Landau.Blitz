@@ -66,7 +66,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         return opiu;
     }
 
-    var calculateOpiu = function(opiu) {
+    var calculateOpiu = function (opiu) {
         var totalExpenses = getVarArrayByName(opiu, "TotalExpensesForBusiness");
         var totalAddPayments = getVarArrayByName(opiu, "AdditionalPayment");
         angular.forEach(opiu.Months, function (month, mKey) {
@@ -144,64 +144,72 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
     }
 
     opiuCalculatorFactory.calculateData = function (currentProject, opiu) {
+        try {
+            if (!currentProject.FinDataOpiu.Opius || currentProject.FinDataOpiu.Opius.length === 0) {
+                return currentProject;
+            }
 
+            opiu = calculateOpiu(opiu);
 
-        opiu = calculateOpiu(opiu);
-
-        opiu.LoanContributionDetails = calculateLoanContributionDetails(opiu.LoanContributionDetails);
-        opiu = calculateRelatedCompanyRevenues(opiu);
-
+            opiu.LoanContributionDetails = calculateLoanContributionDetails(opiu.LoanContributionDetails);
+            opiu = calculateRelatedCompanyRevenues(opiu);
+        } catch (except) {
+            console.log(except);
+        }
         return currentProject;
     };
 
     opiuCalculatorFactory.calculateConsolidatedData = function (currentProject) {
-        var maxMonthsIndex = -1;
-        var maxMonths = 0;
-        for (var i = 0; i < currentProject.FinDataOpiu.Opius.length; i++) {
-            if (maxMonths < currentProject.FinDataOpiu.Opius[i].Months.length) {
-                maxMonths = currentProject.FinDataOpiu.Opius[i].Months.length;
-                maxMonthsIndex = i;
+        try {
+            var maxMonthsIndex = -1;
+            var maxMonths = 0;
+            for (var i = 0; i < currentProject.FinDataOpiu.Opius.length; i++) {
+                if (maxMonths < currentProject.FinDataOpiu.Opius[i].Months.length) {
+                    maxMonths = currentProject.FinDataOpiu.Opius[i].Months.length;
+                    maxMonthsIndex = i;
+                }
             }
-        }
-        currentProject.ConsolidatedOpiu.Opiu = angular.copy(currentProject.FinDataOpiu.Opius[maxMonthsIndex]);
+            currentProject.ConsolidatedOpiu.Opiu = angular.copy(currentProject.FinDataOpiu.Opius[maxMonthsIndex]);
 
-        // make all data as numbers and consolidate this opiu, which is main
-        angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Table, function (row, rKey) {
-            row.Avg = mathFactory.getFloat(row.Avg);
-            row.AvgPrediction = mathFactory.getFloat(row.AvgPrediction);
-            angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Months, function (month, mKey) {
-                row['M' + month.Id] = mathFactory.getFloat(row['M' + month.Id]);
-                if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods') {
-                    row['M' + month.Id] -= mathFactory.getFloat(currentProject.ConsolidatedOpiu.Opiu.TotalRealtedCompanyRevenue['M' + month.Id]);
+            // make all data as numbers and consolidate this opiu, which is main
+            angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Table, function (row, rKey) {
+                row.Avg = mathFactory.getFloat(row.Avg);
+                row.AvgPrediction = mathFactory.getFloat(row.AvgPrediction);
+                angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Months, function (month, mKey) {
+                    row['M' + month.Id] = mathFactory.getFloat(row['M' + month.Id]);
+                    if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods') {
+                        row['M' + month.Id] -= mathFactory.getFloat(currentProject.ConsolidatedOpiu.Opiu.TotalRealtedCompanyRevenue['M' + month.Id]);
+                    }
+                });
+            });
+
+            // consolidating all other opius and simply adding cells
+            angular.forEach(currentProject.FinDataOpiu.Opius, function (opiu, oKey) {
+                if (oKey !== maxMonthsIndex) {
+                    var monthsDiff = maxMonths - opiu.Months.length;
+                    angular.forEach(opiu.Table, function (row, rKey) {
+                        angular.forEach(opiu.Months, function (month, mKey) {
+                            if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods') {
+                                var consOpiuRev = mathFactory.getFloat(row['M' + month.Id]) -
+                                    mathFactory.getFloat(opiu.TotalRealtedCompanyRevenue['M' + month.Id]);
+                                currentProject.ConsolidatedOpiu.Opiu
+                                    .Table[rKey]['M' + (month.Id + monthsDiff)] += consOpiuRev;
+                            } else {
+                                currentProject.ConsolidatedOpiu.Opiu
+                                    .Table[rKey]['M' + (month.Id + monthsDiff)] += mathFactory.getFloat(row['M' + month.Id]);
+                            }
+                        });
+                        currentProject.ConsolidatedOpiu.Opiu
+                                    .Table[rKey].AvgPrediction += mathFactory.getFloat(row.AvgPrediction);
+                    });
                 }
             });
-        });
 
-        // consolidating all other opius and simply adding cells
-        angular.forEach(currentProject.FinDataOpiu.Opius, function (opiu, oKey) {
-            if (oKey !== maxMonthsIndex) {
-                var monthsDiff = maxMonths - opiu.Months.length;
-                angular.forEach(opiu.Table, function (row, rKey) {
-                    angular.forEach(opiu.Months, function (month, mKey) {
-                        if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods') {
-                            var consOpiuRev = mathFactory.getFloat(row['M' + month.Id]) -
-                                mathFactory.getFloat(opiu.TotalRealtedCompanyRevenue['M' + month.Id]);
-                            currentProject.ConsolidatedOpiu.Opiu
-                                .Table[rKey]['M' + (month.Id + monthsDiff)] += consOpiuRev;
-                        } else {
-                            currentProject.ConsolidatedOpiu.Opiu
-                                .Table[rKey]['M' + (month.Id + monthsDiff)] += mathFactory.getFloat(row['M' + month.Id]);
-                        }
-                    });
-                    currentProject.ConsolidatedOpiu.Opiu
-                                .Table[rKey].AvgPrediction += mathFactory.getFloat(row.AvgPrediction);
-                });
-            }
-        });
-
-        //counting refined opiu 
-        currentProject.ConsolidatedOpiu.Opiu = calculateOpiu(currentProject.ConsolidatedOpiu.Opiu);
-
+            //counting refined opiu 
+            currentProject.ConsolidatedOpiu.Opiu = calculateOpiu(currentProject.ConsolidatedOpiu.Opiu);
+        } catch (except) {
+            console.log(except);
+        }
         return currentProject;
     }
 
