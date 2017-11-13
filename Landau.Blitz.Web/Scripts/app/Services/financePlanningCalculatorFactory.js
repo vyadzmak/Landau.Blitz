@@ -1,7 +1,7 @@
 blitzApp.factory('financePlanningCalculatorFactory', ['$rootScope', 'mathFactory', function ($rootScope, mathFactory) {
     var financePlanningCalculatorFactory = {};
 
-    financePlanningCalculatorFactory.calculateData = function(currentProject) {
+    financePlanningCalculatorFactory.calculateData = function (currentProject) {
 
         var ownFunds = 0;
         var borrowedFunds = 0;
@@ -47,14 +47,23 @@ blitzApp.factory('financePlanningCalculatorFactory', ['$rootScope', 'mathFactory
         currentProject.FinancePlanning.ProposedCashlessSum = proposedSum - proposedCashSum;
         var proposedTerm = mathFactory
             .getFloat(currentProject.FinancePlanning.ProposedTerm);
+        var proposedDelay = mathFactory
+            .getFloat(currentProject.FinancePlanning.ProposedDelay);
         var proposedRate = mathFactory
             .getFloat(currentProject.FinancePlanning.ProposedRate);
-        currentProject.FinancePlanning
-            .MonthlyFee = (proposedSum + proposedTerm / 12 * proposedRate * proposedSum / 100) / proposedTerm;
+        //if (currentProject.FinancePlanning.IsAnnuity) {
+        //    currentProject.FinancePlanning.MonthlyFee =
+        //        proposedSum / 12 * proposedRate / 100 * (proposedTerm + 1) / 2 / (proposedTerm - proposedDelay);
+        //} else {
+            currentProject.FinancePlanning
+                .MonthlyFee = (proposedSum + proposedTerm / 12 * proposedRate * proposedSum / 100) / proposedTerm;
+        //}
+        currentProject.FinancePlanning.MonthlyFee = mathFactory.round(currentProject.FinancePlanning.MonthlyFee, 2);
+
 
         return currentProject;
     }
-    
+
     return financePlanningCalculatorFactory;
 
 }]);

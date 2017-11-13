@@ -593,7 +593,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
 
         angular.forEach(this.currentProject.FinancePlanning.Plans, function (value, key) {
-            value.Date = new Date(value.Date);
+            if(moment(value.Date).isValid() || moment(value.Date, ["DD-MM-YYYY", "DD.MM.YYYY", "DD/MM/YYYY"]).isValid()){
+                value.Date = moment(value.Date, ["DD-MM-YYYY", "DD.MM.YYYY", "DD/MM/YYYY"]).format("DD.MM.YYYY");
+            } else { value.Date = null}
         });
 
         return this.currentProject;

@@ -75,12 +75,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
                                 balance.Liabilities[varName].ConsTotal += mathFactory.getFloat(tRow.Sum);
                             }
 
-                            if (varName === 'PayableAccounts' && tRow.IsRelatedCompany) {
-                                balance.Liabilities[varName].OutTotal += mathFactory.getFloat(tRow.Sum);
-                            } else {
-                                balance.Liabilities[varName].Total += mathFactory.getFloat(tRow.Sum);
-                            }
-
+                            balance.Liabilities[varName].Total += mathFactory.getFloat(tRow.Sum);
                         });
                     balance.TotalShortTermDebt += balance.Liabilities[varName].Total;
                     balance.OutTotalShortTermDebt += balance.Liabilities[varName].OutTotal;

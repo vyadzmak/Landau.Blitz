@@ -59,11 +59,11 @@
             <table st-table="planCollection" st-safe-src="currentProject.FinancePlanning.Plans" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Expenditure"><span uib-tooltip="Статья затрат">Статья затрат</span></th>
+                    <th st-sort="Expenditure" colspan="2"><span uib-tooltip="Статья затрат. Выберите из списка, в соседнем столбце можно детализировать статью.">Статья затрат</span></th>
                     <th st-sort="Provider"><span uib-tooltip="Поставщик">Поставщик</span></th>
                     <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
                     <th st-sort="Source"><span uib-tooltip="Источник финансирования">Источник финансирования</span></th>
-                    <th st-sort="Date"><span uib-tooltip="Дата">Дата</span></th>
+                    <th st-sort="Date"><span uib-tooltip="Дата в формате ДД.ММ.ГГГГ">Дата</span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,6 +73,7 @@
                                 ng-model="row.Expenditure"
                                 ng-change="calculateFinancePlan()" style="width: 200px"></select>
                     </td>
+                    <td ng-model="row.Expenditure.Name" content-editable></td>
                     <td ng-model="row.Provider" content-editable></td>
                     <td ng-model="row.Sum" content-editable edit-callback="calculateFinancePlan()"></td>
                     <td>
@@ -80,27 +81,27 @@
                                 ng-model="row.Source"
                                 ng-change="calculateFinancePlan()"></select>
                     </td>
-                    <td><input type="date" ng-model="row.Date"></td>
+                    <td ng-model="row.Date" content-editable></td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="2" class="text-center">Итого:</td>
+                    <td colspan="3" class="text-center">Итого:</td>
                     <td colspan="1" class="text-center">{{currentProject.FinancePlanning.OwnResources | currency:'':2}}</td>
                     <td colspan="2" class="text-center">собственные средства</td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-center"></td>
+                    <td colspan="3" class="text-center"></td>
                     <td colspan="1" class="text-center">{{currentProject.FinancePlanning.BorrowedResources | currency:'':2}}</td>
                     <td colspan="2" class="text-center">заемные средства</td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-center">Всего:</td>
+                    <td colspan="3" class="text-center">Всего:</td>
                     <td colspan="1" class="text-center">{{currentProject.FinancePlanning.TotalResources | currency:'':2}}</td>
                     <td colspan="2" class="text-center"></td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="text-center">
+                    <td colspan="6" class="text-center">
                         <div st-pagination="" st-items-by-page="20" st-displayed-pages="7"></div>
                     </td>
                 </tr>

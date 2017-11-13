@@ -21,6 +21,7 @@ var projectAnalysisController = function ($scope, $http, $location, $state, $uib
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.calculateProjectAnalysis();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }

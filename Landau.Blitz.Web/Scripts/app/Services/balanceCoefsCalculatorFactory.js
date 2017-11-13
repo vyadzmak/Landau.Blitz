@@ -14,7 +14,7 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         var previousBalance = balance.CompanyBalances.length > 1 ? balance.CompanyBalances[0] : undefined;
         var currentDate = moment(currentBalance.Date);
         var previousDate = previousBalance ? moment(previousBalance.Date) : currentDate;
-        var period = currentDate.diff(previousDate, 'days');
+        var period = currentDate.diff(previousDate, 'days', true);
 
         var costOfGoodsAvg = getVarArrayByName(opiu, 'CostOfGoods').Avg;
         var revenuesAvg = getVarArrayByName(opiu, 'Revenues').Avg;
@@ -102,7 +102,7 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
         var previousBalance = balance.CompanyBalances.length > 1 ? balance.CompanyBalances[0] : undefined;
         var currentDate = moment(currentBalance.Date);
         var previousDate = previousBalance ? moment(previousBalance.Date) : currentDate;
-        var period = currentDate.diff(previousDate, 'days');
+        var period = currentDate.diff(previousDate, 'days', true);
 
         var costOfGoodsAvg = getVarArrayByName(opiu, 'CostOfGoods').Avg;
         var revenuesAvg = getVarArrayByName(opiu, 'Revenues').Avg;

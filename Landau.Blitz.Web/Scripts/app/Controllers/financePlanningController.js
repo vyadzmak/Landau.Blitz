@@ -4,7 +4,7 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
 
     $scope.init = function() {
         $scope.currentProject = projectFactory.getToCurrentProject();
-        $scope.expenditures = [
+        $scope.expenditures = [ // if changing, don't forget to change Id=13 for html
         { Id: 1, Name:"ПОС  (приобретение товаров, сырья, расходных материалов, кормов, семян, скота для откорма)"},
         { Id: 2, Name:"Расходы по доставке, растамаживанию (товаров, сырья, расходных материалов, кормов, семян, скота для откорма)"},
         { Id: 3, Name:"Приобретение оборудования, автотраспорта, мебели, техники, основного стада"},
@@ -114,6 +114,8 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.calculateFinancePlan();
+        $scope.calculateCreditData();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }

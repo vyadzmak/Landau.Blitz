@@ -13,7 +13,7 @@
             <tr>
                 <th><span uib-tooltip="Наименование">Наименование</span></th>
                 <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
-                <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                <th ng-if="activeOpiu.Months && activeOpiu.Months.length>0"><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
                 <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
             </tr>
             </thead>
@@ -32,8 +32,10 @@
                 <td ng-model="row.Avg"
                     content-editable
                     non-editable="{{row.VarName!=='LoanPayment'}}"
+                    edit-callback="calculateOpiu(activeOpiu)"
+                     ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
+                <td content-editable ng-model="row.AvgPrediction"
                     edit-callback="calculateOpiu(activeOpiu)"></td>
-                <td content-editable ng-model="row.AvgPrediction"></td>
 
             </tr>
             </tbody>
