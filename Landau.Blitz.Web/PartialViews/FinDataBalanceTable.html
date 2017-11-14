@@ -274,48 +274,66 @@
             </tbody>
         </table>
 
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table table-bordered table-condensed ng-table">
-                    <thead>
-                        <tr>
-                            <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Актив">ВЫНЕСЕНО ЗА БАЛАНС<br />Актив</span></th>
-                            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="outAsset in outBalanceAssets | filter:checkOutAssets">
-                            <td><span uib-tooltip="{{outAsset.name}}">{{outAsset.name}}</span></td>
-                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets[outAsset.varName].OutTotal|currency:'':2}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                ВЫНЕСЕНО ЗА БАЛАНС
+                <div class="clearfix "></div>
             </div>
-            <div class="col-md-6">
-                <table class="table table-bordered table-condensed ng-table">
-                    <thead>
-                        <tr>
-                            <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Пассив">ВЫНЕСЕНО ЗА БАЛАНС<br />Пассив</span></th>
-                            <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="panel-body">
+                <div class="col-md-6 panel-table">
+                    <button class="btn btn-primary btn-xs header-button" ng-click="addNewOutRow('OutAssets');"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <table class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Актив">ВЫНЕСЕНО ЗА БАЛАНС<br />Актив</span></th>
+                                <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="outAsset in outBalanceAssets | filter:checkOutAssets">
+                                <td><span uib-tooltip="{{outAsset.name}}">{{outAsset.name}}</span></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Assets[outAsset.varName].OutTotal|currency:'':2}}</td>
+                            </tr>
+                            <tr ng-repeat="outAsset in activeBalance.OutAssets"  ng-right-click="clickRightTableRow(activeBalance.OutAssets, outAsset.Id,'OutAssets')" menu-items="menuOutItems">
+                                <td ng-model="outAsset.Name" content-editable edit-callback="outNameChanged('OutAssets', outAsset)"></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances" ng-model="bal.OutAssets[outAsset.Id-1].Sum" content-editable edit-callback="calculateBalance(bal, activeCompany.Id)"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalAssets|currency:'':2}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="col-md-6 panel-table">
+                    <button class="btn btn-primary btn-xs header-button" ng-click="addNewOutRow('OutLiabilities');"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <table class="table table-bordered table-condensed ng-table">
+                        <thead>
+                            <tr>
+                                <th><span uib-tooltip="ВЫНЕСЕНО ЗА БАЛАНС Пассив">ВЫНЕСЕНО ЗА БАЛАНС<br />Пассив</span></th>
+                                <th ng-repeat="bal in activeCompany.CompanyBalances"><span uib-tooltip="{{bal.Date|date:'dd.MM.yyyy'}}">{{bal.Date|date:'dd.MM.yyyy'}}</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         <tr ng-repeat="outLiability in outBalanceLiabilities | filter:checkOutLiabilities">
                             <td><span uib-tooltip="{{outLiability.name}}">{{outLiability.name}}</span></td>
                             <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.Liabilities[outLiability.varName].OutTotal|currency:'':2}}</td>
                         </tr>
-
-                        <tr>
-                            <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
-                            <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <tr ng-repeat="outLiability in activeBalance.OutLiabilities" ng-right-click="clickRightTableRow(activeBalance.OutLiabilities, outLiability.Id, 'OutLiabilities')" menu-items="menuOutItems">
+                                <td ng-model="outLiability.Name" content-editable edit-callback="outNameChanged('OutLiabilities', outLiability)"></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances" ng-model="bal.OutLiabilities[outLiability.Id-1].Sum" content-editable edit-callback="calculateBalance(bal, activeCompany.Id)"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><span uib-tooltip="ИТОГО">ИТОГО:</span></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances">{{bal.OutTotalLiabilities|currency:'':2}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
 

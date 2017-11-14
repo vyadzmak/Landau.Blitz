@@ -313,6 +313,15 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
             balance.TotalLiabilities = balance.Equity + balance.TotalLongAccountsPayable;
             balance.OutTotalLiabilities = balance.OutEquity + balance.OutTotalLongAccountsPayable;
             balance.ConsTotalLiabilities = balance.ConsEquity + balance.ConsTotalLongAccountsPayable;
+
+            angular.forEach(balance.OutAssets, function(value, key) {
+                balance.OutTotalAssets += mathFactory.getFloat(value.Sum);
+            });
+            angular.forEach(balance.OutLiabilities, function (value, key) {
+                balance.OutTotalLiabilities += mathFactory.getFloat(value.Sum);
+            });
+            balance.OutTotalAssets = mathFactory.round(balance.OutTotalAssets, 2);
+            balance.OutTotalLiabilities = mathFactory.round(balance.OutTotalLiabilities, 2);
         } catch (except) {
             console.log(except);
         }

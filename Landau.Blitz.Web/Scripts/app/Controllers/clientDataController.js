@@ -201,12 +201,19 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
                 $scope.elements.splice(index, 1);
             }
         }
-
+        $scope.remapIds($scope.elements);
         $scope.calculateClientData();
 
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
+
+    $scope.remapIds = function(rows) {
+        angular.forEach(rows, function(value, key) {
+            value.Id = key + 1;
+        });
+    }
+
     $scope.RemoveElement = function() {
         var dialog = BootstrapDialog.confirm({
             title: 'Предупреждение',
@@ -239,28 +246,32 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         if (!$scope.currentProject.ClientData.BusinessPlaces) {
             $scope.currentProject.ClientData.BusinessPlaces = [];
         }
-        $scope.currentProject.ClientData.BusinessPlaces.push({Id:$scope.currentProject.ClientData.BusinessPlaces.length+1});
+        $scope.currentProject.ClientData.BusinessPlaces.push({});
+        $scope.remapIds($scope.currentProject.ClientData.BusinessPlaces);
     }
 
     $scope.showNewDirectorInfo = function() {
         if (!$scope.currentProject.ClientData.DirectorInfos) {
             $scope.currentProject.ClientData.DirectorInfos = [];
         }
-        $scope.currentProject.ClientData.DirectorInfos.push({Id:$scope.currentProject.ClientData.DirectorInfos.length+1});
+        $scope.currentProject.ClientData.DirectorInfos.push({});
+        $scope.remapIds($scope.currentProject.ClientData.DirectorInfos);
     }
 
     $scope.showNewRelatedCompanyInfo = function() {
         if (!$scope.currentProject.ClientData.RelatedCompanyInfos) {
             $scope.currentProject.ClientData.RelatedCompanyInfos = [];
         }
-        $scope.currentProject.ClientData.RelatedCompanyInfos.push({Id:$scope.currentProject.ClientData.RelatedCompanyInfos.length+1});
+        $scope.currentProject.ClientData.RelatedCompanyInfos.push({});
+        $scope.remapIds($scope.currentProject.ClientData.RelatedCompanyInfos);
     }
 
     $scope.showNewLegalOwnerCompanyInfo = function() {
         if (!$scope.currentProject.ClientData.LegalOwnerCompanyInfos) {
             $scope.currentProject.ClientData.LegalOwnerCompanyInfos = [];
         }
-        $scope.currentProject.ClientData.LegalOwnerCompanyInfos.push({Id:$scope.currentProject.ClientData.LegalOwnerCompanyInfos.length+1});
+        $scope.currentProject.ClientData.LegalOwnerCompanyInfos.push({});
+        $scope.remapIds($scope.currentProject.ClientData.LegalOwnerCompanyInfos);
     }
 
     $scope.showNewActualOwnerCompanyInfo = function() {
@@ -278,14 +289,16 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
         if (!$scope.currentProject.ClientData.CreditHistoryInfos) {
             $scope.currentProject.ClientData.CreditHistoryInfos = [];
         }
-        $scope.currentProject.ClientData.CreditHistoryInfos.push({Id:$scope.currentProject.ClientData.CreditHistoryInfos.length+1});
+        $scope.currentProject.ClientData.CreditHistoryInfos.push({});
+        $scope.remapIds($scope.currentProject.ClientData.CreditHistoryInfos);
     }
 
     $scope.showNewBankAccountInfo = function() {
         if (!$scope.currentProject.ClientData.BankAccountInfos) {
             $scope.currentProject.ClientData.BankAccountInfos = [];
         }
-        $scope.currentProject.ClientData.BankAccountInfos.push({Id:$scope.currentProject.ClientData.BankAccountInfos.length+1});
+        $scope.currentProject.ClientData.BankAccountInfos.push({});
+        $scope.remapIds($scope.currentProject.ClientData.BankAccountInfos);
     }
 
     $scope.finAnalysisCompaniesCountChanged = function() {
@@ -322,10 +335,11 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
                     ind = i;
                 }
             }
-            loan.LoanDetails.splice(ind,0,{Id:loan.LoanDetails.length+1});
+            loan.LoanDetails.splice(ind,0,{});
         } else {
             loan.LoanDetails.push({});
         }
+        $scope.remapIds(loan.LoanDetails);
         $scope.calculateCreditHistory();
     }
 

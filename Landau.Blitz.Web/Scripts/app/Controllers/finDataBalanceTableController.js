@@ -79,9 +79,9 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 dialog.open();
             }
         } else {
-            $scope.activeCompany = projectFactory.getActiveCompanyBalance(1);
+            $scope.activeCompany = projectFactory.getActiveCompanyBalance();
             if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
-                $scope.activeBalance = projectFactory.getActiveBalance($scope.activeCompany.Id, 1);
+                $scope.activeBalance = projectFactory.getActiveBalance();
             }
         }
     }
@@ -132,9 +132,9 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             } else {
                 projectFactory.initBalances($scope.currentProject.FinDataBalance.Companies);
                 $scope.currentProject = projectFactory.getToCurrentProject();
-                $scope.activeCompany = projectFactory.getActiveCompanyBalance(1);
+                $scope.activeCompany = projectFactory.getActiveCompanyBalance();
                 if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
-                    $scope.activeBalance = projectFactory.getActiveBalance($scope.activeCompany.Id, 1);
+                    $scope.activeBalance = projectFactory.getActiveBalance();
                 }
             }
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
@@ -149,20 +149,36 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     usSpinnerService.stop("spinner-1");
 
     $scope.activeBalanceChanged = function() {
-        $scope.activeBalance = projectFactory.getActiveBalance($scope.activeCompany.Id, $scope.activeBalance.Id);
+        projectFactory.setActiveBalance($scope.activeCompany.Id, $scope.activeBalance.Id);
+        $scope.activeBalance = projectFactory.getActiveBalance();
     }
 
     $scope.activeCompanyChangedChanged = function() {
-        $scope.activeCompany = projectFactory.getActiveCompanyBalance($scope.activeCompany.Id);
+        projectFactory.setActiveBalance($scope.activeCompany.Id, 1);
+        $scope.activeCompany = projectFactory.getActiveCompanyBalance();
         if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
-            $scope.activeBalance = projectFactory.getActiveBalance($scope.activeCompany.Id, 1);
+            $scope.activeBalance = projectFactory.getActiveBalance();
         }
     };
 
     
 
     $scope.addNewRow = function(rows) {
-        rows.push({Id:rows.length+1});
+        if (!rows) {
+            rows = [];
+        }
+        rows.push({});
+        $scope.remapIds(rows);
+    }
+
+    $scope.addNewOutRow = function(varName) {
+        angular.forEach($scope.activeCompany.CompanyBalances, function(value, key) {
+            if (!value[varName]) {
+                value[varName] = [];
+            }
+            value[varName].push({});
+            $scope.remapIds(value[varName]);
+        });
     }
     
     $scope.deleteData = function() {
@@ -178,14 +194,42 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.remapIds($scope.elements);
         $scope.calculateBalance($scope.activeBalance, $scope.activeCompany.Id);
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
-    
-    $scope.clickRightTableRow = function(rows, rowId) {
+
+    $scope.deleteOutData = function() {
+        angular.forEach($scope.activeCompany.CompanyBalances, function(value, key) {
+            var ob = value[$scope.outVarName].filter(function(item) {
+                return item.Id == $scope.eIndex;
+            });
+
+            if (ob.length > 0) {
+                var dElement = ob[0];
+                var index = value[$scope.outVarName].indexOf(dElement);
+
+                if (index != -1) {
+                    value[$scope.outVarName].splice(index, 1);
+                }
+            }
+            $scope.remapIds(value[$scope.outVarName]);
+        });
+        
+        $scope.calculateBalance($scope.activeBalance, $scope.activeCompany.Id);
+        projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
+
+    }
+    $scope.remapIds = function(rows) {
+        angular.forEach(rows, function(value, key) {
+            value.Id = key + 1;
+        });
+    }
+    $scope.clickRightTableRow = function(rows, rowId, outVarName) {
         $scope.eIndex = rowId;
         $scope.elements = rows;
+        $scope.outVarName = outVarName;
     };
 
     $scope.removeElement = function() {
@@ -207,6 +251,25 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         dialog.setSize(BootstrapDialog.SIZE_SMALL);
     };
 
+    $scope.removeOutElement = function() {
+        var dialog = BootstrapDialog.confirm({
+            title: 'Предупреждение',
+            message: 'Вы действительно хотите удалить данные?',
+            type: BootstrapDialog.TYPE_WARNING,
+            size: BootstrapDialog.SIZE_SMALL,
+            closable: true,
+            btnCancelLabel: 'Нет',
+            btnOKLabel: 'Да',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    $scope.deleteOutData();
+                }
+            }
+        });
+        dialog.setSize(BootstrapDialog.SIZE_SMALL);
+    };
+
     $scope.menuItems = [
         {
             text: "Удалить",
@@ -215,9 +278,16 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
         }
     ];
 
+    $scope.menuOutItems = [
+        {
+            text: "Удалить",
+            callback: $scope.removeOutElement, //function to be called on click  
+            disabled: false
+        }
+    ];
+
     $scope.calculateBalance = function(balance, companyId) {
-        calculatorFactory.calculateBalanceData($scope.currentProject, companyId, $scope.activeBalance.Id);
-        $scope.activeBalance = projectFactory.getActiveBalance(companyId, $scope.activeBalance.Id);
+        calculatorFactory.calculateBalanceData($scope.currentProject, companyId, balance.Id);
     };
 
     $scope.checkOutAssets = function(value) {
@@ -243,6 +313,16 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             });
         }
         return found;
+    }
+
+    $scope.outNameChanged = function(varName, valueOb) {
+        angular.forEach($scope.activeCompany.CompanyBalances, function(value, key) {
+            angular.forEach(value[varName], function(oValue, oKey) {
+                if (oValue.Id === valueOb.Id) {
+                    oValue.Name = valueOb.Name;
+                }
+            });
+        });
     }
 };
 blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "mathFactory", "calculatorFactory", "projectHttpService", finDataBalanceTableController]);

@@ -88,9 +88,9 @@
             <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Income"><span uib-tooltip="Вид дохода (например: кухня, бар, бильярд)">Доход</span></th>
-                    <th st-sort="Revenue"><span uib-tooltip="Ожидаемая месячная выручка по данному виду дохода">Выручка</span></th>
-                    <th st-sort="ReachTerm"><span uib-tooltip="В течение скольки месяцев с момента ввода в эксплуатацию будет достигнута планируемая выручка. Указать число, например, 5">План, мес</span></th>
+                    <th><span uib-tooltip="Вид дохода (например: кухня, бар, бильярд)">Доход</span></th>
+                    <th><span uib-tooltip="Ожидаемая месячная выручка по данному виду дохода">Выручка</span></th>
+                    <th><span uib-tooltip="В течение скольки месяцев с момента ввода в эксплуатацию будет достигнута планируемая выручка. Указать число, например, 5">План, мес</span></th>
                     <th><span uib-tooltip="Динамика выручки до момента выхода на планируемую мощность">Динамика выручки</span></th>
                 </tr>
                 </thead>
@@ -131,9 +131,9 @@
             <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Income"><span uib-tooltip="Вид дохода">Доход</span></th>
-                    <th st-sort="Justification"><span uib-tooltip="Обоснование данного размера наценки, текст">Обоснование</span></th>
-                    <th st-sort="Markup"><span uib-tooltip="Ожидаемый размер наценки, %">Наценка, %</span></th>
+                    <th><span uib-tooltip="Вид дохода">Доход</span></th>
+                    <th><span uib-tooltip="Обоснование данного размера наценки, текст">Обоснование</span></th>
+                    <th><span uib-tooltip="Ожидаемый размер наценки, %">Наценка, %</span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -164,8 +164,8 @@
             <table st-table="expRevCollection" st-safe-src="currentProject.ProjectAnalysis.ExcpectedRevenues" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Income"><span uib-tooltip="Вид дохода">Доход</span></th>
-                    <th st-sort="Costprice"><span uib-tooltip="Ожидаемая себестоимость">Ожидаемая себестоимость</span></th>
+                    <th><span uib-tooltip="Вид дохода">Доход</span></th>
+                    <th><span uib-tooltip="Ожидаемая себестоимость">Ожидаемая себестоимость</span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -197,9 +197,9 @@
             <table st-table="varExpCollection" st-safe-src="currentProject.ProjectAnalysis.VarExpenses" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Type"><span uib-tooltip="Вид переменных затрат">Вид затрат</span></th>
-                    <th st-sort="Justification"><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
-                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                    <th><span uib-tooltip="Вид переменных затрат">Вид затрат</span></th>
+                    <th><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
+                    <th><span uib-tooltip="Сумма">Сумма</span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -231,9 +231,9 @@
             <table st-table="constExpCollection" st-safe-src="currentProject.ProjectAnalysis.ConstExpenses" class="table table-bordered table-condensed ng-table">
                 <thead>
                 <tr>
-                    <th st-sort="Type"><span uib-tooltip="Вид постоянных затрат">Вид затрат</span></th>
-                    <th st-sort="Justification"><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
-                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
+                    <th><span uib-tooltip="Вид постоянных затрат">Вид затрат</span></th>
+                    <th><span uib-tooltip="Обоснование расчета, текст">Обоснование</span></th>
+                    <th><span uib-tooltip="Сумма">Сумма</span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -280,7 +280,7 @@
                         <div class="form-group">
                             <label class="col-sm-8">Планируемый совокупный взнос по кредитам на данный инвестиционный проект (включая вознаграждение и основной долг)</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" ng-model="currentProject.ProjectAnalysis.ExpectedCumulativeFee">
+                                <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.MonthlyFee" disabled>
                             </div>
 
                         </div>

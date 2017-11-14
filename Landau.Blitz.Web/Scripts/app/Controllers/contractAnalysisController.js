@@ -26,6 +26,7 @@
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.remapIds($scope.elements);
         $scope.recalculateData();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
@@ -49,6 +50,12 @@
         dialog.setSize(BootstrapDialog.SIZE_SMALL);
     };
 
+    $scope.remapIds = function (rows) {
+        angular.forEach(rows, function (value, key) {
+            value.Id = key + 1;
+        });
+    }
+
     $scope.menuItems = [
         {
             text: "Удалить",
@@ -61,18 +68,16 @@
         if (!$scope.currentProject.ContractAnalysis.Sales) {
             $scope.currentProject.ContractAnalysis.Sales = [];
         }
-        $scope.currentProject.ContractAnalysis.Sales.push({
-            Id: $scope.currentProject.ContractAnalysis.Sales.length + 1
-        });
+        $scope.currentProject.ContractAnalysis.Sales.push({});
+        $scope.remapIds($scope.currentProject.ContractAnalysis.Sales);
     }
 
     $scope.showNewPurchases = function () {
         if (!$scope.currentProject.ContractAnalysis.Purchases) {
             $scope.currentProject.ContractAnalysis.Purchases = [];
         }
-        $scope.currentProject.ContractAnalysis.Purchases.push({
-            Id: $scope.currentProject.ContractAnalysis.Purchases.length + 1
-        });
+        $scope.currentProject.ContractAnalysis.Purchases.push({});
+        $scope.remapIds($scope.currentProject.ContractAnalysis.Purchases);
     }
 
     $scope.clickSales = function (id) {

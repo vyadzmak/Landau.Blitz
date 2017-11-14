@@ -445,28 +445,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
         this.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances(companies, this.currentProject);
     }
-
-
-    projectFactory.setBalancesBalance = function (balance, companyId) {
-        this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balance.Id - 1] = balance;
-    }
-
-    projectFactory.getActiveCompanyBalance = function (companyId) {
-        return this.currentProject.FinDataBalance.Balances[companyId - 1];
-    }
-
-    projectFactory.getActiveBalance = function (companyId, balanceId) {
-        return this.currentProject.FinDataBalance.Balances[companyId - 1].CompanyBalances[balanceId - 1];
-    }
-
-    projectFactory.getActiveOpiu = function (ind) {
-        return this.currentProject.FinDataOpiu.Opius[ind - 1];
-    }
-
-    projectFactory.setCrossChecking = function (finDataCrossChecking) {
-        this.currentProject.FinDataCrossChecking = finDataCrossChecking;
-    }
-
+    
     projectFactory.getToCurrentProject = function () {
         angular.forEach(this.currentProject.BusinessInfo.ClientFounderInfos, function (value, key) {
             value.DateOfBirth = new Date(value.DateOfBirth);
@@ -605,7 +584,34 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         this.currentProject = currentProject;
     }
     //-------------------------------end init functions ---------------------------------//
+    projectFactory.setActiveBalance = function (companyId, balanceId) {
+        this.activeBalance = { CompanyId: companyId, BalanceId: balanceId }
+    }
 
+    projectFactory.setActiveOpiu = function (companyId) {
+        this.activeOpiu = { CompanyId: companyId }
+    }
+    projectFactory.getActiveCompanyBalance = function () {
+        if (!(this.activeBalance && this.activeBalance.CompanyId)) {
+            projectFactory.setActiveBalance(1, 1);
+        }
+        return this.currentProject.FinDataBalance.Balances[this.activeBalance.CompanyId - 1];
+    }
+    projectFactory.getActiveBalance = function () {
+        if (!(this.activeBalance && this.activeBalance.CompanyId && this.activeBalance.BalanceId)) {
+            projectFactory.setActiveBalance(1, 1);
+        }
+        return this.currentProject.FinDataBalance.Balances[this.activeBalance.CompanyId - 1]
+            .CompanyBalances[this.activeBalance.BalanceId - 1];
+    }
+
+    projectFactory.getActiveOpiu = function () {
+        if (!(this.activeOpiu && this.activeOpiu.CompanyId)) {
+            projectFactory.setActiveOpiu(1);
+        }
+        return this.currentProject.FinDataOpiu.Opius[this.activeOpiu.CompanyId - 1];
+    }
+    
     return projectFactory;
 
 }]);

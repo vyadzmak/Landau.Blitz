@@ -47,19 +47,60 @@ blitzApp.factory('financePlanningCalculatorFactory', ['$rootScope', 'mathFactory
         currentProject.FinancePlanning.ProposedCashlessSum = proposedSum - proposedCashSum;
         var proposedTerm = mathFactory
             .getFloat(currentProject.FinancePlanning.ProposedTerm);
+        var preferentialTerm = mathFactory
+            .getFloat(currentProject.FinancePlanning.PreferentialTerm);
         var proposedDelay = mathFactory
             .getFloat(currentProject.FinancePlanning.ProposedDelay);
         var proposedRate = mathFactory
             .getFloat(currentProject.FinancePlanning.ProposedRate);
-        //if (currentProject.FinancePlanning.IsAnnuity) {
-        //    currentProject.FinancePlanning.MonthlyFee =
-        //        proposedSum / 12 * proposedRate / 100 * (proposedTerm + 1) / 2 / (proposedTerm - proposedDelay);
-        //} else {
+        if (currentProject.FinancePlanning.IsAnnuity) {
+            currentProject.FinancePlanning.MonthlyFee =
+                (Math.pow(1 + proposedRate / 12 / 100, (proposedTerm - preferentialTerm)) * proposedRate / 12 / 100) /
+                (Math.pow(1 + proposedRate / 12 / 100, (proposedTerm - preferentialTerm)) - 1) *
+                proposedSum;
+        } else {
             currentProject.FinancePlanning
-                .MonthlyFee = (proposedSum + proposedTerm / 12 * proposedRate * proposedSum / 100) / proposedTerm;
-        //}
+                .MonthlyFee = proposedSum / (proposedTerm - preferentialTerm) + proposedRate/12 * proposedSum / 100;
+        }
         currentProject.FinancePlanning.MonthlyFee = mathFactory.round(currentProject.FinancePlanning.MonthlyFee, 2);
 
+        currentProject.FinancePlanning.Schedule = [];
+        currentProject.FinancePlanning.CreditInterestTotal = 0;
+        var remainingDebt = angular.copy(proposedSum);
+        for (var i = 0; i < proposedTerm; i++) {
+            var payment = {Id: i+1};
+            if (i < preferentialTerm) {
+                payment.Interest = proposedRate / 12 / 100 * proposedSum;
+                payment.Interest = mathFactory.round(payment.Interest, 2);
+                payment.Debt = 0;
+                payment.Total = payment.Interest + payment.Debt;
+                payment.RemainingDebt = remainingDebt;
+            } else {
+                if (currentProject.FinancePlanning.IsAnnuity) {
+                    payment.Total = currentProject.FinancePlanning.MonthlyFee;
+                    payment.Interest = remainingDebt * proposedRate / 12 / 100;
+                    payment.Interest = mathFactory.round(payment.Interest, 2);
+                    payment.Debt = payment.Total - payment.Interest;
+                    payment.Debt = mathFactory.round(payment.Debt, 2);
+                    remainingDebt = mathFactory.round(remainingDebt - payment.Debt, 2);
+                    payment.RemainingDebt = remainingDebt;
+                } else {
+                    payment.Debt = mathFactory.round(proposedSum / (proposedTerm - preferentialTerm), 2);
+                    payment.Interest = mathFactory.round((remainingDebt * proposedRate / 12 / 100), 2);
+                    remainingDebt = mathFactory.round(remainingDebt - payment.Debt, 2);
+                    payment.Total = payment.Debt + payment.Interest;
+                    payment.RemainingDebt = remainingDebt;
+                }
+            }
+            if (i === proposedTerm-1) {
+                payment.Total += remainingDebt;
+                payment.Debt += remainingDebt;
+                payment.RemainingDebt = 0;
+            }
+            currentProject.FinancePlanning.CreditInterestTotal += payment.Interest;
+            currentProject.FinancePlanning.Schedule.push(payment);
+        }
+        currentProject.FinancePlanning.CreditTotal = currentProject.FinancePlanning.CreditInterestTotal + proposedSum;
 
         return currentProject;
     }

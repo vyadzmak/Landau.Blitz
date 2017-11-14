@@ -21,6 +21,7 @@ var projectAnalysisController = function ($scope, $http, $location, $state, $uib
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.remapIds($scope.elements);
         $scope.calculateProjectAnalysis();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
@@ -56,28 +57,24 @@ var projectAnalysisController = function ($scope, $http, $location, $state, $uib
         if (!$scope.currentProject.ProjectAnalysis.ExcpectedRevenues) {
             $scope.currentProject.ProjectAnalysis.ExcpectedRevenues = [];
         }
-        $scope.currentProject.ProjectAnalysis.ExcpectedRevenues.push({
-            Id: $scope.currentProject.ProjectAnalysis.ExcpectedRevenues.length + 1,
-            RevenueDynamics: []
-        });
+        $scope.currentProject.ProjectAnalysis.ExcpectedRevenues.push({RevenueDynamics: []});
+        $scope.remapIds($scope.currentProject.ProjectAnalysis.ExcpectedRevenues);
     }
 
     $scope.showNewVarExpenses = function () {
         if (!$scope.currentProject.ProjectAnalysis.VarExpenses) {
             $scope.currentProject.ProjectAnalysis.VarExpenses = [];
         }
-        $scope.currentProject.ProjectAnalysis.VarExpenses.push({
-            Id: $scope.currentProject.ProjectAnalysis.VarExpenses.length + 1
-        });
+        $scope.currentProject.ProjectAnalysis.VarExpenses.push({});
+        $scope.remapIds($scope.currentProject.ProjectAnalysis.VarExpenses);
     }
 
     $scope.showNewConstExpenses = function () {
         if (!$scope.currentProject.ProjectAnalysis.ConstExpenses) {
             $scope.currentProject.ProjectAnalysis.ConstExpenses = [];
         }
-        $scope.currentProject.ProjectAnalysis.ConstExpenses.push({
-            Id: $scope.currentProject.ProjectAnalysis.ConstExpenses.length + 1
-        });
+        $scope.currentProject.ProjectAnalysis.ConstExpenses.push({});
+        $scope.remapIds($scope.currentProject.ProjectAnalysis.ConstExpenses);
     }
 
     $scope.clickExpectedRevenue = function (id) {
@@ -127,9 +124,16 @@ var projectAnalysisController = function ($scope, $http, $location, $state, $uib
         calculatorFactory.calculateProjectAnalyzeData($scope.currentProject);
     }
 
+    $scope.remapIds = function (rows) {
+        angular.forEach(rows, function (value, key) {
+            value.Id = key + 1;
+        });
+    }
+
     $scope.init = function () {
         $scope.currentProject = projectFactory.getToCurrentProject();
     }
+
     $scope.init();
     usSpinnerService.stop("spinner-1");
 };

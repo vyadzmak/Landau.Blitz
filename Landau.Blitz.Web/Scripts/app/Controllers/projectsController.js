@@ -249,7 +249,7 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
     $scope.showProjectModal = function() {
 
         var rParams = { 'id': $scope.userData.UserId };
-        var url = $$ApiUrl + "/projectconfig"
+        var url = $$ApiUrl + "/projectconfig";
         promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
             // alert(result);
             $scope.projectSetting = JSON.parse(result);

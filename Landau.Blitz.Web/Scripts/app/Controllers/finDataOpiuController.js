@@ -32,7 +32,7 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 dialog.open();
             }
         } else {
-            $scope.activeOpiu = projectFactory.getActiveOpiu(1);
+            $scope.activeOpiu = projectFactory.getActiveOpiu();
         }
     }
 
@@ -46,7 +46,8 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
     ];
 
     $scope.activeOpiuChanged = function() {
-        $scope.activeOpiu = projectFactory.getActiveOpiu($scope.activeOpiu.Id);
+        projectFactory.setActiveOpiu($scope.activeOpiu.Id);
+        $scope.activeOpiu = projectFactory.getActiveOpiu();
     }
 
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
@@ -94,7 +95,7 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 }
             } else {
                 projectFactory.initOpius($scope.currentProject);
-                $scope.activeOpiu = projectFactory.getActiveOpiu(1);
+                $scope.activeOpiu = projectFactory.getActiveOpiu();
             }
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
@@ -109,11 +110,11 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
     
     $scope.calculateOpiu = function(opiu) {
         calculatorFactory.calculateOpiuData($scope.currentProject, opiu);
-        $scope.activeOpiu = projectFactory.getActiveOpiu($scope.activeOpiu.Id);
     }
 
     $scope.addNewRow = function(rows) {
-        rows.push({Id:rows.length+1});
+        rows.push({});
+        $scope.remapIds(rows);
     }
     
     $scope.deleteData = function() {
@@ -129,11 +130,20 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 $scope.elements.splice(index, 1);
             }
         }
+
+        $scope.remapIds($scope.elements);
+
         $scope.calculateOpiu($scope.activeOpiu);
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
     
+    $scope.remapIds = function(rows) {
+        angular.forEach(rows, function(value, key) {
+            value.Id = key + 1;
+        });
+    }
+
     $scope.clickRightTableRow = function(rows, rowId) {
         $scope.eIndex = rowId;
         $scope.elements = rows;

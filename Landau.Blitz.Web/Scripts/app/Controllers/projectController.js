@@ -133,6 +133,8 @@ var projectController = function($scope, $stateParams, $http, $location, $state,
     }
 
     $scope.$on('$destroy', function () {
+        projectFactory.setActiveBalance();
+        projectFactory.setActiveOpiu();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
         window.removeEventListener("beforeunload", handler);
     });

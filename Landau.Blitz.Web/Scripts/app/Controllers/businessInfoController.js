@@ -156,8 +156,15 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.remapIds($scope.elements);
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
+    }
+    
+    $scope.remapIds = function(rows) {
+        angular.forEach(rows, function(value, key) {
+            value.Id = key + 1;
+        });
     }
     $scope.RemoveElement = function() {
         //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);
@@ -198,7 +205,8 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         if (!$scope.currentProject.BusinessInfo.ClientFounderInfos) {
             $scope.currentProject.BusinessInfo.ClientFounderInfos = [];
         }
-        $scope.currentProject.BusinessInfo.ClientFounderInfos.push({Id:$scope.currentProject.BusinessInfo.ClientFounderInfos.length+1});
+        $scope.currentProject.BusinessInfo.ClientFounderInfos.push({});
+        $scope.remapIds($scope.currentProject.BusinessInfo.ClientFounderInfos);
         //var modalView = 'PartialViews/Modals/BusinessInfo/ClientFounderInfoModal.html';
         //var modalController = manageClientFounderInfoController;
 
@@ -213,7 +221,8 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         if (!$scope.currentProject.BusinessInfo.ConsumerStructures) {
             $scope.currentProject.BusinessInfo.ConsumerStructures = [];
         }
-        $scope.currentProject.BusinessInfo.ConsumerStructures.push({Id:$scope.currentProject.BusinessInfo.ConsumerStructures.length+1});
+        $scope.currentProject.BusinessInfo.ConsumerStructures.push({});
+        $scope.remapIds($scope.currentProject.BusinessInfo.ConsumerStructures);
         //var modalView = 'PartialViews/Modals/BusinessInfo/ConsumerStructureModal.html';
         //var modalController = manageConsumerStructureController;
 
@@ -228,7 +237,8 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         if (!$scope.currentProject.BusinessInfo.PeriodicityProcurements) {
             $scope.currentProject.BusinessInfo.PeriodicityProcurements = [];
         }
-        $scope.currentProject.BusinessInfo.PeriodicityProcurements.push({Id:$scope.currentProject.BusinessInfo.PeriodicityProcurements.length+1});
+        $scope.currentProject.BusinessInfo.PeriodicityProcurements.push({});
+        $scope.remapIds($scope.currentProject.BusinessInfo.PeriodicityProcurements);
         //var modalView = 'PartialViews/Modals/BusinessInfo/PeriodicityProcurementModal.html';
         //var modalController = managePeriodicityProcurementController;
 
@@ -243,7 +253,8 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         if (!$scope.currentProject.BusinessInfo.SupplierStructures) {
             $scope.currentProject.BusinessInfo.SupplierStructures = [];
         }
-        $scope.currentProject.BusinessInfo.SupplierStructures.push({Id:$scope.currentProject.BusinessInfo.SupplierStructures.length+1});
+        $scope.currentProject.BusinessInfo.SupplierStructures.push({});
+        $scope.remapIds($scope.currentProject.BusinessInfo.SupplierStructures);
         //var modalView = 'PartialViews/Modals/BusinessInfo/SupplierStructureModal.html';
         //var modalController = manageSupplierStructureController;
 

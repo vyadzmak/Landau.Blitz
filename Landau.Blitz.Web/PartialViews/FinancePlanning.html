@@ -18,6 +18,44 @@
                         <label>Запршенная ставка, %</label>
                         <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.RequestedRate">
                     </div>
+                    <uib-accordion>
+                        <div uib-accordion-group class="panel-default" heading="График погашения" is-open="false">
+                            <table st-table="lpsCollection" st-safe-src="currentProject.FinancePlanning.Schedule" class="table table-bordered table-condensed ng-table">
+                                <thead>
+                                    <tr>
+                                        <th><span uib-tooltip="№">№</span></th>
+                                        <th><span uib-tooltip="Взнос">Взнос</span></th>
+                                        <th><span uib-tooltip="Процент">Процент</span></th>
+                                        <th><span uib-tooltip="Капитал">Капитал</span></th>
+                                        <th><span uib-tooltip="Остаток ОД">Остаток</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in lpsCollection">
+                                        <td>{{row.Id}}</td>
+                                        <td>{{row.Total|currency:'':2}}</td>
+                                        <td>{{row.Interest|currency:'':2}}</td>
+                                        <td>{{row.Debt|currency:'':2}}</td>
+                                        <td>{{row.RemainingDebt|currency:'':2}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td><strong>Итого</strong></td>
+                                    <td><strong>{{currentProject.FinancePlanning.CreditTotal|currency:'':2}}</strong></td>
+                                    <td><strong>{{currentProject.FinancePlanning.CreditInterestTotal|currency:'':2}}</strong></td>
+                                    <td><strong>{{currentProject.FinancePlanning.ProposedSum|currency:'':2}}</strong></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </uib-accordion>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -34,10 +72,23 @@
                     </div>
                     <div class="form-group">
                         <label>Предложенный срок, мес.</label>
-                        <input type="number" class="form-control" ng-model="currentProject.FinancePlanning.ProposedTerm" ng-change="calculateCreditData()">
+                        <input type="number" step="1" class="form-control" ng-model="currentProject.FinancePlanning.ProposedTerm" ng-change="calculateCreditData()">
                     </div>
                     <div class="form-group">
-                        <label>Ежемесячный взнос, тенге</label>
+                        <label>Льготный период по погашению основного долга, мес.</label>
+                        <input type="number" step="1" class="form-control" ng-model="currentProject.FinancePlanning.PreferentialTerm" ng-change="calculateCreditData()">
+                    </div>
+                    <div class="form-group">
+                        <label>Способ расчета</label>
+                        <label>
+                            <input type="radio" name="typeOfPaying" ng-value="false" ng-model="currentProject.FinancePlanning.IsAnnuity" ng-change="calculateCreditData()"> Равные доли
+                        </label>
+                        <label>
+                            <input type="radio" name="typeOfPaying" ng-value="true" ng-model="currentProject.FinancePlanning.IsAnnuity" ng-change="calculateCreditData()"> Аннуитет
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>{{currentProject.FinancePlanning.IsAnnuity?'Ежемесячный взнос после льготного периода, тенге':'Первый взнос при погашении основного долга, тенге'}}</label>
                         <input type="number" step="0.01" class="form-control" ng-model="currentProject.FinancePlanning.MonthlyFee" disabled>
                     </div>
                     <div class="form-group">
@@ -58,53 +109,53 @@
             <button class="btn btn-primary btn-xs header-button" ng-click="addNewFinancePlan();"><i class="fa fa-plus" aria-hidden="true"></i></button>
             <table st-table="planCollection" st-safe-src="currentProject.FinancePlanning.Plans" class="table table-bordered table-condensed ng-table">
                 <thead>
-                <tr>
-                    <th st-sort="Expenditure" colspan="2"><span uib-tooltip="Статья затрат. Выберите из списка, в соседнем столбце можно детализировать статью.">Статья затрат</span></th>
-                    <th st-sort="Provider"><span uib-tooltip="Поставщик">Поставщик</span></th>
-                    <th st-sort="Sum"><span uib-tooltip="Сумма">Сумма</span></th>
-                    <th st-sort="Source"><span uib-tooltip="Источник финансирования">Источник финансирования</span></th>
-                    <th st-sort="Date"><span uib-tooltip="Дата в формате ДД.ММ.ГГГГ">Дата</span></th>
-                </tr>
+                    <tr>
+                        <th colspan="2"><span uib-tooltip="Статья затрат. Выберите из списка, в соседнем столбце можно детализировать статью.">Статья затрат</span></th>
+                        <th><span uib-tooltip="Поставщик">Поставщик</span></th>
+                        <th><span uib-tooltip="Сумма">Сумма</span></th>
+                        <th><span uib-tooltip="Источник финансирования">Источник финансирования</span></th>
+                        <th><span uib-tooltip="Дата в формате ДД.ММ.ГГГГ">Дата</span></th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in planCollection" ng-right-click="clickFinancePlan(row.Id)" menu-items="menuItems">
-                    <td>
-                        <select ng-options="item as item.Name for item in expenditures track by item.Id"
-                                ng-model="row.Expenditure"
-                                ng-change="calculateFinancePlan()" style="width: 200px"></select>
-                    </td>
-                    <td ng-model="row.Expenditure.Name" content-editable></td>
-                    <td ng-model="row.Provider" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateFinancePlan()"></td>
-                    <td>
-                        <select ng-options="item as item.Name for item in financialSources track by item.Id"
-                                ng-model="row.Source"
-                                ng-change="calculateFinancePlan()"></select>
-                    </td>
-                    <td ng-model="row.Date" content-editable></td>
-                </tr>
+                    <tr ng-repeat="row in planCollection" ng-right-click="clickFinancePlan(row.Id)" menu-items="menuItems">
+                        <td>
+                            <select ng-options="item as item.Name for item in expenditures track by item.Id"
+                                    ng-model="row.Expenditure"
+                                    ng-change="calculateFinancePlan()" style="width: 200px"></select>
+                        </td>
+                        <td ng-model="row.Expenditure.Name" content-editable></td>
+                        <td ng-model="row.Provider" content-editable></td>
+                        <td ng-model="row.Sum" content-editable edit-callback="calculateFinancePlan()"></td>
+                        <td>
+                            <select ng-options="item as item.Name for item in financialSources track by item.Id"
+                                    ng-model="row.Source"
+                                    ng-change="calculateFinancePlan()"></select>
+                        </td>
+                        <td ng-model="row.Date" content-editable></td>
+                    </tr>
                 </tbody>
                 <tfoot>
-                <tr>
-                    <td colspan="3" class="text-center">Итого:</td>
-                    <td colspan="1" class="text-center">{{currentProject.FinancePlanning.OwnResources | currency:'':2}}</td>
-                    <td colspan="2" class="text-center">собственные средства</td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="text-center"></td>
-                    <td colspan="1" class="text-center">{{currentProject.FinancePlanning.BorrowedResources | currency:'':2}}</td>
-                    <td colspan="2" class="text-center">заемные средства</td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="text-center">Всего:</td>
-                    <td colspan="1" class="text-center">{{currentProject.FinancePlanning.TotalResources | currency:'':2}}</td>
-                    <td colspan="2" class="text-center"></td>
-                </tr>
-                <tr>
-                    <td colspan="6" class="text-center">
-                        <div st-pagination="" st-items-by-page="20" st-displayed-pages="7"></div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">Итого:</td>
+                        <td colspan="1" class="text-center">{{currentProject.FinancePlanning.OwnResources | currency:'':2}}</td>
+                        <td colspan="2" class="text-center">собственные средства</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-center"></td>
+                        <td colspan="1" class="text-center">{{currentProject.FinancePlanning.BorrowedResources | currency:'':2}}</td>
+                        <td colspan="2" class="text-center">заемные средства</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">Всего:</td>
+                        <td colspan="1" class="text-center">{{currentProject.FinancePlanning.TotalResources | currency:'':2}}</td>
+                        <td colspan="2" class="text-center"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <div st-pagination="" st-items-by-page="20" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
                 </tfoot>
             </table>
             <div class="form-group">
@@ -206,4 +257,4 @@
                 </div>
             </div>
         </div>-->
-    </div>
+</div>

@@ -87,7 +87,8 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
         if (!$scope.currentProject.FinancePlanning.Plans) {
             $scope.currentProject.FinancePlanning.Plans = [];
         }
-        $scope.currentProject.FinancePlanning.Plans.push({ Id: $scope.currentProject.FinancePlanning.Plans.length + 1 });
+        $scope.currentProject.FinancePlanning.Plans.push({});
+        $scope.remapIds($scope.currentProject.FinancePlanning.Plans);
     }
 
     $scope.clickFinancePlan = function (id) {
@@ -114,10 +115,17 @@ var financePlanningController = function ($scope, $http, $location, $state, $uib
                 $scope.elements.splice(index, 1);
             }
         }
+        $scope.remapIds($scope.elements);
         $scope.calculateFinancePlan();
         $scope.calculateCreditData();
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
+    }
+
+    $scope.remapIds = function (rows) {
+        angular.forEach(rows, function (value, key) {
+            value.Id = key + 1;
+        });
     }
     $scope.RemoveElement = function () {
         //alert("RM Type = " + $scope.rmIndex + " Element Index= " + $scope.eIndex);

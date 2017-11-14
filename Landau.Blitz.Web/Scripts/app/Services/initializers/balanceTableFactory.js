@@ -91,6 +91,8 @@ blitzApp.factory('balanceTableFactory', ['$rootScope', 'balanceCalculatorFactory
                         }
                         cBalance.Assets = initAssets();
                         cBalance.Liabilities = initLiabilities();
+                        cBalance.OutAssets = [];
+                        cBalance.OutLiabilities = [];
 
                         cBalance.LiquidAssets = 0;
                         cBalance.Receivables = 0;

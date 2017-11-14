@@ -111,11 +111,11 @@
                 <table st-table="bpsCollection" st-safe-src="currentProject.ClientData.BusinessPlaces" class="table table-bordered table-condensed ng-table">
                     <thead>
                         <tr>
-                            <th st-sort="Address"><span uib-tooltip="Юридический адрес">Юр. адрес</span></th>
-                            <th st-sort="ActualAddress"><span uib-tooltip="Фактический адрес">Факт. адр.</span></th>
-                            <th st-sort="IsRent"><span uib-tooltip="Помещение находится в аренде">Аренда</span></th>
-                            <th st-sort="IsFilial"><span uib-tooltip="Имеются ли точки продаж/подразделения, расположенные не по данному адресу">Филиал</span></th>
-                            <th st-sort="FilialCount"><span uib-tooltip="Количество дополнительных точек/продразделений">Кол. филиалов</span></th>
+                            <th><span uib-tooltip="Юридический адрес">Юр. адрес</span></th>
+                            <th><span uib-tooltip="Фактический адрес">Факт. адр.</span></th>
+                            <th><span uib-tooltip="Помещение находится в аренде">Аренда</span></th>
+                            <th><span uib-tooltip="Имеются ли точки продаж/подразделения, расположенные не по данному адресу">Филиал</span></th>
+                            <th><span uib-tooltip="Количество дополнительных точек/продразделений">Кол. филиалов</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -154,17 +154,17 @@
                 <table st-table="directorCollection" st-safe-src="currentProject.ClientData.DirectorInfos" class="table table-bordered table-condensed ng-table">
                     <thead>
                         <tr>
-                            <th st-sort="Name"><span uib-tooltip="Фамилия, имя, отчество полностью">Ф.И.О</span></th>
-                            <th st-sort="DateOfBirth"><span uib-tooltip="Дата рождения">Дата рож-я</span></th>
-                            <th st-sort="PlaceOfBirth"><span uib-tooltip="Место рождения">Место рож-я</span></th>
-                            <th st-sort="Document"><span uib-tooltip="№ удостоверения личности">№ док.</span></th>
-                            <th st-sort="DocumentDetails"><span uib-tooltip="Кем выдан/Дата выдачи/Срок действия">Выдан</span></th>
-                            <th st-sort="PlaceOfRegistration"><span uib-tooltip="Место прописки">Прописка</span></th>
-                            <th st-sort="PlaceOfResidence"><span uib-tooltip="Место проживания">Проживание</span></th>
-                            <th st-sort="PhoneNumber"><span uib-tooltip="Контактный телефон">Тел</span></th>
-                            <th st-sort="IsMarried"><span uib-tooltip="Семейное положение, отметить, если женат/замужем">Жен/Зам</span></th>
-                            <th st-sort="Spouse"><span uib-tooltip="Ф.И.О супруга (-и)">Супруг(-а)</span></th>
-                            <th st-sort="Children"><span uib-tooltip="Ф.И.О. детей и их возраст">Дети</span></th>
+                            <th><span uib-tooltip="Фамилия, имя, отчество полностью">Ф.И.О</span></th>
+                            <th><span uib-tooltip="Дата рождения">Дата рож-я</span></th>
+                            <th><span uib-tooltip="Место рождения">Место рож-я</span></th>
+                            <th><span uib-tooltip="№ удостоверения личности">№ док.</span></th>
+                            <th><span uib-tooltip="Кем выдан/Дата выдачи/Срок действия">Выдан</span></th>
+                            <th><span uib-tooltip="Место прописки">Прописка</span></th>
+                            <th><span uib-tooltip="Место проживания">Проживание</span></th>
+                            <th><span uib-tooltip="Контактный телефон">Тел</span></th>
+                            <th><span uib-tooltip="Семейное положение, отметить, если женат/замужем">Жен/Зам</span></th>
+                            <th><span uib-tooltip="Ф.И.О супруга (-и)">Супруг(-а)</span></th>
+                            <th><span uib-tooltip="Ф.И.О. детей и их возраст">Дети</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -242,15 +242,15 @@
                        ng-show="currentProject.ClientData.RelatedCompanyType==1 || currentProject.ClientData.RelatedCompanyType==2">
                     <thead>
                         <tr>
-                            <th st-sort="CompanyName"><span uib-tooltip="Наименование аффилиированного лица/компании">Наименование</span></th>
-                            <th st-sort="Address"><span uib-tooltip="Юридический адрес">Юр. адрес</span></th>
-                            <th st-sort="ActualAddress"><span uib-tooltip="Фактический адрес">Факт. адр.</span></th>
-                            <th st-sort="RegistrationDate"><span uib-tooltip="Дата государственной регистрации">Дата рег.</span></th>
-                            <th st-sort="ActivityType"><span uib-tooltip="Вид деятельности">Вид деятельности</span></th>
-                            <th st-sort="Director"><span uib-tooltip="Ф.И.О директора">Директор</span></th>
-                            <th st-sort="Founder"><span uib-tooltip="Ф.И.О учредителя">Учредитель</span></th>
-                            <th st-sort="Owner"><span uib-tooltip="Ф.И.О фактического собственника">Cобственник</span></th>
-                            <th st-sort="Comments"><span uib-tooltip="Указать как компании связаны с нашим заемщиком - например: компания оформлена на брата жены, фактически принадлежит заемщику">Комментарии</span></th>
+                            <th><span uib-tooltip="Наименование аффилиированного лица/компании">Наименование</span></th>
+                            <th><span uib-tooltip="Юридический адрес">Юр. адрес</span></th>
+                            <th><span uib-tooltip="Фактический адрес">Факт. адр.</span></th>
+                            <th><span uib-tooltip="Дата государственной регистрации">Дата рег.</span></th>
+                            <th><span uib-tooltip="Вид деятельности">Вид деятельности</span></th>
+                            <th><span uib-tooltip="Ф.И.О директора">Директор</span></th>
+                            <th><span uib-tooltip="Ф.И.О учредителя">Учредитель</span></th>
+                            <th><span uib-tooltip="Ф.И.О фактического собственника">Cобственник</span></th>
+                            <th><span uib-tooltip="Указать как компании связаны с нашим заемщиком - например: компания оформлена на брата жены, фактически принадлежит заемщику">Комментарии</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -317,11 +317,11 @@
                        class="table table-bordered table-condensed ng-table">
                     <thead>
                         <tr>
-                            <th st-sort="Name"><span uib-tooltip="Указать заемщика, созаемщика (если имеется), гаранта (если имеется), собственника (-ов) крупных участников Заемщика (10% и более долей (акций) в уставном капитале) с указанием конечных собственников - физических лиц), %">Наименование организации</span></th>
-                            <th st-sort="State"><span uib-tooltip="Статус">Статус</span></th>
-                            <th st-sort="FirstChief"><span uib-tooltip="Первый руководитель, Ф.И.О">Первый руководитель</span></th>
-                            <th st-sort="OwnerCompanyName"><span uib-tooltip="Наименование организации собственника">Собственники</span></th>
-                            <th st-sort="PercentOwnerShip"><span uib-tooltip="Доля в УК, %">Доля в УК, %</span></th>
+                            <th><span uib-tooltip="Указать заемщика, созаемщика (если имеется), гаранта (если имеется), собственника (-ов) крупных участников Заемщика (10% и более долей (акций) в уставном капитале) с указанием конечных собственников - физических лиц), %">Наименование организации</span></th>
+                            <th><span uib-tooltip="Статус">Статус</span></th>
+                            <th><span uib-tooltip="Первый руководитель, Ф.И.О">Первый руководитель</span></th>
+                            <th><span uib-tooltip="Наименование организации собственника">Собственники</span></th>
+                            <th><span uib-tooltip="Доля в УК, %">Доля в УК, %</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -369,18 +369,18 @@
                        class="table table-bordered table-condensed ng-table">
                     <thead>
                         <tr>
-                            <th st-sort="Id"><span uib-tooltip="Порядковый номер Банковского займа/Кредитной линии/Гарантии/Аккредитива">№</span></th>
-                            <th st-sort="BorrowerName"><span uib-tooltip="Наименование компании/лица (заемщик, созаемщик, гарант, учредитель, залогодатель и прочие связанные компании/лица)">Заемщик</span></th>
-                            <th st-sort="CompanyName"><span uib-tooltip="Наименование Банка/Кредитора">Кредитор</span></th>
-                            <th st-sort="LoanType"><span uib-tooltip="Вид финансирования">Вид</span></th>
-                            <th st-sort="LoanAmount"><span uib-tooltip="Сумма займа/Лимит кредитной линии">Сумма</span></th>
-                            <th st-sort="AnnualRate"><span uib-tooltip="Ставка вознаграждения">Ставка, %</span></th>
-                            <th st-sort="DateOfReceiving"><span uib-tooltip="Дата получения кредита/Открытия кредитной линии">Дата получения</span></th>
-                            <th st-sort="DateOfRepaymentAgreement"><span uib-tooltip="Дата погашения по договору/Дата завершения кредитной линии">Дата погашения<br />по договору</span></th>
-                            <th st-sort="DateOfRepaymentFact"><span uib-tooltip="Дата погашения по факту/Дата завершения кредитной линии по факту">Дата погашения<br />по факту</span></th>
-                            <th st-sort="RemainingDebt"><span uib-tooltip="Непогашенный остаток">Остаток</span></th>
-                            <th st-sort="LoanContribution"><span uib-tooltip="Взнос по кредиту/условному обязательству">Взнос</span></th>
-                            <th st-sort="LoanPurpose"><span uib-tooltip="Целевое назначение">Цель</span></th>
+                            <th><span uib-tooltip="Порядковый номер Банковского займа/Кредитной линии/Гарантии/Аккредитива">№</span></th>
+                            <th><span uib-tooltip="Наименование компании/лица (заемщик, созаемщик, гарант, учредитель, залогодатель и прочие связанные компании/лица)">Заемщик</span></th>
+                            <th><span uib-tooltip="Наименование Банка/Кредитора">Кредитор</span></th>
+                            <th><span uib-tooltip="Вид финансирования">Вид</span></th>
+                            <th><span uib-tooltip="Сумма займа/Лимит кредитной линии">Сумма</span></th>
+                            <th><span uib-tooltip="Ставка вознаграждения">Ставка, %</span></th>
+                            <th><span uib-tooltip="Дата получения кредита/Открытия кредитной линии">Дата получения</span></th>
+                            <th><span uib-tooltip="Дата погашения по договору/Дата завершения кредитной линии">Дата погашения<br />по договору</span></th>
+                            <th><span uib-tooltip="Дата погашения по факту/Дата завершения кредитной линии по факту">Дата погашения<br />по факту</span></th>
+                            <th><span uib-tooltip="Непогашенный остаток">Остаток</span></th>
+                            <th><span uib-tooltip="Взнос по кредиту/условному обязательству">Взнос</span></th>
+                            <th><span uib-tooltip="Целевое назначение">Цель</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -462,10 +462,10 @@
                         </tr>
                         <tr>
                             <th colspan="4"></th>
-                            <th st-sort="LoanAmount"><span uib-tooltip="Сумма займа/Лимит кредитной линии">Сумма</span></th>
+                            <th><span uib-tooltip="Сумма займа/Лимит кредитной линии">Сумма</span></th>
                             <th colspan="4"></th>
-                            <th st-sort="RemainingDebt"><span uib-tooltip="Непогашенный остаток">Остаток</span></th>
-                            <th st-sort="LoanContribution"><span uib-tooltip="Взнос по кредиту/условному обязательству">Взнос</span></th>
+                            <th><span uib-tooltip="Непогашенный остаток">Остаток</span></th>
+                            <th><span uib-tooltip="Взнос по кредиту/условному обязательству">Взнос</span></th>
                             <th></th>
                         </tr>
                         <tr>
@@ -496,15 +496,15 @@
                        class="table table-bordered table-condensed ng-table">
                     <thead>
                         <tr>
-                            <th st-sort="Owner"><span uib-tooltip="Владелец счета">Владелец</span></th>
-                            <th st-sort="CompanyName"><span uib-tooltip="Наименование Банка">Банк</span></th>
-                            <th st-sort="AccountNumber"><span uib-tooltip="№ счета">№ счета</span></th>
-                            <th st-sort="Currency"><span uib-tooltip="Валюта">Валюта</span></th>
-                            <th st-sort="AccountBalance"><span uib-tooltip="Остаток на момент анализа">Остаток</span></th>
-                            <th st-sort="DatePeriodStart" colspan="2"><span uib-tooltip="Период за который предосталены данные по оборотам">Период по оборотам</span></th>
-                            <th st-sort="Turnover"><span uib-tooltip="Оборот по счету за указанный период">Оборот</span></th>
-                            <th st-sort="AverageTurnover"><span uib-tooltip="Среднемесячный оборот">Мес. оборот</span></th>
-                            <th st-sort="Card"><span uib-tooltip="Имеется ли картотека">Картотека</span></th>
+                            <th><span uib-tooltip="Владелец счета">Владелец</span></th>
+                            <th><span uib-tooltip="Наименование Банка">Банк</span></th>
+                            <th><span uib-tooltip="№ счета">№ счета</span></th>
+                            <th><span uib-tooltip="Валюта">Валюта</span></th>
+                            <th><span uib-tooltip="Остаток на момент анализа">Остаток</span></th>
+                            <th colspan="2"><span uib-tooltip="Период за который предосталены данные по оборотам">Период по оборотам</span></th>
+                            <th><span uib-tooltip="Оборот по счету за указанный период">Оборот</span></th>
+                            <th><span uib-tooltip="Среднемесячный оборот">Мес. оборот</span></th>
+                            <th><span uib-tooltip="Имеется ли картотека">Картотека</span></th>
                         </tr>
                     </thead>
                     <tbody>
