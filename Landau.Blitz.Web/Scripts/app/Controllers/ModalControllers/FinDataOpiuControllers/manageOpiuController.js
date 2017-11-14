@@ -1,4 +1,4 @@
-var manageOpiuController = function ($scope, $uibModal, $uibModalInstance) {
+п»їvar manageOpiuController = function ($scope, $uibModal, $uibModalInstance) {
     var vm = this;
 
     function loadOpiuData() {
@@ -18,9 +18,9 @@ var manageOpiuController = function ($scope, $uibModal, $uibModalInstance) {
     }
     loadOpiuData();
     
-    $scope.months = [{ Id:1 , Name: "Январь" },{ Id:2 , Name: "Февраль" },{ Id:3 , Name: "Март" },{ Id:4 , Name: "Апрель" },{ Id:5 , Name: "Май" },
-    { Id:6 , Name: "Июнь" },{ Id:7 , Name: "Июль" },{ Id:8 , Name: "Август" },{ Id:9 , Name: "Сентябрь" },{ Id:10 , Name: "Октябрь" },
-    { Id:11 , Name: "Ноябрь" },{ Id:12 , Name: "Декабрь" }];
+    $scope.months = [{ Id:1 , Name: "СЏРЅРІР°СЂСЊ" },{ Id:2 , Name: "С„РµРІСЂР°Р»СЊ" },{ Id:3 , Name: "РјР°СЂС‚" },{ Id:4 , Name: "Р°РїСЂРµР»СЊ" },{ Id:5 , Name: "РјР°Р№" },
+    { Id:6 , Name: "РёСЋРЅСЊ" },{ Id:7 , Name: "РёСЋР»СЊ" },{ Id:8 , Name: "Р°РІРіСѓСЃС‚" },{ Id:9 , Name: "СЃРµРЅС‚СЏР±СЂСЊ" },{ Id:10 , Name: "РѕРєС‚СЏР±СЂСЊ" },
+    { Id:11 , Name: "РЅРѕСЏР±СЂСЊ" },{ Id:12 , Name: "РґРµРєР°Р±СЂСЊ" }];
 
 };
 blitzApp.controller("manageOpiuController", ["$scope", "$uibModal", "$uibModalInstance", manageOpiuController]);
