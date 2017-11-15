@@ -115,17 +115,27 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         // calculate values
         angular.forEach(opiu.Table, function (tRow, rKey) {
             angular.forEach(opiu.Months, function (month, mKey) {
-                margin['M' + month.Id] = mathFactory.getFloat(revenues['M' + month.Id]) / mathFactory.getFloat(costOfGoods['M' + month.Id]) - 1;
+                if (month.MarginCalcType === 3) {
+                    margin['M' + month.Id] = null;
+                    costOfGoods['M' + month.Id] = null;
+                } else if (month.MarginCalcType === 1 || month.MarginCalcType === 2) {
+                    margin['M' + month.Id] = 100 * (mathFactory.getFloat(revenues['M' + month.Id]) / mathFactory.getFloat(costOfGoods['M' + month.Id]) - 1);
+                    margin['M' + month.Id] = mathFactory.round(margin['M' + month.Id], 2);
+                } if (month.MarginCalcType === 4 || month.MarginCalcType === 5 || month.MarginCalcType === 6) {
+                    costOfGoods['M' + month.Id] = mathFactory.getFloat(revenues['M' + month.Id]) / (100+mathFactory.getFloat(margin['M' + month.Id])) * 100;
+                    costOfGoods['M' + month.Id] = mathFactory.round(costOfGoods['M' + month.Id], 2);
+                }
+
+                
                 grossProfit['M' + month.Id] = mathFactory.getFloat(revenues['M' + month.Id]) - mathFactory.getFloat(costOfGoods['M' + month.Id]);
                 profitOnBusiness['M' + month.Id] = mathFactory.getFloat(grossProfit['M' + month.Id]) - mathFactory.getFloat(totalExpenses['M' + month.Id]);
                 netProfit['M' + month.Id] = mathFactory.getFloat(profitOnBusiness['M' + month.Id]) + mathFactory.getFloat(otherIncome['M' + month.Id]) - mathFactory.getFloat(otherExpenses['M' + month.Id]);
                 netLoanBalance['M' + month.Id] = mathFactory.getFloat(netProfit['M' + month.Id]) - mathFactory.getFloat(loanPayment['M' + month.Id]);
 
-                margin['M' + month.Id] = margin['M' + month.Id].toFixed(2);
-                grossProfit['M' + month.Id] = grossProfit['M' + month.Id].toFixed(2);
-                profitOnBusiness['M' + month.Id] = profitOnBusiness['M' + month.Id].toFixed(2);
-                netProfit['M' + month.Id] = netProfit['M' + month.Id].toFixed(2);
-                netLoanBalance['M' + month.Id] = netLoanBalance['M' + month.Id].toFixed(2);
+                grossProfit['M' + month.Id] = mathFactory.round(grossProfit['M' + month.Id], 2);
+                profitOnBusiness['M' + month.Id] = mathFactory.round(profitOnBusiness['M' + month.Id], 2);
+                netProfit['M' + month.Id] = mathFactory.round(netProfit['M' + month.Id], 2);
+                netLoanBalance['M' + month.Id] = mathFactory.round(netLoanBalance['M' + month.Id], 2);
             });
         });
 
@@ -136,10 +146,10 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                 angular.forEach(opiu.Months, function (month, mKey) {
                     totalByMonths += mathFactory.getFloat(tRow['M' + month.Id]);
                 });
-                tRow.Avg = (totalByMonths / opiu.Months.length).toFixed(2);
+                tRow.Avg = mathFactory.round((totalByMonths / opiu.Months.length), 2);
             }
         });
-        netLoanBalance.Avg = (mathFactory.getFloat(netProfit.Avg) - mathFactory.getFloat(loanPayment.Avg)).toFixed(2);
+        netLoanBalance.Avg = mathFactory.round((mathFactory.getFloat(netProfit.Avg) - mathFactory.getFloat(loanPayment.Avg)), 2);
         return opiu;
     }
 

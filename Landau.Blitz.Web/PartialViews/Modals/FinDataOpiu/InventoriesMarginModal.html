@@ -1,0 +1,56 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Расчет по списку ТМЗ
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <button class="btn btn-primary btn-xs header-button" ng-click="vm.addNewRow(vm.updateData.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <table st-table="udCollection" st-safe-src="vm.updateData.Rows" class="table table-bordered table-condensed ng-table">
+            <thead>
+                <tr>
+                    <th><span uib-tooltip="Наименование ТМЗ">Наименование ТМЗ</span></th>
+                    <th><span uib-tooltip="Количество">Количество</span></th>
+                    <th><span uib-tooltip="Стоимость по цене закупа">Закуп</span></th>
+                    <th><span uib-tooltip="Стоимость по цене реализации">Реализация</span></th>
+                    <th><span uib-tooltip="Сумма по цене закупа">Сумма закупа</span></th>
+                    <th><span uib-tooltip="Сумма по цене реализации">Сумма реализации</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in udCollection track by row.Id" ng-right-click="vm.clickRightTableRow(vm.updateData.Rows, row.Id)" menu-items="vm.menuItems">
+                    <td ng-model="row.Name" content-editable edit-callback="vm.calculateTotal()"></td>
+                    <td ng-model="row.Quantity" content-editable edit-callback="vm.calculateTotal()"></td>
+                    <td ng-model="row.Cost" content-editable edit-callback="vm.calculateTotal()"></td>
+                    <td ng-model="row.Sum" content-editable edit-callback="vm.calculateTotal()"></td>
+                    <td>{{row.TotalCost|currency:'':2}}</td>
+                    <td>{{row.TotalSum|currency:'':2}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Итого</strong></td>
+                    <td><strong>{{vm.updateData.TotalCost|currency:'':2}}</strong></td>
+                    <td><strong>{{vm.updateData.TotalSum|currency:'':2}}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><strong>Расчетная маржа</strong></td>
+                    <td><strong>{{vm.updateValue}}%</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="text-right">
+
+            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+        </div>
+    </div>
+
+</div>

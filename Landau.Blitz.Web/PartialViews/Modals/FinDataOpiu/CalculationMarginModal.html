@@ -1,0 +1,89 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Расчет через калькуляцию
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Товары</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Укажите по скольким видам товаров будет производится расчет?</label>
+                            <input type="number" class="form-control" placeholder="1" ng-model="vm.updateData.GoodsCount" ng-change="vm.goodsCountChanged()">
+                        </div>
+                        <div class="form-group">
+                            <label>Средневзвешенная маржа, %</label>
+                            <input type="number" class="form-control" placeholder="1" ng-model="vm.updateValue" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Введите наименования рассматриваемых товаров</label>
+                            <input type="text" class="form-control" placeholder="Название товара" ng-repeat="row in vm.updateData.Goods track by row.Id" ng-model="row.Name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary" ng-repeat="good in vm.updateData.Goods track by good.Id">
+            <div class="panel-heading">{{good.Name}}</div>
+            <div class="panel-body">
+                <button class="btn btn-primary btn-xs header-button" ng-click="vm.addNewRow(good.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <table st-table="good.Rows" class="table table-bordered table-condensed ng-table">
+                    <thead>
+                        <tr>
+                            <th><span uib-tooltip="Наименование сырья">Наименование сырья</span></th>
+                            <th><span uib-tooltip="Количество (в кг)">Количество (в кг)</span></th>
+                            <th><span uib-tooltip="Цена (за кг)">Цена (за кг)</span></th>
+                            <th><span uib-tooltip="Сумма">Сумма</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in good.Rows track by row.Id" ng-right-click="vm.clickRightTableRow(good.Rows, row.Id)" menu-items="vm.menuItems">
+                            <td ng-model="row.Name" content-editable edit-callback="vm.calculateTotal()"></td>
+                            <td ng-model="row.Quantity" content-editable edit-callback="vm.calculateTotal()"></td>
+                            <td ng-model="row.Cost" content-editable edit-callback="vm.calculateTotal()"></td>
+                            <td>{{row.TotalCost|currency:'':2}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Всего</strong></td>
+                            <td><strong>{{good.Cost|currency:'':2}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong uib-tooltip="Сколько единиц товара/продукции выходит из введенного объема сырья">Выход, ед.</strong></td>
+                            <td ng-model="good.Yield" content-editable edit-callback="vm.calculateTotal()"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong uib-tooltip="Сеьестоимость единицы товара/продукции">Себестоимость единицы товара/продукции</strong></td>
+                            <td><strong>{{good.TotalCost|currency:'':2}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong uib-tooltip="Цена реализации единицы товара/продукции">Цена реализации единицы товара/продукции</strong></td>
+                            <td ng-model="good.TotalSum" content-editable edit-callback="vm.calculateTotal()"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Расчетная маржа</strong></td>
+                            <td><strong>{{good.Margin}}%</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+        </div>
+    </div>
+
+</div>

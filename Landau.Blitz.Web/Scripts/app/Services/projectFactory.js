@@ -182,7 +182,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         var positions = [
             'Выручка (доход от реализации)',
             'Себестоимость',
-            'Маржа',
+            'Маржа, %',
             'ВАЛОВАЯ ПРИБЫЛЬ',
             'Заработная плата',
             'Аренда',
@@ -217,8 +217,8 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
 
         var vNames = [
-            'Revenues',
-            'CostOfGoods',
+            '!Revenues',
+            '!CostOfGoods',
             '!Margin',
             '!GrossProfit',
             'Wage',

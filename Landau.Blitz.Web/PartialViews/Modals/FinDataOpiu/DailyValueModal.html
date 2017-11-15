@@ -1,0 +1,42 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Расчет по дневным данным/тетрадным записям
+        </h3>
+
+    </div>
+    <div class="modal-body">
+            <table st-table="udCollection" st-safe-src="vm.updateData" class="table table-bordered table-condensed ng-table">
+                <thead>
+                    <tr>
+                        <th><span uib-tooltip="Дата">Дата</span></th>
+                        <th><span uib-tooltip="Сумма">Сумма</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in udCollection track by row.Id">
+                        <td>{{row.Id+'.'+mElement.Month.Name}}</td>
+                        <td ng-model="row.Sum" content-editable edit-callback="vm.calculateTotal()"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>Итого</strong></td>
+                        <td><strong>{{vm.updateValue|currency:'':2}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+                <div class="text-right">
+
+                    <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                    <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                </div>
+    </div>
+
+</div>

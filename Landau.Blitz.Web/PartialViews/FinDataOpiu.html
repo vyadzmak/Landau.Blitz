@@ -22,12 +22,48 @@
                 ng-class="{'active bold-trow':row.Calculate}">
 
                 <td>{{row.Title}}</td>
-
+                
                 <td ng-repeat="month in activeOpiu.Months track by $index"
                     ng-model="row['M'+month.Id]"
                     content-editable
                     non-editable="{{row.Calculate}}"
-                    edit-callback="calculateOpiu(activeOpiu)"></td>
+                    edit-callback="calculateOpiu(activeOpiu)" ng-if="row.VarName!=='Revenues' && row.VarName!=='CostOfGoods' && row.VarName!=='Margin'"></td>
+                
+                <td ng-repeat="month in activeOpiu.Months track by $index"
+                    ng-if="row.VarName==='Revenues' || row.VarName==='CostOfGoods' || row.VarName==='Margin'">
+                    <div class="btn-group" uib-dropdown ng-if="row.VarName==='Revenues'">
+                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                            {{row['M'+month.Id]}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1, true)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2, true)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" uib-dropdown ng-if="row.VarName==='CostOfGoods'">
+                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                            {{row['M'+month.Id]}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 3)"><a href="javascript:void(0)">Себестоимость не заполняется в виду специфики направления деятельности</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" uib-dropdown ng-if="row.VarName==='Margin'">
+                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                            {{row['M'+month.Id]}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 4)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 5)"><a href="javascript:void(0)">Рассчитать по списку ТМЗ</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 6)"><a href="javascript:void(0)">Рассчитать через калькуляцию</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem" ng-click="populateMargin(row, month)"><a href="javascript:void(0)">Распространить полученные данные на следующие месяцы</a></li>
+                        </ul>
+                    </div>
+                </td>
 
                 <td ng-model="row.Avg"
                     content-editable

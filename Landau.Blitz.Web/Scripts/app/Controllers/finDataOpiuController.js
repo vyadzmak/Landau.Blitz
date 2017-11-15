@@ -14,7 +14,6 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 $scope.mElement = $scope.currentProject.FinDataOpiu;
                 $scope.addNewModal('PartialViews/Modals/FinDataOpiu/OpiuModal.html',
                     manageOpiuController,
-                    $scope.mElement,
                     'opiuData',
                     $scope.mElement);
             } else {
@@ -50,49 +49,19 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         $scope.activeOpiu = projectFactory.getActiveOpiu();
     }
 
-    $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
+    $scope.addNewModal = function(modalView, modalCtrl, data, element = {}, elements) {
 
-
-        if (element != {}) {
-            $scope.isEdit = true;
-        }
-
-        currentElement = element;
         var modalInstance = $uibModal.open({
             templateUrl: modalView,
             controller: modalCtrl,
             controllerAs: 'vm',
-            scope: $scope
-
+            scope: $scope,
+            size:'lg'
         });
 
         modalInstance.result.then(function() {
-            if (elements !== 'opiuData') {
-                if ($scope.mElement.Id == -1 || $scope.mElement.Id == undefined) {
-
-
-                    var id = 1;
-                    if (elements.length > 0) {
-                        id = elements[elements.length - 1].Id + 1;
-                    }
-                    $scope.mElement.Id = id;
-                    elements.push($scope.mElement);
-                    $scope.mElement = {};
-                } else {
-                    var ob = elements.filter(function(item) {
-                        return item.Id == $scope.mElement.Id;
-                    });
-
-                    if (ob.length > 0) {
-                        var dElement = ob[0];
-                        var index = $scope.elements.indexOf(dElement);
-
-                        if (index != -1) {
-                            $scope.elements[index] = $scope.mElement;
-                        }
-                    }
-                    $scope.mElement = {};
-                }
+            if (data !== 'opiuData') {
+                $scope.calculateOpiu($scope.activeOpiu);
             } else {
                 projectFactory.initOpius($scope.currentProject);
                 $scope.activeOpiu = projectFactory.getActiveOpiu();
@@ -184,5 +153,46 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         return res;
     }
 
+    $scope.cellDropdownChoice = function(row, month, calcType, isRevenues) {
+        if (!isRevenues && month.MarginCalcType !== calcType) {
+            month.MarginCalcType = calcType;
+            month.CalculationsData = null;
+        } else if(isRevenues && month.RevenuesCalcType !== calcType) {
+            month.RevenuesCalcType = calcType;
+            month.RevenuesCalcData = null;
+        }
+        $scope.mElement = { Row: row, Month: month, IsRevenues: isRevenues };
+        switch (calcType) {
+            case 1:
+            case 4:
+                $scope.addNewModal('PartialViews/Modals/FinDataOpiu/ReadyMadeValueModal.html',readyMadeValueController,"",$scope.mElement);
+                break;
+            case 2:
+                $scope.addNewModal('PartialViews/Modals/FinDataOpiu/DailyValueModal.html',dailyValueController,"",$scope.mElement);
+                break;
+            case 5:
+                $scope.addNewModal('PartialViews/Modals/FinDataOpiu/InventoriesMarginModal.html',inventoriesMarginController,"",$scope.mElement);
+                break;
+            case 6:
+                $scope.addNewModal('PartialViews/Modals/FinDataOpiu/CalculationMarginModal.html',calculationMarginController,"",$scope.mElement);
+                break;
+            case 7:
+                $scope.populateMargin(row, month);
+                break;
+
+        default:
+            break;
+        }
+    }
+
+    $scope.populateMargin = function(row, month) {
+        angular.forEach($scope.activeOpiu.Months, function(value, key) {
+            if (month.Id < value.Id) {
+                value.MarginCalcType = month.MarginCalcType === 3 ? 3 : 4;
+                row['M' + value.Id] = row['M' + month.Id];
+            }
+        });
+        $scope.calculateOpiu($scope.activeOpiu);
+    }
 };
-    blitzApp.controller("finDataOpiuController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectHttpService", "projectFactory", "calculatorFactory", finDataOpiuController]);
+blitzApp.controller("finDataOpiuController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectHttpService", "projectFactory", "calculatorFactory", finDataOpiuController]);
