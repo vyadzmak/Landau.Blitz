@@ -399,9 +399,9 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
                 }
             }
 
-            $scope.currentProject.ClientData.CreditHistoryInfo.LoanAmount += value.LoanAmount;
-            $scope.currentProject.ClientData.CreditHistoryInfo.RemainingDebt += value.RemainingDebt;
-            $scope.currentProject.ClientData.CreditHistoryInfo.LoanContribution += value.LoanContribution;
+            $scope.currentProject.ClientData.CreditHistoryInfo.LoanAmount += mathFactory.getFloat(value.LoanAmount);
+            $scope.currentProject.ClientData.CreditHistoryInfo.RemainingDebt += mathFactory.getFloat(value.RemainingDebt);
+            $scope.currentProject.ClientData.CreditHistoryInfo.LoanContribution += mathFactory.getFloat(value.LoanContribution);
         });
     };
 

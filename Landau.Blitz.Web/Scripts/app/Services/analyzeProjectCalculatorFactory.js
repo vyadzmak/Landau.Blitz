@@ -30,18 +30,22 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', 'mathFactory'
         // calculating total expenses
         var totalVarExpenses = 0;
         var totalConstExpenses = 0;
-        for (let i = 0; i < currentProject.ProjectAnalysis.VarExpenses.length; i++) {
-            totalVarExpenses += mathFactory.getFloat(currentProject.ProjectAnalysis.VarExpenses[i].Sum);
+        if (currentProject.ProjectAnalysis.VarExpenses) {
+            for (let i = 0; i < currentProject.ProjectAnalysis.VarExpenses.length; i++) {
+                totalVarExpenses += mathFactory.getFloat(currentProject.ProjectAnalysis.VarExpenses[i].Sum);
+            }
         }
-        for (let i = 0; i < currentProject.ProjectAnalysis.ConstExpenses.length; i++) {
-            totalConstExpenses += mathFactory.getFloat(currentProject.ProjectAnalysis.ConstExpenses[i].Sum);
+        if (currentProject.ProjectAnalysis.ConstExpenses) {
+            for (let i = 0; i < currentProject.ProjectAnalysis.ConstExpenses.length; i++) {
+                totalConstExpenses += mathFactory.getFloat(currentProject.ProjectAnalysis.ConstExpenses[i].Sum);
+            }
         }
         currentProject.ProjectAnalysis.TotalExpenses = totalVarExpenses + totalConstExpenses;
 
         currentProject.ProjectAnalysis.ProfitForTheProject = totalRevenue - totalCostPrice -
             mathFactory.getFloat(currentProject.ProjectAnalysis.TotalExpenses);
         currentProject.ProjectAnalysis.ProfitForTheProject = mathFactory.round(currentProject.ProjectAnalysis.ProfitForTheProject, 2);
-        currentProject.ProjectAnalysis.ExpectedRevenue = mathFactory.round(totalRevenue,2);
+        currentProject.ProjectAnalysis.ExpectedRevenue = mathFactory.round(totalRevenue, 2);
         currentProject.ProjectAnalysis
             .SalesProfitability = currentProject.ProjectAnalysis.ProfitForTheProject / totalRevenue * 100;
         currentProject.ProjectAnalysis.SalesProfitability = mathFactory.round(currentProject.ProjectAnalysis.SalesProfitability, 2);
@@ -58,13 +62,13 @@ blitzApp.factory('analyzeProjectCalculatorFactory', ['$rootScope', 'mathFactory'
             }
         });
 
+        minDate = moment(minDate, 'DD.MM.YYYY').isValid
+            ? moment(minDate, 'DD.MM.YYYY')
+            : moment(minDate).isValid ? moment(minDate) : null;
+        var projectStartDate = moment(currentProject.ProjectAnalysis.ProjectTerms).isValid ? moment(currentProject.ProjectAnalysis.ProjectTerms) : null;
         var monthBeforeProjectStarts = 0;
-        if (currentProject.ProjectAnalysis.ProjectTerms &&
-            minDate &&
-            currentProject.ProjectAnalysis.ProjectTerms > minDate) {
-            monthBeforeProjectStarts = currentProject.ProjectAnalysis.ProjectTerms.getMonth() -
-                minDate.getMonth() +
-                12 * (currentProject.ProjectAnalysis.ProjectTerms.getFullYear() - minDate.getFullYear());
+        if (projectStartDate && minDate && projectStartDate > minDate) {
+            monthBeforeProjectStarts = projectStartDate.diff(minDate, 'months', true);
         }
 
         currentProject.ProjectAnalysis.InvestmentBackPeriod = monthBeforeProjectStarts +
