@@ -179,12 +179,16 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
             case 7:
                 $scope.populateMargin(row, month);
                 break;
+            case 3:
+                row['M' + month.Id] = 0;
+                $scope.calculateOpiu($scope.activeOpiu);
+                break;
 
         default:
             break;
         }
     }
-
+    
     $scope.populateMargin = function(row, month) {
         angular.forEach($scope.activeOpiu.Months, function(value, key) {
             if (month.Id < value.Id) {

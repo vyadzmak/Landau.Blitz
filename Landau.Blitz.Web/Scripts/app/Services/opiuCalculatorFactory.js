@@ -34,6 +34,31 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         return ob[0];
     }
 
+    var calculateMargin = function (margin, costOfGoods, revenues, marginCalcType, varName) {
+        if (marginCalcType === 3) {
+            margin[varName] = null;
+            costOfGoods[varName] = null;
+        } else if (marginCalcType === 1 || marginCalcType === 2) {
+            margin[varName] = 100 * (mathFactory.getFloat(revenues[varName]) / mathFactory.getFloat(costOfGoods[varName]) - 1);
+            margin[varName] = mathFactory.round(margin[varName], 2);
+        } if (marginCalcType === 4 || marginCalcType === 5 || marginCalcType === 6) {
+            costOfGoods[varName] = mathFactory.getFloat(revenues[varName]) / (100 + mathFactory.getFloat(margin[varName])) * 100;
+            costOfGoods[varName] = mathFactory.round(costOfGoods[varName], 2);
+        }
+    }
+
+    var calculateValues = function (totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
+                otherExpenses, netProfit, loanPayment, netLoanBalance, varName) {
+        grossProfit[varName] = mathFactory.getFloat(revenues[varName]) - mathFactory.getFloat(costOfGoods[varName]);
+        profitOnBusiness[varName] = mathFactory.getFloat(grossProfit[varName]) - mathFactory.getFloat(totalExpenses[varName]);
+        netProfit[varName] = mathFactory.getFloat(profitOnBusiness[varName]) + mathFactory.getFloat(otherIncome[varName]) - mathFactory.getFloat(otherExpenses[varName]);
+        netLoanBalance[varName] = mathFactory.getFloat(netProfit[varName]) - mathFactory.getFloat(loanPayment[varName]);
+
+        grossProfit[varName] = mathFactory.round(grossProfit[varName], 2);
+        profitOnBusiness[varName] = mathFactory.round(profitOnBusiness[varName], 2);
+        netProfit[varName] = mathFactory.round(netProfit[varName], 2);
+        netLoanBalance[varName] = mathFactory.round(netLoanBalance[varName], 2);
+    }
     var calculateLoanContributionDetails = function (loan) {
         loan.TotalPrincipal = 0;
         loan.TotalFee = 0;
@@ -75,6 +100,8 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
             // make 0 related company revenues totals
             opiu.TotalRealtedCompanyRevenue['M' + month.Id] = 0;
         });
+        totalExpenses['AvgPrediction'] = 0;
+        totalAddPayments['AvgPrediction'] = 0;
         var margin,
             revenues,
             costOfGoods,
@@ -92,11 +119,13 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                 angular.forEach(opiu.Months, function (month, mKey) {
                     totalExpenses['M' + month.Id] += mathFactory.getFloat(tRow['M' + month.Id]);
                 });
+                totalExpenses['AvgPrediction'] += mathFactory.getFloat(tRow['AvgPrediction']);
             }
             else if (!tRow.Calculate && additionalPayments.indexOf(tRow.VarName) !== -1) {
                 angular.forEach(opiu.Months, function (month, mKey) {
                     totalAddPayments['M' + month.Id] += mathFactory.getFloat(tRow['M' + month.Id]);
                 });
+                totalAddPayments['AvgPrediction'] += mathFactory.getFloat(tRow['AvgPrediction']);
             } else {
                 switch (tRow.VarName) {
                     case "CostOfGoods": costOfGoods = tRow; break;
@@ -113,31 +142,17 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
             }
         });
         // calculate values
-        angular.forEach(opiu.Table, function (tRow, rKey) {
-            angular.forEach(opiu.Months, function (month, mKey) {
-                if (month.MarginCalcType === 3) {
-                    margin['M' + month.Id] = null;
-                    costOfGoods['M' + month.Id] = null;
-                } else if (month.MarginCalcType === 1 || month.MarginCalcType === 2) {
-                    margin['M' + month.Id] = 100 * (mathFactory.getFloat(revenues['M' + month.Id]) / mathFactory.getFloat(costOfGoods['M' + month.Id]) - 1);
-                    margin['M' + month.Id] = mathFactory.round(margin['M' + month.Id], 2);
-                } if (month.MarginCalcType === 4 || month.MarginCalcType === 5 || month.MarginCalcType === 6) {
-                    costOfGoods['M' + month.Id] = mathFactory.getFloat(revenues['M' + month.Id]) / (100+mathFactory.getFloat(margin['M' + month.Id])) * 100;
-                    costOfGoods['M' + month.Id] = mathFactory.round(costOfGoods['M' + month.Id], 2);
-                }
+        angular.forEach(opiu.Months, function (month, mKey) {
+            calculateMargin(margin, costOfGoods, revenues, month.MarginCalcType, 'M'+month.Id);
 
-                
-                grossProfit['M' + month.Id] = mathFactory.getFloat(revenues['M' + month.Id]) - mathFactory.getFloat(costOfGoods['M' + month.Id]);
-                profitOnBusiness['M' + month.Id] = mathFactory.getFloat(grossProfit['M' + month.Id]) - mathFactory.getFloat(totalExpenses['M' + month.Id]);
-                netProfit['M' + month.Id] = mathFactory.getFloat(profitOnBusiness['M' + month.Id]) + mathFactory.getFloat(otherIncome['M' + month.Id]) - mathFactory.getFloat(otherExpenses['M' + month.Id]);
-                netLoanBalance['M' + month.Id] = mathFactory.getFloat(netProfit['M' + month.Id]) - mathFactory.getFloat(loanPayment['M' + month.Id]);
-
-                grossProfit['M' + month.Id] = mathFactory.round(grossProfit['M' + month.Id], 2);
-                profitOnBusiness['M' + month.Id] = mathFactory.round(profitOnBusiness['M' + month.Id], 2);
-                netProfit['M' + month.Id] = mathFactory.round(netProfit['M' + month.Id], 2);
-                netLoanBalance['M' + month.Id] = mathFactory.round(netLoanBalance['M' + month.Id], 2);
-            });
+            calculateValues(totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
+                otherExpenses, netProfit, loanPayment, netLoanBalance, 'M' + month.Id);
         });
+
+        calculateMargin(margin, costOfGoods, revenues, margin['AvgPrediction']?4:1, 'AvgPrediction');
+
+        calculateValues(totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
+            otherExpenses, netProfit, loanPayment, netLoanBalance, 'AvgPrediction');
 
         //calculate average for all rows
         angular.forEach(opiu.Table, function (tRow, rKey) {
