@@ -85,7 +85,42 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         rows.push({});
         $scope.remapIds(rows);
     }
-    
+
+    $scope.showSubRows = function(table, val) {
+        angular.forEach(table, function(value, key) {
+            value.ShowSubRows = val;
+        });
+    }
+
+    $scope.addSubRow = function(table, row, months) {
+        if (!row.Rows) {
+            row.Rows = [];
+        }
+        var subRow = { Title: row.Title}
+        angular.forEach(months, function(value, key) {
+            subRow['M' + value.Id] = 0;
+        });
+        row.Rows.push(subRow);
+        $scope.remapIds(row.Rows);
+        row.Rows[row.Rows.length - 1].Title += row.Rows.length;
+        row.ShowSubRows = true;
+        if (row.VarName === 'Revenues') {
+            angular.forEach(months, function(value, key) {
+                value.MarginCalcType = 1;
+                value.CalculationsData = null;
+                value.RevenuesCalcType = 1;
+                value.RevenuesCalcData = null;
+            });
+            angular.forEach(table, function(value, key) {
+                if (value.VarName === "CostOfGoods") {
+                    $scope.addSubRow(table, value, months);
+                } else if (value.VarName === "Margin") {
+                    $scope.addSubRow(table, value, months);
+                }
+            });
+        }
+    }
+
     $scope.deleteData = function() {
         var ob = $scope.elements.filter(function(item) {
             return item.Id == $scope.eIndex;
@@ -106,7 +141,38 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
     }
-    
+
+    $scope.deleteSubRow = function(table, row, subRow, months) {
+        var index = row.Rows.findIndex(function(value) {
+            return value.Id === subRow.Id;
+        });
+        if(index!==-1){
+            row.Rows.splice(index, 1);
+        }
+        $scope.remapIds(row.Rows);
+        if (row.VarName === 'Revenues') {
+            angular.forEach(months, function(value, key) {
+                if(value.Rows) {
+                    var index = value.Rows.findIndex(function(value) {
+                        return value.Id === subRow.Id;
+                    });
+                    if(index!==-1){
+                        value.Rows.splice(index, 1);
+                    }
+                    $scope.remapIds(value.Rows);
+                }
+            });
+            angular.forEach(table, function(value, key) {
+                if (value.VarName === "CostOfGoods") {
+                    $scope.deleteSubRow(table, value, subRow);
+                } else if (value.VarName === "Margin") {
+                    $scope.deleteSubRow(table, value, subRow);
+                }
+            });
+        }
+        $scope.calculateOpiu($scope.activeOpiu);
+    }
+
     $scope.remapIds = function(rows) {
         angular.forEach(rows, function(value, key) {
             value.Id = key + 1;
@@ -153,15 +219,50 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         return res;
     }
 
-    $scope.cellDropdownChoice = function(row, month, calcType, isRevenues) {
-        if (!isRevenues && month.MarginCalcType !== calcType) {
+    $scope.cellDropdownChoice = function(row, month, calcType, subRow) {
+        if (row.VarName!=='Revenues' && month.MarginCalcType !== calcType) {
             month.MarginCalcType = calcType;
             month.CalculationsData = null;
-        } else if(isRevenues && month.RevenuesCalcType !== calcType) {
+        } else if(row.VarName==='Revenues' && month.RevenuesCalcType !== calcType) {
             month.RevenuesCalcType = calcType;
             month.RevenuesCalcData = null;
         }
-        $scope.mElement = { Row: row, Month: month, IsRevenues: isRevenues };
+        
+        $scope.mElement = { Row: subRow?subRow:row, Month: month, IsRevenues: row.VarName==='Revenues' };
+        $scope.mElement.CalcData = row.VarName === 'Revenues' ? month.RevenuesCalcData : month.CaculationsData;
+        if (subRow) {
+            if (!month.Rows) {
+                month.Rows = [];
+            }
+            var index;
+            angular.forEach(month.Rows, function(rvalue, rkey) {
+                if (rvalue.Id === subRow.Id) {
+                    index = rkey;
+                    if (row.VarName!=='Revenues' && rvalue.MarginCalcType !== calcType) {
+                        rvalue.MarginCalcType = calcType;
+                        rvalue.CalculationsData = null;
+                    } else if(row.VarName==='Revenues' && rvalue.RevenuesCalcType !== calcType) {
+                        rvalue.RevenuesCalcType = calcType;
+                        rvalue.RevenuesCalcData = null;
+                    }
+                }
+            });
+            if (index) {
+                $scope.mElement.CalcData = row.VarName === 'Revenues'? month.Rows[index].RevenuesCalcData: month.Rows[index].CaculationsData;
+            } else {
+                month.Rows.push({
+                    Id: subRow.Id,
+                    MarginCalcType: row.VarName === 'Revenues' ? null : calcType,
+                    CalculationsData: null,
+                    RevenuesCalcType: row.VarName === 'Revenues' ? calcType : null,
+                    RevenuesCalcData: null
+                });
+                $scope.mElement.CalcData = 
+                    row.VarName === 'Revenues'? 
+                    month.Rows[month.Rows.length-1].RevenuesCalcData: 
+                    month.Rows[month.Rows.length-1].CaculationsData;
+            }
+        }
         switch (calcType) {
             case 1:
             case 4:
@@ -180,23 +281,74 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 $scope.populateMargin(row, month);
                 break;
             case 3:
-                row['M' + month.Id] = 0;
+                if(subRow){
+                    subRow['M' + month.Id] = 0;
+                } else {
+                    row['M' + month.Id] = 0;
+                }
                 $scope.calculateOpiu($scope.activeOpiu);
                 break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
     
-    $scope.populateMargin = function(row, month) {
-        angular.forEach($scope.activeOpiu.Months, function(value, key) {
-            if (month.Id < value.Id) {
-                value.MarginCalcType = month.MarginCalcType === 3 ? 3 : 4;
-                row['M' + value.Id] = row['M' + month.Id];
-            }
-        });
+    $scope.populateMargin = function(row, month, subRow) {
+        
+        angular.forEach($scope.activeOpiu.Months,
+            function(value, key) {
+                if (month.Id < value.Id) {
+                    if (!subRow) {
+                        value.MarginCalcType = month.MarginCalcType === 3 ? 3 : 4;
+                        row['M' + value.Id] = row['M' + month.Id];
+                    } else {
+                        if (!value.Rows) {
+                            value.Rows = [];
+                        }
+                        var index = value.Rows.findIndex(function(value) {
+                            return value.Id === subRow.Id;
+                        });
+                        if (index !== -1) {
+                            value.Rows[index].MarginCalcType = month.MarginCalcType === 3 ? 3 : 4;
+                        } else {
+                            value.Rows.push({
+                                Id: subRow.Id,
+                                MarginCalcType: month.MarginCalcType === 3 ? 3 : 4,
+                                CalculationsData: null,
+                                RevenuesCalcType: 1,
+                                RevenuesCalcData: null
+                            });
+                        }
+                        subRow['M' + value.Id] = subRow['M' + month.Id];
+                    }
+                }
+            });
+        
         $scope.calculateOpiu($scope.activeOpiu);
     }
+    $scope.changeRowTitle = function(row, id, title){
+        if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods' || row.VarName === 'Margin') {
+            angular.forEach(row.Rows, function(value, key) {
+                if (value.Id === id) {
+                    value.Title = title;
+                }
+            });
+        }
+    }
+    $scope.changeSubRowTitle = function(table, row, subRow){
+        if (row.VarName === 'Revenues' || row.VarName === 'CostOfGoods' || row.VarName === 'Margin') {
+            angular.forEach(table, function(value, key) {
+                if (value.VarName === "CostOfGoods") {
+                    $scope.changeRowTitle(value, subRow.Id, subRow.Title);
+                } else if (value.VarName === "Margin") {
+                    $scope.changeRowTitle(value, subRow.Id, subRow.Title);
+                }else if (value.VarName === "Revenues") {
+                    $scope.changeRowTitle(value, subRow.Id, subRow.Title);
+                }
+            });
+        }
+    }
+
 };
 blitzApp.controller("finDataOpiuController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "NgTableParams", "projectHttpService", "projectFactory", "calculatorFactory", finDataOpiuController]);

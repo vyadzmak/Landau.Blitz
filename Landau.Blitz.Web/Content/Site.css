@@ -711,3 +711,9 @@ HTML CSS JS Result Edit on .demoTable td:last-child {
 .active-tab {
     background-color: #d3d3d3;
 }
+
+td > div > div .content-editable-container {
+    display: flex;
+    text-align: inherit;
+    line-height: inherit;
+}

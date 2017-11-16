@@ -6,74 +6,155 @@
                     ng-options="item as item.Name for item in currentProject.FinDataOpiu.Opius track by item.Id"
                     ng-change="activeOpiuChanged()"></select>
         </div>
+        <div class="col-md-3">
+            <button class="btn btn-success" ng-click="showSubRows(activeOpiu.Table, true)"><i class="fa fa-expand fa-fw"></i> Развернуть все</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-warning" ng-click="showSubRows(activeOpiu.Table, false)"><i class="fa fa-compress fa-fw"></i> Свернуть все</button>
+        </div>
     </div>
     <div ng-if="activeOpiu">
         <table st-table="activeOpiu.Table" class="table table-bordered table-condensed ng-table">
             <thead>
-            <tr>
-                <th><span uib-tooltip="Наименование">Наименование</span></th>
-                <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
-                <th ng-if="activeOpiu.Months && activeOpiu.Months.length>0"><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
-                <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
-            </tr>
+                <tr>
+                    <th><span uib-tooltip="Наименование">Наименование</span></th>
+                    <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                    <th ng-if="activeOpiu.Months && activeOpiu.Months.length>0"><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                    <th><span uib-tooltip="Среднее прогноз">Среднее прогноз</span></th>
+                </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="row in activeOpiu.Table"
-                ng-class="{'active bold-trow':row.Calculate}">
+                <tr ng-repeat-start="row in activeOpiu.Table"
+                    ng-class="{'active bold-trow':row.Calculate}">
 
-                <td>{{row.Title}}</td>
-                
-                <td ng-repeat="month in activeOpiu.Months track by $index"
-                    ng-model="row['M'+month.Id]"
-                    content-editable
-                    non-editable="{{row.Calculate}}"
-                    edit-callback="calculateOpiu(activeOpiu)" ng-if="row.VarName!=='Revenues' && row.VarName!=='CostOfGoods' && row.VarName!=='Margin'"></td>
-                
-                <td ng-repeat="month in activeOpiu.Months track by $index"
-                    ng-if="row.VarName==='Revenues' || row.VarName==='CostOfGoods' || row.VarName==='Margin'">
-                    <div class="btn-group" uib-dropdown ng-if="row.VarName==='Revenues'">
-                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                            {{row['M'+month.Id]}} <span class="caret"></span>
+                    <td>
+                        <button class="btn btn-xs btn-primary pull-left"
+                                ng-click="addSubRow(activeOpiu.Table, row, activeOpiu.Months)"
+                                ng-if="!row.Calculate && row.VarName!=='CostOfGoods'">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button><span ng-click="row.ShowSubRows=!row.ShowSubRows">{{row.Title}}</span>
+</td>
+
+                    <td ng-repeat="month in activeOpiu.Months track by $index"
+                        ng-model="row['M'+month.Id]"
+                        content-editable
+                        non-editable="{{row.Calculate || row.Rows && row.Rows.length>0}}"
+                        edit-callback="calculateOpiu(activeOpiu)"
+                        ng-if="row.VarName!=='Revenues' && row.VarName!=='CostOfGoods' && row.VarName!=='Margin' || row.Rows && row.Rows.length>0"></td>
+
+                    <td ng-repeat="month in activeOpiu.Months track by $index"
+                        ng-if="(row.VarName==='Revenues' || row.VarName==='CostOfGoods' || row.VarName==='Margin') && (!row.Rows || row.Rows.length===0)">
+                        <div class="btn-group" uib-dropdown ng-if="row.VarName==='Revenues'">
+                            <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                                {{row['M'+month.Id]}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group" uib-dropdown ng-if="row.VarName==='CostOfGoods'">
+                            <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                                {{row['M'+month.Id]}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 3)"><a href="javascript:void(0)">Себестоимость не заполняется в виду специфики направления деятельности</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group" uib-dropdown ng-if="row.VarName==='Margin'">
+                            <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                                {{row['M'+month.Id]}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 4)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 5)"><a href="javascript:void(0)">Рассчитать по списку ТМЗ</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 6)"><a href="javascript:void(0)">Рассчитать через калькуляцию</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="populateMargin(row, month)"><a href="javascript:void(0)">Распространить полученные данные на следующие месяцы</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td ng-model="row.Avg"
+                        content-editable
+                        non-editable="{{row.VarName!=='LoanPayment' || row.Calculate}}"
+                        edit-callback="calculateOpiu(activeOpiu)"
+                        ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
+                    <td content-editable
+                        non-editable="{{row.Calculate && row.VarName!=='LoanPayment'}}"
+                        ng-model="row.AvgPrediction"
+                        edit-callback="calculateOpiu(activeOpiu)"></td>
+
+                </tr>
+            <tr ng-repeat-end ng-repeat="subRow in row.Rows"
+                ng-show="row.ShowSubRows">
+
+                <td>
+                    <div>
+                        <button class="btn btn-xs btn-danger pull-left"
+                                ng-click="deleteSubRow(activeOpiu.Table, row, subRow, activeOpiu.Months)"
+                                ng-if="!row.Calculate && row.VarName!=='CostOfGoods'">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
                         </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1, true)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2, true)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group" uib-dropdown ng-if="row.VarName==='CostOfGoods'">
-                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                            {{row['M'+month.Id]}} <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
-                            <li class="divider"></li>
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 3)"><a href="javascript:void(0)">Себестоимость не заполняется в виду специфики направления деятельности</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group" uib-dropdown ng-if="row.VarName==='Margin'">
-                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                            {{row['M'+month.Id]}} <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 4)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 5)"><a href="javascript:void(0)">Рассчитать по списку ТМЗ</a></li>
-                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, 6)"><a href="javascript:void(0)">Рассчитать через калькуляцию</a></li>
-                            <li class="divider"></li>
-                            <li role="menuitem" ng-click="populateMargin(row, month)"><a href="javascript:void(0)">Распространить полученные данные на следующие месяцы</a></li>
-                        </ul>
+                        <div class="content-editable-container" ng-model="subRow.Title" content-editable edit-callback="changeSubRowTitle(activeOpiu.Table, row, subRow)"></div>
                     </div>
                 </td>
 
-                <td ng-model="row.Avg"
-                    content-editable
-                    non-editable="{{row.VarName!=='LoanPayment'}}"
-                    edit-callback="calculateOpiu(activeOpiu)"
-                     ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
-                <td content-editable ng-model="row.AvgPrediction"
-                    edit-callback="calculateOpiu(activeOpiu)"></td>
+                    <td ng-repeat="month in activeOpiu.Months track by $index"
+                        ng-model="subRow['M'+month.Id]"
+                        content-editable
+                        edit-callback="calculateOpiu(activeOpiu)" ng-if="row.VarName!=='Revenues' && row.VarName!=='CostOfGoods' && row.VarName!=='Margin'"></td>
 
-            </tr>
+                    <td ng-repeat="month in activeOpiu.Months track by $index"
+                        ng-if="row.VarName==='Revenues' || row.VarName==='CostOfGoods' || row.VarName==='Margin'">
+                        <div class="btn-group" uib-dropdown ng-if="row.VarName==='Revenues'">
+                            <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                                {{subRow['M'+month.Id]}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1, subRow)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2, subRow)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group" uib-dropdown ng-if="row.VarName==='CostOfGoods'">
+                            <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                                {{subRow['M'+month.Id]}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1, subRow)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 2, subRow)"><a href="javascript:void(0)">Рассчитать по дневным данным/тетрадным записям</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 3, subRow)"><a href="javascript:void(0)">Себестоимость не заполняется в виду специфики направления деятельности</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group" uib-dropdown ng-if="row.VarName==='Margin'">
+                            <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                                {{subRow['M'+month.Id]}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 4, subRow)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 5, subRow)"><a href="javascript:void(0)">Рассчитать по списку ТМЗ</a></li>
+                                <li role="menuitem" ng-click="cellDropdownChoice(row, month, 6, subRow)"><a href="javascript:void(0)">Рассчитать через калькуляцию</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="populateMargin(row, month, subRow)"><a href="javascript:void(0)">Распространить полученные данные на следующие месяцы</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td ng-model="subRow.Avg"
+                        content-editable
+                        non-editable="{{row.VarName!=='LoanPayment'}}"
+                        edit-callback="calculateOpiu(activeOpiu)"
+                        ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
+                    <td content-editable
+                        non-editable="{{row.Calculate && row.VarName!=='LoanPayment'}}"
+                        ng-model="subRow.AvgPrediction"
+                        edit-callback="calculateOpiu(activeOpiu)"></td>
+
+                </tr>
             </tbody>
         </table>
         <div class="panel panel-primary">
@@ -86,37 +167,37 @@
                 <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeOpiu.RelatedCompanyRevenues);"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 <table st-table="activeOpiu.RelatedCompanyRevenues" class="table table-bordered table-condensed ng-table">
                     <thead>
-                    <tr>
-                        <th><span uib-tooltip="Наименование аффилированной компании/лица">Наименование</span></th>
-                        <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
-                        <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
-                    </tr>
+                        <tr>
+                            <th><span uib-tooltip="Наименование аффилированной компании/лица">Наименование</span></th>
+                            <th ng-repeat="month in activeOpiu.Months track by $index"><span uib-tooltip="{{month.Name}}">{{month.Name}}</span></th>
+                            <th><span uib-tooltip="Среднее текущее">Среднее текущее</span></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="row in activeOpiu.RelatedCompanyRevenues" ng-right-click="clickRightTableRow(activeOpiu.RelatedCompanyRevenues, row.Id)" menu-items="menuItems">
-                        <td ng-model="row.Name" content-editable></td>
-                        <td ng-repeat="month in activeOpiu.Months track by $index"
-                            ng-model="row['M'+month.Id]"
-                            content-editable
-                            edit-callback="calculateOpiu(activeOpiu)"></td>
+                        <tr ng-repeat="row in activeOpiu.RelatedCompanyRevenues" ng-right-click="clickRightTableRow(activeOpiu.RelatedCompanyRevenues, row.Id)" menu-items="menuItems">
+                            <td ng-model="row.Name" content-editable></td>
+                            <td ng-repeat="month in activeOpiu.Months track by $index"
+                                ng-model="row['M'+month.Id]"
+                                content-editable
+                                edit-callback="calculateOpiu(activeOpiu)"></td>
 
-                        <td>{{row.Avg|currency:'':2}}</td>
-                    </tr>
+                            <td>{{row.Avg|currency:'':2}}</td>
+                        </tr>
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <td><strong>Итого</strong></td>
-                        <td ng-repeat="month in activeOpiu.Months track by $index">
-                            {{activeOpiu.TotalRealtedCompanyRevenue['M'+month.Id]|currency:'':2}}
-                        </td>
+                        <tr>
+                            <td><strong>Итого</strong></td>
+                            <td ng-repeat="month in activeOpiu.Months track by $index">
+                                {{activeOpiu.TotalRealtedCompanyRevenue['M'+month.Id]|currency:'':2}}
+                            </td>
 
-                        <td>{{activeOpiu.TotalRealtedCompanyRevenue.Avg|currency:'':2}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="30" class="text-center">
-                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
-                        </td>
-                    </tr>
+                            <td>{{activeOpiu.TotalRealtedCompanyRevenue.Avg|currency:'':2}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="30" class="text-center">
+                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                            </td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -131,47 +212,47 @@
                 <button class="btn btn-primary btn-xs header-button" ng-click="addNewRow(activeOpiu.LoanContributionDetails.Rows);"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 <table st-table="activeOpiu.LoanContributionDetails.Rows" class="table table-bordered table-condensed ng-table">
                     <thead>
-                    <tr>
-                        <th><span uib-tooltip="Наименование Заемщика">Заемщик</span></th>
-                        <th><span uib-tooltip="Наименование БВУ">БВУ</span></th>
-                        <th><span uib-tooltip="Отметить, если данные обязательства являются действующими. Если не отмечено - планируемые обязательства">Действующие об.</span></th>
-                        <th><span uib-tooltip="Стоимость затрат">Стоимость затрат</span></th>
-                        <th><span uib-tooltip="Лимит финансирования">Лимит финансирования</span></th>
-                        <th><span uib-tooltip="Сумма взноса основного долга">Сумма взноса основного долга</span></th>
-                        <th><span uib-tooltip="Сумма взноса вознаграждения">Сумма взноса вознаграждения</span></th>
-                        <th><span uib-tooltip="Если отмечено, то учитывается полный взнос (основной долг + вознаграждение), иначе только вознаграждение">Учитывать полный взнос</span></th>
-                        <th><span uib-tooltip="Итого сумма взноса учитываемая в ОПиУ">Итого</span></th>
-                    </tr>
+                        <tr>
+                            <th><span uib-tooltip="Наименование Заемщика">Заемщик</span></th>
+                            <th><span uib-tooltip="Наименование БВУ">БВУ</span></th>
+                            <th><span uib-tooltip="Отметить, если данные обязательства являются действующими. Если не отмечено - планируемые обязательства">Действующие об.</span></th>
+                            <th><span uib-tooltip="Стоимость затрат">Стоимость затрат</span></th>
+                            <th><span uib-tooltip="Лимит финансирования">Лимит финансирования</span></th>
+                            <th><span uib-tooltip="Сумма взноса основного долга">Сумма взноса основного долга</span></th>
+                            <th><span uib-tooltip="Сумма взноса вознаграждения">Сумма взноса вознаграждения</span></th>
+                            <th><span uib-tooltip="Если отмечено, то учитывается полный взнос (основной долг + вознаграждение), иначе только вознаграждение">Учитывать полный взнос</span></th>
+                            <th><span uib-tooltip="Итого сумма взноса учитываемая в ОПиУ">Итого</span></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="row in activeOpiu.LoanContributionDetails.Rows" ng-right-click="clickRightTableRow(activeOpiu.LoanContributionDetails.Rows, row.Id)" menu-items="menuItems">
-                        <td ng-model="row.Name" content-editable></td>
-                        <td ng-model="row.BankName" content-editable></td>
-                        <td><input type="checkbox" ng-model="row.IsCurrent"></td>
-                        <td>
-                            <select ng-options="item as item.Name for item in loanTypes track by item.Id"
-                                    ng-model="row.LoanType"></select>
-                        </td>
-                        <td ng-model="row.LimitSum" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
-                        <td ng-model="row.Principal" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
-                        <td ng-model="row.Fee" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
-                        <td><input type="checkbox" ng-model="row.IsPrincipal" ng-change="calculateOpiu(activeOpiu)"></td>
-                        <td>{{row.ForOpiu|currency:'':2}}</td>
-                    </tr>
+                        <tr ng-repeat="row in activeOpiu.LoanContributionDetails.Rows" ng-right-click="clickRightTableRow(activeOpiu.LoanContributionDetails.Rows, row.Id)" menu-items="menuItems">
+                            <td ng-model="row.Name" content-editable></td>
+                            <td ng-model="row.BankName" content-editable></td>
+                            <td><input type="checkbox" ng-model="row.IsCurrent"></td>
+                            <td>
+                                <select ng-options="item as item.Name for item in loanTypes track by item.Id"
+                                        ng-model="row.LoanType"></select>
+                            </td>
+                            <td ng-model="row.LimitSum" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                            <td ng-model="row.Principal" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                            <td ng-model="row.Fee" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                            <td><input type="checkbox" ng-model="row.IsPrincipal" ng-change="calculateOpiu(activeOpiu)"></td>
+                            <td>{{row.ForOpiu|currency:'':2}}</td>
+                        </tr>
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <td colspan="5"><strong>Итого</strong></td>
-                        <td>{{activeOpiu.LoanContributionDetails.TotalPrincipal|currency:'':2}}</td>
-                        <td>{{activeOpiu.LoanContributionDetails.TotalFee|currency:'':2}}</td>
-                        <td></td>
-                        <td>{{activeOpiu.LoanContributionDetails.TotalForOpiu|currency:'':2}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="30" class="text-center">
-                            <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="5"><strong>Итого</strong></td>
+                            <td>{{activeOpiu.LoanContributionDetails.TotalPrincipal|currency:'':2}}</td>
+                            <td>{{activeOpiu.LoanContributionDetails.TotalFee|currency:'':2}}</td>
+                            <td></td>
+                            <td>{{activeOpiu.LoanContributionDetails.TotalForOpiu|currency:'':2}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="30" class="text-center">
+                                <div st-pagination="" st-items-by-page="5" st-displayed-pages="7"></div>
+                            </td>
+                        </tr>
                     </tfoot>
                 </table>
                 <div class="form-group">
@@ -189,7 +270,8 @@
             <div class="panel-body">
                 <div class="row" ng-repeat="row in activeOpiu.Table | filter:opiuItemHasData">
                     <label class="col-md-3">{{row.Title}}</label>
-                    <div class="col-md-9"><textarea type="text" class="form-control" placeholder="Комментарии" ng-model="row.Comments"></textarea>
+                    <div class="col-md-9">
+                        <textarea type="text" class="form-control" placeholder="Комментарии" ng-model="row.Comments"></textarea>
                     </div>
                 </div>
             </div>

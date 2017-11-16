@@ -10,7 +10,7 @@ blitzApp.factory('mathFactory', ['$rootScope', function ($rootScope) {
     }
 
     mathFactory.round = function (value, precision) {
-
+        value = this.getFloat(value);
         var result = Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
         return result;
 

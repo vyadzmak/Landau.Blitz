@@ -26,12 +26,27 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
     ];
 
 
-    var getVarArrayByName = function (opiu, name) {
-        var ob = opiu.Table.filter(function (item) {
-            return item.VarName == name;
+    var calculateSubRowTotals = function (rows, months) {
+        angular.forEach(months, function (month, mkey) {
+            angular.forEach(rows, function (row, rkey) {
+                if (row.Rows) {
+                    row['M' + month.Id] = 0;
+                    row['AvgPrediction'] = 0;
+                    angular.forEach(row.Rows, function (subRow, skey) {
+                        row['M' + month.Id] += mathFactory.getFloat(subRow['M' + month.Id]);
+                        row['AvgPrediction'] += mathFactory.getFloat(subRow['AvgPrediction']);
+                    });
+                }
+            });
         });
-        if (ob == undefined || ob.length === 0) return null;
-        return ob[0];
+    }
+
+    var calculateAverageValue = function (row, months) {
+        var totalByMonths = 0;
+        for (var i = 1; i <= months; i++) {
+            totalByMonths += mathFactory.getFloat(row['M' + i]);
+        }
+        row.Avg = mathFactory.round((totalByMonths / months), 2);
     }
 
     var calculateMargin = function (margin, costOfGoods, revenues, marginCalcType, varName) {
@@ -92,16 +107,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
     }
 
     var calculateOpiu = function (opiu) {
-        var totalExpenses = getVarArrayByName(opiu, "TotalExpensesForBusiness");
-        var totalAddPayments = getVarArrayByName(opiu, "AdditionalPayment");
-        angular.forEach(opiu.Months, function (month, mKey) {
-            totalExpenses['M' + month.Id] = 0;
-            totalAddPayments['M' + month.Id] = 0;
-            // make 0 related company revenues totals
-            opiu.TotalRealtedCompanyRevenue['M' + month.Id] = 0;
-        });
-        totalExpenses['AvgPrediction'] = 0;
-        totalAddPayments['AvgPrediction'] = 0;
+        // finding variables
         var margin,
             revenues,
             costOfGoods,
@@ -111,7 +117,48 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
             otherExpenses,
             netProfit,
             loanPayment,
-            netLoanBalance;
+            netLoanBalance,
+            totalExpenses,
+            totalAddPayments;
+
+        angular.forEach(opiu.Table, function (tRow, rKey) {
+            switch (tRow.VarName) {
+                case "CostOfGoods": costOfGoods = tRow; break;
+                case "Revenues": revenues = tRow; break;
+                case "Margin": margin = tRow; break;
+                case "GrossProfit": grossProfit = tRow; break;
+                case "ProfitOnBusiness": profitOnBusiness = tRow; break;
+                case "OtherIncome": otherIncome = tRow; break;
+                case "OtherExpenses": otherExpenses = tRow; break;
+                case "NetProfit": netProfit = tRow; break;
+                case "LoanPayment": loanPayment = tRow; break;
+                case "NetLoanBalance": netLoanBalance = tRow; break;
+                case "TotalExpensesForBusiness": totalExpenses = tRow; break;
+                case "AdditionalPayment": totalAddPayments = tRow; break;
+            }
+        });
+
+        angular.forEach(opiu.Months, function (month, mKey) {
+            if (margin.Rows && margin.Rows.length > 0) {
+                angular.forEach(margin.Rows, function (subRow, skey) {
+                    angular.forEach(month.Rows, function (rvalue, rkey) {
+                        if (rvalue.Id === subRow.Id) {
+                            calculateMargin(subRow, costOfGoods.Rows[skey], revenues.Rows[skey], rvalue.MarginCalcType, 'M' + month.Id);
+                        }
+                    });
+                });
+            }
+            totalExpenses['M' + month.Id] = 0;
+            totalAddPayments['M' + month.Id] = 0;
+            // make 0 related company revenues totals
+            opiu.TotalRealtedCompanyRevenue['M' + month.Id] = 0;
+        });
+        totalExpenses['Avg'] = 0;
+        totalAddPayments['Avg'] = 0;
+        totalExpenses['AvgPrediction'] = 0;
+        totalAddPayments['AvgPrediction'] = 0;
+        // calculating totals for the table rows that have subRows
+        calculateSubRowTotals(opiu.Table, opiu.Months);
 
         // calculating totalExpenses and total addPayments
         angular.forEach(opiu.Table, function (tRow, rKey) {
@@ -126,30 +173,17 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                     totalAddPayments['M' + month.Id] += mathFactory.getFloat(tRow['M' + month.Id]);
                 });
                 totalAddPayments['AvgPrediction'] += mathFactory.getFloat(tRow['AvgPrediction']);
-            } else {
-                switch (tRow.VarName) {
-                    case "CostOfGoods": costOfGoods = tRow; break;
-                    case "Revenues": revenues = tRow; break;
-                    case "Margin": margin = tRow; break;
-                    case "GrossProfit": grossProfit = tRow; break;
-                    case "ProfitOnBusiness": profitOnBusiness = tRow; break;
-                    case "OtherIncome": otherIncome = tRow; break;
-                    case "OtherExpenses": otherExpenses = tRow; break;
-                    case "NetProfit": netProfit = tRow; break;
-                    case "LoanPayment": loanPayment = tRow; break;
-                    case "NetLoanBalance": netLoanBalance = tRow; break;
-                }
             }
         });
         // calculate values
         angular.forEach(opiu.Months, function (month, mKey) {
-            calculateMargin(margin, costOfGoods, revenues, month.MarginCalcType, 'M'+month.Id);
+            calculateMargin(margin, costOfGoods, revenues, month.MarginCalcType, 'M' + month.Id);
 
             calculateValues(totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
                 otherExpenses, netProfit, loanPayment, netLoanBalance, 'M' + month.Id);
         });
 
-        calculateMargin(margin, costOfGoods, revenues, margin['AvgPrediction']?4:1, 'AvgPrediction');
+        calculateMargin(margin, costOfGoods, revenues, margin['AvgPrediction'] ? 4 : 1, 'AvgPrediction');
 
         calculateValues(totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
             otherExpenses, netProfit, loanPayment, netLoanBalance, 'AvgPrediction');
@@ -157,14 +191,16 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         //calculate average for all rows
         angular.forEach(opiu.Table, function (tRow, rKey) {
             if (tRow.VarName !== 'LoanPayment') {
-                var totalByMonths = 0;
-                angular.forEach(opiu.Months, function (month, mKey) {
-                    totalByMonths += mathFactory.getFloat(tRow['M' + month.Id]);
-                });
-                tRow.Avg = mathFactory.round((totalByMonths / opiu.Months.length), 2);
+                calculateAverageValue(tRow, opiu.Months.length);
+                if (tRow.Rows && tRow.Rows.length > 0) {
+                    angular.forEach(tRow.Rows, function (subRow, sKey) {
+                        calculateAverageValue(subRow, opiu.Months.length);
+                    });
+                }
             }
         });
         netLoanBalance.Avg = mathFactory.round((mathFactory.getFloat(netProfit.Avg) - mathFactory.getFloat(loanPayment.Avg)), 2);
+        
         return opiu;
     }
 

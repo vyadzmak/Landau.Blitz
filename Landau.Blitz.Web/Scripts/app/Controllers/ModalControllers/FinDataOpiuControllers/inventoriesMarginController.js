@@ -4,9 +4,7 @@
     function loadReadyData() {
         vm.$scope = $scope;
         vm.updateValue = $scope.mElement.Row['M' + $scope.mElement.Month.Id];
-        vm.updateData = angular.copy($scope.mElement.IsRevenues
-            ? $scope.mElement.Month.RevenuesCalcData
-            : $scope.mElement.Month.CalculationsData);
+        vm.updateData = angular.copy($scope.mElement.CalcData);
         if (!vm.updateData) {
             vm.updateValue = 0;
             vm.updateData = {
@@ -99,11 +97,7 @@
         vm.confirm = function () {
 
             $scope.mElement.Row['M' + $scope.mElement.Month.Id] = vm.updateValue;
-            if ($scope.mElement.IsRevenues) {
-                $scope.mElement.Month.RevenuesCalcData = vm.updateData;
-            } else {
-                $scope.mElement.Month.CalculationsData = vm.updateData;
-            }
+            $scope.mElement.CalcData = vm.updateData;
             $uibModalInstance.close();
         };
         vm.cancel = $uibModalInstance.dismiss;
