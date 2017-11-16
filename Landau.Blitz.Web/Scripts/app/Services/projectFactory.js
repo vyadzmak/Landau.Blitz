@@ -217,8 +217,8 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
 
         var vNames = [
-            '!Revenues',
-            '!CostOfGoods',
+            'Revenues',
+            'CostOfGoods',
             '!Margin',
             '!GrossProfit',
             'Wage',
