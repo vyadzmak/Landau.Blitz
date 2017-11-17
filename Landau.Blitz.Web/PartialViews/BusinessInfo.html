@@ -73,7 +73,6 @@
             <div class="row"><button class="btn btn-sm btn-primary" ng-click="removeFromServerFiles(serverImages, currentProject.BusinessInfo.Images);">Удалить выбранные файлы</button></div>
         </div>
     </div>
-</div>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -98,7 +97,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in suplCollection" ng-right-click="clickBusinessPlace(row.Id)" menu-items="menuItems">
+                    <tr ng-repeat="row in suplCollection" ng-right-click="clickSupplierStructure(row.Id)" menu-items="menuItems">
                         <td ng-model="row.Name" content-editable></td>
                         <td ng-model="row.Country" content-editable></td>
                         <td ng-model="row.Document" content-editable></td>

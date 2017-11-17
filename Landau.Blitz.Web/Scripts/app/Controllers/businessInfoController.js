@@ -279,11 +279,7 @@ var businessInfoController = function($scope, $http, $location, $state, $uibModa
         dialog.setSize(BootstrapDialog.SIZE_SMALL);
     };
 
-    $scope.menuItems = [{
-            text: "Редактировать", //menu option text 
-            callback: $scope.EditElement, //function to be called on click  
-            disabled: false //No click event. Grayed out option. 
-        },
+    $scope.menuItems = [
         {
             text: "Удалить",
             callback: $scope.RemoveElement, //function to be called on click  
