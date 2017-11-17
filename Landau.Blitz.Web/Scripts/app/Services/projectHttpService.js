@@ -1,6 +1,6 @@
-blitzApp.service('projectHttpService', function() {
+blitzApp.service('projectHttpService', function () {
 
-    this.getToProjectById = function($http, $scope, usSpinnerService, projectId) {
+    this.getToProjectById = function ($http, $scope, usSpinnerService, projectId) {
         var url = $$ApiUrl + "/projects";
         $scope.currentProject = {};
 
@@ -10,7 +10,7 @@ blitzApp.service('projectHttpService', function() {
             params: { id: projectId }
         })
 
-        .then(function(response) {
+        .then(function (response) {
             // alert(JSON.stringify(response.data));
             $scope.currentProject = null;
             if (JSON.parse(response.data) != null) {
@@ -33,7 +33,7 @@ blitzApp.service('projectHttpService', function() {
         $http.get(url,
         {
             params: { id: projectId }
-        }).then(function(response) {
+        }).then(function (response) {
             $scope.loadData = false;
             if (reload) {
                 $scope.init();
@@ -47,7 +47,7 @@ blitzApp.service('projectHttpService', function() {
 
 
     //add or Edit company
-    this.manageProject = function($http, $scope, usSpinnerService, currentProject, reload) {
+    this.manageProject = function ($http, $scope, usSpinnerService, currentProject, reload) {
         var url = $$ApiUrl + "/projects";
 
         var pModel = {};
@@ -65,24 +65,69 @@ blitzApp.service('projectHttpService', function() {
 
 
         $http({
-                url: url,
-                method: methodType,
-                contentType: "application/json",
-                data: pModel
-            })
-            .then(function(response) {
-                    $scope.loadData = false;
-                    if (reload) {
-                        $scope.init();
-                        $scope.currentProject = JSON.parse(response.data);
-                    }
-                    usSpinnerService.stop('spinner-1');
+            url: url,
+            method: methodType,
+            contentType: "application/json",
+            data: pModel
+        })
+            .then(function (response) {
+                $scope.loadData = false;
+                if (reload) {
+                    $scope.init();
+                    $scope.currentProject = JSON.parse(response.data);
+                }
+                usSpinnerService.stop('spinner-1');
 
-                },
-                function(response) { // optional
+            },
+                function (response) { // optional
                     // failed
                     usSpinnerService.stop('spinner-1');
                     showNotify("Ошибка", "Ошибка при работе с проектом", "danger");
                 });
+    }
+
+    this.uploadImages = function ($http, $scope, $state, fUrl, usSpinnerService, data, fileContainer, files) {
+
+        var objXhr = new XMLHttpRequest();
+        objXhr.onreadystatechange = stateChange;
+        objXhr.upload.onprogress = updateProgress;
+
+
+        // SEND FILE DETAILS TO THE API.
+        objXhr.open("POST", fUrl);
+        objXhr.send(data);
+
+        //statechange listener
+        function stateChange() {
+            if (objXhr.readyState == 4) {// 4 = "DONE"
+                if (objXhr.status == 200) {// 200 = OK
+                    if (JSON.parse(objXhr.response) != null) {
+                        var responseFiles = JSON.parse(objXhr.response);
+                        angular.forEach(responseFiles, function (rFile, rKey) {
+                            fileContainer.push(rFile);
+                            $scope.remapIds(fileContainer);
+                        });
+                        files.splice(0, files.length);
+                        showNotify("Успех", "Загрузка прошла успешно.", "success");
+                    } else {
+                        showNotify("Успех", "Ошибка загрузки файлов", "danger");
+                    }
+                }
+                else {
+                    showNotify("Успех", "Ошибка сервера. Обратитесь к администратору. Код ошибки: " +
+                            objXhr.status + " " + objXhr.statusText, "danger");
+                }
+                $scope.$apply();
+                usSpinnerService.stop('spinner-1');
+            }
+        }
+        function updateProgress(evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = (evt.loaded / evt.total) * 100;
+                document.getElementById("proBar").style.width = percentComplete + "%";
+            }
+            else { console.log('unable to compute'); }
+        }
+
     }
 });

@@ -210,7 +210,7 @@ var settingsController = function($scope, $http, $location, $state, $uibModal, $
         var url = $$ApiUrl + "/clientType";
         promiseUtils.getPromiseHttpResult(httpService.getRequestList($http, $scope, usSpinnerService, url)).then(function(result) {
 
-            var types = JSON.parse(result);
+            //var types = JSON.parse(result);
 
             var modalView = 'PartialViews/Modals/Setting/SettingModal.html';
             var modalController = manageSettingController;

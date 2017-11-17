@@ -27,7 +27,53 @@
         </div>
     </div>
 
+    <div class="panel panel-primary">
+        <div class="panel-heading"><strong>Загрузка файлов</strong></div>
+        <div class="panel-body">
+            <!-- Standard Form -->
+            <h4>Выберите файлы</h4>
+            <form id="lForm" action="" method="post" enctype="multipart/form-data">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files" accept="image/*" multiple>
+                    </div>
+                </div>
+            </form>
 
+            <!-- Drop Zone -->
+            <h4>Или перетяните файлы</h4>
+            <div class="upload-drop-zone" id="drop-zone">
+                Перетаскивать сюда
+            </div>
+            <div class="progress" ng-show="showProgressBar && files && files>0">
+                <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <span class="sr-only">0% Готово</span>
+                </div>
+            </div>
+            <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:darkred" ng-click="removeFromFiles(files, file.name)"></span></div>
+
+            <div class="row">
+                <button class="btn btn-sm btn-primary" ng-click="uploadImages()">Загрузить файлы</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel panel-primary" ng-show="currentProject.BusinessInfo.Images && currentProject.BusinessInfo.Images.length>0">
+        <div class="panel-heading"><strong>Загруженные файлы</strong></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 fadeInLeft" data-wow-delay=".7s" ng-repeat="file in currentProject.BusinessInfo.Images">
+                    <input type="checkbox" checklist-model="serverImages" checklist-value="file.Id">
+                    <a ng-href="{{file.ImagePath}}" data-lightbox="dishGallery" data-title="{{file.OriginalFileName}}"><img class="example-image" ng-src="{{file.ThumbnailPath}}" alt="" /></a>
+                </div>
+            </div>
+
+
+
+            <div class="row"><button class="btn btn-sm btn-primary" ng-click="removeFromServerFiles(serverImages, currentProject.BusinessInfo.Images);">Удалить выбранные файлы</button></div>
+        </div>
+    </div>
+</div>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
