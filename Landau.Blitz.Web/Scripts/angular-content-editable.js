@@ -50,16 +50,21 @@ angular.module('angular-content-editable')
         ngModel.$render = function () {
             if (options.editableFilter === 'currency') {
                 var value;
-                if (!isNaN(parseFloat(ngModel.$modelValue)) && isFinite(ngModel.$modelValue)) {
-                    value = $filter('currency')(parseFloat(ngModel.$modelValue), '', 2);
+                if (isNaN(parseFloat(ngModel.$modelValue)) || !isFinite(ngModel.$modelValue)) {
+                    ngModel.$setViewValue(0);
                 }
+                value = $filter('currency')(parseFloat(ngModel.$modelValue), '', 2);
+
                 elem.html(value || elem.html());
             } else if (options.editableFilter === 'percent') {
+
                 var value;
-                if (!isNaN(parseFloat(ngModel.$modelValue)) && isFinite(ngModel.$modelValue)) {
-                    value = $filter('currency')(parseFloat(ngModel.$modelValue), '', 2);
-                    value += "%";
+                if (isNaN(parseFloat(ngModel.$modelValue)) || !isFinite(ngModel.$modelValue)) {
+                    ngModel.$setViewValue(0);
                 }
+                value = $filter('currency')(parseFloat(ngModel.$modelValue), '', 2);
+                value += "%";
+
                 elem.html(value || elem.html());
             } else {
                 elem.html(ngModel.$modelValue || elem.html());
@@ -87,7 +92,7 @@ angular.module('angular-content-editable')
 
                 // turn on the flag
                 noEscape = true;
-                
+
                 // if render-html is enabled convert
                 // all text content to plaintext
                 // in order to modify html tags
