@@ -96,13 +96,37 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         return res;
     }
     $scope.isPredicted = ['TotalIncome', 'TotalOutOperationsIncome'];
+    $scope.percentTypeNonEditable = ['Purchase','Wage','Rent','Storage','Fuels','Waybill','Advertising','Customs',
+            'DeliveryOfGoods','Fare','Taxes','Utilities','Security','Hospitality','LoanInterestPayment',
+            'MarriageDamageCancellation','BankServices','OtherBusinessExpenses'];
+    
+    $scope.percentTypeEditable = ['RevenuesIncome','PrepaidIncome','ReturnIncome','OtherIncome',
+            'CreditIncome','SalesIncome','SponsorshipIncome','OtherOutOperationsIncome'];
     $scope.checkEditability = function(row, hVarName) {
         var result = row.Calculate;
-        if ($scope.isPredicted.indexOf(row.VarName) !== -1 && hVarName === 'Prediction') {
-            result = false;
+        if(hVarName === 'Prediction'){
+            if ($scope.isPredicted.indexOf(row.VarName) !== -1 ||
+                $scope.percentTypeEditable.indexOf(row.VarName) !== -1) {
+                result = false;
+            } else {
+                result = true;
+            }
         }
         return result;
     }
+
+    //$scope.getDataType = function(row, hVarName) {
+    //    var result = 'currency';
+    //    if (hVarName === 'Prediction'){ 
+    //        if ($scope.percentTypeEditable.indexOf(row.VarName) !== -1 ||
+    //            $scope.percentTypeNonEditable.indexOf(row.VarName) !== -1) {
+    //            result = 'percent';
+    //        } else {
+    //            result = null;
+    //        }
+    //    }
+    //    return result;
+    //}
     $scope.init();
 };
 blitzApp.controller("finDataOddsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", "calculatorFactory", finDataOddsController]);

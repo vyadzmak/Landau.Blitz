@@ -15,7 +15,7 @@
                     <td>{{row.Title}}</td>
 
                     <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
-                        ng-model="row[month.VarName]"
+                        ng-model="row[month.VarName]" editable-filter="'currency'"
                         content-editable
                         non-editable="{{checkEditability(row, month.VarName)}}"
                         edit-callback="calculateOdds()"></td>

@@ -20,7 +20,7 @@
             <tbody>
                 <tr ng-repeat="row in activeBalance.Liabilities.RentalsArrears.Rows" ng-right-click="clickRightTableRow(activeBalance.Liabilities.RentalsArrears.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                     <td><input type="date" ng-model="row.ArrearsDate"></td>
                     <td><input type="date" ng-model="row.MaturityDate"></td>
                     <td><input type="checkbox" ng-model="row.IsRelatedCompany"  ng-change="calculateBalance(activeBalance, activeCompany.Id)"/></td>

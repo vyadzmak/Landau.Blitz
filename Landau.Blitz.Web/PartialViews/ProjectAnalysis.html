@@ -97,13 +97,13 @@
                 <tbody>
                 <tr ng-repeat="row in expRevCollection" ng-right-click="clickExpectedRevenue(row.Id)" menu-items="menuItems">
                     <td ng-model="row.Income" content-editable></td>
-                    <td ng-model="row.Revenue" content-editable edit-callback="calculateProjectAnalysis()"></td>
+                    <td ng-model="row.Revenue" editable-filter="'currency'" content-editable edit-callback="calculateProjectAnalysis()"></td>
                     <td ng-model="row.ReachTerm" content-editable edit-callback="createRevenueDynamics(text, text2, row)"></td>
                     <td style="padding: 0">
                         <table>
                             <tbody style="padding: 0">
                                 <tr>
-                                    <td ng-repeat="mCell in row.RevenueDynamics track by mCell.Id" ng-model="mCell.Revenue" content-editable></td>
+                                    <td ng-repeat="mCell in row.RevenueDynamics track by mCell.Id" ng-model="mCell.Revenue" editable-filter="'currency'" content-editable></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -206,7 +206,7 @@
                 <tr ng-repeat="row in varExpCollection" ng-right-click="clickVarExpenses(row.Id)" menu-items="menuItems">
                     <td ng-model="row.Type" content-editable></td>
                     <td ng-model="row.Justification" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateProjectAnalysis()"></td>
+                    <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateProjectAnalysis()"></td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -240,7 +240,7 @@
                 <tr ng-repeat="row in constExpCollection" ng-right-click="clickConstExpenses(row.Id)" menu-items="menuItems">
                     <td ng-model="row.Type" content-editable></td>
                     <td ng-model="row.Justification" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateProjectAnalysis()"></td>
+                    <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateProjectAnalysis()"></td>
                 </tr>
                 </tbody>
                 <tfoot>

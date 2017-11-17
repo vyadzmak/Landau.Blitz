@@ -18,9 +18,9 @@
             <tbody>
                 <tr ng-repeat="row in activeBalance.Assets.Checkout.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.Checkout.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
-                    <td ng-model="row.NotConfirmed" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
-                    <td ng-model="row.OutBusiness" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.NotConfirmed" editable-filter="'currency'" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.OutBusiness" editable-filter="'currency'" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                 </tr>
             </tbody>
             <tfoot>

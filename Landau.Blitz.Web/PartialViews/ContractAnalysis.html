@@ -29,9 +29,9 @@
                     <td><input type="date" ng-model="row.SignDate"></td>
                     <td><input type="date" ng-model="row.EndDate"></td>
                     <td ng-model="row.ContractSubject" content-editable></td>
-                    <td ng-model="row.TotalCost" content-editable edit-callback="calculateTotalSales()"></td>
-                    <td ng-model="row.PaidSum" content-editable edit-callback="calculateTotalSales()"></td>
-                    <td>{{row.UnpaidSum}}</td>
+                    <td ng-model="row.TotalCost" editable-filter="'currency'" content-editable edit-callback="calculateTotalSales()"></td>
+                    <td ng-model="row.PaidSum" editable-filter="'currency'" content-editable edit-callback="calculateTotalSales()"></td>
+                    <td>{{row.UnpaidSum|currency:'':2}}</td>
                     <td ng-model="row.PayCondition" content-editable></td>
                 </tr>
                 </tbody>
@@ -86,9 +86,9 @@
                         <td><input type="date" ng-model="row.SignDate"></td>
                         <td><input type="date" ng-model="row.EndDate"></td>
                         <td ng-model="row.ContractSubject" content-editable></td>
-                        <td ng-model="row.TotalCost" content-editable edit-callback="calculateTotalPurchases()"></td>
-                        <td ng-model="row.PaidSum" format="currency" content-editable edit-callback="calculateTotalPurchases()"></td>
-                        <td>{{row.UnpaidSum}}</td>
+                        <td ng-model="row.TotalCost" editable-filter="'currency'" content-editable edit-callback="calculateTotalPurchases()"></td>
+                        <td ng-model="row.PaidSum" editable-filter="'currency'" content-editable edit-callback="calculateTotalPurchases()"></td>
+                        <td>{{row.UnpaidSum|currency:'':2}}</td>
                         <td ng-model="row.PayCondition" content-editable></td>
                     </tr>
                 </tbody>

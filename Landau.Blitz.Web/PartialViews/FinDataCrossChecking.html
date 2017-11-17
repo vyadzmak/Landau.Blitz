@@ -102,7 +102,7 @@
                 <tr ng-repeat="row in currentProject.FinDataCrossChecking.Factors" ng-right-click="clickRightTableRow(currentProject.FinDataCrossChecking.Factors, row.Id)" menu-items="menuItems">
                     <td><input type="checkbox" ng-model="row.IsMoney"/></td>
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateCrossChecking()"></td>
+                    <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateCrossChecking()"></td>
                 </tr>
                 </tbody>
                 <tfoot>

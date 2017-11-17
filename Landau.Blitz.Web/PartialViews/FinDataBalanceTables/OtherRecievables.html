@@ -21,7 +21,7 @@
             <tbody>
                 <tr ng-repeat="row in activeBalance.Assets.OtherRecievables.Rows" ng-right-click="clickRightTableRow(activeBalance.Assets.OtherRecievables.Rows, row.Id)" menu-items="menuItems">
                     <td ng-model="row.Name" content-editable></td>
-                    <td ng-model="row.Sum" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
+                    <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateBalance(activeBalance, activeCompany.Id)"></td>
                     <td><input type="date" ng-model="row.OccurDate"></td>
                     <td><input type="date" ng-model="row.ReturnDate"></td>
                     <td><input type="checkbox" ng-model="row.IsRelatedCompany"  ng-change="calculateBalance(activeBalance, activeCompany.Id)"/></td>

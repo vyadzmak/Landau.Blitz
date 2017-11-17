@@ -17,7 +17,7 @@
                 <tbody>
                     <tr ng-repeat="row in udCollection track by row.Id">
                         <td>{{row.Id+'.'+mElement.Month.Name}}</td>
-                        <td ng-model="row.Sum" content-editable edit-callback="vm.calculateTotal()"></td>
+                        <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="vm.calculateTotal()"></td>
                     </tr>
                 </tbody>
                 <tfoot>

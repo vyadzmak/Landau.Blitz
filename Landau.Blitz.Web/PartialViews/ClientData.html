@@ -393,13 +393,13 @@
                                         ng-model="row.LoanType"
                                         ng-change="loanTypeChanged(row)"></select>
                             </td>
-                            <td ng-model="row.LoanAmount" content-editable edit-callback="calculateCreditHistory()"></td>
+                            <td ng-model="row.LoanAmount" editable-filter="'currency'" content-editable edit-callback="calculateCreditHistory()"></td>
                             <td ng-model="row.AnnualRate" content-editable></td>
                             <td><input type="date" ng-model="row.DateOfReceiving"></td>
                             <td><input type="date" ng-model="row.DateOfRepaymentAgreement"></td>
                             <td><input type="date" ng-model="row.DateOfRepaymentFact"></td>
-                            <td ng-model="row.RemainingDebt" content-editable edit-callback="calculateCreditHistory()"></td>
-                            <td ng-model="row.LoanContribution" content-editable edit-callback="calculateCreditHistory()"></td>
+                            <td ng-model="row.RemainingDebt" editable-filter="'currency'" content-editable edit-callback="calculateCreditHistory()"></td>
+                            <td ng-model="row.LoanContribution" editable-filter="'currency'" content-editable edit-callback="calculateCreditHistory()"></td>
                             <td ng-model="row.LoanPurpose" content-editable></td>
                         </tr>
                         <tr ng-show="row.LoanType.Id==2 ||row.LoanType.Id==3 || row.LoanType.Id==4">
@@ -436,13 +436,13 @@
                                                 </button>{{detRow.Document}}
                                             </td>
                                             <td ng-model="detRow.Document" content-editable ng-if="!detRow.noEditing"></td>
-                                            <td ng-model="detRow.LoanAmount" content-editable edit-callback="calculateCreditHistory()"></td>
+                                            <td ng-model="detRow.LoanAmount" editable-filter="'currency'" content-editable edit-callback="calculateCreditHistory()"></td>
                                             <td ng-model="detRow.AnnualRate" content-editable></td>
                                             <td><input type="date" ng-model="detRow.DateOfReceiving"></td>
                                             <td><input type="date" ng-model="detRow.DateOfRepaymentAgreement"></td>
                                             <td><input type="date" ng-model="detRow.DateOfRepaymentFact"></td>
-                                            <td ng-model="detRow.RemainingDebt" content-editable edit-callback="calculateCreditHistory()"></td>
-                                            <td ng-model="detRow.LoanContribution" content-editable edit-callback="calculateCreditHistory()"></td>
+                                            <td ng-model="detRow.RemainingDebt" editable-filter="'currency'" content-editable edit-callback="calculateCreditHistory()"></td>
+                                            <td ng-model="detRow.LoanContribution" editable-filter="'currency'" content-editable edit-callback="calculateCreditHistory()"></td>
                                             <td ng-model="detRow.LoanPurpose" content-editable></td>
                                         </tr>
                                     </tbody>
@@ -513,11 +513,11 @@
                             <td ng-model="row.CompanyName" content-editable></td>
                             <td ng-model="row.AccountNumber" content-editable></td>
                             <td ng-model="row.Currency" content-editable></td>
-                            <td ng-model="row.AccountBalance" content-editable></td>
+                            <td ng-model="row.AccountBalance" editable-filter="'currency'" content-editable></td>
                             <td><input type="date" ng-model="row.DatePeriodStart" ng-change="calculateBankAccounts()"></td>
                             <td><input type="date" ng-model="row.DatePeriodEnd" ng-change="calculateBankAccounts()"></td>
-                            <td ng-model="row.Turnover" content-editable edit-callback="calculateBankAccounts()"></td>
-                            <td ng-model="row.AverageTurnover" content-editable edit-callback="calculateBankAccounts()"></td>
+                            <td ng-model="row.Turnover" editable-filter="'currency'" content-editable edit-callback="calculateBankAccounts()"></td>
+                            <td ng-model="row.AverageTurnover" editable-filter="'currency'" content-editable edit-callback="calculateBankAccounts()"></td>
                             <td><input type="checkbox" ng-model="row.Card" /></td>
                         </tr>
                         <tr ng-repeat-end>

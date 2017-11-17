@@ -126,7 +126,7 @@
                         </td>
                         <td ng-model="row.Expenditure.Name" content-editable></td>
                         <td ng-model="row.Provider" content-editable></td>
-                        <td ng-model="row.Sum" content-editable edit-callback="calculateFinancePlan()"></td>
+                        <td ng-model="row.Sum" editable-filter="'currency'" content-editable edit-callback="calculateFinancePlan()"></td>
                         <td>
                             <select ng-options="item as item.Name for item in financialSources track by item.Id"
                                     ng-model="row.Source"

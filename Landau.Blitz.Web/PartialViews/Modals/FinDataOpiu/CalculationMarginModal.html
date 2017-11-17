@@ -46,7 +46,7 @@
                         <tr ng-repeat="row in good.Rows track by row.Id" ng-right-click="vm.clickRightTableRow(good.Rows, row.Id)" menu-items="vm.menuItems">
                             <td ng-model="row.Name" content-editable edit-callback="vm.calculateTotal()"></td>
                             <td ng-model="row.Quantity" content-editable edit-callback="vm.calculateTotal()"></td>
-                            <td ng-model="row.Cost" content-editable edit-callback="vm.calculateTotal()"></td>
+                            <td ng-model="row.Cost" editable-filter="'currency'" content-editable edit-callback="vm.calculateTotal()"></td>
                             <td>{{row.TotalCost|currency:'':2}}</td>
                         </tr>
                     </tbody>
@@ -70,7 +70,7 @@
                         </tr>
                         <tr>
                             <td colspan="3"><strong uib-tooltip="Цена реализации единицы товара/продукции">Цена реализации единицы товара/продукции</strong></td>
-                            <td ng-model="good.TotalSum" content-editable edit-callback="vm.calculateTotal()"></td>
+                            <td ng-model="good.TotalSum" editable-filter="'currency'" content-editable edit-callback="vm.calculateTotal()"></td>
                         </tr>
                         <tr>
                             <td colspan="3"><strong>Расчетная маржа</strong></td>

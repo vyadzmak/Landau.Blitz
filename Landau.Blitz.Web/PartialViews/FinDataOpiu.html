@@ -36,7 +36,7 @@
 </td>
 
                     <td ng-repeat="month in activeOpiu.Months track by $index"
-                        ng-model="row['M'+month.Id]"
+                        ng-model="row['M'+month.Id]"  editable-filter="'currency'"
                         content-editable
                         non-editable="{{row.Calculate || row.Rows && row.Rows.length>0}}"
                         edit-callback="calculateOpiu(activeOpiu)"
@@ -46,7 +46,7 @@
                         ng-if="(row.VarName==='Revenues' || row.VarName==='CostOfGoods' || row.VarName==='Margin') && (!row.Rows || row.Rows.length===0)">
                         <div class="btn-group" uib-dropdown ng-if="row.VarName==='Revenues'">
                             <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                                {{row['M'+month.Id]}} <span class="caret"></span>
+                                {{row['M'+month.Id] | currency:'':2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="btn-group" uib-dropdown ng-if="row.VarName==='CostOfGoods'">
                             <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                                {{row['M'+month.Id]}} <span class="caret"></span>
+                                {{row['M'+month.Id] | currency:'':2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="btn-group" uib-dropdown ng-if="row.VarName==='Margin'">
                             <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                                {{row['M'+month.Id]}} <span class="caret"></span>
+                                {{row['M'+month.Id] | currency:'':2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="cellDropdownChoice(row, month, 4)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
@@ -79,11 +79,11 @@
                     </td>
 
                     <td ng-model="row.Avg"
-                        content-editable
+                        content-editable  editable-filter="'currency'"
                         non-editable="{{row.VarName!=='LoanPayment' || row.Calculate}}"
                         edit-callback="calculateOpiu(activeOpiu)"
                         ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
-                    <td content-editable
+                    <td content-editable  editable-filter="'currency'"
                         non-editable="{{row.Calculate && row.VarName!=='LoanPayment'}}"
                         ng-model="row.AvgPrediction"
                         edit-callback="calculateOpiu(activeOpiu)"></td>
@@ -104,7 +104,7 @@
                 </td>
 
                     <td ng-repeat="month in activeOpiu.Months track by $index"
-                        ng-model="subRow['M'+month.Id]"
+                        ng-model="subRow['M'+month.Id]" editable-filter="'currency'"
                         content-editable
                         edit-callback="calculateOpiu(activeOpiu)" ng-if="row.VarName!=='Revenues' && row.VarName!=='CostOfGoods' && row.VarName!=='Margin'"></td>
 
@@ -112,7 +112,7 @@
                         ng-if="row.VarName==='Revenues' || row.VarName==='CostOfGoods' || row.VarName==='Margin'">
                         <div class="btn-group" uib-dropdown ng-if="row.VarName==='Revenues'">
                             <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                                {{subRow['M'+month.Id]}} <span class="caret"></span>
+                                {{subRow['M'+month.Id] | currency:'':2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1, subRow)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="btn-group" uib-dropdown ng-if="row.VarName==='CostOfGoods'">
                             <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                                {{subRow['M'+month.Id]}} <span class="caret"></span>
+                                {{subRow['M'+month.Id] | currency:'':2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="cellDropdownChoice(row, month, 1, subRow)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="btn-group" uib-dropdown ng-if="row.VarName==='Margin'">
                             <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
-                                {{subRow['M'+month.Id]}} <span class="caret"></span>
+                                {{subRow['M'+month.Id] | currency:'':2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="cellDropdownChoice(row, month, 4, subRow)"><a uib-popover-html="htmlPopoverInput" href="javascript:void(0)">Ввести готовое значение</a></li>
@@ -145,11 +145,11 @@
                     </td>
 
                     <td ng-model="subRow.Avg"
-                        content-editable
+                        content-editable  editable-filter="'currency'"
                         non-editable="{{row.VarName!=='LoanPayment'}}"
                         edit-callback="calculateOpiu(activeOpiu)"
                         ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
-                    <td content-editable
+                    <td content-editable  editable-filter="'currency'"
                         non-editable="{{row.Calculate && row.VarName!=='LoanPayment'}}"
                         ng-model="subRow.AvgPrediction"
                         edit-callback="calculateOpiu(activeOpiu)"></td>
@@ -177,7 +177,7 @@
                         <tr ng-repeat="row in activeOpiu.RelatedCompanyRevenues" ng-right-click="clickRightTableRow(activeOpiu.RelatedCompanyRevenues, row.Id)" menu-items="menuItems">
                             <td ng-model="row.Name" content-editable></td>
                             <td ng-repeat="month in activeOpiu.Months track by $index"
-                                ng-model="row['M'+month.Id]"
+                                ng-model="row['M'+month.Id]"  editable-filter="'currency'"
                                 content-editable
                                 edit-callback="calculateOpiu(activeOpiu)"></td>
 
@@ -233,9 +233,9 @@
                                 <select ng-options="item as item.Name for item in loanTypes track by item.Id"
                                         ng-model="row.LoanType"></select>
                             </td>
-                            <td ng-model="row.LimitSum" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
-                            <td ng-model="row.Principal" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
-                            <td ng-model="row.Fee" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                            <td ng-model="row.LimitSum" editable-filter="'currency'" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                            <td ng-model="row.Principal" editable-filter="'currency'" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
+                            <td ng-model="row.Fee" editable-filter="'currency'" content-editable edit-callback="calculateOpiu(activeOpiu)"></td>
                             <td><input type="checkbox" ng-model="row.IsPrincipal" ng-change="calculateOpiu(activeOpiu)"></td>
                             <td>{{row.ForOpiu|currency:'':2}}</td>
                         </tr>

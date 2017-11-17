@@ -296,7 +296,7 @@
                             </tr>
                             <tr ng-repeat="outAsset in activeBalance.OutAssets"  ng-right-click="clickRightTableRow(activeBalance.OutAssets, outAsset.Id,'OutAssets')" menu-items="menuOutItems">
                                 <td ng-model="outAsset.Name" content-editable edit-callback="outNameChanged('OutAssets', outAsset)"></td>
-                                <td ng-repeat="bal in activeCompany.CompanyBalances" ng-model="bal.OutAssets[outAsset.Id-1].Sum" content-editable edit-callback="calculateBalance(bal, activeCompany.Id)"></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances" ng-model="bal.OutAssets[outAsset.Id-1].Sum" editable-filter="'currency'" content-editable edit-callback="calculateBalance(bal, activeCompany.Id)"></td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -323,7 +323,7 @@
                         </tr>
                             <tr ng-repeat="outLiability in activeBalance.OutLiabilities" ng-right-click="clickRightTableRow(activeBalance.OutLiabilities, outLiability.Id, 'OutLiabilities')" menu-items="menuOutItems">
                                 <td ng-model="outLiability.Name" content-editable edit-callback="outNameChanged('OutLiabilities', outLiability)"></td>
-                                <td ng-repeat="bal in activeCompany.CompanyBalances" ng-model="bal.OutLiabilities[outLiability.Id-1].Sum" content-editable edit-callback="calculateBalance(bal, activeCompany.Id)"></td>
+                                <td ng-repeat="bal in activeCompany.CompanyBalances" ng-model="bal.OutLiabilities[outLiability.Id-1].Sum" editable-filter="'currency'" content-editable edit-callback="calculateBalance(bal, activeCompany.Id)"></td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -338,90 +338,87 @@
         </div>
 
         <!-- CHECKOUT -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/Checkout.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/Checkout.html'"></ng-include>
 
         <!-- CurrentAccount -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/CurrentAccount.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/CurrentAccount.html'"></ng-include>
 
         <!-- SavingsDeposit -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/SavingsDeposit.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/SavingsDeposit.html'"></ng-include>
 
         <!-- RecievableAccounts -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/RecievableAccounts.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/RecievableAccounts.html'"></ng-include>
 
         <!-- OtherRecievables -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/OtherRecievables.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/OtherRecievables.html'"></ng-include>
 
         <!--TransitGoods-->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/TransitGoods.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/TransitGoods.html'"></ng-include>-->
 
         <!--SuppliersPrepayment-->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/SuppliersPrepayment.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/SuppliersPrepayment.html'"></ng-include>-->
 
         <!-- Inventories 'FinishedGoods', 'RawMaterials', SemiProducts',-->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/Inventories.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/Inventories.html'"></ng-include>
 
         <!-- ForSaleGoods -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/ForSaleGoods.html'"></ng-include>-->
-
-        <!-- OtherRecievables -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/OtherRecievables.html'"></ng-include>
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/ForSaleGoods.html'"></ng-include>-->
 
         <!-- Hardware -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/Hardware.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/Hardware.html'"></ng-include>
 
         <!-- MotorTransport -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/MotorTransport.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/MotorTransport.html'"></ng-include>
 
         <!-- RealEstate -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/RealEstate.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/RealEstate.html'"></ng-include>
 
         <!-- Investments -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/Investments.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/Investments.html'"></ng-include>
 
 
 
         <!-- BudgetSettlements -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/BudgetSettlements.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/BudgetSettlements.html'"></ng-include>-->
 
         <!-- RentalsArrears -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/RentalsArrears.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/RentalsArrears.html'"></ng-include>-->
 
         <!-- ShortTermDebt -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/ShortTermDebt.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/ShortTermDebt.html'"></ng-include>-->
 
         <!-- PayableAccounts -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/PayableAccounts.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/PayableAccounts.html'"></ng-include>
 
         <!-- CommodityLoan -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/CommodityLoan.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/CommodityLoan.html'"></ng-include>-->
 
         <!-- CustomersPrepayment -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/CustomersPrepayment.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/CustomersPrepayment.html'"></ng-include>-->
 
         <!-- ShortPrivateLoans -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/ShortPrivateLoans.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/ShortPrivateLoans.html'"></ng-include>
 
         <!-- ShortWorkingCapitalCredit -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/ShortWorkingCapitalCredit.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/ShortWorkingCapitalCredit.html'"></ng-include>
 
         <!-- ShortFixedAssetsCredit -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/ShortFixedAssetsCredit.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/ShortFixedAssetsCredit.html'"></ng-include>
 
         <!-- OtherCurrentDebt -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/OtherCurrentDebt.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/OtherCurrentDebt.html'"></ng-include>-->
 
         <!-- LongPrivateLoans -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/LongPrivateLoans.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/LongPrivateLoans.html'"></ng-include>
 
         <!-- LongWorkingCapitalCredit -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/LongWorkingCapitalCredit.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/LongWorkingCapitalCredit.html'"></ng-include>
 
         <!-- LongFixedAssetsCredit -->
-        <!--<ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/LongFixedAssetsCredit.html'"></ng-include>-->
+        <!--<ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/LongFixedAssetsCredit.html'"></ng-include>-->
 
         <!-- OtherLiabilities -->
-        <ng-include src="'/landauBlitz/PartialViews/FinDataBalanceTables/OtherLiabilities.html'"></ng-include>
+        <ng-include src="'/Blitz/PartialViews/FinDataBalanceTables/OtherLiabilities.html'"></ng-include>
 
     </div>
 </div>
