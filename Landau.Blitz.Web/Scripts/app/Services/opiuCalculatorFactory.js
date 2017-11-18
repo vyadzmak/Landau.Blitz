@@ -27,18 +27,29 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
 
 
     var calculateSubRowTotals = function (rows, months) {
-        angular.forEach(months, function (month, mkey) {
+        if (months && months.length > 0) {
+            angular.forEach(months, function (month, mkey) {
+                angular.forEach(rows, function (row, rkey) {
+                    if (row.Rows) {
+                        row['M' + month.Id] = 0;
+                        row['AvgPrediction'] = 0;
+                        angular.forEach(row.Rows, function (subRow, skey) {
+                            row['M' + month.Id] += mathFactory.getFloat(subRow['M' + month.Id]);
+                            row['AvgPrediction'] += mathFactory.getFloat(subRow['AvgPrediction']);
+                        });
+                    }
+                });
+            });
+        } else { 
             angular.forEach(rows, function (row, rkey) {
                 if (row.Rows) {
-                    row['M' + month.Id] = 0;
                     row['AvgPrediction'] = 0;
                     angular.forEach(row.Rows, function (subRow, skey) {
-                        row['M' + month.Id] += mathFactory.getFloat(subRow['M' + month.Id]);
                         row['AvgPrediction'] += mathFactory.getFloat(subRow['AvgPrediction']);
                     });
                 }
             });
-        });
+        }
     }
 
     var calculateAverageValue = function (row, months) {
@@ -153,6 +164,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
             // make 0 related company revenues totals
             opiu.TotalRealtedCompanyRevenue['M' + month.Id] = 0;
         });
+
         totalExpenses['Avg'] = 0;
         totalAddPayments['Avg'] = 0;
         totalExpenses['AvgPrediction'] = 0;
@@ -175,6 +187,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                 totalAddPayments['AvgPrediction'] += mathFactory.getFloat(tRow['AvgPrediction']);
             }
         });
+
         // calculate values
         angular.forEach(opiu.Months, function (month, mKey) {
             calculateMargin(margin, costOfGoods, revenues, month.MarginCalcType, 'M' + month.Id);
@@ -183,7 +196,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                 otherExpenses, netProfit, loanPayment, netLoanBalance, 'M' + month.Id);
         });
 
-        calculateMargin(margin, costOfGoods, revenues, margin['AvgPrediction'] ? 4 : 1, 'AvgPrediction');
+        calculateMargin(margin, costOfGoods, revenues, costOfGoods['AvgPrediction'] ? 1 : 4, 'AvgPrediction');
 
         calculateValues(totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
             otherExpenses, netProfit, loanPayment, netLoanBalance, 'AvgPrediction');
@@ -199,8 +212,9 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                 }
             }
         });
+
         netLoanBalance.Avg = mathFactory.round((mathFactory.getFloat(netProfit.Avg) - mathFactory.getFloat(loanPayment.Avg)), 2);
-        
+
         return opiu;
     }
 
@@ -222,7 +236,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
 
     opiuCalculatorFactory.calculateConsolidatedData = function (currentProject) {
         try {
-            var maxMonthsIndex = -1;
+            var maxMonthsIndex = 0;
             var maxMonths = 0;
             for (var i = 0; i < currentProject.FinDataOpiu.Opius.length; i++) {
                 if (maxMonths < currentProject.FinDataOpiu.Opius[i].Months.length) {
