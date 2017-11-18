@@ -15,6 +15,7 @@ angular.module('angular-content-editable')
 
     function _link(scope, elem, attrs, ngModel) {
 
+        var regexp = /((\%3C)|<)[^\n]+((\%3E)|>)/i;
         // return if ng model not specified
         if (!ngModel) {
             $log.warn('Error: ngModel is required in elem: ', elem);
@@ -48,6 +49,10 @@ angular.module('angular-content-editable')
 
         // render always with model value
         ngModel.$render = function () {
+            if (regexp.test(ngModel.$modelValue) || regexp.test(elem.html())) {
+                ngModel.$setViewValue('');
+                elem.html('');
+            }
             if (options.editableFilter === 'currency') {
                 var value;
                 if (isNaN(parseFloat(ngModel.$modelValue)) || !isFinite(ngModel.$modelValue)) {
@@ -163,7 +168,6 @@ angular.module('angular-content-editable')
                         });
 
                     }
-
                 }
             });
 
