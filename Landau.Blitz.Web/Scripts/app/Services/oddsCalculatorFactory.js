@@ -71,14 +71,15 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                 'TotalExpensesOutBusiness',
                 'TotalExpensesForBusiness'
             ]
-        },
-        {
-            TotalName: 'EndMonth',
-            SubValues: [
-                'Income',
-                'Expenses'
-            ]
         }
+        //,
+        //{
+        //    TotalName: 'EndMonth',
+        //    SubValues: [
+        //        'Income',
+        //        'Expenses'
+        //    ]
+        //}
     ];
 
     var getVarArrayByName = function (odds, name) {
@@ -90,12 +91,10 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
     }
 
     var calculateValues = function (currentProject, startVarSymbol) {
-        angular.forEach(sumsValues, function (tSumV, tSumKey) {
-            var totalValue = getVarArrayByName(currentProject.FinDataOdds.Odds, tSumV.TotalName);
-
-
-            angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
-                if (month.VarName[0] === startVarSymbol) {
+        angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
+            if (month.VarName[0] === startVarSymbol) {
+                angular.forEach(sumsValues, function (tSumV, tSumKey) {
+                    var totalValue = getVarArrayByName(currentProject.FinDataOdds.Odds, tSumV.TotalName);
                     totalValue[month.VarName] = 0;
 
                     angular.forEach(tSumV.SubValues, function (subValue, sKey) {
@@ -103,8 +102,13 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                         totalValue[month.VarName] += mathFactory.getFloat(sSubValue[month.VarName]);
                     });
                     totalValue[month.VarName] = mathFactory.round(totalValue[month.VarName], 2);
-                }
-            });
+                });
+                var endMonth = getVarArrayByName(currentProject.FinDataOdds.Odds, 'EndMonth');
+                var income = getVarArrayByName(currentProject.FinDataOdds.Odds, 'Income');
+                var expenses = getVarArrayByName(currentProject.FinDataOdds.Odds, 'Expenses');
+                endMonth[month.VarName] = mathFactory.getFloat(income[month.VarName]) - mathFactory.getFloat(expenses[month.VarName]);
+                endMonth[month.VarName] = mathFactory.round(endMonth[month.VarName], 2);
+            }
         });
     }
 

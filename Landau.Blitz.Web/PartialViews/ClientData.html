@@ -428,7 +428,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="detRow in row.LoanDetails" ng-right-click="loanDetailsRowClicked(detRow.Document, detRow.noEditing, row.Id)" menu-items="menuItems">
+                                        <tr ng-repeat="detRow in row.LoanDetails" ng-right-click="loanDetailsRowClicked(detRow.Id, detRow.noEditing, row.Id)" menu-items="menuItems">
                                             <td ng-if="detRow.noEditing">
                                                 <button class="btn btn-xs btn-primary pull-left"
                                                         ng-click="addLoanDetail(row, detRow.detType)">
