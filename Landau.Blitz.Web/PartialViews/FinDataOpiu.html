@@ -1,5 +1,5 @@
 <div ng-controller="finDataOpiuController">
-    <div class="row">
+    <div class="container" style="padding-bottom: 10px">
         <div class="col-md-3">
             <select class="form-control"
                     ng-model="activeOpiu"
@@ -33,10 +33,10 @@
                                 ng-if="!row.Calculate && row.VarName!=='CostOfGoods'">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button><span ng-click="row.ShowSubRows=!row.ShowSubRows">{{row.Title}}</span>
-</td>
+                    </td>
 
                     <td ng-repeat="month in activeOpiu.Months track by $index"
-                        ng-model="row['M'+month.Id]"  editable-filter="'currency'"
+                        ng-model="row['M'+month.Id]" editable-filter="'currency'"
                         content-editable
                         non-editable="{{row.Calculate || row.Rows && row.Rows.length>0}}"
                         edit-callback="calculateOpiu(activeOpiu)"
@@ -79,29 +79,29 @@
                     </td>
 
                     <td ng-model="row.Avg"
-                        content-editable  editable-filter="'currency'"
+                        content-editable editable-filter="'currency'"
                         non-editable="{{row.VarName!=='LoanPayment' || row.Calculate}}"
                         edit-callback="calculateOpiu(activeOpiu)"
                         ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
-                    <td content-editable  editable-filter="'currency'"
+                    <td content-editable editable-filter="'currency'"
                         non-editable="{{row.Calculate && row.VarName!=='LoanPayment'}}"
                         ng-model="row.AvgPrediction"
                         edit-callback="calculateOpiu(activeOpiu)"></td>
 
                 </tr>
-            <tr ng-repeat-end ng-repeat="subRow in row.Rows"
-                ng-show="row.ShowSubRows">
+                <tr ng-repeat-end ng-repeat="subRow in row.Rows"
+                    ng-show="row.ShowSubRows">
 
-                <td>
-                    <div>
-                        <button class="btn btn-xs btn-danger pull-left"
-                                ng-click="deleteSubRow(activeOpiu.Table, row, subRow, activeOpiu.Months)"
-                                ng-if="!row.Calculate && row.VarName!=='CostOfGoods'">
-                            <i class="fa fa-minus" aria-hidden="true"></i>
-                        </button>
-                        <div class="content-editable-container" ng-model="subRow.Title" content-editable edit-callback="changeSubRowTitle(activeOpiu.Table, row, subRow)"></div>
-                    </div>
-                </td>
+                    <td>
+                        <div>
+                            <button class="btn btn-xs btn-danger pull-left"
+                                    ng-click="deleteSubRow(activeOpiu.Table, row, subRow, activeOpiu.Months)"
+                                    ng-if="!row.Calculate && row.VarName!=='CostOfGoods'">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <div class="content-editable-container" ng-model="subRow.Title" content-editable edit-callback="changeSubRowTitle(activeOpiu.Table, row, subRow)"></div>
+                        </div>
+                    </td>
 
                     <td ng-repeat="month in activeOpiu.Months track by $index"
                         ng-model="subRow['M'+month.Id]" editable-filter="'currency'"
@@ -145,11 +145,11 @@
                     </td>
 
                     <td ng-model="subRow.Avg"
-                        content-editable  editable-filter="'currency'"
+                        content-editable editable-filter="'currency'"
                         non-editable="{{row.VarName!=='LoanPayment'}}"
                         edit-callback="calculateOpiu(activeOpiu)"
                         ng-if="activeOpiu.Months && activeOpiu.Months.length>0"></td>
-                    <td content-editable  editable-filter="'currency'"
+                    <td content-editable editable-filter="'currency'"
                         non-editable="{{row.Calculate && row.VarName!=='LoanPayment'}}"
                         ng-model="subRow.AvgPrediction"
                         edit-callback="calculateOpiu(activeOpiu)"></td>
@@ -177,7 +177,7 @@
                         <tr ng-repeat="row in activeOpiu.RelatedCompanyRevenues" ng-right-click="clickRightTableRow(activeOpiu.RelatedCompanyRevenues, row.Id)" menu-items="menuItems">
                             <td ng-model="row.Name" content-editable></td>
                             <td ng-repeat="month in activeOpiu.Months track by $index"
-                                ng-model="row['M'+month.Id]"  editable-filter="'currency'"
+                                ng-model="row['M'+month.Id]" editable-filter="'currency'"
                                 content-editable
                                 edit-callback="calculateOpiu(activeOpiu)"></td>
 

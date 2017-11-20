@@ -187,6 +187,9 @@ blitzApp.factory('balanceCoefsCalculatorFactory', ['$rootScope', 'mathFactory', 
 
     balanceCoefsCalculatorFactory.calculateData = function (currentProject) {
         try {
+            if (!currentProject.FinDataBalance.Balances || !currentProject.FinDataOpiu.Opius) {
+                return currentProject;
+            }
             angular.forEach(currentProject.FinDataBalance.Balances, function (balance, bKey) {
                 angular.forEach(currentProject.FinDataOpiu.Opius, function (opiu, oKey) {
                     if (bKey === oKey) {

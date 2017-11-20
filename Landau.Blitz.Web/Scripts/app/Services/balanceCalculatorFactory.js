@@ -390,7 +390,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
                 if (compKey > 0) {
                     angular.forEach(comp.CompanyBalances, function (compBalance, bKey) {
                         angular.forEach(currentProject.ConsolidatedBalance.CompanyBalances, function (consBalance, cbKey) {
-                            if (consBalance.Date === compBalance.Date) {
+                            if (moment(consBalance.Date).isSame(compBalance.Date, 'day')) {
                                 angular.forEach(assetsNames, function (assetName, abKey) {
                                     consBalance.Assets[assetName].ConsTotal = mathFactory.getFloat(consBalance.Assets[assetName].ConsTotal) + mathFactory.getFloat(compBalance.Assets[assetName].ConsTotal);
                                 });

@@ -90,9 +90,64 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
         return ob[0];
     }
 
+    var calculateSubrows = function (rows, varName) {
+        angular.forEach(rows, function (row, rKey) {
+            if (row.Rows && row.Rows.length > 0) {
+                row[varName] = 0;
+                angular.forEach(row.Rows, function (subRow, sKey) {
+                    row[varName] += mathFactory.getFloat(subRow[varName]);
+                });
+                row[varName] = mathFactory.round(row[varName], 2);
+            }
+        });
+    }
+
+    var calculatePredictionValues = function (odds) {
+        angular.forEach(sumsValues, function (tSumV, tSumKey) {
+            if (tSumV.TotalName === 'TotalIncome' || tSumV.TotalName === 'TotalOutOperationsIncome') {
+                angular.forEach(tSumV.SubValues, function (subValue, sKey) {
+                    var sSubValue = getVarArrayByName(odds, subValue);
+                    if (sSubValue.Rows && sSubValue.Rows.length > 0) {
+                        sSubValue.Prediction = 0;
+                        angular.forEach(sSubValue.Rows, function (subRow, sKey) {
+                            sSubValue.Prediction += mathFactory.getFloat(subRow.Prediction);
+                        });
+                        sSubValue.Prediction = mathFactory.round(sSubValue.Prediction, 2);
+                    }
+                });
+            } else if (tSumV.TotalName === 'TotalExpensesForBusiness' || tSumV.TotalName === 'TotalExpensesOutBusiness') {
+
+                var totalValue = getVarArrayByName(odds, tSumV.TotalName);
+                totalValue.Prediction = 0;
+                angular.forEach(tSumV.SubValues, function (subValue, sKey) {
+                    var sSubValue = getVarArrayByName(odds, subValue);
+                    if (sSubValue.Rows && sSubValue.Rows.length > 0) {
+                        sSubValue.Prediction = 0;
+                        angular.forEach(sSubValue.Rows, function (subRow, sKey) {
+                            sSubValue.Prediction += mathFactory.getFloat(subRow.Prediction);
+                        });
+                        sSubValue.Prediction = mathFactory.round(sSubValue.Prediction, 2);
+                    }
+                    totalValue.Prediction += mathFactory.getFloat(sSubValue.Prediction);
+                });
+            } else if (tSumV.TotalName === 'Income') {
+
+                var totalValue = getVarArrayByName(odds, tSumV.TotalName);
+                totalValue.Prediction = 0;
+                angular.forEach(tSumV.SubValues, function (subValue, sKey) {
+                    var sSubValue = getVarArrayByName(odds, subValue);
+                    totalValue.Prediction += mathFactory.getFloat(sSubValue.Prediction);
+                });
+            }
+        });
+    }
+
     var calculateValues = function (currentProject, startVarSymbol) {
         angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
-            if (month.VarName[0] === startVarSymbol) {
+            if (month.VarName.indexOf(startVarSymbol) === 0) {
+                // calculate subrows
+                calculateSubrows(currentProject.FinDataOdds.Odds.Table, month.VarName);
+                // calculate sums
                 angular.forEach(sumsValues, function (tSumV, tSumKey) {
                     var totalValue = getVarArrayByName(currentProject.FinDataOdds.Odds, tSumV.TotalName);
                     totalValue[month.VarName] = 0;
@@ -120,8 +175,21 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                 result += mathFactory.getFloat(totalIncome[month.VarName]);
             }
         });
-        result = result / currentProject.FinDataOdds.Odds.MonthsBefore;
-        return result;
+        var balanceDate = moment(currentProject.FinDataBalance.CurrentFinAnalysisDate);
+        var monthsQuantity = currentProject.FinDataOdds.Odds.MonthsBefore +
+            balanceDate.date() / balanceDate.daysInMonth();
+        result = result / monthsQuantity;
+        return mathFactory.round(result,2);
+    }
+
+    var expensesRowPercentage = function (row, avgHistoricalIncome, months, monthsBefore) {
+        var totalSubValue = 0;
+        angular.forEach(months, function (month, mKey) {
+            if (month.VarName[0] === 'm') {
+                totalSubValue += mathFactory.getFloat(row[month.VarName]);
+            }
+        });
+        row.Prediction = mathFactory.round(totalSubValue / monthsBefore / avgHistoricalIncome * 100, 2);
     }
 
     var calculateExpensesForBusinessPercentage = function (currentProject, avgHistoricalIncome) {
@@ -130,16 +198,24 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
             if (tSumV.TotalName === 'TotalExpensesForBusiness') {
                 angular.forEach(tSumV.SubValues, function (subValue, sKey) {
                     var sSubValue = getVarArrayByName(currentProject.FinDataOdds.Odds, subValue);
-                    var totalSubValue = 0;
-                    angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
-                        if (month.VarName[0] === 'm') {
-                            totalSubValue += mathFactory.getFloat(sSubValue[month.VarName]);
-                        }
-                    });
-                    sSubValue.Prediction = mathFactory.round(totalSubValue / currentProject.FinDataOdds.Odds.MonthsBefore / avgHistoricalIncome * 100, 2);
+                    if (sSubValue.Rows && sSubValue.Rows.length > 0) {
+                        angular.forEach(sSubValue.Rows, function(subRow, subRowKey) {
+                            expensesRowPercentage(subRow, avgHistoricalIncome, currentProject.FinDataOdds.Odds.Header, currentProject.FinDataOdds.Odds.MonthsBefore);
+                        });
+                    }
+                    expensesRowPercentage(sSubValue, avgHistoricalIncome, currentProject.FinDataOdds.Odds.Header, currentProject.FinDataOdds.Odds.MonthsBefore);
                 });
             }
         });
+    }
+
+    var populateSubrows = function(subRows, prediciton, varName) {
+        if (subRows && subRows.length > 0) {
+            angular.forEach(subRows, function (subRow, subRowKey) {
+                subRow[varName] = mathFactory.getFloat(prediciton) * subRow.Prediction / 100;
+                subRow[varName] = mathFactory.round(subRow[varName], 2);
+            });
+        }
     }
 
     var populatingPredictionData = function (currentProject) {
@@ -152,6 +228,8 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                     var sSubValue = getVarArrayByName(currentProject.FinDataOdds.Odds, subValue);
                     angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
                         if (month.VarName[0] === 'M') {
+                            // populating subrows
+                            populateSubrows(sSubValue.Rows, totalIncome.Prediction, month.VarName);
                             sSubValue[month.VarName] = mathFactory.getFloat(totalIncome.Prediction) * sSubValue.Prediction / 100;
                             sSubValue[month.VarName] = mathFactory.round(sSubValue[month.VarName], 2);
                         }
@@ -163,6 +241,8 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                     var sSubValue = getVarArrayByName(currentProject.FinDataOdds.Odds, subValue);
                     angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
                         if (month.VarName[0] === 'M') {
+                            // populating subrows
+                            populateSubrows(sSubValue.Rows, totalIncome.Prediction, month.VarName);
                             sSubValue[month.VarName] = mathFactory.getFloat(totalOutOperationsIncome.Prediction) * sSubValue.Prediction / 100;
                             sSubValue[month.VarName] = mathFactory.round(sSubValue[month.VarName], 2);
                         }
@@ -174,6 +254,8 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                     var sSubValue = getVarArrayByName(currentProject.FinDataOdds.Odds, subValue);
                     angular.forEach(currentProject.FinDataOdds.Odds.Header, function (month, mKey) {
                         if (month.VarName[0] === 'M') {
+                            // populating subrows
+                            populateSubrows(sSubValue.Rows, totalIncome.Prediction, month.VarName);
                             sSubValue[month.VarName] = mathFactory.getFloat(totalIncome.Prediction) * sSubValue.Prediction / 100;
                             sSubValue[month.VarName] = mathFactory.round(sSubValue[month.VarName], 2);
                         }
@@ -185,12 +267,17 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
 
     oddsCalculatorFactory.calculateData = function (currentProject) {
         try {
+            if (!currentProject.FinDataOdds.Odds || !currentProject.FinDataOdds.Odds.Header || !currentProject.FinDataOdds.Odds.Table) {
+                return currentProject;
+            }
             // calculate historical values
             calculateValues(currentProject, 'm');
 
             var avgHistoricalIncome = calculateAvgHistoricalIncome(currentProject);
 
             calculateExpensesForBusinessPercentage(currentProject, avgHistoricalIncome);
+
+            calculatePredictionValues(currentProject.FinDataOdds.Odds);
 
             populatingPredictionData(currentProject);
 
@@ -206,11 +293,12 @@ blitzApp.factory('oddsCalculatorFactory', ['$rootScope', 'mathFactory', function
                 mathFactory.getFloat(currentBalance.Assets.Savings.ConsTotal) +
                 mathFactory.getFloat(currentBalance.Assets.CurrentAccount.ConsTotal);
             startPeriod.M0 = mathFactory.round(consLiquidAssetsWoDepoit, 2);
+            startPeriod.Prediction = startPeriod.M0;
             endPeriod.m0 = startPeriod.M0;
-            startPeriod.m0 = mathFactory.round(endPeriod.m0 + mathFactory.getFloat(endMonth.m0), 2);
+            startPeriod.m0 = mathFactory.round(endPeriod.m0 - mathFactory.getFloat(endMonth.m0), 2);
             for (let i = 1; i <= currentProject.FinDataOdds.Odds.MonthsBefore; i++) {
                 endPeriod['m' + i] = startPeriod['m' + (i - 1)];
-                startPeriod['m' + i] = endPeriod['m' + i] + mathFactory.getFloat(endMonth['m' + i]);
+                startPeriod['m' + i] = endPeriod['m' + i] - mathFactory.getFloat(endMonth['m' + i]);
                 startPeriod['m' + i] = mathFactory.round(startPeriod['m' + i], 2);
             }
             endPeriod.M0 = startPeriod.M0 + mathFactory.getFloat(endMonth.M0);

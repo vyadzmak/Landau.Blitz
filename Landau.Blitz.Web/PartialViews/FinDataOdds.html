@@ -1,5 +1,12 @@
 <div ng-controller="finDataOddsController">
-
+    <div class="container" style="padding-bottom: 10px">
+        <div class="col-md-3">
+            <button class="btn btn-success" ng-click="showSubRows(currentProject.FinDataOdds.Odds.Table, true)"><i class="fa fa-expand fa-fw"></i> Развернуть все</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-warning" ng-click="showSubRows(currentProject.FinDataOdds.Odds.Table, false)"><i class="fa fa-compress fa-fw"></i> Свернуть все</button>
+        </div>
+    </div>
     <div ng-if="currentProject.FinDataOdds.Odds.Header">
         <table st-table="currentProject.FinDataOdds.Odds.Table" class="table table-bordered table-condensed ng-table">
             <thead>
@@ -9,17 +16,41 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in currentProject.FinDataOdds.Odds.Table"
-                    ng-class="{'active bold-trow':row.Calculate}">
+            <tr ng-repeat-start="row in currentProject.FinDataOdds.Odds.Table"
+                ng-class="{'active bold-trow':row.Calculate}">
+                    
+                <td>
+                    <button class="btn btn-xs btn-primary pull-left"
+                            ng-click="addSubRow(row, currentProject.FinDataOdds.Odds.Header)"
+                            ng-if="!row.Calculate">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button><span ng-click="row.ShowSubRows=!row.ShowSubRows">{{row.Title}}</span>
+                </td>
 
-                    <td>{{row.Title}}</td>
+                <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
+                    ng-model="row[month.VarName]" editable-filter="{{getDataType(row, month.VarName)}}"
+                    content-editable
+                    non-editable="{{checkEditability(row, month.VarName)}}"
+                    edit-callback="calculateOdds()"></td>
+            </tr>
+            <tr ng-repeat-end ng-repeat="subRow in row.Rows"
+                    ng-show="row.ShowSubRows">
 
-                    <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
-                        ng-model="row[month.VarName]" editable-filter="'currency'"
-                        content-editable
-                        non-editable="{{checkEditability(row, month.VarName)}}"
-                        edit-callback="calculateOdds()"></td>
-                </tr>
+                <td>
+                    <div>
+                        <button class="btn btn-xs btn-danger pull-left"
+                                ng-click="deleteSubRow(row, subRow)">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                        <div class="content-editable-container" ng-model="subRow.Title" content-editable></div>
+                    </div>
+                </td>
+
+                <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
+                    ng-model="subRow[month.VarName]" editable-filter="{{getDataType(row, month.VarName)}}"
+                    content-editable
+                    edit-callback="calculateOdds()"></td>
+            </tr>
             </tbody>
         </table>
         <div class="panel panel-primary">

@@ -12,6 +12,10 @@ blitzApp.factory('crossCheckCalculatorFactory', ['$rootScope', 'mathFactory', fu
     crossCheckCalculatorFactory.calculateData = function (currentProject) {
 
         try {
+            if (!currentProject.ConsolidatedBalance || !currentProject.ConsolidatedBalance.CompanyBalances) {
+                return currentProject;
+            }
+
             var len = currentProject.ConsolidatedBalance.CompanyBalances.length;
             if (len > 1) {
                 currentProject.FinDataCrossChecking.Period =
