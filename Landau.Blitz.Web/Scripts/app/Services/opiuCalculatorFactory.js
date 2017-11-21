@@ -30,7 +30,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         if (months && months.length > 0) {
             angular.forEach(months, function (month, mkey) {
                 angular.forEach(rows, function (row, rkey) {
-                    if (row.Rows) {
+                    if (row.Rows && row.Rows.length>0) {
                         row['M' + month.Id] = 0;
                         row['AvgPrediction'] = 0;
                         angular.forEach(row.Rows, function (subRow, skey) {
@@ -42,7 +42,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
             });
         } else { 
             angular.forEach(rows, function (row, rkey) {
-                if (row.Rows) {
+                if (row.Rows && row.Rows.length>0) {
                     row['AvgPrediction'] = 0;
                     angular.forEach(row.Rows, function (subRow, skey) {
                         row['AvgPrediction'] += mathFactory.getFloat(subRow['AvgPrediction']);

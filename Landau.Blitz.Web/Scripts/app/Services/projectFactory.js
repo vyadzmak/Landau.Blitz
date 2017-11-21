@@ -407,17 +407,17 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
         startDate = moment(startDate);
 
-        for (var i = 1; i <= months.MonthsBefore; i++) {
+        for (var i = 0; i < months.MonthsBefore; i++) {
             var befDate = angular.copy(startDate);
             currentProject.FinDataOdds.Odds.Header.unshift({
-                Name: befDate.add(-i, 'months').format('MM.YY'),
+                Name: befDate.add(-(i+1), 'months').format('MM.YY'),
                 VarName: 'm' + i
             });
         }
-        currentProject.FinDataOdds.Odds.Header.push({
-            Name: startDate.format('MM.YY'),
-            VarName: 'm' + 0
-        });
+        //currentProject.FinDataOdds.Odds.Header.push({
+        //    Name: startDate.format('MM.YY'),
+        //    VarName: 'm' + 0
+        //});
         currentProject.FinDataOdds.Odds.Header.push({
             Name: 'Прогноз',
             VarName: 'Prediction'

@@ -180,7 +180,13 @@ angular.module('angular-content-editable')
             // on tab key blur and
             // TODO: focus to next
             if (e.which == 9) {
+                e.preventDefault();
                 originalElement.blur();
+                var nextElem = elem.next('.editable');
+                if (nextElem[0]) {
+                    nextElem[0].scrollIntoView({ block: "end", behavior: "smooth" });
+                    nextElem[0].click();
+                }
                 return;
             }
 
