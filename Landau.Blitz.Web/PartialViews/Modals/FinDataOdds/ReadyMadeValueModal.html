@@ -1,0 +1,35 @@
+<div>
+
+    <div class="create-modal-header">
+        <h3 class="modal-title">
+            Ввод значения
+        </h3>
+
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="readyMadeValueForm" id="readyMadeValueForm" role="form" novalidate>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Введите значение<i class="red-star">*</i></label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" name="readyValue" ng-model="vm.updateData" required>
+                    <div class="help-block" ng-messages="readyMadeValueForm.readyValue.$error" ng-if="readyMadeValueForm.readyValue.$touched || submitted">
+                        <div ng-message="required">Поле должно быть заполнено</div>
+                        <div ng-message="number">Введите число</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group col-sm-11 text-right">
+                    
+                    <button type="submit" class="btn btn-success" ng-click="vm.confirm()">Сохранить</button>
+                    <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Отмена</button>
+                </div>
+            </div>
+        </form>
+        <hr />
+        <div>
+            <p class="form-description-text">Поля обозначеннные знаком <i class="red-star">*</i> обязательны для заполнения</p>
+        </div>
+    </div>
+
+</div>

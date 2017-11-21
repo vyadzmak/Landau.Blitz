@@ -37,29 +37,7 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
 
         modalInstance.result.then(function() {
             if (elements !== 'oddsData') {
-                if ($scope.mElement.Id == -1 || $scope.mElement.Id == undefined) {
-                    var id = 1;
-                    if (elements.length > 0) {
-                        id = elements[elements.length - 1].Id + 1;
-                    }
-                    $scope.mElement.Id = id;
-                    elements.push($scope.mElement);
-                    $scope.mElement = {};
-                } else {
-                    var ob = elements.filter(function(item) {
-                        return item.Id == $scope.mElement.Id;
-                    });
-
-                    if (ob.length > 0) {
-                        var dElement = ob[0];
-                        var index = $scope.elements.indexOf(dElement);
-
-                        if (index != -1) {
-                            $scope.elements[index] = $scope.mElement;
-                        }
-                    }
-                    $scope.mElement = {};
-                }
+                $scope.calculateOdds();
             } else {
                 projectFactory.initOddsData($scope.mElement, $scope.currentProject);
             }
@@ -134,18 +112,22 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
     $scope.percentTypeNonEditable = ['Purchase','Wage','Rent','Storage','Fuels','Waybill','Advertising','Customs',
             'DeliveryOfGoods','Fare','Taxes','Utilities','Security','Hospitality','LoanInterestPayment',
             'MarriageDamageCancellation','BankServices','OtherBusinessExpenses'];
+
+    $scope.takeFromOpiu=['Wage','Rent','Storage','Fuels','Waybill','Advertising','Customs',
+            'DeliveryOfGoods','Fare','Taxes','Utilities','Security','Hospitality','LoanInterestPayment',
+            'MarriageDamageCancellation','BankServices','OtherBusinessExpenses', 'OtherExpenses', 'TotalOutOperationsIncome', 'TotalIncome'];
     
     $scope.percentTypeEditable = ['RevenuesIncome','PrepaidIncome','ReturnIncome','OtherIncome',
             'CreditIncome','SalesIncome','SponsorshipIncome','OtherOutOperationsIncome'];
-    $scope.checkEditability = function(row, hVarName) {
-        var result = row.Calculate || (row.Rows && row.Rows.length>0);
+    $scope.checkEditability = function(row, hVarName, hasSubrows) {
+        var result = row.Calculate || (hasSubrows);
         if(hVarName === 'Prediction'){
             if (($scope.isPredicted.indexOf(row.VarName) !== -1 ||
                 $scope.percentTypeEditable.indexOf(row.VarName) !== -1) &&
-                (!row.Rows || row.Rows.length===0)) {
+                !hasSubrows) {
                 result = false;
-            } else if ($scope.percentTypeNonEditable.indexOf(row.VarName) === -1 &&
-                (!row.Rows || row.Rows.length===0) && !row.Calculate) {
+            } else if ($scope.takeFromOpiu.indexOf(row.VarName) === -1 &&
+                !hasSubrows && !row.Calculate) {
                 result = false;
             }
             else {
@@ -157,15 +139,49 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
 
     $scope.getDataType = function(row, hVarName) {
         var result = "'currency'";
-        if (hVarName === 'Prediction'){ 
+        if (hVarName === 'Prediction') {
             if ($scope.percentTypeEditable.indexOf(row.VarName) !== -1 ||
                 $scope.percentTypeNonEditable.indexOf(row.VarName) !== -1 ||
-                row.VarName === 'TotalExpensesForBusiness') {
+                row.VarName === 'TotalExpensesForBusiness' ||
+                row.VarName === 'TotalOutOperationsIncome'||
+                row.VarName === 'OtherExpenses') {
                 result = "'percent'";
             }
         }
         return result;
     }
+    
+    $scope.cellOptionsShown = function(rowVarName, monthVarName, hasSubRows) {
+        if ((monthVarName.indexOf('M') === 0 ||
+            monthVarName.indexOf('Prediction') === 0) &&
+            $scope.takeFromOpiu.indexOf(rowVarName) !== -1) {
+            return !hasSubRows;
+        } else if (monthVarName.indexOf('M') === 0 &&
+            ($scope.percentTypeEditable.indexOf(rowVarName) !== -1 || 
+            rowVarName === 'Purchase')) {
+            return !hasSubRows;
+        }else {
+            return false;
+        }
+    }
+
+    $scope.cellDropdownChoice = function(row, month, calcType) {
+        
+        $scope.mElement = { Row: row, Month: month };
+        if (!row.NonOpiu) {
+            row.NonOpiu = {};
+        }
+        row.NonOpiu[month.VarName] = calcType;
+        if (calcType) {
+            $scope.addNewModal('PartialViews/Modals/FinDataOdds/ReadyMadeValueModal.html',
+                readyOddsValueController,
+                "",
+                $scope.mElement);
+        } else {
+            $scope.calculateOdds();
+        }
+    }
+
     $scope.init();
 };
 blitzApp.controller("finDataOddsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "projectHttpService", "calculatorFactory", finDataOddsController]);

@@ -248,6 +248,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
 
             // make all data as numbers and consolidate this opiu, which is main
             angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Table, function (row, rKey) {
+                row.Rows = undefined;
                 row.Avg = mathFactory.getFloat(row.Avg);
                 row.AvgPrediction = mathFactory.getFloat(row.AvgPrediction);
                 angular.forEach(currentProject.ConsolidatedOpiu.Opiu.Months, function (month, mKey) {

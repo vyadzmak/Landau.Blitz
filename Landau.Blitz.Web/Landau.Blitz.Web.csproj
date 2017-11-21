@@ -365,6 +365,7 @@
     <Content Include="PartialViews\Modals\FinancePlanning\SupplierModal.html" />
     <Content Include="PartialViews\Modals\FinDataBalance\BalanceModal.html" />
     <Content Include="PartialViews\Modals\FinDataOdds\OddsModal.html" />
+    <Content Include="PartialViews\Modals\FinDataOdds\ReadyMadeValueModal.html" />
     <Content Include="PartialViews\Modals\FinDataOpiu\DailyValueModal.html" />
     <Content Include="PartialViews\Modals\FinDataOpiu\CalculationMarginModal.html" />
     <Content Include="PartialViews\Modals\FinDataOpiu\InventoriesMarginModal.html" />
@@ -458,6 +459,7 @@
     <Content Include="Scripts\app\Controllers\ModalControllers\FinancePlanningControllers\manageSupplierController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOddsControllers\manageOddsController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataBalanceControllers\manageBalanceController.js" />
+    <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOddsControllers\readyOddsValueController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOpiuControllers\calculationMarginController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOpiuControllers\inventoriesMarginController.js" />
     <Content Include="Scripts\app\Controllers\ModalControllers\FinDataOpiuControllers\dailyValueController.js" />

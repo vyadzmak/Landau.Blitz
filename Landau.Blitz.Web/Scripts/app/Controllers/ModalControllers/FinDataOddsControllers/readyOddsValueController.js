@@ -1,14 +1,14 @@
-﻿var readyOddsValueController = function ($scope, $uibModal, $uibModalInstance) {
+﻿var readyMadeValueController = function ($scope, $uibModal, $uibModalInstance) {
     var vm = this;
 
     function loadReadyData() {
         vm.$scope = $scope;
-        vm.updateData = $scope.mElement.Row[$scope.mElement.Month.VarName];
+        vm.updateData = $scope.mElement.Row['M' + $scope.mElement.Month.Id];
         vm.confirm = function () {
             $scope.submitted = true;
             if ($scope.readyMadeValueForm.$valid) {
                 $scope.submitted = false;
-                $scope.mElement.Row[$scope.mElement.Month.VarName] = vm.updateData;
+                $scope.mElement.Row['M' + $scope.mElement.Month.Id] = vm.updateData;
                 $uibModalInstance.close();
             }
         };
@@ -16,4 +16,4 @@
     }
     loadReadyData();
 };
-blitzApp.controller("readyOddsValueController", ["$scope", "$uibModal", "$uibModalInstance", readyOddsValueController]);
+blitzApp.controller("readyMadeValueController", ["$scope", "$uibModal", "$uibModalInstance", readyMadeValueController]);

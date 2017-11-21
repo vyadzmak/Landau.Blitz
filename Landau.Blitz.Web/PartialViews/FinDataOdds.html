@@ -22,16 +22,28 @@
                 <td>
                     <button class="btn btn-xs btn-primary pull-left"
                             ng-click="addSubRow(row, currentProject.FinDataOdds.Odds.Header)"
-                            ng-if="!row.Calculate">
+                            ng-if="!(row.Calculate || takeFromOpiu.indexOf(row.VarName)!==-1)">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button><span ng-click="row.ShowSubRows=!row.ShowSubRows">{{row.Title}}</span>
                 </td>
 
-                <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
+                <td ng-repeat-start="month in currentProject.FinDataOdds.Odds.Header track by $index"
                     ng-model="row[month.VarName]" editable-filter="{{getDataType(row, month.VarName)}}"
                     content-editable
-                    non-editable="{{checkEditability(row, month.VarName)}}"
-                    edit-callback="calculateOdds()"></td>
+                    non-editable="{{checkEditability(row, month.VarName, row.Rows && row.Rows.length>0)}}"
+                    edit-callback="calculateOdds()"
+                    ng-if="!cellOptionsShown(row.VarName, month.VarName, row.Rows && row.Rows.length>0)"></td>
+                <td ng-repeat-end ng-if="cellOptionsShown(row.VarName, month.VarName, row.Rows && row.Rows.length>0)">
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                            {{row[month.VarName] | currency:'':2}}{{getDataType(row, month.VarName).indexOf('percent')!==-1?'%':''}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, false)"><a href="javascript:void(0)">Исплользовать прогнозное значение из ОПИУ</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(row, month, true)"><a href="javascript:void(0)">Ввести другое значение</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
             <tr ng-repeat-end ng-repeat="subRow in row.Rows"
                     ng-show="row.ShowSubRows">
@@ -45,11 +57,23 @@
                         <div class="content-editable-container" ng-model="subRow.Title" content-editable></div>
                     </div>
                 </td>
-
-                <td ng-repeat="month in currentProject.FinDataOdds.Odds.Header track by $index"
+                <td ng-repeat-start="month in currentProject.FinDataOdds.Odds.Header track by $index"
                     ng-model="subRow[month.VarName]" editable-filter="{{getDataType(row, month.VarName)}}"
                     content-editable
-                    edit-callback="calculateOdds()"></td>
+                    non-editable="{{checkEditability(row, month.VarName)}}"
+                    edit-callback="calculateOdds()"
+                    ng-if="!cellOptionsShown(row.VarName, month.VarName)"></td>
+                <td ng-repeat-end ng-if="cellOptionsShown(row.VarName, month.VarName)">
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-xs btn-outline" uib-dropdown-toggle>
+                            {{subRow[month.VarName] | currency:'':2}}{{getDataType(row, month.VarName).indexOf('percent')!==-1?'%':''}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-click="cellDropdownChoice(subRow, month, false)"><a href="javascript:void(0)">Исплользовать прогнозное значение из ОПИУ</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(subRow, month, true)"><a href="javascript:void(0)">Ввести другое значение</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
