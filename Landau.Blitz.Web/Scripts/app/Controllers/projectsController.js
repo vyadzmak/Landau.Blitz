@@ -26,28 +26,29 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
 
     $scope.deleteProject = function(projectId) {
         var rParams = { id: projectId };
-        promiseUtils.getPromiseHttpResult(httpService.deleteRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
+        promiseUtils.getPromiseHttpResult(httpService.deleteRequest($http, $scope, usSpinnerService, url, rParams))
+            .then(function(result) {
 
-            //alert(result);
+                //alert(result);
 
-            if (result == "OK") {
-                var ob = $scope.projects.filter(function(item) {
-                    return item.Id == projectId;
-                });
+                if (result == "OK") {
+                    var ob = $scope.projects.filter(function(item) {
+                        return item.Id == projectId;
+                    });
 
-                if (ob.length > 0) {
-                    var dElement = ob[0];
-                    var index = $scope.projects.indexOf(dElement);
+                    if (ob.length > 0) {
+                        var dElement = ob[0];
+                        var index = $scope.projects.indexOf(dElement);
 
-                    if (index != -1) {
-                        $scope.projects.splice(index, 1);
+                        if (index != -1) {
+                            $scope.projects.splice(index, 1);
+                        }
                     }
                 }
-            }
-            $('#projectTable').bootstrapTable('load', $scope.projects);
-            $('#projectTable').bootstrapTable('resetView');
+                $('#projectTable').bootstrapTable('load', $scope.projects);
+                $('#projectTable').bootstrapTable('resetView');
 
-        })
+            });
     }
 
     var rParams = { 'userId': $scope.userData.UserId };
@@ -103,18 +104,18 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
             data: $scope.projects,
             showColumns: true,
             columns: [{
-                    field: 'Id',
-                    title: 'Id',
-                    sortable: true
-                }, {
-                    field: 'Name',
-                    title: 'Наименование',
-                    sortable: true
-                }, {
-                    field: 'Content.ClientData.OrganizationName',
-                    title: 'Клиент',
-                    sortable: true
-                },
+                field: 'Id',
+                title: 'Id',
+                sortable: true
+            }, {
+                field: 'Name',
+                title: 'Наименование',
+                sortable: true
+            }, {
+                field: 'Content.ClientData.OrganizationName',
+                title: 'Клиент',
+                sortable: true
+            },
                 {
                     field: 'CreatorName',
                     title: 'Пользователь',
@@ -160,12 +161,7 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
     //add new user btn event
     //имя вьюхи, контроллер, пустой элемент, куда пишем, что пишем
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
-
-
-        if (element != {}) {
-            $scope.isEdit = true;
-        }
-
+        
         currentElement = element;
         var modalInstance = $uibModal.open({
             templateUrl: modalView,
@@ -196,17 +192,18 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
             if (JSON.stringify(element) == "{}") {
 
 
-                promiseUtils.getPromiseHttpResult(httpService.postRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
+                promiseUtils.getPromiseHttpResult(httpService
+                    .postRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
 
-                    $scope.mElement = JSON.parse(result);
-                    //$scope.mElement.ClientTypeName = $scope.mElement.CurrentClientType.Description;
-                    //$scope.mElement.RegistrationDate = JSON.parse(result).RegistrationDate;
-                    elements.push($scope.mElement);
-                    $scope.mElement = {};
-                    $('#projectTable').bootstrapTable('load', $scope.projects);
-                    $('#projectTable').bootstrapTable('resetView');
-
-                })
+                        $scope.mElement = JSON.parse(result);
+                        //$scope.mElement.ClientTypeName = $scope.mElement.CurrentClientType.Description;
+                        //$scope.mElement.RegistrationDate = JSON.parse(result).RegistrationDate;
+                        elements.push($scope.mElement);
+                        $('#projectTable').bootstrapTable('load', $scope.projects);
+                        $('#projectTable').bootstrapTable('resetView');
+                        $state.go('main.dashboard.project', { projectId: $scope.mElement.Id });
+                        $scope.mElement = {};
+                    });
 
 
                 //send request to POST
