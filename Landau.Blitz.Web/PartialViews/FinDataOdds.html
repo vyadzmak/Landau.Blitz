@@ -6,6 +6,9 @@
         <div class="col-md-3">
             <button class="btn btn-warning" ng-click="showSubRows(currentProject.FinDataOdds.Odds.Table, false)"><i class="fa fa-compress fa-fw"></i> Свернуть все</button>
         </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" ng-click="updateOdds()"><i class="fa fa-pencil-square-o fa-fw"></i> Обновить исходные данные</button>
+        </div>
     </div>
     <div ng-if="currentProject.FinDataOdds.Odds.Header">
         <table st-table="currentProject.FinDataOdds.Odds.Table" class="table table-bordered table-condensed ng-table">

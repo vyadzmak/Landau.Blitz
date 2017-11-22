@@ -552,6 +552,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\lightbox.js" />
+    <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\mask.js" />
     <Content Include="Scripts\metisMenu.min.js" />
     <Content Include="Scripts\mindmup-editabletable.js" />

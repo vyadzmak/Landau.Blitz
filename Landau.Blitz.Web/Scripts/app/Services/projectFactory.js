@@ -261,7 +261,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
     }
 
     function initOpiuMonth(endMonth, monthsQuantity) {
-        var startMonth = moment(endMonth).add(-monthsQuantity, 'months');
+        var startMonth = moment(endMonth).add(-(1 + monthsQuantity), 'months');
         var months = [];
         for (var i = 1; i <= monthsQuantity; i++) {
             var startDate = moment(startMonth);
@@ -271,6 +271,21 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
             });
         }
         return months;
+    }
+
+    var setIntersectionOpiuValues = function (element, source, months, intersectionMonths) {
+        _.forEach(months, function (month, monthKey) {
+            var sourceMonth = _.find(intersectionMonths, function (o) { return o.Name === month.Name });
+            sourceMonth = sourceMonth ? sourceMonth : {};
+            element["M" + month.Id] = source["M" + sourceMonth.Id];
+        });
+        element.AvgPrediction = source.AvgPredicion;
+    }
+
+    var setIntersectionOddsValues = function (element, source, intersectionVars) {
+        _.forEach(intersectionVars, function (varName, key) {
+            element[varName] = source[varName];
+        });
     }
 
     //-------------------------------init functions --------------------------------------//
@@ -393,6 +408,37 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         this.currentProject = currentProject;
     }
 
+    projectFactory.updateOpius = function (currentProject) {
+        var sourceOpius = _.cloneDeep(currentProject.FinDataOpiu.Opius);
+        projectFactory.initOpius(currentProject);
+        _.forEach(currentProject.FinDataOpiu.Opius, function (opiu, opiuKey) {
+            var sourceOpiu = _.find(sourceOpius, function (o) { return o.Name === opiu.Name; });
+            var intersectionMonths = _.intersectionBy(sourceOpiu.Months, opiu.Months, 'Name');
+            _.forEach(opiu.Months, function (month, monthsKey) {
+                var sourceMonth = _.find(intersectionMonths, function (o) { return o.Name === opiu.Name; });
+                sourceMonth = sourceMonth ? sourceMonth : {};
+                opiu.MarginCalcType = sourceMonth.MarginCalcType;
+                opiu.CalculationsData = sourceMonth.CalculationsData;
+                opiu.RevenuesCalcType = sourceMonth.RevenuesCalcType;
+                opiu.RevenuesCalcData = sourceMonth.RevenuesCalcData;
+                opiu.Rows = sourceMonth.Rows;
+            });
+            _.forEach(opiu.Table, function (row, rowKey) {
+                var sourceRow = _.find(sourceOpiu.Table, function (o) { return o.VarName === row.VarName });
+                sourceRow = sourceRow ? sourceRow : {};
+                setIntersectionOpiuValues(row, sourceRow, opiu.Months, intersectionMonths);
+                if (sourceRow.Rows) {
+                    row.Rows = [];
+                    _.forEach(sourceRow.Rows, function (sourceSubRow, subRowKey) {
+                        var subRow = { Id: sourceSubRow.Id, Title: sourceSubRow.Title }
+                        setIntersectionOpiuValues(subRow, sourceSubRow, opiu.Months, intersectionMonths);
+                        row.Rows.push(subRow);
+                    });
+                }
+            });
+        });
+    }
+
     projectFactory.initOddsData = function (months, currentProject) {
 
         currentProject.FinDataOdds.Odds = {};
@@ -410,7 +456,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         for (var i = 0; i < months.MonthsBefore; i++) {
             var befDate = angular.copy(startDate);
             currentProject.FinDataOdds.Odds.Header.unshift({
-                Name: befDate.add(-(i+1), 'months').format('MM.YY'),
+                Name: befDate.add(-(i + 1), 'months').format('MM.YY'),
                 VarName: 'm' + i
             });
         }
@@ -441,11 +487,42 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         this.currentProject = currentProject;
     };
 
+    projectFactory.updateOddsData = function (months, currentProject) {
+        var sourceOdds = _.cloneDeep(currentProject.FinDataOdds.Odds);
+        projectFactory.initOddsData(months, currentProject);
+        var intersectionMonths = _.intersectionWith(sourceOdds.Header, this.currentProject.FinDataOdds.Odds.Header, _.isEqual);
+        var intersectionVars = [];
+        _.forEach(intersectionMonths, function (value, key) {
+            intersectionVars.push(value.VarName);
+        });
+        _.forEach(this.currentProject.FinDataOdds.Odds.Table, function (row, rowKey) {
+            var sourceRow = _.find(sourceOdds.Table, function (o) { return o.VarName === row.VarName });
+            sourceRow = sourceRow ? sourceRow : {};
+            setIntersectionOddsValues(row, sourceRow, intersectionVars);
+            if (sourceRow.NonOpiu) {
+                row.NonOpiu = {};
+                setIntersectionOddsValues(row.NonOpiu, sourceRow.NonOpiu, intersectionVars);
+            }
+            if (sourceRow.Rows) {
+                row.Rows = [];
+                _.forEach(sourceRow.Rows, function (sourceSubRow, subRowKey) {
+                    var subRow = { Id: sourceSubRow.Id, Title: sourceSubRow.Title }
+                    setIntersectionOddsValues(subRow, sourceSubRow, intersectionVars);
+                    if (sourceSubRow.NonOpiu) {
+                        subRow.NonOpiu = {};
+                        setIntersectionOddsValues(subRow.NonOpiu, sourceSubRow.NonOpiu, intersectionVars);
+                    }
+                    row.Rows.push(subRow);
+                });
+            }
+        });
+    }
+
     projectFactory.initBalances = function (companies) {
 
         this.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances(companies, this.currentProject);
     }
-    
+
     projectFactory.getToCurrentProject = function () {
         angular.forEach(this.currentProject.BusinessInfo.ClientFounderInfos, function (value, key) {
             value.DateOfBirth = new Date(value.DateOfBirth);
@@ -572,9 +649,9 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
 
 
         angular.forEach(this.currentProject.FinancePlanning.Plans, function (value, key) {
-            if(moment(value.Date).isValid() || moment(value.Date, ["DD-MM-YYYY", "DD.MM.YYYY", "DD/MM/YYYY"]).isValid()){
+            if (moment(value.Date).isValid() || moment(value.Date, ["DD-MM-YYYY", "DD.MM.YYYY", "DD/MM/YYYY"]).isValid()) {
                 value.Date = moment(value.Date, ["DD-MM-YYYY", "DD.MM.YYYY", "DD/MM/YYYY"]).format("DD.MM.YYYY");
-            } else { value.Date = null}
+            } else { value.Date = null }
         });
 
         return this.currentProject;
@@ -611,7 +688,7 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         }
         return this.currentProject.FinDataOpiu.Opius[this.activeOpiu.CompanyId - 1];
     }
-    
+
     return projectFactory;
 
 }]);

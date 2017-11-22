@@ -19,6 +19,17 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         }
     }
 
+    $scope.updateOdds = function() {
+        $scope.mElement = {};
+        $scope.mElement.MonthsBefore = $scope.currentProject.FinDataOdds.Odds.MonthsBefore;
+        $scope.mElement.MonthsAfter = $scope.currentProject.FinDataOdds.Odds.MonthsAfter;
+        $scope.addNewModal('PartialViews/Modals/FinDataOdds/OddsModal.html',
+                manageOddsController,
+                $scope.mElement,
+                'oddsData',
+                $scope.mElement);
+    }
+
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
 
@@ -39,7 +50,12 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
             if (elements !== 'oddsData') {
                 $scope.calculateOdds();
             } else {
-                projectFactory.initOddsData($scope.mElement, $scope.currentProject);
+                if ($scope.isEdit) {
+                    projectFactory.updateOddsData($scope.mElement, $scope.currentProject);
+                    $scope.calculateOdds();
+                } else{
+                    projectFactory.initOddsData($scope.mElement, $scope.currentProject);
+                }
             }
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 

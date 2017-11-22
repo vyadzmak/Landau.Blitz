@@ -35,6 +35,15 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
         }
     }
 
+    $scope.updateOpiu = function() {
+        $scope.mElement = $scope.currentProject.FinDataOpiu;
+        $scope.addNewModal('PartialViews/Modals/FinDataOpiu/OpiuModal.html',
+            manageOpiuController,
+            'opiuData',
+            $scope.mElement);
+        $scope.isEdit = true;
+    }
+
     $scope.loanTypes = [
             {Id:1, Name:"Банковский заем" },
             {Id:2, Name:"Возобновляемая кредитная линия" },
@@ -61,10 +70,29 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
 
         modalInstance.result.then(function() {
             if (data !== 'opiuData') {
+                var dataRow;
+                if ($scope.mElement.Row.Id) {
+                    dataRow = _.find($scope.mElement.Month.Rows, function(o) {return o.Id === $scope.mElement.Row.Id});
+                } else {
+                    dataRow = $scope.mElement.Month;
+                }
+                if ($scope.mElement.IsRevenues) {
+                    dataRow.RevenuesCalcData = $scope.mElement.CalcData;
+                } else {
+                    dataRow.CalculationsData = $scope.mElement.CalcData;
+                }
                 $scope.calculateOpiu($scope.activeOpiu);
             } else {
-                projectFactory.initOpius($scope.currentProject);
-                $scope.activeOpiu = projectFactory.getActiveOpiu();
+                if ($scope.isEdit) {
+                    projectFactory.updateOpius($scope.currentProject);
+                    angular.forEach($scope.currentProject.FinDataOpiu.Opius, function(value, key) {
+                        $scope.calculateOpiu(value);
+                    });
+                    $scope.activeOpiu = projectFactory.getActiveOpiu();
+                } else{
+                    projectFactory.initOpius($scope.currentProject);
+                    $scope.activeOpiu = projectFactory.getActiveOpiu();
+                }
             }
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 
@@ -228,13 +256,14 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
             month.RevenuesCalcData = null;
         }
         
-        $scope.mElement = { Row: subRow?subRow:row, Month: month, IsRevenues: row.VarName==='Revenues' };
-        $scope.mElement.CalcData = row.VarName === 'Revenues' ? month.RevenuesCalcData : month.CaculationsData;
-        if (subRow) {
+        $scope.mElement = { Row: subRow?subRow:row, Month: month, IsRevenues: row.VarName==='Revenues'};
+        if(!subRow){
+            $scope.mElement.CalcData = row.VarName === 'Revenues' ? month.RevenuesCalcData : month.CalculationsData;
+        } else {
             if (!month.Rows) {
                 month.Rows = [];
             }
-            var index;
+            var index = -1;
             angular.forEach(month.Rows, function(rvalue, rkey) {
                 if (rvalue.Id === subRow.Id) {
                     index = rkey;
@@ -247,8 +276,8 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                     }
                 }
             });
-            if (index) {
-                $scope.mElement.CalcData = row.VarName === 'Revenues'? month.Rows[index].RevenuesCalcData: month.Rows[index].CaculationsData;
+            if (index!==-1) {
+                $scope.mElement.CalcData = row.VarName === 'Revenues'? month.Rows[index].RevenuesCalcData: month.Rows[index].CalculationsData;
             } else {
                 month.Rows.push({
                     Id: subRow.Id,
@@ -260,7 +289,7 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 $scope.mElement.CalcData = 
                     row.VarName === 'Revenues'? 
                     month.Rows[month.Rows.length-1].RevenuesCalcData: 
-                    month.Rows[month.Rows.length-1].CaculationsData;
+                    month.Rows[month.Rows.length-1].CalculationsData;
             }
         }
         switch (calcType) {
