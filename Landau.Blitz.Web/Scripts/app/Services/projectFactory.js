@@ -523,6 +523,31 @@ blitzApp.factory('projectFactory', ['$rootScope', 'clientDataInitializer', 'data
         this.currentProject.FinDataBalance.Balances = balanceTableFactory.initBalances(companies, this.currentProject);
     }
 
+    projectFactory.updateBalance = function (finDataBalance, prevFinDataBalance) {
+
+        this.currentProject.FinDataBalance.Balances = balanceTableFactory.updateBalance(finDataBalance, prevFinDataBalance, this.currentProject);
+        var isDiffMonths = moment(this.currentProject.FinDataBalance.CurrentFinAnalysisDate).year()
+                                !== moment(finDataBalance.CurrentFinAnalysisDate).year()
+                       || moment(this.currentProject.FinDataBalance.CurrentFinAnalysisDate).month()
+                                !== moment(finDataBalance.CurrentFinAnalysisDate).month();
+
+        if (isDiffMonths) {
+            this.currentProject.FinDataBalance.CurrentFinAnalysisDate = finDataBalance.CurrentFinAnalysisDate;
+            if (this.currentProject.FinDataOdds.Odds) {
+                var oddsMonths = {
+                    MonthsBefore: this.currentProject.FinDataOdds.Odds.MonthsBefore,
+                    MonthsAfter: this.currentProject.FinDataOdds.Odds.MonthsAfter
+                }
+                projectFactory.updateOddsData(oddsMonths, this.currentProject);
+            }
+            if (this.currentProject.FinDataOpiu.Opius) {
+                projectFactory.updateOpius(this.currentProject);
+            }
+        } else {
+            this.currentProject.FinDataBalance.CurrentFinAnalysisDate = finDataBalance.CurrentFinAnalysisDate;
+        }
+    }
+
     projectFactory.getToCurrentProject = function () {
         angular.forEach(this.currentProject.BusinessInfo.ClientFounderInfos, function (value, key) {
             value.DateOfBirth = new Date(value.DateOfBirth);

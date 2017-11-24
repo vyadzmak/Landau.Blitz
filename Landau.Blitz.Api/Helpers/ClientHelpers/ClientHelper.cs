@@ -30,9 +30,10 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
                         Id = client.Id,
                         Name = client.Name,
                         RegistrationNumber = client.RegistrationNumber,
-                        RegistrationDate = client.RegistrationDate.ToString(),
+                        RegistrationDate = client.RegistrationDate.HasValue ? client.RegistrationDate.ToString() : "",
+                        StateRegistrationDate = client.StateRegistrationDate.HasValue ? client.StateRegistrationDate.ToString() : "",
+                        OrganizationType = client.OrganizationType,
                         ClientTypes = ClientTypeHelper.GetToClientType()
-
                     };
 
                     model.CurrentClientType = model.ClientTypes.FirstOrDefault(x => x.Id == model.ClientTypeId);
@@ -70,7 +71,9 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
                         Id = client.Id,
                         Name = client.Name,
                         RegistrationNumber = client.RegistrationNumber,
-                        RegistrationDate = client.RegistrationDate.ToString(),
+                        RegistrationDate = client.RegistrationDate.HasValue ? client.RegistrationDate.ToString() : "",
+                        StateRegistrationDate = client.StateRegistrationDate.HasValue ? client.StateRegistrationDate.ToString() : "",
+                        OrganizationType = client.OrganizationType,
                         ClientTypes = ClientTypeHelper.GetToClientType(userId)
 
                     };
@@ -110,7 +113,9 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
                         Id = client.Id,
                         Name = client.Name,
                         RegistrationNumber = client.RegistrationNumber,
-                        RegistrationDate = client.RegistrationDate.ToString(),
+                        RegistrationDate = client.RegistrationDate.HasValue ? client.RegistrationDate.ToString() : "",
+                        StateRegistrationDate = client.StateRegistrationDate.HasValue ? client.StateRegistrationDate.ToString() : "",
+                        OrganizationType = client.OrganizationType,
                         ClientTypes = ClientTypeHelper.GetToClientType()
                     };
                     model.CurrentClientType = model.ClientTypes.FirstOrDefault(x => x.Id == model.ClientTypeId);
@@ -151,7 +156,9 @@ namespace Landau.Blitz.Api.Helpers.ClientHelpers
                         Id = client.Id,
                         Name = client.Name,
                         RegistrationNumber = client.RegistrationNumber,
-                        RegistrationDate = client.RegistrationDate.ToString(),
+                        RegistrationDate = client.RegistrationDate.HasValue ? client.RegistrationDate.ToString() : "",
+                        StateRegistrationDate = client.StateRegistrationDate.HasValue ? client.StateRegistrationDate.ToString() : "",
+                        OrganizationType = client.OrganizationType,
                         ClientTypes = ClientTypeHelper.GetToClientType(userId)
                     };
                     model.CurrentClientType = model.ClientTypes.FirstOrDefault(x => x.Id == model.ClientTypeId);

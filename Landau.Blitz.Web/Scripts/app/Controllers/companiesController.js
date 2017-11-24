@@ -59,16 +59,19 @@ var companiesController = function($scope, $http, $location, $state, $uibModal, 
                 var ob = $scope.companies.filter(function(item) {
                     return item.Id == row.Id;
                 });
-                var editElement = ob;
+
                 var modalView = 'PartialViews/Modals/Company/CompanyModal.html';
                 var modalController = manageCompanyController;
 
                 if ($scope.companies == undefined) {
                     $scope.companies = [];
                 }
-                $scope.mElement = ob[0];
+                $scope.mElement = _.cloneDeep(ob[0]);
                 //$scope.showCompanyModal($scope.mElement);
                 $scope.mElement.ClientTypeId = 1;
+                $scope.mElement.StateRegistrationDate = moment($scope.mElement.StateRegistrationDate, 'DD.MM.YYYY H:mm:ss').isValid()
+                    ? new Date(moment($scope.mElement.StateRegistrationDate, 'DD.MM.YYYY H:mm:ss')._d)
+                    : null;
                 $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.companies, $scope.mElement);
 
             },
@@ -188,10 +191,11 @@ var companiesController = function($scope, $http, $location, $state, $uibModal, 
 
 
                 promiseUtils.getPromiseHttpResult(httpService.postRequest($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
-
-                    $scope.mElement.Id = JSON.parse(result).Id;
+                    var result = JSON.parse(result);
+                    $scope.mElement.Id = result.Id;
                     $scope.mElement.ClientTypeName = $scope.mElement.CurrentClientType.Description;
-                    $scope.mElement.RegistrationDate = JSON.parse(result).RegistrationDate;
+                    $scope.mElement.RegistrationDate = result.RegistrationDate;
+                    $scope.mElement.StateRegistrationDate = result.StateRegistrationDate;
                     elements.push($scope.mElement);
                     $scope.mElement = {};
                     $('#companyTable').bootstrapTable('load', $scope.companies);

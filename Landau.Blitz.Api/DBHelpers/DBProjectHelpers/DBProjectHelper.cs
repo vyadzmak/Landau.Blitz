@@ -24,12 +24,12 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
                 using (var db = new LandauBlitzEntities())
                 {
                     return db.Projects
-                        .Include(x=>x.Users)
-                        
+                        .Include(x => x.Users)
+
                         .Where(x => x.CreatorId == userId).OrderByDescending(x => x.Id)
                         .ToList();
                 }
-                
+
             }
             catch (Exception e)
             {
@@ -51,7 +51,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
             {
                 using (var db = new LandauBlitzEntities())
                 {
-                    return SerializeHelper.Serialize(db.Projects.FirstOrDefault(x => x.Id==id));
+                    return SerializeHelper.Serialize(db.Projects.FirstOrDefault(x => x.Id == id));
                 }
             }
             catch (Exception e)
@@ -63,7 +63,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
 
                 return "";
             }
-            
+
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
                     {
                         project.ProjectContent = model.Content;
                         db.SaveChanges();
-                     
+
                     }
                 }
                 return SerializeHelper.Serialize(model);
@@ -136,7 +136,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
                     model.Id = project.Id;
                     model.CreationDate = project.CreationDate.ToString();
                 }
-                    return SerializeHelper.Serialize(model);
+                return SerializeHelper.Serialize(model);
             }
             catch (Exception e)
             {
@@ -194,6 +194,39 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectHelpers
             catch (Exception e)
             {
                 return "Error";
+            }
+        }
+
+        public static List<Projects> GetProjectsByClientIdProjectId(int clientId, int projectId)
+        {
+            try
+            {
+                using (var db = new LandauBlitzEntities())
+                {
+                    var project = db.Projects.FirstOrDefault(x => x.Id == projectId);
+                    var projects = db.Projects
+                        .Include(x => x.Users)
+                        .Where(x => x.ClientId == clientId && x.CreationDate<project.CreationDate)
+                        .ToList();
+                    var result = new List<DB.Projects>();
+                    for (var i = projects.Count - 1; i > -1; i--)
+                    {
+                        if (result.Count > 3)
+                        {
+                            return result;
+                        }
+                        else
+                        {
+                            result.Add(projects[i]);
+                        }
+                    }
+                    return result;
+                }
+
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
     }

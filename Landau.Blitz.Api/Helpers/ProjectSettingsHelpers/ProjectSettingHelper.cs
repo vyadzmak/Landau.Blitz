@@ -18,11 +18,11 @@ namespace Landau.Blitz.Api.Helpers.ProjectSettingsHelpers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static  string GetToProjectSettings(int userId)
+        public static  string GetToProjectSettings(int userId, string registrationNumber)
         {
             try
             {
-                List<Clients> clients = DBProjectSettingsHelper.GetToClientsByUserId(userId);
+                List<Clients> clients = DBProjectSettingsHelper.GetToClientsByUserIdRegistrationNumber(userId, registrationNumber);
 
                 ProjectSettingModel model = new ProjectSettingModel();
 

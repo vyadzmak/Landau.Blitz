@@ -6,32 +6,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Наименование компании и юридическая форма организации</div>
-
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Наименование компании</label>
-                            <input type="text" class="form-control" placeholder="Наименование компании" ng-model="currentProject.ClientData.OrganizationName">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleSelect2">Форма СЧП</label>
-                            <select class="form-control" id="exampleSelect2" ng-model="currentProject.ClientData.OrganizationType">
-                                <option value="1">ИП</option>
-                                <option value="2">ТОО</option>
-                                <option value="3">КХ</option>
-                            </select>
-                            <small id="emailHelp" class="form-text text-muted">Относится ли к целевой группе по юридическому статусу</small>
-                        </div>
-                        <div class="form-group">
-                            <label>БИН/ИИН</label>
-                            <input type="text" class="form-control" placeholder="БИН/ИИН" ng-model="currentProject.ClientData.BinIin">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-primary">
                     <div class="panel-heading">Кредит</div>
 
                     <div class="panel-body">
@@ -56,6 +30,29 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Финансовый анализ компаний
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>По скольким компаниям группы будет производиться финансовый анализ</label>
+                            <input type="number" class="form-control" placeholder="1" ng-model="currentProject.ClientData.FinAnalysisCompaniesCount" ng-change="finAnalysisCompaniesCountChanged()">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" ng-model="currentProject.ClientData.ForeignEarnings">
+                                У заемщика имеется валютная выручка
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Введите наименования рассматриваемых компаний</label>
+                            <input type="text" class="form-control" placeholder="Название компании" ng-repeat="row in currentProject.ClientData.FinAnalysisCompanies" ng-model="row.Name">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -66,10 +63,6 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Дата государственной регистрации заемщика</label>
-                            <input type="date" class="form-control" ng-model="currentProject.ClientData.RegistrationDate">
-                        </div>
 
                         <div class="form-group">
                             <label for="exampleSelect1">Виды деятельности клиента (отрасль кредитования (вид и код ОКЭД))</label>
@@ -277,33 +270,6 @@
             </div>
         </div>
         <!--END BLOCK-->
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Финансовый анализ компаний
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>По скольким компаниям группы будет производиться финансовый анализ</label>
-                            <input type="number" class="form-control" placeholder="1" ng-model="currentProject.ClientData.FinAnalysisCompaniesCount" ng-change="finAnalysisCompaniesCountChanged()">
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" ng-model="currentProject.ClientData.ForeignEarnings">
-                                У заемщика имеется валютная выручка
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Введите наименования рассматриваемых компаний</label>
-                            <input type="text" class="form-control" placeholder="Название компании" ng-repeat="row in currentProject.ClientData.FinAnalysisCompanies" ng-model="row.Name">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--Юридические собственники компании-->
 
         <div class="panel panel-primary">

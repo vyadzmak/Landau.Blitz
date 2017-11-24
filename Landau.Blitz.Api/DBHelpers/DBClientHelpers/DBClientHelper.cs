@@ -62,7 +62,7 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                         .Include(x => x.Users)
                         .Include(x=>x.Users.Clients)
                         
-                        .FirstOrDefault(x=>x.Id==userId);
+                        .FirstOrDefault(x=>x.UserId==userId);
                     if (data == null) return null;
                     int clientId = (int)data.Users.ClientId;
 
@@ -153,9 +153,17 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                         Name = model.Name,
                         ClientTypeId = model.CurrentClientType.Id,
                         RegistrationDate = DateTime.Now,
+                        OrganizationType = model.OrganizationType,
                         RegistrationNumber = model.RegistrationNumber,
                         ClientCreatorId = model.ClientCreatorId
                     };
+                    DateTime result;
+                    if (DateTime.TryParse(model.StateRegistrationDate, out result))
+                    {
+                        client.StateRegistrationDate = result;
+                        model.StateRegistrationDate = client.StateRegistrationDate.ToString();
+                    }
+
                     model.RegistrationDate = client.RegistrationDate.ToString();
                     db.Clients.Add(client);
                     db.SaveChanges();
@@ -189,13 +197,20 @@ namespace Landau.Blitz.Api.DBHelpers.DBClientHelpers
                     {
                         client.Address = model.Address;
                         client.Name = model.Name;
+                        client.OrganizationType = model.OrganizationType;
                         client.ClientTypeId = model.CurrentClientType.Id;
-                       
                         client.RegistrationNumber = model.RegistrationNumber;
+
+                        DateTime result;
+                        if (DateTime.TryParse(model.StateRegistrationDate, out result))
+                        {
+                            client.StateRegistrationDate = result;
+                            model.StateRegistrationDate = client.StateRegistrationDate.ToString();
+                        }
                         //db.Clients.Add(client);
                         db.SaveChanges();
                         model.Id = client.Id;
-                       // model.ClientTypes = client
+                        // model.ClientTypes = client
                     };
                                     }
                 return model;

@@ -5,17 +5,37 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
 
         $scope.currentProject = projectFactory.getToCurrentProject();
         if (!$scope.currentProject.FinDataOdds.Odds) {
-            
-            $scope.currentProject.FinDataBalance.Companies = angular
-                .copy($scope.currentProject.ClientData.FinAnalysisCompanies);
+            if ($scope.currentProject.ClientData.FinAnalysisCompanies &&
+                $scope.currentProject.ClientData.FinAnalysisCompanies.length > 0 &&
+                $scope.currentProject.FinDataBalance.CurrentFinAnalysisDate) {
+                $scope.currentProject.FinDataBalance.Companies = angular
+                    .copy($scope.currentProject.ClientData.FinAnalysisCompanies);
 
-            $scope.mElement = {};
-            $scope.addNewModal('PartialViews/Modals/FinDataOdds/OddsModal.html',
-                manageOddsController,
-                $scope.mElement,
-                'oddsData',
-                $scope.mElement);
+                $scope.mElement = {};
+                $scope.addNewModal('PartialViews/Modals/FinDataOdds/OddsModal.html',
+                    manageOddsController,
+                    $scope.mElement,
+                    'oddsData',
+                    $scope.mElement);
 
+            }
+            else {
+                var dialog = new BootstrapDialog({
+                    type: BootstrapDialog.TYPE_WARNING,
+                    size: BootstrapDialog.SIZE_SMALL,
+                    title: "Не указаны данные",
+                    message:
+                        '<div style="text-align:center">Во вкладке "Данные о клиенте" подпункте "Финансовый анализ компаний" укажите количество компаний и их названия.' +
+                            ' По данным компаниям будет проведен финансовый анализ.' +
+                            ' Также заполните данные на вкладке Финданные Баланс' +
+                            '</div>',
+                    onhidden: function(dialogRef) {
+                        $state.go("main.dashboard.project.finDataBalanceTable");
+                    }
+                });
+                dialog.setSize(BootstrapDialog.SIZE_SMALL);
+                dialog.open();
+            }
         }
     }
 
@@ -50,12 +70,14 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
             if (elements !== 'oddsData') {
                 $scope.calculateOdds();
             } else {
+                usSpinnerService.spin("spinner-1");
                 if ($scope.isEdit) {
                     projectFactory.updateOddsData($scope.mElement, $scope.currentProject);
                     $scope.calculateOdds();
                 } else{
                     projectFactory.initOddsData($scope.mElement, $scope.currentProject);
                 }
+                usSpinnerService.stop("spinner-1");
             }
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 

@@ -18,7 +18,7 @@ function projectDeleteFormatter(value, row, index) {
     ].join('');
 }
 
-var projectsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, promiseUtils, httpService, projectFactory) {
+var projectsController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $timeout, $rootScope, usSpinnerService, promiseUtils, httpService, projectFactory) {
 
 
     var url = $$ApiUrl + "/userprojects";
@@ -245,13 +245,13 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
 
     $scope.showProjectModal = function() {
 
-        var rParams = { 'id': $scope.userData.UserId };
-        var url = $$ApiUrl + "/projectconfig";
+        var rParams = { 'userId': $scope.userData.UserId };
+        var url = $$ApiUrl + "/userClients";
         promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
             // alert(result);
-            $scope.projectSetting = JSON.parse(result);
+            var result = JSON.parse(result);
 
-            if ($scope.projectSetting.Clients == undefined || $scope.projectSetting.Clients.length == 0) {
+            if (result == undefined || result.length == 0) {
                 var dialog = BootstrapDialog.alert({
                     title: 'Ошибка',
                     message: 'Отсутствуют компании заемщики. Перед созданием заявки необходимо создать заемщика',
@@ -267,13 +267,13 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
                 dialog.setSize(BootstrapDialog.SIZE_SMALL);
             } else {
 
-                $scope.projectSetting.SelectedClient = $scope.projectSetting.Clients[0];
+                //$scope.projectSetting.SelectedClient = $scope.projectSetting.Clients[0];
 
-                $scope.projectSetting.StartMonth = $scope.projectSetting.StartDates.Months[0];
-                $scope.projectSetting.StartYear = $scope.projectSetting.StartDates.Years[0];
+                //$scope.projectSetting.StartMonth = $scope.projectSetting.StartDates.Months[0];
+                //$scope.projectSetting.StartYear = $scope.projectSetting.StartDates.Years[0];
 
-                $scope.projectSetting.EndMonth = $scope.projectSetting.EndDates.Months[0];
-                $scope.projectSetting.EndYear = $scope.projectSetting.EndDates.Years[0];
+                //$scope.projectSetting.EndMonth = $scope.projectSetting.EndDates.Months[0];
+                //$scope.projectSetting.EndYear = $scope.projectSetting.EndDates.Years[0];
 
 
                 var modalView = 'PartialViews/Modals/Project/ProjectModal.html';
@@ -286,8 +286,8 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
                 $scope.mElement = projectFactory.initProject();
                 $scope.mElement.CreatorId = $scope.userData.UserId;
 
-                $scope.mElement.ProjectSetting = $scope.projectSetting;
-                $scope.selectClient();
+                $scope.mElement.ProjectSetting = {SelectedClient:null};
+                //$scope.selectClient();
 
                 $scope.addNewModal(modalView, modalController, $scope.mElement, $scope.projects);
             }
@@ -296,25 +296,48 @@ var projectsController = function($scope, $http, $location, $state, $uibModal, $
 
     }
 
-
-    $scope.selectClient = function() {
-
+    $scope.getParentProject = function(item) {
+        $scope.mElement.ProjectSetting.SelectedClient = item;
         var rParams = { 'id': $scope.mElement.ProjectSetting.SelectedClient.Id };
-        var url = $$ApiUrl + "/parentproject"
-        promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
-            var ob = JSON.parse(result)
-            if (ob == null) {
-                $scope.mElement.ParentExists = false;
-                $scope.mElement.ParentProject = undefined;
-            } else {
-                $scope.mElement.ParentExists = true;
-                $scope.mElement.ParentProject = JSON.parse(ob.ProjectContent);
-                var t = "";
-            }
-        })
-
-
+        var url = $$ApiUrl + "/parentproject";
+        promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams))
+            .then(function(result) {
+                var ob = JSON.parse(result);
+                if (ob == null) {
+                    $scope.mElement.ParentExists = false;
+                    $scope.mElement.ParentProject = undefined;
+                } else {
+                    $scope.mElement.ParentExists = true;
+                    $scope.mElement.ParentProject = JSON.parse(ob.ProjectContent);
+                }
+            });
     }
 
+    $scope.selectClient = function(item) {
+        if (item && item.Id) {
+            $scope.getParentProject(item);
+        } else {
+            $scope.getClientsByRegNumber($scope.mElement.ProjectSetting.SelectedClient);
+        }
+    }
+
+    $scope.getClientsByRegNumber = function(val) {
+        var rParams = { 'id': $scope.userData.UserId, 'regId': val };
+        var url = $$ApiUrl + "/projectconfig";
+        promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams)).then(function(result) {
+            // alert(result);
+            var result = JSON.parse(result);
+            if (result.Clients && result.Clients.length > 0) {
+                $scope.noResults = false;
+                return $scope.mElement.ProjectSetting.Clients = result.Clients;
+            } else {
+                $scope.noResults = true;
+                return $scope.mElement.ProjectSetting.Clients = [];
+            }
+
+        });
+    }
+
+
 };
-blitzApp.controller("projectsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "promiseUtils", "httpService", "projectFactory", projectsController]);
+blitzApp.controller("projectsController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$timeout", "$rootScope", "usSpinnerService", "promiseUtils", "httpService", "projectFactory", projectsController]);

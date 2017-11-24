@@ -25,7 +25,10 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                         '<div style="text-align:center">Во вкладке "Данные о клиенте" подпункте "Финансовый анализ компаний" укажите количество компаний и их названия.' +
                             ' По данным компаниям будет проведен финансовый анализ.' +
                             ' Также заполните данные на вкладке Финданные Баланс' +
-                            '</div>'
+                            '</div>',
+                    onhidden: function(dialogRef) {
+                        $state.go("main.dashboard.project.finDataBalanceTable");
+                    }
                 });
                 dialog.setSize(BootstrapDialog.SIZE_SMALL);
                 dialog.open();
@@ -83,6 +86,7 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                 }
                 $scope.calculateOpiu($scope.activeOpiu);
             } else {
+                usSpinnerService.spin("spinner-1");
                 if ($scope.isEdit) {
                     projectFactory.updateOpius($scope.currentProject);
                     angular.forEach($scope.currentProject.FinDataOpiu.Opius, function(value, key) {
@@ -93,6 +97,7 @@ var finDataOpiuController = function($scope, $http, $location, $state, $uibModal
                     projectFactory.initOpius($scope.currentProject);
                     $scope.activeOpiu = projectFactory.getActiveOpiu();
                 }
+                usSpinnerService.stop("spinner-1");
             }
             projectHttpService.manageProject($http, $scope, usSpinnerService, projectFactory.getToCurrentProject(), false);
 

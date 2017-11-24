@@ -131,5 +131,35 @@ namespace Landau.Blitz.Api.Helpers.ProjectHelpers
                 return "";
             }
         }
+
+        public static string GetToProjectsByClientIdProjectId(int clientId, int projectId)
+        {
+            try
+            {
+                List<Projects> projects = DBProjectHelper.GetProjectsByClientIdProjectId(clientId, projectId);
+
+                List<ProjectViewModel> models = new List<ProjectViewModel>();
+
+
+                foreach (var project in projects)
+                {
+                    models.Add(new ProjectViewModel()
+                    {
+                        Content = project.ProjectContent,
+                        CreationDate = project.CreationDate.ToString(),
+                        CreatorId = project.CreatorId,
+                        CreatorName = project.Users.FirstName + " " + project.Users.LastName,
+                        Id = project.Id,
+                        Name = project.Name
+                    });
+                }
+
+                return SerializeHelper.Serialize(models);
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
     }
 }

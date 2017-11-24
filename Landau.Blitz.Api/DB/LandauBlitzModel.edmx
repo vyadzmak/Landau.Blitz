@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LandauBlitzModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LandauBlitzModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Catalogs">
           <Key>
             <PropertyRef Name="Id" />
@@ -25,6 +25,8 @@
           <Property Name="ClientTypeId" Type="int" Nullable="false" />
           <Property Name="RegistrationDate" Type="datetime" />
           <Property Name="ClientCreatorId" Type="int" />
+          <Property Name="OrganizationType" Type="int" />
+          <Property Name="StateRegistrationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ClientTypes">
           <Key>
@@ -444,8 +446,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LandauBlitzModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -477,6 +478,8 @@
           <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Clients" FromRole="Clients" ToRole="Projects" />
           <NavigationProperty Name="Templates" Relationship="Self.FK_Templates_Clients" FromRole="Clients" ToRole="Templates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Clients" FromRole="Clients" ToRole="Users" />
+          <Property Name="OrganizationType" Type="Int32" />
+          <Property Name="StateRegistrationDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="ClientTypes">
           <Key>
@@ -941,6 +944,8 @@
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="LandauBlitzModel.Clients">
               <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="StateRegistrationDate" ColumnName="StateRegistrationDate" />
+                <ScalarProperty Name="OrganizationType" ColumnName="OrganizationType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RegistrationNumber" ColumnName="RegistrationNumber" />

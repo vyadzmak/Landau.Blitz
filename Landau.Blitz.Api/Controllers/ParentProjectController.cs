@@ -22,6 +22,11 @@ namespace Landau.Blitz.Api.Controllers
             return ProjectHelper.GetToParentProjectById(id);
         }
 
+        public string Get(int clientId, int projectId)
+        {
+            return ProjectHelper.GetToProjectsByClientIdProjectId(clientId, projectId);
+        }
+
         // POST: api/ParentProject
         public void Post([FromBody]string value)
         {
