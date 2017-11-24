@@ -13,8 +13,9 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectSettingsHelpers
         /// get to clients
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="regNum"></param>
         /// <returns></returns>
-        public static List<Clients> GetToClientsByUserId(int userId)
+        public static List<Clients> GetToClientsByUserIdRegistrationNumber(int userId, string regNum)
         {
             try
             {
@@ -22,7 +23,8 @@ namespace Landau.Blitz.Api.DBHelpers.DBProjectSettingsHelpers
                 {
                     int clientId =(int)db.Users.FirstOrDefault(x => x.Id == userId).ClientId;
 
-                    return db.Clients.Where(x => x.ClientTypeId == 3 && x.ClientCreatorId==clientId).ToList();
+                    return db.Clients.Where(x => x.ClientTypeId == 3 && x.ClientCreatorId==clientId 
+                    && x.RegistrationNumber.Contains(regNum)).ToList();
                 }
                 return null;
             }

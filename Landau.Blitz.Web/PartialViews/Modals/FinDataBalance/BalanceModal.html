@@ -15,7 +15,32 @@
                             Сохранились ли данные предыдущего финансового анализа
                         </label>
                     </div>
-                    <div class="form-group" ng-show="previousEnabled">
+                    <div class="form-group" ng-show="previousEnabled && currentProject.ParentExists">
+                        <label>
+                            <input type="checkbox" ng-model="mElement.isImported" />
+                            Импортировать данные предыдущего проекта
+                        </label>
+                    </div>
+                    <div class="form-group" ng-show="mElement.isImported">
+                        <label>Выберите проект</label>
+                        <select class="form-control"
+                                ng-options="item as item.Name+' - '+item.CreationDate for item in previousProjects track by item.Id"
+                                ng-model="mElement.previousProject" ng-required="mElement.isImported"></select>
+                    </div>
+                    <div class="form-group" ng-show="mElement.isImported && mElement.previousProject">
+                        <label>Выберите дату баланса</label>
+                        <label ng-if="mElement.previousProject.FinDataBalance.PreviousFinAnalysisDate">
+                            <input type="radio" ng-value="mElement.previousProject.FinDataBalance.PreviousFinAnalysisDate"
+                                    ng-model="mElement.PreviousFinAnalysisDate" ng-required="mElement.isImported"/>
+                            {{mElement.previousProject.FinDataBalance.PreviousFinAnalysisDate | date:'dd.MM.yyyy'}}
+                        </label>
+                        <label>
+                            <input type="radio" ng-value="mElement.previousProject.FinDataBalance.CurrentFinAnalysisDate"
+                                    ng-model="mElement.PreviousFinAnalysisDate" ng-required="mElement.isImported"/>
+                            {{mElement.previousProject.FinDataBalance.CurrentFinAnalysisDate | date:'dd.MM.yyyy'}}
+                        </label>
+                    </div>
+                    <div class="form-group" ng-show="previousEnabled && !mElement.isImported">
                         <label>Дата предыдущего финансового анализа</label>
                         <input type="date" class="form-control"
                                ng-required="previousEnabled"

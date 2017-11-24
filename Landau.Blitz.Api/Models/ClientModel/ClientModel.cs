@@ -82,6 +82,16 @@ namespace Landau.Blitz.Api.Models.ClientModel
         /// client creator id
         /// </summary>
         public int ClientCreatorId { get; set; }
+
+        /// <summary>
+        /// registration date
+        /// </summary>
+        public string StateRegistrationDate { get; set; }
+
+        /// <summary>
+        /// registration date
+        /// </summary>
+        public int? OrganizationType { get; set; }
         #endregion
 
     }

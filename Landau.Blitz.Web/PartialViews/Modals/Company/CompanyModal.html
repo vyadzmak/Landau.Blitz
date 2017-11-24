@@ -7,41 +7,86 @@
     <div class="modal-body">
         <div class="container">
             <div class="row">
-                <form class="form-horizontal" name="companyForm" id="companyForm" role="form" data-toggle="validator">
+                <form class="form-horizontal" name="companyForm" id="companyForm" role="form" novalidate>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">«Наименование клиента (с указанием организационно-правовой формы)»<i class="red-star">*</i></label>
+                    <div class="form-group" 
+                         ng-class="{ true: 'has-error'}[companyForm.companyName.$invalid 
+                         && (companyForm.companyName.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">Наименование клиента<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="ТОО Альфа" maxlength="270" data-error="Наименование должно быть заполнено" ng-model="mElement.Name" required>
-                            <div class="help-block with-errors"></div>
+                            <input type="text" class="form-control" name="companyName" placeholder="Альфа" maxlength="270" ng-model="mElement.Name" required>
+                            <div class="help-block" ng-messages="companyForm.companyName.$error" ng-if="companyForm.companyName.$touched || submitted">
+                                <div ng-message="required">Наименование должно быть заполнено</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Регистрационный номер<i class="red-star">*</i></label>
+                    <div class="form-group" ng-show="userData.UserRoleId==1 || userData.UserRoleId==2"
+                         ng-class="{ true: 'has-error'}[!mElement.CurrentClientType && submitted]">
+                        <label class="col-sm-3 control-label" for="exampleSelect1">Тип организации</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="123456789" data-error="Регистрационный номер должен быть заполнен" ng-model="mElement.RegistrationNumber" required>
-                            <div class="help-block with-errors"></div>
+                            <select class="form-control" name="clientType" ng-options="type.Description for type in mElement.ClientTypes track by type.Id" ng-model="mElement.CurrentClientType"></select>
+                            <div class="help-block" ng-if="!mElement.CurrentClientType && submitted">
+                                Выберите тип организации
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{ true: 'has-error'}[!mElement.OrganizationType && submitted]"
+                         ng-show="mElement.CurrentClientType.Id == 3">
+                        <label class="col-sm-3 control-label">Форма СЧП<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="exampleSelect2" name="organizationType" ng-model="mElement.OrganizationType" ng-required="mElement.CurrentClientType.Id == 3">
+                                <option value="1">ИП</option>
+                                <option value="2">ТОО</option>
+                                <option value="3">КХ</option>
+                            </select>
+                            <small id="emailHelp" class="form-text text-muted">Относится ли к целевой группе по юридическому статусу</small>
+                            <div class="help-block" ng-if="!mElement.OrganizationType && submitted">
+                                Выберите форму СЧП
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group"
+                         ng-class="{ true: 'has-error'}[companyForm.registrationNumber.$invalid 
+                         && (companyForm.registrationNumber.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">БИН/ИИН<i class="red-star">*</i></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="registrationNumber" placeholder="123456789" ng-model="mElement.RegistrationNumber" required>
+                            <div class="help-block" ng-messages="companyForm.registrationNumber.$error" ng-if="companyForm.registrationNumber.$touched || submitted">
+                                <div ng-message="required">БИН/ИИН должен быть заполнен</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group"
+                         ng-class="{ true: 'has-error'}[companyForm.address.$invalid 
+                         && (companyForm.address.$touched || submitted)]">
                         <label class="col-sm-3 control-label">Адрес<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="г.Минск, ул.Народная, д.80, офис 63" data-error="Адрес должен быть заполнен" ng-model="mElement.Address" required>
-                            <div class="help-block with-errors"></div>
+                            <input type="text" class="form-control" name="address" placeholder="г.Минск, ул.Народная, д.80, офис 63" ng-model="mElement.Address" required>
+                            <div class="help-block" ng-messages="companyForm.address.$error" ng-if="companyForm.address.$touched || submitted">
+                                <div ng-message="required">Адрес должен быть заполнен</div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group" ng-show="userData.UserRoleId==1 || userData.UserRoleId==2">
-                        <label class="col-sm-3 control-label" for="exampleSelect1">Тип организации</label>
-
+                    
+                    <div class="form-group"
+                         ng-class="{ true: 'has-error'}[companyForm.regDate.$invalid 
+                         && (companyForm.regDate.$touched || submitted)]" ng-show="mElement.CurrentClientType.Id == 3">
+                        <label class="col-sm-3 control-label">Дата государственной регистрации заемщика<i class="red-star">*</i></label>
                         <div class="col-sm-9">
-
-                            <select class="form-control" ng-options="type.Description for type in mElement.ClientTypes track by type.Id" ng-model="mElement.CurrentClientType"></select>
-
+                            <input type="date" class="form-control" name="regDate" ng-model="mElement.StateRegistrationDate" ng-required="mElement.CurrentClientType.Id == 3">
+                            <div class="help-block" ng-messages="companyForm.regDate.$error" ng-if="companyForm.regDate.$touched || submitted">
+                                <div ng-message="required">Дата должна быть заполнена</div>
+                                <div ng-message="date">Введите корректную дату</div>
+                            </div>
                         </div>
                     </div>
+
+                    
                     </br>
                     <div class="form-group">
                         <div class="form-group col-sm-11 text-right">
@@ -60,8 +105,3 @@
     </div>
 
 </div>
-<script>
-    $('#companyForm').validator({
-        disable: false
-    });
-</script>

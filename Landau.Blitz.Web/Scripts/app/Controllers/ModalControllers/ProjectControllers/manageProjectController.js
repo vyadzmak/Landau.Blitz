@@ -7,6 +7,13 @@ var manageProjectController = function($scope, $uibModal, $uibModalInstance) {
             if ($scope.projectForm.$valid) { $uibModalInstance.close(); }
         };
         vm.cancel = $uibModalInstance.dismiss;
+        vm.modelOptions = {
+            debounce: {
+                default: 500,
+                blur: 250
+            },
+            getterSetter: true
+        };
     }
     loadProjectData();
 

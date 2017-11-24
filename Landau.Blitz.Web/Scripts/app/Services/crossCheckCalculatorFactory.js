@@ -12,7 +12,8 @@ blitzApp.factory('crossCheckCalculatorFactory', ['$rootScope', 'mathFactory', fu
     crossCheckCalculatorFactory.calculateData = function (currentProject) {
 
         try {
-            if (!currentProject.ConsolidatedBalance || !currentProject.ConsolidatedBalance.CompanyBalances) {
+            if (!currentProject.ConsolidatedBalance || !currentProject.ConsolidatedBalance.CompanyBalances
+                || !currentProject.ConsolidatedOpiu || !currentProject.ConsolidatedOpiu.Opiu) {
                 return currentProject;
             }
 

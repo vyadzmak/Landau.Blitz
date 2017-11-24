@@ -11,6 +11,10 @@
                     ng-options="item as item.Name for item in activeCompany.CompanyBalances track by item.Id"
                     ng-model="activeBalance" ng-change="activeBalanceChanged()"></select>
         </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" ng-show="activeBalance"
+                     ng-click="updateBalance()"><i class="fa fa-pencil-square-o fa-fw"></i> Обновить исходные данные</button>
+        </div>
     </div>
 
     <div ng-if="activeBalance">

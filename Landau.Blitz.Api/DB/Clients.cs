@@ -32,6 +32,8 @@ namespace Landau.Blitz.Api.DB
         public int ClientTypeId { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
         public Nullable<int> ClientCreatorId { get; set; }
+        public Nullable<int> OrganizationType { get; set; }
+        public Nullable<System.DateTime> StateRegistrationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Clients> Clients1 { get; set; }

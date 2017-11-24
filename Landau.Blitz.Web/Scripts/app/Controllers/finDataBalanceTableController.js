@@ -1,5 +1,5 @@
 
-var finDataBalanceTableController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, mathFactory, calculatorFactory, projectHttpService) {
+var finDataBalanceTableController = function($scope, $http, $location, $state, $uibModal, $log, $window, $filter, $rootScope, usSpinnerService, projectFactory, mathFactory, calculatorFactory, projectHttpService, promiseUtils, httpService) {
     
 
     $scope.assets = {
@@ -48,7 +48,8 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
     //{varName:'LongFixedAssetsCredit', name:'Банк.кр.(бол. 12 мес.) на осн/ср'},
     {varName:'OtherLiabilities', name:'Прочие пассивы'}];
 
-    $scope.initBalance = function() {$scope.currentProject = projectFactory.getToCurrentProject();
+    $scope.initBalance = function() {
+        $scope.currentProject = projectFactory.getToCurrentProject();
 
         if (!$scope.currentProject.FinDataBalance.Balances ||
             $scope.currentProject.FinDataBalance.Balances.length === 0) {
@@ -57,8 +58,10 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
 
                 $scope.currentProject.FinDataBalance.Companies = angular
                     .copy($scope.currentProject.ClientData.FinAnalysisCompanies);
-
+                
                 $scope.mElement = $scope.currentProject.FinDataBalance;
+                $scope.mElement.previousProject = null;
+                $scope.mElement.isImported = false;
                 $scope.addNewModal('PartialViews/Modals/FinDataBalance/BalanceModal.html',
                     manageBalanceController,
                     $scope.mElement,
@@ -73,7 +76,10 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                     message:
                         '<div style="text-align:center">Во вкладке "Данные о клиенте" подпункте "Финансовый анализ компаний" укажите количество компаний и их названия.' +
                             ' По данным компаниям будет проведен финансовый анализ.' +
-                            '</div>'
+                            '</div>',
+                    onhidden: function(dialogRef) {
+                        $state.go("main.dashboard.project.clientData");
+                    }
                 });
                 dialog.setSize(BootstrapDialog.SIZE_SMALL);
                 dialog.open();
@@ -85,14 +91,31 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             }
         }
     }
+    
+    $scope.updateBalance = function() {
+        $scope.previousProject = {};
+        $scope.mElement = angular.copy($scope.currentProject.FinDataBalance);
+        $scope.previousEnabled = moment($scope.mElement.PreviousFinAnalysisDate).isValid();
+        if ($scope.previousEnabled) {
+            $scope.mElement.PreviousFinAnalysisDate = new Date($scope.mElement.PreviousFinAnalysisDate);
+        }
+        if (moment($scope.mElement.CurrentFinAnalysisDate).isValid()) {
+            $scope.mElement.CurrentFinAnalysisDate = new Date($scope.mElement.CurrentFinAnalysisDate);
+        }
+        $scope.mElement.previousProject = null;
+        $scope.mElement.isImported = false;
+
+        $scope.isEdit = true;
+
+        $scope.addNewModal('PartialViews/Modals/FinDataBalance/BalanceModal.html',
+            manageBalanceController,
+            $scope.mElement,
+            'balanceData',
+            $scope.mElement);
+    }
 
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
-
-
-        if (element != {}) {
-            $scope.isEdit = true;
-        }
-
+        
         currentElement = element;
         var modalInstance = $uibModal.open({
             templateUrl: modalView,
@@ -130,8 +153,23 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
                     $scope.mElement = {};
                 }
             } else {
-                projectFactory.initBalances($scope.currentProject.FinDataBalance.Companies);
-                $scope.currentProject = projectFactory.getToCurrentProject();
+                usSpinnerService.spin("spinner-1");
+
+                var previousFinDataBalance = $scope.mElement.previousProject?$scope.mElement.previousProject.FinDataBalance:null;
+                $scope.mElement.previousProject = undefined;
+                
+                if($scope.isEdit){
+                    projectFactory.updateBalance($scope.mElement, previousFinDataBalance);
+                } else{
+                    projectFactory.initBalances($scope.currentProject.FinDataBalance.Companies);
+                    $scope.currentProject = projectFactory.getToCurrentProject();
+
+                    if ($scope.mElement.isImported) {
+                        $scope.mElement = angular.copy($scope.currentProject.FinDataBalance);
+                        projectFactory.updateBalance($scope.mElement, previousFinDataBalance);
+                    }
+                }
+                usSpinnerService.stop("spinner-1");
                 $scope.activeCompany = projectFactory.getActiveCompanyBalance();
                 if ($scope.activeCompany.CompanyBalances && $scope.activeCompany.CompanyBalances.length > 0) {
                     $scope.activeBalance = projectFactory.getActiveBalance();
@@ -324,5 +362,33 @@ var finDataBalanceTableController = function($scope, $http, $location, $state, $
             });
         });
     }
+
+    $scope.loadPreviousProjects = function() {
+        if($scope.currentProject.ParentExists){
+            var rParams = { 'clientId': $scope.currentProject.ClientId, 'projectId': $scope.currentProject.Id};
+            var url = $$ApiUrl + "/parentproject";
+            promiseUtils.getPromiseHttpResult(httpService.getRequestById($http, $scope, usSpinnerService, url, rParams))
+                .then(function(result) {
+                    var ob = JSON.parse(result);
+                    if (!ob) {
+                        $scope.previousProjects = [];
+                    } else {
+                        _.forEach(ob, function(val, key) {
+                            val.ProjectContent = JSON.parse(val.Content);
+                            val.FinDataBalance = angular.copy(val.ProjectContent.FinDataBalance);
+                            if (moment(val.FinDataBalance.PreviousFinAnalysisDate).isValid()) {
+                                val.FinDataBalance.PreviousFinAnalysisDate = new Date(val.FinDataBalance.PreviousFinAnalysisDate);
+                            }
+                            if (moment(val.FinDataBalance.CurrentFinAnalysisDate).isValid()) {
+                                val.FinDataBalance.CurrentFinAnalysisDate = new Date(val.FinDataBalance.CurrentFinAnalysisDate);
+                            }
+                            val.ProjectContent = undefined;
+                            val.Content = undefined;
+                        });
+                        $scope.previousProjects = ob;
+                    }
+                });
+        }
+    }
 };
-blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "mathFactory", "calculatorFactory", "projectHttpService", finDataBalanceTableController]);
+blitzApp.controller("finDataBalanceTableController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "$rootScope", "usSpinnerService", "projectFactory", "mathFactory", "calculatorFactory", "projectHttpService", "promiseUtils", "httpService", finDataBalanceTableController]);

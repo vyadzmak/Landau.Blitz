@@ -311,7 +311,7 @@ blitzApp.factory('balanceCalculatorFactory', ['$rootScope', 'mathFactory', funct
             balance.OutEquity = balance.OutTotalAssets - balance.OutTotalLongAccountsPayable;
             balance.ConsEquity = balance.ConsTotalAssets - balance.ConsTotalLongAccountsPayable;
             balance.TotalLiabilities = balance.Equity + balance.TotalLongAccountsPayable;
-            balance.OutTotalLiabilities = balance.OutEquity + balance.OutTotalLongAccountsPayable;
+            balance.OutTotalLiabilities = balance.OutTotalLongAccountsPayable;
             balance.ConsTotalLiabilities = balance.ConsEquity + balance.ConsTotalLongAccountsPayable;
 
             angular.forEach(balance.OutAssets, function(value, key) {

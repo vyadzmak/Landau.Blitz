@@ -2,8 +2,9 @@ var manageBalanceController = function ($scope, $uibModal, $uibModalInstance) {
     var vm = this;
 
     function loadBalanceData() {
+        $scope.loadPreviousProjects();
         vm.$scope = $scope;
-        vm.confirm = function() {
+        vm.confirm = function () {
             if ($scope.balanceForm.$valid) {
                 if (!$scope.previousEnabled) {
                     $scope.mElement.PreviousFinAnalysisDate = undefined;

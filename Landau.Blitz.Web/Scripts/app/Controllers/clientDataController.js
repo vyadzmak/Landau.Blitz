@@ -353,51 +353,51 @@ var clientDataController = function($scope, $http, $location, $state, $uibModal,
             $scope.currentProject.ClientData.CreditHistoryInfo.LoanContribution = 0;
         }
         angular.forEach($scope.currentProject.ClientData.CreditHistoryInfos, function(value, key) {
-            if (value.LoanDetails && value.LoanDetails.length > 0) {
-                value.LoanAmount = 0;
-                value.RemainingDebt = 0;
-                value.LoanContribution = 0;
-                if (value.LoanType && value.LoanType.Id === 4) { // counting mixed credit line
-                    var renewablePart;
-                    var nonRenewablePart;
-                    var renewablesEnded = false;
-                    angular.forEach(value.LoanDetails, function(vDetail, vDKey) {
-                        if (vDetail.detType === 2) {
-                            renewablePart = vDetail;
-                            if (value.LoanDetails[vDKey + 1] && value.LoanDetails[vDKey + 1].detType !== 3) {
-                                renewablePart.LoanAmount = 0;
-                                renewablePart.RemainingDebt = 0;
-                                renewablePart.LoanContribution = 0;
-                            }
-                        } else if (vDetail.detType === 3) {
-                            renewablesEnded = true;
-                            nonRenewablePart = vDetail;
-                            if (value.LoanDetails[vDKey + 1]) {
-                                nonRenewablePart.LoanAmount = 0;
-                                nonRenewablePart.RemainingDebt = 0;
-                                nonRenewablePart.LoanContribution = 0;
-                            }
-                        } else if (!renewablesEnded) {
-                            renewablePart.LoanAmount += mathFactory.getFloat(vDetail.LoanAmount);
-                            renewablePart.RemainingDebt += mathFactory.getFloat(vDetail.RemainingDebt);
-                            renewablePart.LoanContribution += mathFactory.getFloat(vDetail.LoanContribution);
-                        } else if (renewablesEnded) {
-                            nonRenewablePart.LoanAmount += mathFactory.getFloat(vDetail.LoanAmount);
-                            nonRenewablePart.RemainingDebt += mathFactory.getFloat(vDetail.RemainingDebt);
-                            nonRenewablePart.LoanContribution += mathFactory.getFloat(vDetail.LoanContribution);
-                        }
-                    });
-                    value.LoanAmount = mathFactory.getFloat(renewablePart.LoanAmount) + mathFactory.getFloat(nonRenewablePart.LoanAmount);
-                    value.RemainingDebt = mathFactory.getFloat(renewablePart.RemainingDebt)+mathFactory.getFloat(nonRenewablePart.RemainingDebt);
-                    value.LoanContribution = mathFactory.getFloat(renewablePart.LoanContribution)+mathFactory.getFloat(nonRenewablePart.LoanContribution);
-                } else {
-                    angular.forEach(value.LoanDetails, function(vDetail, vDKey) {
-                        value.LoanAmount += mathFactory.getFloat(vDetail.LoanAmount);
-                        value.RemainingDebt += mathFactory.getFloat(vDetail.RemainingDebt);
-                        value.LoanContribution += mathFactory.getFloat(vDetail.LoanContribution);
-                    });
-                }
-            }
+        //    if (value.LoanDetails && value.LoanDetails.length > 0) {
+        //        value.LoanAmount = 0;
+        //        value.RemainingDebt = 0;
+        //        value.LoanContribution = 0;
+        //        if (value.LoanType && value.LoanType.Id === 4) { // counting mixed credit line
+        //            var renewablePart;
+        //            var nonRenewablePart;
+        //            var renewablesEnded = false;
+        //            angular.forEach(value.LoanDetails, function(vDetail, vDKey) {
+        //                if (vDetail.detType === 2) {
+        //                    renewablePart = vDetail;
+        //                    if (value.LoanDetails[vDKey + 1] && value.LoanDetails[vDKey + 1].detType !== 3) {
+        //                        renewablePart.LoanAmount = 0;
+        //                        renewablePart.RemainingDebt = 0;
+        //                        renewablePart.LoanContribution = 0;
+        //                    }
+        //                } else if (vDetail.detType === 3) {
+        //                    renewablesEnded = true;
+        //                    nonRenewablePart = vDetail;
+        //                    if (value.LoanDetails[vDKey + 1]) {
+        //                        nonRenewablePart.LoanAmount = 0;
+        //                        nonRenewablePart.RemainingDebt = 0;
+        //                        nonRenewablePart.LoanContribution = 0;
+        //                    }
+        //                } else if (!renewablesEnded) {
+        //                    renewablePart.LoanAmount += mathFactory.getFloat(vDetail.LoanAmount);
+        //                    renewablePart.RemainingDebt += mathFactory.getFloat(vDetail.RemainingDebt);
+        //                    renewablePart.LoanContribution += mathFactory.getFloat(vDetail.LoanContribution);
+        //                } else if (renewablesEnded) {
+        //                    nonRenewablePart.LoanAmount += mathFactory.getFloat(vDetail.LoanAmount);
+        //                    nonRenewablePart.RemainingDebt += mathFactory.getFloat(vDetail.RemainingDebt);
+        //                    nonRenewablePart.LoanContribution += mathFactory.getFloat(vDetail.LoanContribution);
+        //                }
+        //            });
+        //            value.LoanAmount = mathFactory.getFloat(renewablePart.LoanAmount) + mathFactory.getFloat(nonRenewablePart.LoanAmount);
+        //            value.RemainingDebt = mathFactory.getFloat(renewablePart.RemainingDebt)+mathFactory.getFloat(nonRenewablePart.RemainingDebt);
+        //            value.LoanContribution = mathFactory.getFloat(renewablePart.LoanContribution)+mathFactory.getFloat(nonRenewablePart.LoanContribution);
+        //        } else {
+        //            angular.forEach(value.LoanDetails, function(vDetail, vDKey) {
+        //                value.LoanAmount += mathFactory.getFloat(vDetail.LoanAmount);
+        //                value.RemainingDebt += mathFactory.getFloat(vDetail.RemainingDebt);
+        //                value.LoanContribution += mathFactory.getFloat(vDetail.LoanContribution);
+        //            });
+        //        }
+        //    }
 
             $scope.currentProject.ClientData.CreditHistoryInfo.LoanAmount += mathFactory.getFloat(value.LoanAmount);
             $scope.currentProject.ClientData.CreditHistoryInfo.RemainingDebt += mathFactory.getFloat(value.RemainingDebt);

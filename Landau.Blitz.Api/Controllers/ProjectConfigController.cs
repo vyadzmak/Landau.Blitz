@@ -18,9 +18,9 @@ namespace Landau.Blitz.Api.Controllers
         }
 
         // GET: api/ProjectConfig/5
-        public string Get(int id)
+        public string Get(int id, string regId)
         {
-            return ProjectSettingHelper.GetToProjectSettings(id);
+            return ProjectSettingHelper.GetToProjectSettings(id, regId);
         }
 
         // POST: api/ProjectConfig
