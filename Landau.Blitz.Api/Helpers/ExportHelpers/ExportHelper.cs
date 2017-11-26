@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Hosting;
 using Landau.Blitz.Api.DB;
 using Landau.Blitz.Api.DBHelpers.DBProjectHelpers;
 using Landau.Blitz.Api.DBHelpers.DBReportHelpers;
 using Landau.Blitz.Api.DBHelpers.DBSettingsHelpers;
-using Landau.Blitz.Exporter;
-using Landau.Blitz.Exporter.Helpers;
-using Landau.Blitz.Exporter.Models.ReportSchemaModels;
-using System.IO;
-using System.IO.Compression;
 using Landau.Blitz.Api.DBHelpers.DBLogHelpers;
+using Newtonsoft.Json;
+using QuarkPoint.Exporter.Helpers;
+using QuarkPoint.Exporter.Models.TemplateModels;
 
 namespace Landau.Blitz.Api.Helpers.ExportHelpers
 {
@@ -24,19 +20,52 @@ namespace Landau.Blitz.Api.Helpers.ExportHelpers
         {
             try
             {
-                ExportProcessor processor = new ExportProcessor();
+                DBLogHelper.AddLog("Export Project");
                 int templateId =Convert.ToInt32(DBSettingHelper.GetSettingByName("MainExportTemplateId"));
                 string content = DBProjectHelper.GetProjectEntityById(id).ProjectContent;
                 string path = DBSettingHelper.GetSettingByName("ReportPhysicalPath");
-               
-                ReportTemplates template = DBReportHelper.GetToReport(templateId);
-                ReportSchemaModel model = SerializeHelper.DeserializeReportSchema(template.Template);
+                dynamic r_obj = JsonConvert.DeserializeObject(content);
+                var currentProject = r_obj;
 
-                 string pt = processor.GenerateReport(path, SerializeHelper.Serialize(model), content);
+                if (currentProject == null)
+                {
+                    DBLogHelper.AddLog("PROJECT is NULL");
+                }
+
+                DBLogHelper.AddLog("TemplateId: " + templateId);
+
+                ReportTemplates template = DBReportHelper.GetToReport(templateId);
+                //DBLogHelper.AddLog("Template: "+template.Template);
+                TemplateModel cTemplate = JsonConvert.DeserializeObject<TemplateModel>(template.Template);
+
+                if (cTemplate==null)
+                DBLogHelper.AddLog("Template is NULL");
+                else
+                {
+                    DBLogHelper.AddLog("Template is not NULL");
+
+                }
+
+                string ext = ".docx";
+                string dateTime = DateTime.Now.ToString();
+
+                string fileName = new String(dateTime.Where(Char.IsDigit).ToArray()) + ext; ;
+
+                string resultPath = Path.Combine(path, fileName);
+                DBLogHelper.AddLog("resultPath="+ resultPath);
+
+                //DBLogHelper.AddLog(currentProject.ToString());
+                //DBLogHelper.AddLog(cTemplate.ToString());
+
+                string result =GenerateProcessor.ExportDocument(currentProject, cTemplate, resultPath);
+                //ReportSchemaModel model = SerializeHelper.DeserializeReportSchema(template.Template);
+                DBLogHelper.AddLog("Result "+result);
+
+                //string pt = processor.GenerateReport(path, SerializeHelper.Serialize(model), content);
 
 
                 //FileStream str= new FileStream(pt,FileMode.Open, FileAccess.Read);
-                string name = Path.GetFileName(pt);
+                string name = Path.GetFileName(resultPath);
                 return name;
 
             }
