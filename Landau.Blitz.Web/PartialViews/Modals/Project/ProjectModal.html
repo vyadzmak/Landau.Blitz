@@ -22,7 +22,7 @@
                         <label class="col-sm-3 control-label" for="exampleSelect2">Клиент</label>
                         <div class="col-sm-9">
                             <input type="text" placeholder="Введите БИН/ИИН"
-                                   maxlength="14"
+                                   ng-maxlength="mElement.ProjectSetting.SelectedClient.Id?300:14"
                                    ng-model="mElement.ProjectSetting.SelectedClient"
                                    ng-model-options="vm.modelOptions"
                                    uib-typeahead="client.Name for client in mElement.ProjectSetting.Clients"
