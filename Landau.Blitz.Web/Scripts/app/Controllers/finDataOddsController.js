@@ -53,7 +53,7 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
     $scope.addNewModal = function(modalView, modalCtrl, currentElement, elements, element = {}) {
 
 
-        if (element != {}) {
+        if (!_.isEmpty(element)) {
             $scope.isEdit = true;
         }
 
@@ -69,11 +69,13 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         modalInstance.result.then(function() {
             if (elements !== 'oddsData') {
                 $scope.calculateOdds();
+				$scope.isEdit = false;
             } else {
                 usSpinnerService.spin("spinner-1");
                 if ($scope.isEdit) {
                     projectFactory.updateOddsData($scope.mElement, $scope.currentProject);
                     $scope.calculateOdds();
+					$scope.isEdit = false;
                 } else{
                     projectFactory.initOddsData($scope.mElement, $scope.currentProject);
                 }
@@ -157,6 +159,10 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
     
     $scope.percentTypeEditable = ['RevenuesIncome','PrepaidIncome','ReturnIncome','OtherIncome',
             'CreditIncome','SalesIncome','SponsorshipIncome','OtherOutOperationsIncome'];
+
+    $scope.outExpenesToPopulate = ['AutoLoanRepayment', 'LoanRepayment', 'ExpectedLoanRepayment', 'FamilyExpenses',
+            'InvestmentExpenses', 'FixedAssetsPurchase', 'DividendExpenses', 'AssistanceExpenses'];
+
     $scope.checkEditability = function(row, hVarName, hasSubrows) {
         var result = row.Calculate || (hasSubrows);
         if(hVarName === 'Prediction'){
@@ -194,11 +200,14 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
             monthVarName.indexOf('Prediction') === 0) &&
             $scope.takeFromOpiu.indexOf(rowVarName) !== -1) {
             return !hasSubRows;
+        } else if ($scope.outExpenesToPopulate.indexOf(rowVarName) !== -1 &&
+            monthVarName.indexOf('Prediction') === 0) {
+            return !hasSubRows;
         } else if (monthVarName.indexOf('M') === 0 &&
-            ($scope.percentTypeEditable.indexOf(rowVarName) !== -1 || 
+        ($scope.percentTypeEditable.indexOf(rowVarName) !== -1 ||
             rowVarName === 'Purchase')) {
             return !hasSubRows;
-        }else {
+        } else {
             return false;
         }
     }
@@ -218,6 +227,22 @@ var finDataOddsController = function($scope, $http, $location, $state, $uibModal
         } else {
             $scope.calculateOdds();
         }
+    }
+
+    $scope.populateValue = function(row, month, subRow) {
+        
+        angular.forEach($scope.currentProject.FinDataOdds.Odds.Header,
+            function(value, key) {
+                if (value.VarName.indexOf('M')===0) {
+                    if (!subRow) {
+                        row[value.VarName] = row['Prediction'];
+                    } else {
+                        subRow[value.VarName] = subRow['Prediction'];
+                    }
+                }
+            });
+        
+        $scope.calculateOdds();
     }
 
     $scope.init();

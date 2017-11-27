@@ -67,7 +67,7 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
         } else if (marginCalcType === 1 || marginCalcType === 2) {
             margin[varName] = 100 * (mathFactory.getFloat(revenues[varName]) / mathFactory.getFloat(costOfGoods[varName]) - 1);
             margin[varName] = mathFactory.round(margin[varName], 2);
-        } if (marginCalcType === 4 || marginCalcType === 5 || marginCalcType === 6) {
+        } else if (marginCalcType === 4 || marginCalcType === 5 || marginCalcType === 6) {
             costOfGoods[varName] = mathFactory.getFloat(revenues[varName]) / (100 + mathFactory.getFloat(margin[varName])) * 100;
             costOfGoods[varName] = mathFactory.round(costOfGoods[varName], 2);
         }
@@ -196,7 +196,8 @@ blitzApp.factory('opiuCalculatorFactory', ['$rootScope', 'mathFactory', function
                 otherExpenses, netProfit, loanPayment, netLoanBalance, 'M' + month.Id);
         });
 
-        calculateMargin(margin, costOfGoods, revenues, costOfGoods['AvgPrediction'] ? 1 : 4, 'AvgPrediction');
+        calculateMargin(margin, costOfGoods, revenues,
+		costOfGoods['AvgPrediction'] ? 1 : margin['AvgPrediction'] ? 4 : 3, 'AvgPrediction');
 
         calculateValues(totalExpenses, revenues, costOfGoods, grossProfit, profitOnBusiness, otherIncome,
             otherExpenses, netProfit, loanPayment, netLoanBalance, 'AvgPrediction');
