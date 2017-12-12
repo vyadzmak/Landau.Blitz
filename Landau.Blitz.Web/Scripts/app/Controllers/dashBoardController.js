@@ -1,7 +1,10 @@
 ﻿var dashBoardController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, projectHttpService, promiseUtils, httpService, projectFactory) {
     $scope.showProjectMenu = true;
     $scope.profileShowing = false;
-    var dash = function() {
+    var dash = function () {
+        if (!$window.chrome) {
+            $scope.exitApp();
+        }
         // $scope.serviceStateId = 1;
         $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
         //console.log(JSON.stringify($scope.userData));
@@ -27,7 +30,6 @@
         $scope.loadData = false;
 
     };
-    dash();
 
     $scope.loadDocument = function() {
         projectHttpService.getDocumentByProjectId($http, $scope, usSpinnerService, $rootScope.currentProjectId, false);
@@ -130,6 +132,7 @@
         $scope.exitApp();
     });
 
+    dash();
     $scope.start = function() {
         closeModals();
         Idle.watch();

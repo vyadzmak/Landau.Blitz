@@ -79,7 +79,9 @@
                             {{subRow[month.VarName] | currency:'':2}}{{getDataType(row, month.VarName).indexOf('percent')!==-1?'%':''}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                            <li role="menuitem" ng-click="cellDropdownChoice(subRow, month, false)"><a href="javascript:void(0)">Исплользовать прогнозное значение из ОПИУ</a></li>
+                            <li role="menuitem" ng-click="cellDropdownChoice(subRow, month, false)" ng-show="outExpenesToPopulate.indexOf(row.VarName) === -1">
+                                <a href="javascript:void(0)">Исплользовать прогнозное значение из ОПИУ</a>
+                            </li>
                             <li role="menuitem" ng-click="cellDropdownChoice(subRow, month, true)"><a href="javascript:void(0)">Ввести другое значение</a></li>
                             <li role="menuitem" ng-click="populateValue(row, month, subRow)" ng-show="outExpenesToPopulate.indexOf(row.VarName) !== -1">
                                 <a href="javascript:void(0)">Распространить данные на следующие месяцы</a>

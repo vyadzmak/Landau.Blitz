@@ -1,6 +1,7 @@
 ﻿(function() {
     var loginController = function($scope, $http, $location, $state, $rootScope, $window, usSpinnerService, $cookies) {
         var url = $$ApiUrl + "/login";
+        $scope.showLoginForm = !!$window.chrome;
         $scope.rememberMe = false;
         $scope.isLogin = false;
         // $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
